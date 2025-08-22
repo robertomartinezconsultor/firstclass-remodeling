@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luxury remodeling services in San Antonio, Texas. First Class Remodeling specializes in fix & flip ROI for investors and luxury remodels for homeowners.">
+  <title>First Class Remodeling Texas</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles */
+    .transition {
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+  <script>
+    // Toggle between English and Spanish
+    function toggleLang() {
+      const en = document.querySelectorAll('.lang-en');
+      const es = document.querySelectorAll('.lang-es');
+      en.forEach(el => el.classList.toggle('hidden'));
+      es.forEach(el => el.classList.toggle('hidden'));
+    }
+  </script>
+</head>
+<body class="bg-gray-100 font-sans leading-relaxed text-gray-800">
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <!-- Logo placeholder -->
+        <svg class="w-8 h-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L11 2H13L12 0ZM8 1L7 3H9L8 1ZM16 1L15 3H17L16 1ZM4 2L3 4H5L4 2ZM20 2L19 4H21L20 2ZM2 4L1 6H3L2 4ZM22 4L21 6H23L22 4ZM0 7L2 9H22L24 7H0ZM1 10L0 12H24L23 10H1ZM3 13L2 15H22L21 13H3ZM5 16L4 18H20L19 16H5ZM7 19L6 21H18L17 19H7ZM9 22L8 24H16L15 22H9Z"/></svg>
+        <span class="text-xl font-bold">First Class Remodeling</span>
+      </div>
+      <button onclick="toggleLang()" class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">ES/EN</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="container mx-auto px-4 py-16 flex flex-col-reverse lg:flex-row items-center gap-8">
+    <div class="lg:w-1/2">
+      <h2 class="lang-en text-4xl font-extrabold mb-4">Luxury Remodeling. Smart Investments. First Class Results.</h2>
+      <h2 class="lang-es text-4xl font-extrabold mb-4 hidden">Remodelaciones de lujo. Inversiones inteligentes. Resultados de primera clase.</h2>
+      <p class="lang-en text-xl mb-6">Flip faster. Live finer.</p>
+      <p class="lang-es text-xl mb-6 hidden">Restaura rápido. Vive mejor.</p>
+      <a href="#contact" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+        <span class="lang-en">Free Consultation</span>
+        <span class="lang-es hidden">Consulta Gratis</span>
+      </a>
+    </div>
+    <div class="lg:w-1/2">
+      <img src="https://source.unsplash.com/800x600/?remodel,kitchen,construction" alt="Remodeling project" class="rounded-lg shadow-lg">
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="bg-white py-16">
+    <div class="container mx-auto px-4">
+      <h3 class="lang-en text-3xl font-bold mb-6">About Us</h3>
+      <h3 class="lang-es text-3xl font-bold mb-6 hidden">Sobre Nosotros</h3>
+      <p class="lang-en mb-4">First Class Remodeling is where craftsmanship meets strategy. Based in San Antonio, Texas, we specialize in two areas:</p>
+      <p class="lang-es mb-4 hidden">First Class Remodeling es donde la artesanía se une a la estrategia. Con sede en San Antonio, Texas, nos especializamos en dos áreas:</p>
+      <ul class="list-disc list-inside mb-4">
+        <li class="lang-en">Helping real estate investors maximize ROI on fix &amp; flip projects.</li>
+        <li class="lang-es hidden">Ayudando a los inversionistas inmobiliarios a maximizar su ROI en proyectos de compra y reventa.</li>
+        <li class="lang-en">Delivering luxury remodels for homeowners who want elegance, comfort, and lasting value.</li>
+        <li class="lang-es hidden">Entregando remodelaciones de lujo para propietarios que buscan elegancia, comodidad y valor duradero.</li>
+      </ul>
+      <p class="lang-en">Our team blends industry expertise, premium materials, and cost‑efficient solutions to deliver projects that are on time, on budget, and beyond expectations.</p>
+      <p class="lang-es hidden">Nuestro equipo combina experiencia en la industria, materiales de primera calidad y soluciones rentables para entregar proyectos a tiempo, dentro del presupuesto y más allá de las expectativas.</p>
+    </div>
+  </section>
+
+  <!-- Trust & Transformation Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h3 class="lang-en text-3xl font-bold mb-4">Quality &amp; Trust</h3>
+        <h3 class="lang-es text-3xl font-bold mb-4 hidden">Calidad y Confianza</h3>
+        <p class="lang-en mb-6">Investors trust us to stretch budgets without cutting corners, while homeowners choose us to elevate their spaces with first‑class luxury. Our commitment to quality and precision ensures every project is a smart investment whether it’s boosting ROI on a fix &amp; flip or creating a dream home built to impress.</p>
+        <p class="lang-es mb-6 hidden">Los inversionistas confían en nosotros para estirar sus presupuestos sin recortar esquinas, mientras que los propietarios nos eligen para elevar sus espacios con lujo de primera clase. Nuestro compromiso con la calidad y la precisión asegura que cada proyecto sea una inversión inteligente, ya sea aumentando el ROI en una rehabilitación para venta rápida o creando la casa de sus sueños.</p>
+      </div>
+      <div>
+        <img src="https://source.unsplash.com/600x400/?architecture,blueprint" alt="Blueprint design" class="rounded-lg shadow-lg">
+      </div>
+      <div>
+        <img src="https://source.unsplash.com/600x400/?modern,kitchen" alt="Modern kitchen" class="rounded-lg shadow-lg">
+      </div>
+      <div>
+        <h3 class="lang-en text-3xl font-bold mb-4">Transforming Spaces</h3>
+        <h3 class="lang-es text-3xl font-bold mb-4 hidden">Transformando Espacios</h3>
+        <p class="lang-en">From outdated to outstanding, we turn every space into a statement. Investors love our ability to maximize property value, while homeowners enjoy stunning remodels that redefine comfort and style. Every transformation is crafted to inspire, impress, and deliver lasting results.</p>
+        <p class="lang-es hidden">De obsoleto a espectacular, convertimos cada espacio en una declaración. Los inversionistas adoran nuestra capacidad para maximizar el valor de la propiedad, mientras que los propietarios disfrutan remodelaciones impresionantes que redefinen el confort y el estilo. Cada transformación se realiza para inspirar, impresionar y ofrecer resultados duraderos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Gallery Section -->
+  <section id="projects" class="bg-white py-16">
+    <div class="container mx-auto px-4">
+      <h3 class="lang-en text-3xl font-bold mb-8 text-center">Our Projects</h3>
+      <h3 class="lang-es text-3xl font-bold mb-8 text-center hidden">Nuestros Proyectos</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Project image placeholders -->
+        <img src="https://source.unsplash.com/400x300/?kitchen,design" alt="Project 1" class="rounded-lg shadow-lg">
+        <img src="https://source.unsplash.com/400x300/?bathroom,remodel" alt="Project 2" class="rounded-lg shadow-lg">
+        <img src="https://source.unsplash.com/400x300/?living-room,renovation" alt="Project 3" class="rounded-lg shadow-lg">
+        <img src="https://source.unsplash.com/400x300/?home,interior" alt="Project 4" class="rounded-lg shadow-lg">
+        <img src="https://source.unsplash.com/400x300/?house,construction" alt="Project 5" class="rounded-lg shadow-lg">
+        <img src="https://source.unsplash.com/400x300/?garden,patio" alt="Project 6" class="rounded-lg shadow-lg">
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16">
+    <div class="container mx-auto px-4">
+      <h3 class="lang-en text-3xl font-bold mb-6 text-center">Start Your Project</h3>
+      <h3 class="lang-es text-3xl font-bold mb-6 text-center hidden">Comienza Tu Proyecto</h3>
+      <p class="lang-en text-center mb-8">Schedule a consultation by sending us a message below.</p>
+      <p class="lang-es text-center mb-8 hidden">Programa una consulta enviándonos un mensaje a continuación.</p>
+      <!-- Simple contact form using Formspree for free hosting -->
+      <form action="https://formspree.io/f/yourid" method="POST" class="max-w-xl mx-auto space-y-4 bg-white p-8 rounded-lg shadow">
+        <div>
+          <label class="block text-sm font-medium mb-1 lang-en" for="name">Name</label>
+          <label class="block text-sm font-medium mb-1 lang-es hidden" for="name">Nombre</label>
+          <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1 lang-en" for="email">Email<span class="text-red-500">*</span></label>
+          <label class="block text-sm font-medium mb-1 lang-es hidden" for="email">Correo electrónico<span class="text-red-500">*</span></label>
+          <input type="email" id="email" name="_replyto" class="w-full border border-gray-300 rounded px-3 py-2" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1 lang-en" for="phone">Phone</label>
+          <label class="block text-sm font-medium mb-1 lang-es hidden" for="phone">Teléfono</label>
+          <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded px-3 py-2">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1 lang-en" for="message">Project Details</label>
+          <label class="block text-sm font-medium mb-1 lang-es hidden" for="message">Detalles del Proyecto</label>
+          <textarea id="message" name="message" rows="4" class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+          <span class="lang-en">Send</span>
+          <span class="lang-es hidden">Enviar</span>
+        </button>
+      </form>
+      <!-- Contact info and hours -->
+      <div class="mt-12 text-center">
+        <p class="font-semibold">First Class Remodeling Texas</p>
+        <p>9206 Hilltop Crossing Drive, San Antonio, TX, USA</p>
+        <p><a href="tel:+12106065298" class="text-blue-600 hover:underline">+1 (210) 606-5298</a></p>
+        <div class="mt-4">
+          <p class="font-semibold lang-en">Hours:</p>
+          <p class="font-semibold lang-es hidden">Horario:</p>
+          <p>Mon – Fri: 9:00 AM – 5:00 PM</p>
+          <p class="lang-en">Sat – Sun: Closed</p>
+          <p class="lang-es hidden">Sáb – Dom: Cerrado</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-gray-200 py-6">
+    <div class="container mx-auto px-4 text-center text-sm">
+      <p class="lang-en">&copy; <span id="year"></span> First Class Remodeling. All rights reserved.</p>
+      <p class="lang-es hidden">&copy; <span id="year2"></span> First Class Remodeling. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Update copyright year automatically
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('year2').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
