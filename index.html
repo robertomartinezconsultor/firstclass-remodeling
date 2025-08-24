@@ -1,179 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="San Antonio remodeling for investors and homeowners: fix &amp; flip rehabs, kitchens, baths, permitting—on time and on budget. Bilingual. Free consultation.">
-  <title>First Class Remodeling | San Antonio Fix &amp; Flip + Luxury Remodels</title>
-  <!-- Tailwind CSS CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    /* Custom styles */
-    .transition {
-      transition: all 0.3s ease-in-out;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Page metadata tuned for investors and high-end homeowners -->
+  <title>First Class Remodeling | Luxury &amp; Investment Remodeling in San Antonio</title>
+  <meta name="description" content="San Antonio’s premier design‑build firm for luxury home remodels and investor‑focused rehabs. We specialise in custom kitchens, spa bathrooms, whole‑home transformations, vacation rental refreshes and BRRRR upgrades—delivering elevated design, transparent budgets and maximised ROI." />
+  <link rel="canonical" href="https://www.firstclassremodelingtx.com/" />
+  
+  <!-- Open Graph (social sharing) -->
+  <meta property="og:title" content="First Class Remodeling | Luxury &amp; Investment Remodeling in San Antonio" />
+  <meta property="og:description" content="Transforming San Antonio properties: from bespoke kitchens and spa bathrooms to investor rehabs that maximise ROI. Discover our award‑winning design‑build process." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.firstclassremodelingtx.com/" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1580638278902-5126f2077f4c?auto=format&amp;fit=crop&amp;q=80&amp;w=1200" />
+
+  <!-- Tailwind CSS CDN for rapid prototyping; in production, this should be compiled locally for performance. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- JSON‑LD schema for local business and services -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "First Class Remodeling",
+    "url": "https://www.firstclassremodelingtx.com/",
+    "telephone": "+1-210-555-0123",
+    "areaServed": "San Antonio, TX",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "San Antonio",
+      "addressRegion": "TX",
+      "addressCountry": "US"
+    },
+    "description": "Luxury remodels and investor rehabs delivering custom design, transparent budgets and maximised ROI.",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Luxury &amp; Investment Services",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Luxury Kitchen Remodels"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Spa Bathroom Remodels"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Whole‑Home Transformations"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Additions &amp; Outdoor Living"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fix &amp; Flip Rehabs"}},
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "BRRRR Upgrades"}}
+      ]
     }
-  </style>
-  <script>
-    // Toggle between English and Spanish
-    function toggleLang() {
-      const en = document.querySelectorAll('.lang-en');
-      const es = document.querySelectorAll('.lang-es');
-      en.forEach(el => el.classList.toggle('hidden'));
-      es.forEach(el => el.classList.toggle('hidden'));
-    }
+  }
   </script>
+
+  <style>
+    /* Simple utility to blur and lighten backgrounds for hero overlay */
+    .hero-overlay {
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.3));
+    }
+    /* Hide Spanish elements by default until toggled */
+    body.hidden-es .es { display: none; }
+    body.hidden-en .en { display: none; }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans leading-relaxed text-gray-800">
-  <header class="bg-white shadow">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <!-- Logo placeholder -->
-        <svg class="w-8 h-8 text-blue-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L11 2H13L12 0ZM8 1L7 3H9L8 1ZM16 1L15 3H17L16 1ZM4 2L3 4H5L4 2ZM20 2L19 4H21L20 2ZM2 4L1 6H3L2 4ZM22 4L21 6H23L22 4ZM0 7L2 9H22L24 7H0ZM1 10L0 12H24L23 10H1ZM3 13L2 15H22L21 13H3ZM5 16L4 18H20L19 16H5ZM7 19L6 21H18L17 19H7ZM9 22L8 24H16L15 22H9Z"/></svg>
-        <span class="text-xl font-bold">First Class Remodeling</span>
+<body class="bg-slate-50 text-slate-800 hidden-es" id="top">
+  <!-- Sticky contact bar for quick calls and language toggle -->
+  <div class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center text-sm">
+      <div class="font-medium tracking-wide">
+        <span class="en">San Antonio Luxury &amp; Investment Remodeling</span>
+        <span class="es">Remodelación de Lujo e Inversión en San Antonio</span>
       </div>
-      <button onclick="toggleLang()" class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">ES/EN</button>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="container mx-auto px-4 py-16 flex flex-col-reverse lg:flex-row items-center gap-8">
-    <div class="lg:w-1/2">
-      <h2 class="lang-en text-4xl font-extrabold mb-4">Flip Faster. Live Finer.</h2>
-      <h2 class="lang-es text-4xl font-extrabold mb-4 hidden">Vende Más Rápido. Vive Mejor.</h2>
-      <p class="lang-en text-xl mb-6">From fix-&amp;-flip rehabs to high-end kitchens and baths.</p>
-      <p class="lang-es text-xl mb-6 hidden">Desde rehabs para venta hasta cocinas y baños de alta gama.</p>
-      <a href="#contact" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
-        <span class="lang-en">Get a Free Consultation</span>
-        <span class="lang-es hidden">Solicita tu Consulta Gratis</span>
-      </a>
-    </div>
-    <div class="lg:w-1/2">
-      <img src="https://source.unsplash.com/800x600/?remodel,kitchen,construction" alt="Remodeling project" class="rounded-lg shadow-lg">
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="bg-white py-16">
-    <div class="container mx-auto px-4">
-      <h3 class="lang-en text-3xl font-bold mb-6">About Us</h3>
-      <h3 class="lang-es text-3xl font-bold mb-6 hidden">Sobre Nosotros</h3>
-      <p class="lang-en mb-4">First Class Remodeling combines craftsmanship with strategic planning to deliver exceptional results. Based in San Antonio, Texas, we serve two key audiences:</p>
-      <p class="lang-es mb-4 hidden">First Class Remodeling combina artesanía con planificación estratégica para ofrecer resultados excepcionales. Con sede en San Antonio, Texas, atendemos a dos públicos principales:</p>
-      <ul class="list-disc list-inside mb-4">
-        <li class="lang-en">Helping real estate investors maximize ROI on fix &amp; flip projects.</li>
-        <li class="lang-es hidden">Ayudando a los inversionistas inmobiliarios a maximizar su ROI en proyectos de compra y reventa.</li>
-        <li class="lang-en">Delivering luxury remodels for homeowners who want elegance, comfort, and lasting value.</li>
-        <li class="lang-es hidden">Entregando remodelaciones de lujo para propietarios que buscan elegancia, comodidad y valor duradero.</li>
-        <li class="lang-en">Managing the entire renovation process from design to completion.</li>
-        <li class="lang-es hidden">Gestionamos todo el proceso de renovación desde el diseño hasta la entrega.</li>
-      </ul>
-      <p class="lang-en">Our integrated team handles everything from concept to completion, blending industry expertise, premium materials, and cost‑efficient solutions to ensure projects are delivered on time, on budget, and beyond expectations.</p>
-      <p class="lang-es hidden">Nuestro equipo integral maneja todo desde el concepto hasta la entrega, combinando experiencia en la industria, materiales de primera calidad y soluciones rentables para garantizar que los proyectos se entreguen a tiempo, dentro del presupuesto y por encima de las expectativas.</p>
-    </div>
-  </section>
-
-  <!-- Trust & Transformation Section -->
-  <section class="py-16">
-    <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <h3 class="lang-en text-3xl font-bold mb-4">Quality &amp; Trust</h3>
-        <h3 class="lang-es text-3xl font-bold mb-4 hidden">Calidad y Confianza</h3>
-        <p class="lang-en mb-6">Investor-smart pricing, permit coordination, and weekly photo updates. Stretch budgets without cutting corners.</p>
-        <p class="lang-es mb-6 hidden">Precios inteligentes, permisos coordinados y avances semanales con fotos. Estira el presupuesto sin sacrificar calidad.</p>
-      </div>
-      <div>
-        <img src="https://source.unsplash.com/600x400/?architecture,blueprint" alt="Blueprint design" class="rounded-lg shadow-lg">
-      </div>
-      <div>
-        <img src="https://source.unsplash.com/600x400/?modern,kitchen" alt="Modern kitchen" class="rounded-lg shadow-lg">
-      </div>
-      <div>
-        <h3 class="lang-en text-3xl font-bold mb-4">Transforming Spaces</h3>
-        <h3 class="lang-es text-3xl font-bold mb-4 hidden">Transformando Espacios</h3>
-        <p class="lang-en">From outdated to extraordinary, we transform every space into a showcase. Our design and construction expertise adds lasting value and unmatched comfort, whether you're flipping a property or reinventing your home.</p>
-        <p class="lang-es hidden">De obsoleto a extraordinario, transformamos cada espacio en un escaparate. Nuestra experiencia en diseño y construcción agrega valor duradero y comodidad inigualable, ya sea que estés revendiendo una propiedad o reinventando tu hogar.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Gallery Section -->
-  <section id="projects" class="bg-white py-16">
-    <div class="container mx-auto px-4">
-      <h3 class="lang-en text-3xl font-bold mb-8 text-center">Our Projects</h3>
-      <h3 class="lang-es text-3xl font-bold mb-8 text-center hidden">Nuestros Proyectos</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Project image placeholders -->
-        <img src="https://source.unsplash.com/400x300/?kitchen,design" alt="Project 1" class="rounded-lg shadow-lg">
-        <img src="https://source.unsplash.com/400x300/?bathroom,remodel" alt="Project 2" class="rounded-lg shadow-lg">
-        <img src="https://source.unsplash.com/400x300/?living-room,renovation" alt="Project 3" class="rounded-lg shadow-lg">
-        <img src="https://source.unsplash.com/400x300/?home,interior" alt="Project 4" class="rounded-lg shadow-lg">
-        <img src="https://source.unsplash.com/400x300/?house,construction" alt="Project 5" class="rounded-lg shadow-lg">
-        <img src="https://source.unsplash.com/400x300/?garden,patio" alt="Project 6" class="rounded-lg shadow-lg">
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-16">
-    <div class="container mx-auto px-4">
-      <h3 class="lang-en text-3xl font-bold mb-6 text-center">Start Your Project</h3>
-      <h3 class="lang-es text-3xl font-bold mb-6 text-center hidden">Comienza Tu Proyecto</h3>
-      <p class="lang-en text-center mb-8">Schedule a consultation by sending us a message below.</p>
-      <p class="lang-es text-center mb-8 hidden">Programa una consulta enviándonos un mensaje a continuación.</p>
-      <!-- Simple contact form using Formspree for free hosting -->
-      <form action="https://formspree.io/f/yourid" method="POST" class="max-w-xl mx-auto space-y-4 bg-white p-8 rounded-lg shadow">
-        <div>
-          <label class="block text-sm font-medium mb-1 lang-en" for="name">Name</label>
-          <label class="block text-sm font-medium mb-1 lang-es hidden" for="name">Nombre</label>
-          <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded px-3 py-2" required>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1 lang-en" for="email">Email<span class="text-red-500">*</span></label>
-          <label class="block text-sm font-medium mb-1 lang-es hidden" for="email">Correo electrónico<span class="text-red-500">*</span></label>
-          <input type="email" id="email" name="_replyto" class="w-full border border-gray-300 rounded px-3 py-2" required>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1 lang-en" for="phone">Phone</label>
-          <label class="block text-sm font-medium mb-1 lang-es hidden" for="phone">Teléfono</label>
-          <input type="tel" id="phone" name="phone" class="w-full border border-gray-300 rounded px-3 py-2">
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1 lang-en" for="message">Project Details</label>
-          <label class="block text-sm font-medium mb-1 lang-es hidden" for="message">Detalles del Proyecto</label>
-          <textarea id="message" name="message" rows="4" class="w-full border border-gray-300 rounded px-3 py-2"></textarea>
-        </div>
-        <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
-          <span class="lang-en">Send</span>
-          <span class="lang-es hidden">Enviar</span>
+      <div class="flex gap-3 items-center">
+        <a href="tel:+12105550123" class="px-3 py-1.5 rounded-full bg-emerald-600 text-white font-semibold shadow hover:bg-emerald-700">
+          <span class="en">Call Now</span><span class="es">Llamar Ahora</span> • (210) 555‑0123
+        </a>
+        <button id="langToggle" class="px-3 py-1.5 rounded-full border border-slate-300 hover:border-slate-400">
+          ES / EN
         </button>
-      </form>
-      <!-- Contact info and hours -->
-      <div class="mt-12 text-center">
-        <p class="font-semibold">First Class Remodeling Texas</p>
-        <p>9206 Hilltop Crossing Drive, San Antonio, TX, USA</p>
-        <p><a href="tel:+12106065298" class="text-blue-600 hover:underline">+1 (210) 606-5298</a></p>
-        <div class="mt-4">
-          <p class="font-semibold lang-en">Hours:</p>
-          <p class="font-semibold lang-es hidden">Horario:</p>
-          <p>Mon – Fri: 9:00 AM – 5:00 PM</p>
-          <p class="lang-en">Sat – Sun: Closed</p>
-          <p class="lang-es hidden">Sáb – Dom: Cerrado</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="relative">
+    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&amp;fit=crop&amp;q=80&amp;w=1600" alt="Luxury living room with modern furniture and natural stone accents" class="w-full h-[65vh] md:h-[75vh] object-cover" />
+    <div class="absolute inset-0 hero-overlay flex items-end">
+      <div class="max-w-7xl mx-auto px-4 pb-14 md:pb-20">
+        <h1 class="text-white text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow">
+          <span class="en">Transforming Homes. Maximising ROI.</span>
+          <span class="es">Transformamos Hogares. Maximizamos ROI.</span>
+        </h1>
+        <p class="text-slate-200 text-lg sm:text-xl max-w-xl mb-6">
+          <span class="en">We design and build luxury remodels and investor rehabs—custom kitchens, spa baths, whole‑home transformations &amp; BRRRR upgrades—that elevate lifestyles and deliver exceptional returns.</span>
+          <span class="es">Diseñamos y ejecutamos remodelaciones de lujo y rehabilitaciones para inversores—cocinas a medida, baños tipo spa, transformaciones integrales y mejoras BRRRR—que elevan tu estilo de vida y ofrecen retornos extraordinarios.</span>
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#contact" class="px-6 py-3 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+            <span class="en">Schedule a Private Consultation</span><span class="es">Agendar una Consulta Privada</span>
+          </a>
+          <a href="#portfolio" class="px-6 py-3 rounded-full bg-white/90 text-slate-900 font-semibold hover:bg-white">
+            <span class="en">Explore Our Work</span><span class="es">Explora Nuestro Trabajo</span>
+          </a>
+          <a href="#roi" class="px-6 py-3 rounded-full border border-emerald-600 text-emerald-600 font-semibold hover:bg-emerald-50">
+            <span class="en">Calculate Your ROI</span><span class="es">Calcula tu ROI</span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="bg-gray-200 py-6">
-    <div class="container mx-auto px-4 text-center text-sm">
-      <p class="lang-en">&copy; <span id="year"></span> First Class Remodeling. All rights reserved.</p>
-      <p class="lang-es hidden">&copy; <span id="year2"></span> First Class Remodeling. Todos los derechos reservados.</p>
+  <!-- TRUST & BRAND PROMISE BAR -->
+  <section class="bg-white py-6 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-4 text-center text-slate-600 text-sm">
+      <div>
+        <span class="en">Design‑Led Expertise • White‑Glove Execution • Transparent Pricing</span>
+        <span class="es">Diseño Experto • Ejecución Premium • Precios Transparentes</span>
+      </div>
+      <div class="flex justify-center gap-6 opacity-80">
+        <img src="https://dummyimage.com/100x28/ddd/aaa&text=Houzz+5★" alt="Houzz award" class="h-6" />
+        <img src="https://dummyimage.com/100x28/ddd/aaa&text=BBB+A+Rating" alt="BBB" class="h-6" />
+        <img src="https://dummyimage.com/100x28/ddd/aaa&text=Top+Builder" alt="Top builder" class="h-6" />
+      </div>
+      <div>
+        <span class="en">Investor‑Smart Budgets • Weekly Photo Updates • Post‑Project Warranty</span>
+        <span class="es">Presupuestos Inteligentes • Reportes Semanales • Garantía Post‑Proyecto</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section id="services" class="py-16 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-8">
+        <span class="en">Our Signature Services</span>
+        <span class="es">Nuestros Servicios Emblemáticos</span>
+      </h2>
+      <div class="grid lg:grid-cols-3 gap-8 text-slate-700">
+        <!-- Luxury services column -->
+        <div class="space-y-8">
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Luxury Kitchen Remodels</span><span class="es">Cocinas de Lujo a Medida</span>
+            </h3>
+            <p>
+              <span class="en">Custom cabinetry, natural stone, integrated appliances and smart layouts. Crafted for culinary art and resale value.</span>
+              <span class="es">Carpintería a medida, piedra natural, electrodomésticos integrados y distribuciones inteligentes. Pensadas para el arte culinario y el valor de reventa.</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Spa Bathroom Retreats</span><span class="es">Baños Tipo Spa</span>
+            </h3>
+            <p>
+              <span class="en">Large format porcelain, stone slabs, soaking tubs, steam showers and heated floors. Turn your bath into a sanctuary.</span>
+              <span class="es">Porcelanato gran formato, placas de piedra, tinas de inmersión, duchas de vapor y pisos radiantes. Convierte tu baño en un santuario.</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Whole‑Home Transformations</span><span class="es">Transformaciones Integrales</span>
+            </h3>
+            <p>
+              <span class="en">Architectural reconfiguration, additions, artisan plaster, and fine finishes for cohesive luxury throughout your home.</span>
+              <span class="es">Reconfiguración arquitectónica, ampliaciones, estucos artesanales y acabados finos para un lujo coherente en toda tu casa.</span>
+            </p>
+          </div>
+        </div>
+        <!-- Investor services column -->
+        <div class="space-y-8">
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Fix &amp; Flip Rehabs</span><span class="es">Rehabilitaciones Fix &amp; Flip</span>
+            </h3>
+            <p>
+              <span class="en">Strategic upgrades, materials and finishes that maximise resale value while controlling costs and timelines.</span>
+              <span class="es">Mejoras estratégicas, materiales y acabados que maximizan el valor de reventa controlando costos y tiempos.</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">BRRRR Upgrades</span><span class="es">Mejoras BRRRR</span>
+            </h3>
+            <p>
+              <span class="en">Renovations optimised for Buy‑Rehab‑Rent‑Refinance‑Repeat strategies. Balance capex with cash flow and long‑term ROI.</span>
+              <span class="es">Reformas optimizadas para la estrategia Comprar‑Rehabilitar‑Alquilar‑Refinanciar‑Repetir. Equilibra gastos de capital con flujo de caja y ROI a largo plazo.</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Vacation Rental Refresh</span><span class="es">Actualización de Casas Vacacionales</span>
+            </h3>
+            <p>
+              <span class="en">Quick turn remodels tailored for short‑term rentals: durable finishes, smart furnishings and memorable design touches.</span>
+              <span class="es">Reformas rápidas para alquiler vacacional: acabados duraderos, mobiliario inteligente y detalles de diseño memorables.</span>
+            </p>
+          </div>
+        </div>
+        <!-- Additional services column -->
+        <div class="space-y-8">
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Additions &amp; Outdoor Living</span><span class="es">Ampliaciones &amp; Exteriores</span>
+            </h3>
+            <p>
+              <span class="en">Seamless additions, outdoor kitchens, pergolas, pools and fire features that extend your lifestyle beyond walls.</span>
+              <span class="es">Ampliaciones integradas, cocinas exteriores, pérgolas, albercas y fogateros que extienden tu estilo de vida al aire libre.</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Smart Home &amp; Energy Upgrades</span><span class="es">Integración Smart Home &amp; Energía</span>
+            </h3>
+            <p>
+              <span class="en">Lighting, AV, climate and security systems fully integrated. Energy efficient windows, insulation and HVAC for sustainability.</span>
+              <span class="es">Iluminación, audio/video, clima y seguridad integrados. Ventanas eficientes, aislamiento y HVAC para la sustentabilidad.</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl mb-2">
+              <span class="en">Design Consultation &amp; ROI Analysis</span><span class="es">Consultoría de Diseño &amp; Análisis de ROI</span>
+            </h3>
+            <p>
+              <span class="en">Not sure where to start? Our team provides personalised design concepts and ROI analysis to guide your decisions.</span>
+              <span class="es">¿No sabes por dónde empezar? Nuestro equipo te ofrece conceptos de diseño personalizados y análisis de ROI para orientar tus decisiones.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI SECTION -->
+  <section id="roi" class="py-16 bg-white border-t border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="md:flex md:items-center md:justify-between">
+        <div class="md:w-1/2">
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-4">
+            <span class="en">Maximise Your Investment Return</span>
+            <span class="es">Maximiza Tu Retorno de Inversión</span>
+          </h2>
+          <p class="text-slate-700 mb-6">
+            <span class="en">Discover the upgrades that offer the highest ROI in San Antonio’s competitive market. Our experts leverage market data and investor experience to help you allocate budgets effectively—often yielding 20–50% gains.</span>
+            <span class="es">Descubre las mejoras que ofrecen el mayor ROI en el competitivo mercado de San Antonio. Nuestros expertos utilizan datos de mercado y experiencia inversora para ayudarte a asignar presupuestos eficazmente—con retornos del 20 al 50%.</span>
+          </p>
+          <a href="#contact" class="inline-block px-6 py-3 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+            <span class="en">Talk to an Investor Specialist</span><span class="es">Hablar con un Especialista en Inversión</span>
+          </a>
+        </div>
+        <div class="md:w-1/2 mt-8 md:mt-0">
+          <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&amp;fit=crop&amp;q=80&amp;w=1200" alt="Financial charts with house blueprint and calculator" class="rounded-2xl shadow-md" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO & CASE STUDIES -->
+  <section id="portfolio" class="py-16 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-8">
+        <span class="en">Portfolio &amp; Case Studies</span>
+        <span class="es">Portafolio &amp; Casos de Éxito</span>
+      </h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Case study 1 -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Luxury kitchen remodel" class="w-full h-40 object-cover" />
+          <div class="p-4">
+            <h3 class="font-semibold text-xl mb-2">
+              <span class="en">Investor Flip in Alamo Heights</span><span class="es">Flip para Inversor en Alamo Heights</span>
+            </h3>
+            <p class="text-sm text-slate-700">
+              <span class="en">We transformed a dated 1970s home into a modern showpiece with a 42% ROI for our investor client.</span>
+              <span class="es">Transformamos una casa anticuada de los 70s en una joya moderna con un ROI del 42% para nuestro cliente inversor.</span>
+            </p>
+            <a href="#contact" class="mt-3 inline-block text-emerald-600 font-semibold hover:underline">
+              <span class="en">See details</span><span class="es">Ver detalles</span>
+            </a>
+          </div>
+        </div>
+        <!-- Case study 2 -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Spa bathroom remodel" class="w-full h-40 object-cover" />
+          <div class="p-4">
+            <h3 class="font-semibold text-xl mb-2">
+              <span class="en">Luxury Bathroom Sanctuary</span><span class="es">Sanctuario de Baño de Lujo</span>
+            </h3>
+            <p class="text-sm text-slate-700">
+              <span class="en">A complete spa retreat featuring marble slabs, steam shower and radiant floors. Client satisfaction: priceless.</span>
+              <span class="es">Un retiro tipo spa con placas de mármol, ducha de vapor y pisos radiantes. Satisfacción del cliente: invaluable.</span>
+            </p>
+            <a href="#contact" class="mt-3 inline-block text-emerald-600 font-semibold hover:underline">
+              <span class="en">View gallery</span><span class="es">Ver galería</span>
+            </a>
+          </div>
+        </div>
+        <!-- Case study 3 -->
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1527030280862-64139fba04ca?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Outdoor living remodel" class="w-full h-40 object-cover" />
+          <div class="p-4">
+            <h3 class="font-semibold text-xl mb-2">
+              <span class="en">Outdoor Oasis in The Dominion</span><span class="es">Oasis Exterior en The Dominion</span>
+            </h3>
+            <p class="text-sm text-slate-700">
+              <span class="en">We added a pool, outdoor kitchen and pergola, increasing property value by $150k and rental potential.</span>
+              <span class="es">Añadimos una alberca, cocina exterior y pérgola, incrementando el valor de la propiedad en 150 k y su potencial de alquiler.</span>
+            </p>
+            <a href="#contact" class="mt-3 inline-block text-emerald-600 font-semibold hover:underline">
+              <span class="en">Learn more</span><span class="es">Saber más</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS SECTION -->
+  <section id="process" class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-8">
+        <span class="en">Our Proven Process</span>
+        <span class="es">Nuestro Proceso Probado</span>
+      </h2>
+      <ol class="grid md:grid-cols-3 gap-6 text-slate-700">
+        <li class="bg-slate-50 rounded-3xl p-6 border border-slate-200">
+          <h3 class="font-semibold mb-2">
+            <span class="en">1) Vision &amp; Goals Session</span>
+            <span class="es">1) Sesión de Visión &amp; Objetivos</span>
+          </h3>
+          <p>
+            <span class="en">We dive into your goals—whether it’s lifestyle enhancement or investment returns—and define scope, style and budget.</span>
+            <span class="es">Profundizamos en tus objetivos—ya sea mejorar tu estilo de vida o obtener retornos de inversión—y definimos alcance, estilo y presupuesto.</span>
+          </p>
+        </li>
+        <li class="bg-slate-50 rounded-3xl p-6 border border-slate-200">
+          <h3 class="font-semibold mb-2">
+            <span class="en">2) Concept &amp; Budget Alignment</span>
+            <span class="es">2) Concepto &amp; Alineación de Presupuesto</span>
+          </h3>
+          <p>
+            <span class="en">Our designers craft mood boards, material palettes and layouts, while our estimators prepare transparent budgets and ROI projections.</span>
+            <span class="es">Nuestros diseñadores crean moodboards, paletas de materiales y planos, mientras nuestros estimadores preparan presupuestos transparentes y proyecciones de ROI.</span>
+          </p>
+        </li>
+        <li class="bg-slate-50 rounded-3xl p-6 border border-slate-200">
+          <h3 class="font-semibold mb-2">
+            <span class="en">3) Design Development &amp; Permits</span>
+            <span class="es">3) Desarrollo de Diseño &amp; Permisos</span>
+          </h3>
+          <p>
+            <span class="en">Detailed drawings, permit coordination and procurement of materials and trades to ensure on‑time execution.</span>
+            <span class="es">Planos detallados, coordinación de permisos y aprovisionamiento de materiales y oficios para asegurar una ejecución puntual.</span>
+          </p>
+        </li>
+        <li class="bg-slate-50 rounded-3xl p-6 border border-slate-200">
+          <h3 class="font-semibold mb-2">
+            <span class="en">4) Build &amp; Protect</span>
+            <span class="es">4) Construcción &amp; Protección</span>
+          </h3>
+          <p>
+            <span class="en">Professional craftspeople bring the vision to life while protecting your property. Weekly photo updates keep you informed.</span>
+            <span class="es">Artesanos profesionales hacen realidad la visión mientras protegen tu propiedad. Actualizaciones semanales con fotos te mantienen informado.</span>
+          </p>
+        </li>
+        <li class="bg-slate-50 rounded-3xl p-6 border border-slate-200">
+          <h3 class="font-semibold mb-2">
+            <span class="en">5) Reveal &amp; ROI Realisation</span>
+            <span class="es">5) Entrega &amp; Realización de ROI</span>
+          </h3>
+          <p>
+            <span class="en">We conduct a meticulous walkthrough, handle punchlist items and prepare your property for enjoyment or market return.</span>
+            <span class="es">Realizamos un recorrido minucioso, atendemos los pendientes y preparamos tu propiedad para disfrutarla o ponerla en el mercado.</span>
+          </p>
+        </li>
+        <li class="bg-slate-50 rounded-3xl p-6 border border-slate-200">
+          <h3 class="font-semibold mb-2">
+            <span class="en">6) After‑Care &amp; Warranty</span>
+            <span class="es">6) Cuidado Posterior &amp; Garantía</span>
+          </h3>
+          <p>
+            <span class="en">Enjoy peace of mind with our workmanship warranty and optional maintenance services.</span>
+            <span class="es">Disfruta de tranquilidad con nuestra garantía de mano de obra y servicios de mantenimiento opcionales.</span>
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-8">
+        <span class="en">What Clients Say</span><span class="es">Lo que Dicen Nuestros Clientes</span>
+      </h2>
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+        <div id="testimonial" class="text-lg italic text-slate-700">
+          “We doubled our investment thanks to their strategic upgrades and clear communication.” — J.D., Investor
+        </div>
+        <div class="mt-2 text-sm text-slate-500">
+          <span class="en">— J.D., Investor</span><span class="es">— J.D., Inversor</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD MAGNET SECTION -->
+  <section class="py-16 bg-emerald-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h3 class="text-2xl font-extrabold mb-2">
+          <span class="en">Free Guide: Top 10 Upgrades for Maximum ROI</span>
+          <span class="es">Guía Gratis: Top 10 Mejoras para Máximo ROI</span>
+        </h3>
+        <p class="text-slate-200 mb-4">
+          <span class="en">Learn which upgrades deliver the best returns in San Antonio’s market—plus insider tips and budget guidance.</span>
+          <span class="es">Conoce qué mejoras ofrecen los mejores retornos en el mercado de San Antonio—más consejos y orientación de presupuesto.</span>
+        </p>
+      </div>
+      <form action="https://formspree.io/f/yourid" method="POST" class="bg-white/10 p-4 rounded-3xl grid md:grid-cols-3 gap-4">
+        <input type="email" name="email" required placeholder="Email" class="col-span-2 px-4 py-3 rounded-2xl bg-white text-slate-900" />
+        <button type="submit" class="px-4 py-3 rounded-2xl bg-white text-emerald-700 font-semibold hover:bg-emerald-100">
+          <span class="en">Get the Guide</span><span class="es">Obtener la Guía</span>
+        </button>
+        <input type="hidden" name="source" value="lead-magnet" />
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-10">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-4">
+          <span class="en">Book Your Consultation</span><span class="es">Agenda tu Consulta</span>
+        </h2>
+        <p class="text-slate-700 mb-4">
+          <span class="en">Tell us about your project—whether it’s a luxury remodel or investment rehab. Our team responds within one business day.</span>
+          <span class="es">Cuéntanos sobre tu proyecto—ya sea una remodelación de lujo o una rehabilitación de inversión. Nuestro equipo responde en un día hábil.</span>
+        </p>
+        <ul class="text-slate-600 text-sm space-y-1">
+          <li>San Antonio, TX</li>
+          <li><a href="tel:+12105550123" class="underline">(210) 555‑0123</a></li>
+          <li><a href="mailto:hello@firstclassremodelingtx.com" class="underline">hello@firstclassremodelingtx.com</a></li>
+        </ul>
+      </div>
+      <form action="https://formspree.io/f/yourid" method="POST" class="bg-slate-50 rounded-3xl border border-slate-200 p-6 shadow-sm">
+        <div class="grid gap-4">
+          <input type="text" name="name" placeholder="Name / Nombre" required class="px-4 py-3 rounded-2xl border border-slate-300" />
+          <input type="email" name="email" placeholder="Email" required class="px-4 py-3 rounded-2xl border border-slate-300" />
+          <input type="tel" name="phone" placeholder="Phone / Teléfono" required class="px-4 py-3 rounded-2xl border border-slate-300" />
+          <input type="text" name="address" placeholder="Property address (optional) / Dirección (opcional)" class="px-4 py-3 rounded-2xl border border-slate-300" />
+          <select name="project_type" class="px-4 py-3 rounded-2xl border border-slate-300">
+            <option value="" disabled selected class="text-slate-400">Project Type / Tipo de proyecto</option>
+            <option value="luxury-kitchen">Luxury Kitchen</option>
+            <option value="spa-bathroom">Spa Bathroom</option>
+            <option value="whole-home">Whole-Home</option>
+            <option value="addition">Addition/Outdoor</option>
+            <option value="fix-flip">Fix &amp; Flip Rehab</option>
+            <option value="brrrr">BRRRR Upgrade</option>
+            <option value="vacation-rental">Vacation Rental Refresh</option>
+            <option value="other">Other</option>
+          </select>
+          <textarea name="details" rows="5" placeholder="Project details (rooms, style, timeline) / Detalles del proyecto" class="px-4 py-3 rounded-2xl border border-slate-300"></textarea>
+          <input type="hidden" name="utm_source" id="utm_source" />
+          <input type="hidden" name="utm_campaign" id="utm_campaign" />
+          <input type="hidden" name="utm_medium" id="utm_medium" />
+          <button type="submit" class="px-5 py-3 rounded-2xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+            <span class="en">Request Consultation</span><span class="es">Solicitar Consulta</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FLOATING CTA BUTTONS -->
+  <div class="fixed right-4 bottom-4 flex flex-col gap-3 z-50">
+    <a href="tel:+12105550123" class="px-4 py-3 rounded-full bg-emerald-600 text-white font-semibold shadow-lg hover:bg-emerald-700">
+      <span class="en">Call Now</span><span class="es">Llamar Ahora</span> • (210) 555‑0123
+    </a>
+    <a href="https://wa.me/12105550123" class="px-4 py-3 rounded-full bg-green-600 text-white font-semibold shadow-lg hover:bg-green-700">
+      WhatsApp
+    </a>
+  </div>
+
+  <footer class="py-10 bg-slate-900 text-slate-300 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>&copy; <span id="year"></span> First Class Remodeling · San Antonio, TX</div>
+      <div class="flex gap-4">
+        <a href="#top" class="underline"><span class="en">Back to top</span><span class="es">Volver arriba</span></a>
+      </div>
     </div>
   </footer>
 
   <script>
-    // Update copyright year automatically
+    // Toggle language
+    const langBtn = document.getElementById('langToggle');
+    langBtn?.addEventListener('click', () => {
+      document.body.classList.toggle('hidden-es');
+      document.body.classList.toggle('hidden-en');
+    });
+    // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('year2').textContent = new Date().getFullYear();
+    // Capture UTM parameters for contact form
+    const params = new URLSearchParams(window.location.search);
+    ['utm_source','utm_campaign','utm_medium'].forEach(key => {
+      const val = params.get(key);
+      if (val) document.getElementById(key).value = val;
+    });
+    // Testimonial rotator
+    const testimonials = [
+      {
+        en: "\"We doubled our investment thanks to their strategic upgrades and clear communication.\" — J.D., Investor",
+        es: "\"Duplicamos nuestra inversión gracias a sus mejoras estratégicas y comunicación clara.\" — J.D., Inversor"
+      },
+      {
+        en: "\"Their design‑led approach turned our dated kitchen into a chef’s dream.\" — L.M., Homeowner",
+        es: "\"Su enfoque basado en el diseño convirtió nuestra cocina anticuada en el sueño de un chef.\" — L.M., Propietario"
+      },
+      {
+        en: "\"Reliable timelines and transparent budgets. Highly recommend for BRRRR projects.\" — S.R., Investor",
+        es: "\"Cronogramas confiables y presupuestos transparentes. Altamente recomendados para proyectos BRRRR.\" — S.R., Inversor"
+      }
+    ];
+    let tIndex = 0;
+    setInterval(() => {
+      tIndex = (tIndex + 1) % testimonials.length;
+      const testEl = document.getElementById('testimonial');
+      // fade effect
+      testEl.style.opacity = 0;
+      setTimeout(() => {
+        const isHiddenEs = document.body.classList.contains('hidden-es');
+        if (isHiddenEs) {
+          testEl.textContent = testimonials[tIndex].en;
+        } else {
+          testEl.textContent = testimonials[tIndex].es;
+        }
+        testEl.style.opacity = 1;
+      }, 200);
+    }, 6000);
   </script>
 </body>
 </html>
