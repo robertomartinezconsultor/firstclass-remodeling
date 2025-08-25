@@ -15,20 +15,21 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .nav-link { @apply text-slate-600 hover:text-slate-900 px-3 py-2 font-medium; }
-    /* Use the secondary colour to denote the active navigation link */
+    /* Use the secondary color to denote the active navigation link */
     .nav-link-active { @apply font-semibold; color: var(--color-secondary); }
     .project-card:hover .project-overlay { opacity: 1; }
     /*
-     * Global colour variables: defined here for consistency across pages.
+     * Global color variables: defined here for consistency across pages.
      * Deep navy conveys trust and reliability; teal evokes growth and prosperity;
      * gold adds a subtle sense of quality and aspiration【662585276928544†L40-L43】【662585276928544†L300-L325】. See index.html for full palette.
      */
     :root {
+      /* Unified color palette across the site: deep navy conveys trust and security【662585276928544†L40-L43】, vibrant teal reflects growth and prosperity, and warm gold adds a subtle sense of quality and aspiration【662585276928544†L300-L325】. */
       --color-primary: #0f172a;
-      --color-secondary: #006d5b;
-      --color-accent: #c9a341;
-      --color-bg: #f7f7fb;
-      --color-text: #334155;
+      --color-secondary: #0a9396;
+      --color-accent: #c59e47;
+      --color-bg: #f8fafc;
+      --color-text: #1f2937;
     }
   </style>
 </head>
@@ -37,7 +38,8 @@
   <div class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-slate-200" style="background-color: var(--color-primary); color: #ffffff;">
     <div class="mx-auto max-w-7xl px-4 py-2 flex justify-between items-center text-sm">
       <div class="font-medium">
-        <span class="en">Quality Remodeling &amp; Investments • San Antonio</span>
+        <!-- Updated tagline for consistency across pages -->
+        <span class="en">San Antonio Remodeling &amp; Investments</span>
         <span class="es">Remodelación y Inversiones en San Antonio</span>
       </div>
       <div class="flex items-center gap-3">
@@ -54,7 +56,7 @@
     <div class="mx-auto max-w-7xl px-4">
       <div class="flex justify-between items-center py-4">
         <a href="index.html" class="flex items-center">
-          <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-10 md:h-12 w-auto mr-2">
+          <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-12 md:h-16 w-auto mr-2">
           <span class="text-xl font-extrabold tracking-wide text-slate-900">First Class</span>
         </a>
         <div class="flex space-x-4">

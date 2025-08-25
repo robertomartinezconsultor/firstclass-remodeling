@@ -22,6 +22,19 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Custom color palette defined using CSS variables for consistent branding.
+       Primary (trustworthy navy), Secondary (teal for growth), Accent (subtle gold),
+       Background and text colors. These variables mirror those used on the home page. -->
+  <style>
+    :root {
+      --color-primary: #0f172a; /* deep navy conveys trust and professionalism */
+      --color-secondary: #0d9488; /* teal/emerald evokes growth and prosperity */
+      --color-accent: #c59e47;    /* gold accent for quality and warmth */
+      --color-background: #f8fafc; /* light background for contrast */
+      --color-text: #1e293b;      /* dark slate for legibility */
+    }
+  </style>
+
   <!-- JSON‑LD schema for service offerings -->
   <script type="application/ld+json">
   {
@@ -35,7 +48,7 @@
       {"@type": "ListItem", "position": 4, "item": {"@type": "Service", "name": "Outdoor Living", "description": "Pools, outdoor kitchens, patios, pergolas and landscaping."}},
       {"@type": "ListItem", "position": 5, "item": {"@type": "Service", "name": "Smart Home Integration", "description": "Lighting control, AV, climate and security systems seamlessly integrated."}},
       {"@type": "ListItem", "position": 6, "item": {"@type": "Service", "name": "New Builds", "description": "Ground‑up custom homes designed and built with precision and artistry."}},
-      {"@type": "ListItem", "position": 7, "item": {"@type": "Service", "name": "Fix &amp; Flip", "description": "Investor‑focused rehabs to maximise resale value and return on investment."}},
+      {"@type": "ListItem", "position": 7, "item": {"@type": "Service", "name": "Fix &amp; Flip", "description": "Investor‑focused rehabs to maximize resale value and return on investment."}},
       {"@type": "ListItem", "position": 8, "item": {"@type": "Service", "name": "BRRRR Upgrades", "description": "Strategic improvements for buy‑rehab‑rent‑refinance‑repeat portfolios."}},
       {"@type": "ListItem", "position": 9, "item": {"@type": "Service", "name": "Vacation Rental Refreshes", "description": "Design and renovation solutions to elevate short‑term rental appeal."}}
     ]
@@ -45,21 +58,22 @@
   <style>
     /* Minor custom styles for navigation */
     .nav-link { @apply text-slate-600 hover:text-slate-900 px-3 py-2 font-medium; }
-    /* Highlight the current page using our secondary colour */
+    /* Highlight the current page using our secondary color */
     .nav-link-active { @apply font-semibold; color: var(--color-secondary); }
 
     /*
-     * Colour palette derived from colour psychology: deep navy for trust,
+     * Color palette derived from color psychology: deep navy for trust,
      * teal for growth and prosperity, and gold for subtle highlights. These
      * variables are reused across the site for consistency. See index.html for
      * details on our choices.
      */
     :root {
+      /* Unified color palette across the site: deep navy conveys trust and security,【662585276928544†L40-L43】 vibrant teal reflects growth and prosperity, and warm gold adds a subtle sense of quality and aspiration【662585276928544†L300-L325】. */
       --color-primary: #0f172a;
-      --color-secondary: #006d5b;
-      --color-accent: #c9a341;
-      --color-bg: #f7f7fb;
-      --color-text: #334155;
+      --color-secondary: #0a9396;
+      --color-accent: #c59e47;
+      --color-bg: #f8fafc;
+      --color-text: #1f2937;
     }
   </style>
 </head>
@@ -68,7 +82,8 @@
   <div class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-slate-200" style="background-color: var(--color-primary); color: #ffffff;">
     <div class="mx-auto max-w-7xl px-4 py-2 flex justify-between items-center text-sm">
       <div class="font-medium">
-        <span class="en">Quality Remodeling &amp; Investments • San Antonio</span>
+        <!-- Updated tagline emphasises location and services without British spelling -->
+        <span class="en">San Antonio Remodeling &amp; Investments</span>
         <span class="es">Remodelación y Inversiones en San Antonio</span>
       </div>
       <div class="flex items-center gap-3">
@@ -86,7 +101,7 @@
       <div class="flex justify-between items-center py-4">
         <!-- Logo -->
         <a href="index.html" class="flex items-center">
-          <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-10 md:h-12 w-auto mr-2">
+          <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-12 md:h-16 w-auto mr-2">
           <span class="text-xl font-extrabold tracking-wide text-slate-900">First Class</span>
         </a>
         <!-- Menu -->
@@ -104,7 +119,7 @@
 
   <!-- Hero Section -->
   <header class="relative bg-gray-900">
-    <img src="https://images.unsplash.com/photo-1486693122907-9907e4b679ae?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Remodel hero" class="w-full h-64 md:h-96 object-cover">
+    <img src="https://images.unsplash.com/photo-1486693122907-9907e4b679ae?auto=format&amp;fit=crop&amp;w=1600&amp;q=80" alt="Remodel hero" class="w-full h-64 md:h-96 object-cover" loading="lazy">
     <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-gray-900/40"></div>
     <div class="absolute inset-0 flex items-end">
       <div class="mx-auto max-w-7xl w-full px-4 pb-12 md:pb-16 text-white">
@@ -136,7 +151,7 @@
             <span class="es">Cocinas a Medida</span>
           </h3>
           <p class="mt-2">
-            <span class="en">Custom cabinetry, integrated appliances, natural stone and personalised layouts for your gourmet dreams.</span>
+            <span class="en">Custom cabinetry, integrated appliances, natural stone and personalized layouts for your gourmet dreams.</span>
             <span class="es">Carpintería a medida, electrodomésticos integrados, piedra natural y distribuciones personalizadas para tu cocina ideal.</span>
           </p>
         </div>
@@ -196,12 +211,12 @@
         <!-- Fix & Flip -->
         <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
           <h3 class="font-bold text-xl"><span class="en">Fix &amp; Flip</span><span class="es">Fix &amp; Flip</span></h3>
-          <p class="mt-2"><span class="en">Targeted upgrades to maximise sale price and speed, delivering high ROI on your next flip.</span><span class="es">Mejoras enfocadas para maximizar el precio de venta y la velocidad, obteniendo un alto ROI en tu próximo flip.</span></p>
+          <p class="mt-2"><span class="en">Targeted upgrades to maximize sale price and speed, delivering high ROI on your next flip.</span><span class="es">Mejoras enfocadas para maximizar el precio de venta y la velocidad, obteniendo un alto ROI en tu próximo flip.</span></p>
         </div>
         <!-- BRRRR Upgrades -->
         <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
           <h3 class="font-bold text-xl"><span class="en">BRRRR Upgrades</span><span class="es">Mejoras BRRRR</span></h3>
-          <p class="mt-2"><span class="en">Strategic rehabs designed to maximise cash flow and refinance value for long‑term holds.</span><span class="es">Rehabilitaciones estratégicas diseñadas para maximizar el flujo de efectivo y el valor de refinanciamiento en inversiones a largo plazo.</span></p>
+          <p class="mt-2"><span class="en">Strategic rehabs designed to maximize cash flow and refinance value for long‑term holds.</span><span class="es">Rehabilitaciones estratégicas diseñadas para maximizar el flujo de efectivo y el valor de refinanciamiento en inversiones a largo plazo.</span></p>
         </div>
         <!-- Vacation Rentals -->
         <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
