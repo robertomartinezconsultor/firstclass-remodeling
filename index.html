@@ -62,21 +62,35 @@
     /* Hide Spanish elements by default until toggled */
     body.hidden-es .es { display: none; }
     body.hidden-en .en { display: none; }
+
+    /*
+     * Colour palette derived from colour psychology for trust, growth and quality.
+     * Primary (navy) conveys trust and dependability, secondary (deep teal) conveys
+     * growth and prosperity and accent (gold) adds a touch of warmth and quality.
+     * These variables can be referenced inline via var(--colour-name).
+     */
+    :root {
+      --color-primary: #0f172a; /* dark navy for trust and stability */
+      --color-secondary: #006d5b; /* deep teal for growth and prosperity */
+      --color-accent: #c9a341; /* gold accent for warmth and quality */
+      --color-bg: #f7f7fb; /* light background for a clean canvas */
+      --color-text: #334155; /* dark slate for legible text */
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 hidden-es" id="top">
   <!-- Sticky contact bar for quick calls and language toggle -->
-  <div class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+  <div class="sticky top-0 z-50 backdrop-blur border-b border-slate-200" style="background-color: var(--color-primary); color: #ffffff;">
     <div class="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center text-sm">
       <div class="font-medium tracking-wide">
         <span class="en">San Antonio Remodeling &amp; Investments</span>
         <span class="es">Remodelación y Inversiones en San Antonio</span>
       </div>
       <div class="flex gap-3 items-center">
-        <a href="tel:+12106065298" class="px-3 py-1.5 rounded-full bg-emerald-600 text-white font-semibold shadow hover:bg-emerald-700">
+        <a href="tel:+12106065298" class="px-3 py-1.5 rounded-full font-semibold shadow" style="background-color: var(--color-secondary); color: #ffffff;">
           <span class="en">Call Now</span><span class="es">Llamar Ahora</span> • (210) 606‑5298
         </a>
-        <button id="langToggle" class="px-3 py-1.5 rounded-full border border-slate-300 hover:border-slate-400">
+        <button id="langToggle" class="px-3 py-1.5 rounded-full border border-slate-300 hover:border-slate-400" style="color: #ffffff; background-color: transparent;">
           ES / EN
         </button>
       </div>
@@ -89,7 +103,8 @@
       <div class="flex justify-between items-center py-4">
         <!-- Logo and site title -->
         <a href="index.html" class="flex items-center">
-          <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-12 w-auto mr-2">
+          <!-- Logo sized for navigation: slightly smaller on small screens, larger on medium screens -->
+         <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-10 md:h-12 w-auto mr-2">
           <span class="text-xl font-extrabold tracking-wide text-slate-900">First&nbsp;Class</span>
         </a>
         <!-- Navigation links -->
@@ -119,31 +134,31 @@
 
   <!-- HERO SECTION -->
   <section class="relative">
-    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&amp;fit=crop&amp;q=80&amp;w=1600" alt="Elegant living room with modern furniture and natural stone accents" class="w-full h-[65vh] md:h-[75vh] object-cover" />
+    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&amp;fit=crop&amp;q=80&amp;w=1600" alt="Elegant living room with modern furniture and natural stone accents" class="w-full h-[60vh] md:h-[70vh] object-cover" loading="lazy" />
     <div class="absolute inset-0 hero-overlay flex items-end">
-      <div class="max-w-7xl mx-auto px-4 pb-14 md:pb-20">
-        <!-- Company logo -->
-        <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-14 md:h-16 w-auto mb-4">
+        <div class="max-w-7xl mx-auto px-4 pb-14 md:pb-20">
+        <!-- Company logo: refined sizing for a balanced hero. Adjusted for mobile. -->
+        <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-12 md:h-16 w-auto mb-4" loading="lazy">
         <h1 class="text-white text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow">
-          <span class="en">Design‑Led Renovations. Maximising Value.</span>
-          <span class="es">Renovaciones con Diseño. Maximiza tu Valor.</span>
+          <span class="en">Quality Renovations. Enhance Your Space. Maximise Value.</span>
+          <span class="es">Remodelaciones de Calidad. Mejora tu Espacio. Maximiza el Valor.</span>
         </h1>
         <p class="text-slate-200 text-lg sm:text-xl max-w-xl mb-6">
-          <span class="en">We design and build high‑quality remodels and investor rehabs—custom kitchens, spa baths, whole‑home transformations &amp; BRRRR upgrades—that enrich everyday life and deliver exceptional returns.</span>
-          <span class="es">Diseñamos y ejecutamos remodelaciones de alta calidad y rehabilitaciones para inversores—cocinas a medida, baños tipo spa, transformaciones integrales y mejoras BRRRR—que enriquecen tu día a día y ofrecen retornos extraordinarios.</span>
+          <span class="en">We create thoughtful remodels and investor rehabs—beautiful kitchens, spa bathrooms, whole‑home transformations and BRRRR upgrades—that enrich your lifestyle and build long‑term value.</span>
+          <span class="es">Creamos remodelaciones cuidadosas y rehabilitaciones para inversores—cocinas hermosas, baños spa, transformaciones integrales y mejoras BRRRR—que enriquecen tu estilo de vida y construyen valor a largo plazo.</span>
         </p>
         <div class="flex flex-wrap gap-3">
-          <a href="#contact" class="px-6 py-3 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
-            <span class="en">Schedule a Private Consultation</span><span class="es">Agendar una Consulta Privada</span>
+          <a href="#contact" class="px-6 py-3 rounded-full font-semibold" style="background-color: var(--color-secondary); color: #ffffff;">
+            <span class="en">Schedule Your Design Consultation</span><span class="es">Agenda tu Consulta de Diseño</span>
           </a>
-          <a href="#portfolio" class="px-6 py-3 rounded-full bg-white/90 text-slate-900 font-semibold hover:bg-white">
+          <a href="#portfolio" class="px-6 py-3 rounded-full font-semibold" style="background-color: var(--color-bg); color: var(--color-primary); border: 1px solid var(--color-primary);">
             <span class="en">Explore Our Work</span><span class="es">Explora Nuestro Trabajo</span>
           </a>
-          <a href="#roi" class="px-6 py-3 rounded-full border border-emerald-600 text-emerald-600 font-semibold hover:bg-emerald-50">
-            <span class="en">Calculate Your ROI</span><span class="es">Calcula tu ROI</span>
+          <a href="#roi" class="px-6 py-3 rounded-full font-semibold" style="background-color: transparent; border: 2px solid var(--color-secondary); color: var(--color-secondary);">
+            <span class="en">Discover Your ROI</span><span class="es">Descubre tu ROI</span>
           </a>
         </div>
-      </div>
+        </div>
     </div>
   </section>
 
@@ -281,12 +296,12 @@
             <span class="en">Discover the upgrades that offer the highest ROI in San Antonio’s competitive market. Our experts leverage market data and investor experience to help you allocate budgets effectively—often yielding 20–50% gains.</span>
             <span class="es">Descubre las mejoras que ofrecen el mayor ROI en el competitivo mercado de San Antonio. Nuestros expertos utilizan datos de mercado y experiencia inversora para ayudarte a asignar presupuestos eficazmente—con retornos del 20 al 50%.</span>
           </p>
-          <a href="#contact" class="inline-block px-6 py-3 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+          <a href="#contact" class="inline-block px-6 py-3 rounded-full font-semibold" style="background-color: var(--color-secondary); color: #ffffff;">
             <span class="en">Speak with an investment advisor</span><span class="es">Habla con un asesor de inversión</span>
           </a>
         </div>
         <div class="md:w-1/2 mt-8 md:mt-0">
-          <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&amp;fit=crop&amp;q=80&amp;w=1200" alt="Financial charts with house blueprint and calculator" class="rounded-2xl shadow-md" />
+          <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&amp;fit=crop&amp;q=80&amp;w=1200" alt="Financial charts with house blueprint and calculator" class="rounded-2xl shadow-md" loading="lazy" />
         </div>
       </div>
     </div>
@@ -302,7 +317,7 @@
       <div class="grid md:grid-cols-3 gap-6">
         <!-- Case study 1 -->
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Custom kitchen renovation" class="w-full h-40 object-cover" />
+          <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Custom kitchen renovation" class="w-full h-40 object-cover" loading="lazy" />
           <div class="p-4">
             <h3 class="font-semibold text-xl mb-2">
               <span class="en">Investor Flip in Alamo Heights</span><span class="es">Flip para Inversor en Alamo Heights</span>
@@ -311,14 +326,14 @@
               <span class="en">We transformed a dated 1970s home into a modern showpiece with a 42% ROI for our investor client.</span>
               <span class="es">Transformamos una casa anticuada de los 70s en una joya moderna con un ROI del 42% para nuestro cliente inversor.</span>
             </p>
-            <a href="#contact" class="mt-3 inline-block text-emerald-600 font-semibold hover:underline">
+            <a href="#contact" class="mt-3 inline-block font-semibold hover:underline" style="color: var(--color-secondary);">
               <span class="en">See details</span><span class="es">Ver detalles</span>
             </a>
           </div>
         </div>
         <!-- Case study 2 -->
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Spa bathroom remodel" class="w-full h-40 object-cover" />
+          <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Spa bathroom remodel" class="w-full h-40 object-cover" loading="lazy" />
           <div class="p-4">
             <h3 class="font-semibold text-xl mb-2">
               <span class="en">Bathroom sanctuary</span><span class="es">Santuario de baño</span>
@@ -327,14 +342,14 @@
               <span class="en">A complete spa retreat featuring marble slabs, steam shower and radiant floors. Client satisfaction: priceless.</span>
               <span class="es">Un retiro tipo spa con placas de mármol, ducha de vapor y pisos radiantes. Satisfacción del cliente: invaluable.</span>
             </p>
-            <a href="#contact" class="mt-3 inline-block text-emerald-600 font-semibold hover:underline">
+            <a href="#contact" class="mt-3 inline-block font-semibold hover:underline" style="color: var(--color-secondary);">
               <span class="en">View gallery</span><span class="es">Ver galería</span>
             </a>
           </div>
         </div>
         <!-- Case study 3 -->
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1527030280862-64139fba04ca?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Outdoor living remodel" class="w-full h-40 object-cover" />
+          <img src="https://images.unsplash.com/photo-1527030280862-64139fba04ca?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Outdoor living remodel" class="w-full h-40 object-cover" loading="lazy" />
           <div class="p-4">
             <h3 class="font-semibold text-xl mb-2">
               <span class="en">Outdoor Oasis in The Dominion</span><span class="es">Oasis Exterior en The Dominion</span>
@@ -343,7 +358,7 @@
               <span class="en">We added a pool, outdoor kitchen and pergola, increasing property value by $150k and rental potential.</span>
               <span class="es">Añadimos una alberca, cocina exterior y pérgola, incrementando el valor de la propiedad en 150 k y su potencial de alquiler.</span>
             </p>
-            <a href="#contact" class="mt-3 inline-block text-emerald-600 font-semibold hover:underline">
+            <a href="#contact" class="mt-3 inline-block font-semibold hover:underline" style="color: var(--color-secondary);">
               <span class="en">Learn more</span><span class="es">Saber más</span>
             </a>
           </div>
@@ -442,7 +457,7 @@
   </section>
 
   <!-- LEAD MAGNET SECTION -->
-  <section class="py-16 bg-emerald-600 text-white">
+  <section class="py-16" style="background-color: var(--color-secondary); color: #ffffff;">
     <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
       <div>
         <h3 class="text-2xl font-extrabold mb-2">
@@ -456,7 +471,7 @@
       </div>
       <form action="https://formspree.io/f/yourid" method="POST" class="bg-white/10 p-4 rounded-3xl grid md:grid-cols-3 gap-4">
         <input type="email" name="email" required placeholder="Email" class="col-span-2 px-4 py-3 rounded-2xl bg-white text-slate-900" />
-        <button type="submit" class="px-4 py-3 rounded-2xl bg-white text-emerald-700 font-semibold hover:bg-emerald-100">
+        <button type="submit" class="px-4 py-3 rounded-2xl font-semibold" style="background-color: #ffffff; color: var(--color-secondary);">
           <span class="en">Get the Guide</span><span class="es">Obtener la Guía</span>
         </button>
         <input type="hidden" name="source" value="lead-magnet" />
@@ -503,7 +518,7 @@
           <input type="hidden" name="utm_source" id="utm_source" />
           <input type="hidden" name="utm_campaign" id="utm_campaign" />
           <input type="hidden" name="utm_medium" id="utm_medium" />
-          <button type="submit" class="px-5 py-3 rounded-2xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+          <button type="submit" class="px-5 py-3 rounded-2xl font-semibold" style="background-color: var(--color-secondary); color: #ffffff;">
             <span class="en">Request Consultation</span><span class="es">Solicitar Consulta</span>
           </button>
         </div>
@@ -513,7 +528,7 @@
 
   <!-- FLOATING CTA BUTTONS -->
   <div class="fixed right-4 bottom-4 flex flex-col gap-3 z-50">
-    <a href="tel:+12106065298" class="px-4 py-3 rounded-full bg-emerald-600 text-white font-semibold shadow-lg hover:bg-emerald-700">
+    <a href="tel:+12106065298" class="px-4 py-3 rounded-full font-semibold shadow-lg" style="background-color: var(--color-secondary); color: #ffffff;">
       <span class="en">Call Now</span><span class="es">Llamar Ahora</span> • (210) 606‑5298
     </a>
     <a href="https://wa.me/12106065298" class="px-4 py-3 rounded-full bg-green-600 text-white font-semibold shadow-lg hover:bg-green-700">
@@ -521,11 +536,11 @@
     </a>
   </div>
 
-  <footer class="py-10 bg-slate-900 text-slate-300 border-t border-slate-800">
+  <footer class="py-10" style="background-color: var(--color-primary); color: #ffffff;">
     <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div>&copy; <span id="year"></span> First Class Remodeling · San Antonio, TX</div>
       <div class="flex gap-4">
-        <a href="#top" class="underline"><span class="en">Back to top</span><span class="es">Volver arriba</span></a>
+        <a href="#top" class="underline" style="color: var(--color-accent);"><span class="en">Back to top</span><span class="es">Volver arriba</span></a>
       </div>
     </div>
   </footer>
