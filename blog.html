@@ -15,22 +15,32 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .nav-link { @apply text-slate-600 hover:text-slate-900 px-3 py-2 font-medium; }
-    .nav-link-active { @apply text-sky-600 font-semibold; }
+    /* Use our secondary colour to highlight the active nav link */
+    .nav-link-active { @apply font-semibold; color: var(--color-secondary); }
+
+    /* Colour variables derived from colour psychology: deep navy inspires trust; teal hints at growth; gold suggests enduring quality【662585276928544†L40-L43】【662585276928544†L300-L325】 */
+    :root {
+      --color-primary: #0f172a;
+      --color-secondary: #006d5b;
+      --color-accent: #c9a341;
+      --color-bg: #f7f7fb;
+      --color-text: #334155;
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 hidden-es" id="top">
   <!-- Sticky call bar -->
-  <div class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 border-b border-slate-200">
+  <div class="sticky top-0 z-50 w-full backdrop-blur-md border-b border-slate-200" style="background-color: var(--color-primary); color: #ffffff;">
     <div class="mx-auto max-w-7xl px-4 py-2 flex justify-between items-center text-sm">
       <div class="font-medium">
         <span class="en">Quality Remodeling &amp; Investments • San Antonio</span>
-        <span class="es">Remodelación de Calidad &amp; Inversiones • San Antonio</span>
+        <span class="es">Remodelación y Inversiones en San Antonio</span>
       </div>
       <div class="flex items-center gap-3">
-        <a href="tel:+12106065298" class="px-3 py-1.5 rounded-full bg-sky-600 text-white hover:bg-sky-700 font-semibold">
+        <a href="tel:+12106065298" class="px-3 py-1.5 rounded-full font-semibold" style="background-color: var(--color-secondary); color: #ffffff;">
           <span class="en">Call Now</span><span class="es">Llamar Ahora</span> • (210) 606‑5298
         </a>
-        <button id="langToggle" class="px-3 py-1.5 rounded-full border border-slate-300 hover:border-slate-400">ES / EN</button>
+        <button id="langToggle" class="px-3 py-1.5 rounded-full border border-slate-300 hover:border-slate-400" style="background-color: transparent; color: #ffffff;">ES / EN</button>
       </div>
     </div>
   </div>
@@ -39,7 +49,7 @@
     <div class="mx-auto max-w-7xl px-4">
       <div class="flex justify-between items-center py-4">
         <a href="index.html" class="flex items-center">
-          <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-12 w-auto mr-2">
+          <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-10 md:h-12 w-auto mr-2">
           <span class="text-xl font-extrabold tracking-wide text-slate-900">First Class</span>
         </a>
         <div class="flex space-x-4">
