@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | First Class Remodeling</title>
+  <!-- Tailwind CSS via CDN for rapid prototyping. You can integrate this into your build if you prefer local styles. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Hide any Spanish content (if present) */
+    .es { display: none !important; }
+    /* Hero background logo watermark */
+    .hero-logo-bg {
+      background-image: url('logofirstclass.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 80% auto;
+      opacity: 0.05;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+  <!-- Navigation -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="container mx-auto flex items-center justify-between py-4 px-6">
+      <!-- Logo enlarged for better visibility -->
+      <a href="/" class="flex items-center">
+        <img src="logofirstclass.jpg" alt="First Class Remodeling logo" class="h-16 md:h-24 w-auto mr-2" />
+        <span class="text-xl font-semibold hidden sm:inline">First Class Remodeling</span>
+      </a>
+      <nav class="space-x-6 text-sm">
+        <a href="/index.html" class="hover:text-blue-600">Home</a>
+        <a href="/about.html" class="hover:text-blue-600">About Us</a>
+        <a href="/services.html" class="text-blue-600 font-medium">Services</a>
+        <a href="/portfolio.html" class="hover:text-blue-600">Portfolio</a>
+        <a href="/roi.html" class="hover:text-blue-600">ROI</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative py-16 hero-logo-bg">
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Our Signature Services</h1>
+      <p class="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+        Whether you’re a homeowner looking to transform your living space or an investor seeking high-ROI renovation projects, our
+        expert team turns visions into reality.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services for Homeowners -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-6 text-center">For Homeowners</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <!-- Kitchen Remodel -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 4.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v3a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-3zM4.5 9.75a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v3a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-3zM15.75 9.75a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v3a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-3zM9.75 15.75a.75.75 0 01.75-.75h3a.75.75 0 01.75.75v3a.75.75 0 01-.75.75h-3a.75.75 0 01-.75-.75v-3z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Kitchen Transformations</h3>
+            <p class="text-gray-700">We reinvent kitchens with thoughtful layouts, modern cabinetry and fixtures, and gorgeous countertops to enhance both functionality and style.</p>
+          </div>
+        </div>
+        <!-- Bathroom Remodel -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.25h13.5v4.5H5.25v-4.5zM9 14.25a1.5 1.5 0 013 0v3.75m0 0a1.5 1.5 0 003 0v-3.75m3 0a1.5 1.5 0 013 0v3.75m0 0a1.5 1.5 0 003 0v-3.75m-12 6.75h13.5" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Spa‑Quality Bathrooms</h3>
+            <p class="text-gray-700">Relax in a custom bathroom oasis featuring premium tiling, modern plumbing fixtures and efficient storage solutions.</p>
+          </div>
+        </div>
+        <!-- Outdoor Living -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 9l-8.954 8.955a.884.884 0 01-1.246 0L3 12.954" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Outdoor Living</h3>
+            <p class="text-gray-700">Extend your living space outdoors with pergolas, patios and full outdoor kitchens built to withstand the Texas climate.</p>
+          </div>
+        </div>
+        <!-- Whole‑Home Remodeling -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75V19.5A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 19.5V9.75m-9 0V3.75H7.5A1.5 1.5 0 006 5.25v4.5m0 0H3m18 0h-3m-9 0H6" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Whole‑Home Overhauls</h3>
+            <p class="text-gray-700">From structural changes to interior finishes, we manage comprehensive remodels that add value and style to your entire home.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services for Investors -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-6 text-center">For Investors</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <!-- Quick Flips -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.597 5.913l.172 3.09a.75.75 0 001.393.367l2.228-3.415m0 0l-4.53-2.687M19.39 4.958l-.535 3.14a.75.75 0 01-1.32.44L15.117 5.16m0 0L19.39 4.958M15.117 5.16L11.317 2.968M12 11.25h6m-6 3h6M7.875 14.25a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM16.5 14.25a3.375 3.375 0 100 6.75 3.375 3.375 0 000-6.75z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Quick Flips</h3>
+            <p class="text-gray-700">We partner with investors on accelerated remodel timelines that maximize resale value and ROI.</p>
+          </div>
+        </div>
+        <!-- Rental Renovations -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l2.458-2.457a1.125 1.125 0 011.592 0L12 13.744l3.45-3.45a1.125 1.125 0 011.592 0L19.5 12.75M5.25 19.5h13.5a.75.75 0 00.75-.75v-6l-5.25-5.25H9L3.75 12.75v6a.75.75 0 00.75.75z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Rental Renovations</h3>
+            <p class="text-gray-700">Upgrade rental units with durable finishes and modern amenities that attract quality tenants and boost returns.</p>
+          </div>
+        </div>
+        <!-- New Construction Investments -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.625 10.5l-7.8-7.8a1.125 1.125 0 00-1.588 0l-7.8 7.8M3 10.5h18M5.25 10.5v10.125c0 .621.504 1.125 1.125 1.125h11.25c.621 0 1.125-.504 1.125-1.125V10.5" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">New Construction Investments</h3>
+            <p class="text-gray-700">From concept to completion, our team manages ground-up builds that meet investor timelines and budgets.</p>
+          </div>
+        </div>
+        <!-- Multi‑Unit Development -->
+        <div class="flex items-start">
+          <div class="flex-shrink-0 text-blue-600 mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75v10.5A1.125 1.125 0 004.125 21h3.75A1.125 1.125 0 009 20.25V13.5H6v-3.75M15 21h4.875A1.125 1.125 0 0021 19.875v-7.125M15 21v-6a1.125 1.125 0 011.125-1.125H18M9.75 8.25V6A1.125 1.125 0 0110.875 4.875H13.125A1.125 1.125 0 0114.25 6v2.25M12 9.75V21" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Multi‑Unit Development</h3>
+            <p class="text-gray-700">We handle complex multi‑unit renovations and development projects, ensuring high standards across all units.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-blue-600 text-white text-center">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Project?</h2>
+      <p class="mb-6 max-w-2xl mx-auto">Schedule a free consultation with our remodeling experts and see how we can bring your vision to life.</p>
+      <a href="mailto:hello@firstclassremodelingtx.com" class="inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded-full shadow hover:bg-gray-100 transition">Contact Us</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-800 text-slate-300 py-8">
+    <div class="container mx-auto px-6 text-center">
+      <p class="mb-4">&copy; 2025 First Class Remodeling. All rights reserved.</p>
+      <div class="space-x-4">
+        <a href="https://www.facebook.com/firstclassremodelingsatx" target="_blank" class="hover:text-white">Facebook</a>
+        <a href="tel:+12103065298" class="hover:text-white">(210) 306‑5298</a>
+        <a href="mailto:hello@firstclassremodelingtx.com" class="hover:text-white">hello@firstclassremodelingtx.com</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
