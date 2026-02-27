@@ -3,100 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bathroom & Kitchen Remodeling Services in San Antonio | First Class Remodeling</title>
-  <meta name="description" content="Discover our bathroom and kitchen remodeling services in San Antonio. We focus on functional upgrades such as walk-in showers, custom cabinets, islands, and water efficient fixtures to improve daily living.">
+  <title>Bathroom &amp; Kitchen Remodeling Services in San Antonio TX</title>
+  <meta name="description" content="Explore our bathroom and kitchen remodeling services in San Antonio. We specialise in walk‑in showers, custom cabinets, islands and energy‑efficient upgrades.">
+  <link rel="canonical" href="https://www.firstclassremodelingtx.com/services.html" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Service schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Bathroom & Kitchen Remodeling",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "First Class Remodeling TX",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Main Street",
+        "addressLocality": "San Antonio",
+        "addressRegion": "TX",
+        "postalCode": "78258",
+        "addressCountry": "US"
+      },
+      "telephone": "+1-210-606-5298"
+    },
+    "areaServed": ["San Antonio", "Stone Oak", "Helotes", "Shavano Park", "Boerne"],
+    "description": "Bathroom and kitchen remodeling services focusing on functional upgrades, storage solutions and water/energy efficiency."
+  }
+  </script>
 </head>
 <body class="bg-slate-50 font-sans">
   <!-- Header -->
-  <header class="bg-white shadow sticky top-0 z-50">
+  <header class="bg-white shadow sticky top-0 z-40">
     <div class="container mx-auto flex items-center justify-between py-4 px-6">
       <a href="/" class="flex items-center">
-        <img src="/logofirstclass.jpg" alt="First Class Remodeling logo" class="h-10 w-auto mr-2">
-        <span class="font-semibold text-lg">First Class Remodeling</span>
+        <img src="/logofirstclass.jpg" alt="First Class Remodeling logo" class="h-10 w-auto mr-2" />
+        <span class="font-semibold text-lg">First Class Remodeling</span>
       </a>
-      <nav class="space-x-6 hidden md:flex">
+      <nav class="hidden md:flex space-x-6" aria-label="Main navigation">
         <a href="/" class="text-gray-700 hover:text-teal-600">Home</a>
-        <a href="#bathrooms" class="text-gray-700 hover:text-teal-600">Bathrooms</a>
-        <a href="#kitchens" class="text-gray-700 hover:text-teal-600">Kitchens</a>
-        <a href="/about.html" class="text-gray-700 hover:text-teal-600">About</a>
+        <a href="/services.html#bathrooms" class="text-gray-700 hover:text-teal-600">Bathrooms</a>
+        <a href="/services.html#kitchens" class="text-gray-700 hover:text-teal-600">Kitchens</a>
         <a href="/portfolio.html" class="text-gray-700 hover:text-teal-600">Gallery</a>
+        <a href="/about.html" class="text-gray-700 hover:text-teal-600">About</a>
         <a href="/blog.html" class="text-gray-700 hover:text-teal-600">Blog</a>
-        <a href="/roi.html" class="text-gray-700 hover:text-teal-600">Contact</a>
+        <a href="/contact.html" class="text-gray-700 hover:text-teal-600">Contact</a>
       </nav>
-      <a href="/roi.html" class="md:hidden inline-block bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Contact</a>
+      <button id="menuToggle" class="md:hidden flex items-center" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-white shadow">
+      <nav class="flex flex-col p-4 space-y-2">
+        <a href="/" class="text-gray-700 hover:text-teal-600">Home</a>
+        <a href="/services.html#bathrooms" class="text-gray-700 hover:text-teal-600">Bathrooms</a>
+        <a href="/services.html#kitchens" class="text-gray-700 hover:text-teal-600">Kitchens</a>
+        <a href="/portfolio.html" class="text-gray-700 hover:text-teal-600">Gallery</a>
+        <a href="/about.html" class="text-gray-700 hover:text-teal-600">About</a>
+        <a href="/blog.html" class="text-gray-700 hover:text-teal-600">Blog</a>
+        <a href="/contact.html" class="text-gray-700 hover:text-teal-600">Contact</a>
+      </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="bg-cover bg-center text-white" style="background-image:url('https://images.unsplash.com/photo-1600566753072-dce0a1d18059?auto=format&fit=crop&w=1400&q=80');">
+  <section class="bg-cover bg-center text-white" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161f47b12?auto=format&fit=crop&w=1600&q=80');">
     <div class="bg-black bg-opacity-50">
-      <div class="container mx-auto px-6 py-24 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Functional Bathroom & Kitchen Remodeling</h1>
-        <p class="max-w-2xl mx-auto mb-6 text-lg">Transform your home with practical upgrades that improve comfort, storage, and energy efficiency. Serving San Antonio and surrounding communities.</p>
-        <a href="/roi.html" class="bg-yellow-600 text-white px-6 py-3 rounded hover:bg-yellow-700">Schedule Your Consultation</a>
+      <div class="container mx-auto px-6 py-32 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Your Bathroom &amp; Kitchen Experts</h1>
+        <p class="max-w-2xl mx-auto mb-6 text-lg">From walk‑in showers and tub‑to‑shower conversions to custom cabinets and functional islands, we transform San Antonio homes with durable, energy‑efficient upgrades.</p>
+        <a href="/contact.html" class="bg-teal-600 text-white px-8 py-3 rounded hover:bg-teal-700">Request a Free Estimate</a>
       </div>
     </div>
   </section>
 
-  <!-- Bathroom Remodeling Section -->
+  <!-- Bathrooms Section -->
   <section id="bathrooms" class="container mx-auto py-16 px-6">
     <h2 class="text-3xl font-bold mb-4">Bathroom Remodeling</h2>
-    <p class="mb-6">Update your bathroom to make mornings easier and evenings more relaxing. Our team designs and builds walk in showers, double vanities and storage solutions that are easy to clean and stand up to Texas humidity. We specialize in tub‭to shower conversions, master bath updates and guest bath renovations.</p>
+    <p class="mb-6">Outdated bathrooms from the 1970s or 1990s often feel cramped and lack storage.  We design spaces that make mornings easier and evenings more relaxing by incorporating walk‑in showers, double vanities and humidity‑resistant materials.  Our tub‑to‑shower conversions are perfect for families seeking ease of access and improved water efficiency.</p>
     <div class="grid md:grid-cols-2 gap-8 items-center">
       <div>
-        <ul class="list-disc list-inside space-y-2 mb-6">
-          <li>Walk in showers with benches, niches and slip resistant flooring for safety and accessibility.</li>
-          <li>Custom vanities and cabinetry to organize toiletries and towels.</li>
-          <li>Water‟saving fixtures that conserve thousands of gallons per year while maintaining comfortable pressure.</li>
-          <li>Tub‭to shower conversions and space‟saving layouts for small guest bathrooms.</li>
+        <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+          <li>Walk‑in showers with benches, niches and slip‑resistant flooring for safety and accessibility【56138329664428†L63-L103】.</li>
+          <li>Custom vanities and cabinets tailored to your storage needs and style.</li>
+          <li>Fixtures that conserve water without sacrificing comfort, saving 10 000–25 000 gallons per year for a family of four【762290338243937†L117-L123】.</li>
+          <li>Space‑saving layouts for guest bathrooms and powder rooms.</li>
         </ul>
-        <a href="/roi.html" class="bg-teal-600 text-white px-6 py-3 rounded hover:bg-teal-700">Get Bathroom Estimate</a>
+        <a href="/contact.html" class="bg-teal-600 text-white px-6 py-3 rounded hover:bg-teal-700">Get My Bathroom Estimate</a>
       </div>
       <div>
-        <img src="https://images.unsplash.com/photo-1600566753072-dce0a1d18059?auto=format&fit=crop&w=800&q=80" alt="walk-in shower bathroom remodel San Antonio" class="rounded-lg shadow">
+        <img src="/images/gallery/helotes-bath-after.jpg" alt="walk-in shower with bench in Helotes master bath remodel" class="rounded-lg shadow" loading="lazy" />
+      </div>
+    </div>
+    <!-- FAQs for bathroom -->
+    <div class="mt-12">
+      <h3 class="text-2xl font-semibold mb-4">Frequently Asked Questions</h3>
+      <div class="space-y-4">
+        <details class="bg-white p-4 rounded shadow">
+          <summary class="font-semibold cursor-pointer">How long does a bathroom remodel take?</summary>
+          <p class="mt-2">Depending on scope, most projects take 3–6 weeks from demolition to final walk‑through.  We provide a detailed timeline up front.</p>
+        </details>
+        <details class="bg-white p-4 rounded shadow">
+          <summary class="font-semibold cursor-pointer">Do I need permits?</summary>
+          <p class="mt-2">We handle any necessary permits for plumbing and electrical work and ensure all local codes are met.</p>
+        </details>
+        <details class="bg-white p-4 rounded shadow">
+          <summary class="font-semibold cursor-pointer">What brands of fixtures do you use?</summary>
+          <p class="mt-2">We work with reputable manufacturers known for durability and offer options to suit your budget.</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- Kitchen Remodeling Section -->
+  <!-- Kitchens Section -->
   <section id="kitchens" class="bg-gray-100 py-16">
     <div class="container mx-auto px-6">
       <h2 class="text-3xl font-bold mb-4">Kitchen Remodeling</h2>
-      <p class="mb-6">Create a kitchen that works for your lifestyle. We replace outdated cabinets, open up cramped layouts and install islands for prep and seating. Our designs incorporate energy‟efficient appliances and durable surfaces to make cooking and gathering easier.</p>
+      <p class="mb-6">The kitchen is the heart of the home.  Many San Antonio houses built in the 1980s and 1990s still feature builder‑grade oak cabinets and closed layouts【300432353056772†L60-L72】.  We modernise them with open floor plans, functional islands and custom cabinetry.  Our energy‑efficient appliances and LED lighting keep your kitchen cool and comfortable year‑round【934285223477420†L69-L83】.</p>
       <div class="grid md:grid-cols-2 gap-8 items-center">
         <div class="order-2 md:order-1">
-          <img src="https://images.unsplash.com/photo-1556912167-f556f1f39df1?auto=format&fit=crop&w=800&q=80" alt="kitchen remodel with island and custom cabinets San Antonio" class="rounded-lg shadow">
+          <img src="/images/gallery/stone-oak-kitchen-after.jpg" alt="kitchen remodel with island and custom cabinets in Stone Oak San Antonio" class="rounded-lg shadow" loading="lazy" />
         </div>
         <div class="order-1 md:order-2">
-          <ul class="list-disc list-inside space-y-2 mb-6">
-            <li>Custom cabinets with pull‟outs, soft‟close drawers and corner solutions to maximize storage.</li>
-            <li>Functional islands for seating, cooking and gathering with family.</li>
-            <li>Open layouts that improve flow and connect indoor and outdoor spaces.</li>
-            <li>Energy‟efficient appliances and LED lighting for better performance and lower utility bills.</li>
+          <ul class="list-disc list-inside space-y-2 mb-6 text-gray-700">
+            <li>Custom cabinets with pull‑outs, soft‑close drawers and corner solutions for maximum storage【300432353056772†L92-L147】.</li>
+            <li>Islands that provide seating, prep space and hidden storage【934285223477420†L161-L175】.</li>
+            <li>Open layouts that connect your kitchen to dining and outdoor spaces【934285223477420†L186-L200】.</li>
+            <li>Energy‑efficient appliances and smart lighting to reduce utility costs【934285223477420†L69-L83】.</li>
           </ul>
-          <a href="/roi.html" class="bg-teal-600 text-white px-6 py-3 rounded hover:bg-teal-700">Get Kitchen Estimate</a>
+          <a href="/contact.html" class="bg-teal-600 text-white px-6 py-3 rounded hover:bg-teal-700">Get My Kitchen Estimate</a>
+        </div>
+      </div>
+      <!-- FAQs for kitchen -->
+      <div class="mt-12">
+        <h3 class="text-2xl font-semibold mb-4">Frequently Asked Questions</h3>
+        <div class="space-y-4">
+          <details class="bg-white p-4 rounded shadow">
+            <summary class="font-semibold cursor-pointer">How long does a kitchen remodel take?</summary>
+            <p class="mt-2">A typical kitchen remodel takes 6–10 weeks depending on complexity and whether structural changes are involved.</p>
+          </details>
+          <details class="bg-white p-4 rounded shadow">
+            <summary class="font-semibold cursor-pointer">Do you offer financing?</summary>
+            <p class="mt-2">Yes.  We partner with reputable lenders to offer financing options with approved credit.</p>
+          </details>
+          <details class="bg-white p-4 rounded shadow">
+            <summary class="font-semibold cursor-pointer">Can you reuse my existing appliances?</summary>
+            <p class="mt-2">If your appliances are in good working condition and fit your new design, we can integrate them into the remodel.  We will advise on energy‑efficient upgrades.</p>
+          </details>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Our Process Section -->
-  <section class="container mx-auto py-16 px-6">
-    <h2 class="text-3xl font-bold mb-6">Our Process</h2>
-    <ol class="list-decimal list-inside space-y-4">
-      <li><strong>Listen & Learn.</strong> We start with a free in‟home consultation to understand your goals, style and budget. Every project is tailored to your needs.</li>
-      <li><strong>Design & Build.</strong> Our design team plans a functional layout and helps you select durable materials. We handle demolition, electrical, plumbing and installation under one roof—no need for multiple contractors.</li>
-      <li><strong>Enjoy & Support.</strong> We conduct a thorough walk‟through, provide a written warranty and remain available for any questions. Your satisfaction is our priority.</li>
-    </ol>
-  </section>
-
   <!-- Call to Action -->
-  <section class="bg-yellow-100 py-12">
+  <section class="py-16 bg-yellow-100">
     <div class="container mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-      <p class="mb-6">Let’s talk about how we can transform your bathroom or kitchen with functional upgrades and lasting value.</p>
-      <a href="/roi.html" class="bg-yellow-600 text-white px-8 py-3 rounded hover:bg-yellow-700">Schedule a Consultation</a>
+      <h2 class="text-3xl font-bold mb-4">Ready to Transform Your Home?</h2>
+      <p class="mb-6">Let’s discuss your ideas and craft a plan that makes the most of your space, budget and style.</p>
+      <a href="/contact.html" class="bg-yellow-600 text-white px-8 py-3 rounded hover:bg-yellow-700">Schedule a No‑Obligation Consultation</a>
     </div>
   </section>
 
@@ -105,29 +171,38 @@
     <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8">
       <div>
         <h3 class="font-semibold mb-2">Contact</h3>
-        <p>San Antonio, TX</p>
-        <p>Phone: <a href="tel:2106865298" class="text-teal-400">210-686-5298</a></p>
+        <p>San Antonio, TX</p>
+        <p>Phone: <a href="tel:+12106065298" class="text-teal-400">210‑606‑5298</a></p>
         <p>Email: <a href="mailto:hello@firstclassremodelingtx.com" class="text-teal-400">hello@firstclassremodelingtx.com</a></p>
+        <p><a href="https://www.facebook.com/firstclassremodelingsatx/" class="text-blue-400 hover:text-blue-600" target="_blank" rel="noopener">Síguenos en Facebook</a></p>
       </div>
       <div>
         <h3 class="font-semibold mb-2">Navigation</h3>
         <ul class="space-y-1">
           <li><a href="/" class="hover:text-teal-400">Home</a></li>
-          <li><a href="#bathrooms" class="hover:text-teal-400">Bathrooms</a></li>
-          <li><a href="#kitchens" class="hover:text-teal-400">Kitchens</a></li>
-          <li><a href="/about.html" class="hover:text-teal-400">About</a></li>
+          <li><a href="/services.html#bathrooms" class="hover:text-teal-400">Bathrooms</a></li>
+          <li><a href="/services.html#kitchens" class="hover:text-teal-400">Kitchens</a></li>
           <li><a href="/portfolio.html" class="hover:text-teal-400">Gallery</a></li>
+          <li><a href="/about.html" class="hover:text-teal-400">About</a></li>
           <li><a href="/blog.html" class="hover:text-teal-400">Blog</a></li>
+          <li><a href="/contact.html" class="hover:text-teal-400">Contact</a></li>
         </ul>
       </div>
       <div>
         <h3 class="font-semibold mb-2">Service Areas</h3>
-        <p>San Antonio, Stone Oak, Helotes, Shavano Park, Boerne & nearby communities.</p>
+        <p>San Antonio, Stone Oak, Helotes, Shavano Park, Boerne &amp; nearby communities.</p>
       </div>
     </div>
     <div class="text-center text-gray-400 mt-8">
-      &copy; 2026 First Class Remodeling TX. All rights reserved.
+      &copy; 2026 First Class Remodeling TX. All rights reserved. | <a href="/privacy.html" class="text-teal-400 hover:underline">Privacy Policy</a>
     </div>
   </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+  </script>
 </body>
 </html>
