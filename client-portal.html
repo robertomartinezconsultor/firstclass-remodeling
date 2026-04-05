@@ -2034,22 +2034,35 @@ async function getJoeResponse(userMessage) {
   }
 
   try {
-    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + GROQ_API_KEY
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [
-          { role: 'system', content: buildJoeSystemPrompt(ctx) + extraSystemNote },
-          ...joeConversation
-        ],
-        max_tokens: 250,
-        temperature: 0.7
-      })
-    });
+    // Use server proxy if available (keeps API key server-side), fallback to direct Groq
+    const apiPayload = {
+      model: 'llama-3.3-70b-versatile',
+      messages: [
+        { role: 'system', content: buildJoeSystemPrompt(ctx) + extraSystemNote },
+        ...joeConversation
+      ],
+      max_tokens: 250,
+      temperature: 0.7
+    };
+
+    let resp;
+    const proxyUrl = 'http://159.203.143.156:8085/api/joe';
+    try {
+      resp = await fetch(proxyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(apiPayload)
+      });
+    } catch(proxyErr) {
+      // Fallback to direct Groq if proxy down
+      if (GROQ_API_KEY) {
+        resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_API_KEY },
+          body: JSON.stringify(apiPayload)
+        });
+      } else { throw new Error('No AI available'); }
+    }
 
     if (!resp.ok) throw new Error('API error');
 
