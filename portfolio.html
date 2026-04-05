@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remodeling Portfolio San Antonio TX | First Class Remodeling</title>
+  <meta name="description" content="See our remodeling work — kitchen transformations, bathroom renovations, outdoor kitchens, and patios across San Antonio TX. Licensed & insured. Free estimates (210) 606-5298.">
+  <link rel="canonical" href="https://www.firstclassremodelingtx.com/portfolio.html" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ImageGallery","name":"First Class Remodeling TX Portfolio","description":"Kitchen, bathroom, outdoor kitchen and patio remodeling projects in San Antonio TX","url":"https://www.firstclassremodelingtx.com/portfolio.html","provider":{"@type":"HomeAndConstructionBusiness","name":"First Class Remodeling TX","telephone":"+12106065298"}}
+  </script>
+  <style>
+    .gallery-item { cursor: pointer; overflow: hidden; border-radius: 0.5rem; }
+    .gallery-item img { transition: transform 0.3s ease; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    #lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; }
+    #lightbox.open { display:flex; }
+    #lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; }
+  </style>
+</head>
+<body class="bg-slate-50 font-sans">
+  <header class="bg-white shadow sticky top-0 z-40">
+    <div class="container mx-auto flex items-center justify-between py-4 px-6">
+      <a href="/" class="font-bold text-xl text-teal-700">First Class Remodeling TX</a>
+      <nav class="hidden md:flex space-x-6 items-center">
+        <a href="/" class="text-gray-700 hover:text-teal-600">Home</a>
+        <a href="/services.html" class="text-gray-700 hover:text-teal-600">Services</a>
+        <a href="/portfolio.html" class="text-teal-600 font-semibold">Portfolio</a>
+        <a href="/blog.html" class="text-gray-700 hover:text-teal-600">Blog</a>
+        <a href="/contact.html" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Free Estimate</a>
+      </nav>
+      <button id="menuToggle" class="md:hidden"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden bg-white shadow"><nav class="flex flex-col p-4 space-y-2">
+      <a href="/" class="text-gray-700">Home</a>
+      <a href="/services.html" class="text-gray-700">Services</a>
+      <a href="/portfolio.html" class="text-teal-600 font-semibold">Portfolio</a>
+      <a href="/contact.html" class="text-teal-600 font-semibold">Free Estimate</a>
+    </nav></div>
+  </header>
+
+  <main>
+    <section class="bg-teal-700 text-white py-14 px-6 text-center">
+      <h1 class="text-4xl font-bold mb-3">Our Work Speaks for Itself</h1>
+      <p class="text-xl text-teal-100 max-w-2xl mx-auto">Real projects. Real San Antonio homeowners. Kitchens, bathrooms, outdoor kitchens, and patios — all built by our licensed team.</p>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="container mx-auto py-8 px-6">
+      <div class="flex flex-wrap gap-3 justify-center mb-10" id="filterBtns">
+        <button onclick="filterGallery('all')" class="filter-btn active px-5 py-2 rounded-full bg-teal-600 text-white font-semibold text-sm">All Projects</button>
+        <button onclick="filterGallery('kitchen')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🍳 Kitchens</button>
+        <button onclick="filterGallery('bathroom')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🛁 Bathrooms</button>
+        <button onclick="filterGallery('outdoor')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🔥 Outdoor</button>
+        <button onclick="filterGallery('patio')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🏡 Patios</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="gallery">
+
+        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
+          <img src="/images/projects/kitchen-1.webp" alt="Full kitchen remodel San Antonio TX — white shaker cabinets and quartz countertops" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Full Kitchen Remodel</p><p class="text-gray-500 text-xs">Stone Oak, San Antonio TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
+          <img src="/images/projects/kitchen-2.webp" alt="Modern kitchen renovation San Antonio — quartz island and custom cabinets" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Kitchen with Island</p><p class="text-gray-500 text-xs">Helotes, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="bathroom" onclick="openLightbox(this)">
+          <img src="/images/projects/bathroom-1.webp" alt="Master bathroom remodel San Antonio — walk-in shower with custom tile" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Master Bath Renovation</p><p class="text-gray-500 text-xs">Shavano Park, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="bathroom" onclick="openLightbox(this)">
+          <img src="/images/projects/bathroom-2.webp" alt="Bathroom remodel San Antonio — tub to shower conversion with frameless glass" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Tub-to-Shower Conversion</p><p class="text-gray-500 text-xs">Boerne, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="outdoor" onclick="openLightbox(this)">
+          <img src="/images/projects/patio-1.webp" alt="Outdoor kitchen San Antonio TX — built-in grill and tile countertops" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Outdoor Kitchen Build</p><p class="text-gray-500 text-xs">Leon Valley, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="patio" onclick="openLightbox(this)">
+          <img src="/images/projects/patio-2.webp" alt="Covered patio San Antonio TX — pergola with outdoor fans and lighting" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Covered Patio & Pergola</p><p class="text-gray-500 text-xs">San Antonio, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="patio" onclick="openLightbox(this)">
+          <img src="/images/projects/patio-3.webp" alt="Backyard patio remodel San Antonio — stamped concrete and outdoor living" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Backyard Patio Remodel</p><p class="text-gray-500 text-xs">New Braunfels, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="outdoor" onclick="openLightbox(this)">
+          <img src="/images/projects/fireplace-1.webp" alt="Outdoor fireplace San Antonio TX — custom stone fireplace and patio" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Outdoor Fireplace</p><p class="text-gray-500 text-xs">Stone Oak, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
+          <img src="/images/projects/project-real-1.jpg" alt="Kitchen remodel San Antonio — before and after transformation" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Kitchen Transformation</p><p class="text-gray-500 text-xs">Schertz, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="bathroom" onclick="openLightbox(this)">
+          <img src="/images/projects/project-real-2.jpg" alt="Bathroom renovation San Antonio — modern tile and fixtures" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Modern Bathroom Reno</p><p class="text-gray-500 text-xs">Converse, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
+          <img src="/images/projects/project-real-3.jpg" alt="Complete kitchen renovation San Antonio TX" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Complete Kitchen Reno</p><p class="text-gray-500 text-xs">Universal City, TX</p></div>
+        </div>
+
+        <div class="gallery-item" data-cat="patio" onclick="openLightbox(this)">
+          <img src="/images/projects/project-real-4.jpg" alt="Patio and outdoor living space San Antonio TX" class="w-full h-56 object-cover" loading="lazy">
+          <div class="p-3 bg-white"><p class="font-semibold text-sm">Outdoor Living Space</p><p class="text-gray-500 text-xs">Helotes, TX</p></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <section class="bg-teal-700 text-white py-10 px-6">
+      <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div><div class="text-4xl font-bold">200+</div><div class="text-teal-200 text-sm mt-1">Projects Completed</div></div>
+        <div><div class="text-4xl font-bold">5★</div><div class="text-teal-200 text-sm mt-1">Average Rating</div></div>
+        <div><div class="text-4xl font-bold">10+</div><div class="text-teal-200 text-sm mt-1">Years in San Antonio</div></div>
+        <div><div class="text-4xl font-bold">100%</div><div class="text-teal-200 text-sm mt-1">Licensed & Insured</div></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="container mx-auto py-16 px-6 text-center">
+      <h2 class="text-3xl font-bold mb-3">Ready to Start Your Project?</h2>
+      <p class="text-gray-600 mb-8 max-w-xl mx-auto">Join hundreds of San Antonio homeowners who've transformed their homes with First Class Remodeling TX. Free estimate, no pressure, results that last.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact.html" class="bg-teal-600 text-white font-bold px-8 py-3 rounded hover:bg-teal-700">Request Free Estimate</a>
+        <a href="https://wa.me/12106065298" target="_blank" class="border-2 border-teal-600 text-teal-600 font-bold px-8 py-3 rounded hover:bg-teal-50">💬 WhatsApp Us</a>
+        <a href="tel:+12106065298" class="border-2 border-gray-300 text-gray-700 font-bold px-8 py-3 rounded hover:bg-gray-50">(210) 606-5298</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <button onclick="closeLightbox()" style="position:absolute;top:20px;right:24px;color:white;font-size:2rem;background:none;border:none;cursor:pointer;">✕</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <footer class="bg-gray-800 text-gray-300 py-8">
+    <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div><h3 class="font-semibold mb-2">First Class Remodeling TX</h3><p>San Antonio TX</p><p>Phone: <a href="tel:+12106065298" class="text-teal-400">(210) 606-5298</a></p></div>
+      <div><h3 class="font-semibold mb-2">Services</h3><ul class="space-y-1">
+        <li><a href="/services.html#kitchens" class="hover:text-teal-400">Kitchen Remodels</a></li>
+        <li><a href="/services.html#bathrooms" class="hover:text-teal-400">Bathroom Remodels</a></li>
+        <li><a href="/services.html#outdoor" class="hover:text-teal-400">Outdoor Kitchens</a></li>
+        <li><a href="/portfolio.html" class="hover:text-teal-400">Portfolio</a></li>
+      </ul></div>
+      <div><h3 class="font-semibold mb-2">Locations</h3><ul class="space-y-1">
+        <li><a href="/locations/helotes.html" class="hover:text-teal-400">Helotes</a></li>
+        <li><a href="/locations/boerne.html" class="hover:text-teal-400">Boerne</a></li>
+        <li><a href="/locations/stone-oak.html" class="hover:text-teal-400">Stone Oak</a></li>
+        <li><a href="/locations/shavano-park.html" class="hover:text-teal-400">Shavano Park</a></li>
+      </ul></div>
+    </div>
+    <div class="text-center text-gray-400 mt-8">&copy; 2026 First Class Remodeling TX. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    function filterGallery(cat) {
+      document.querySelectorAll('.gallery-item').forEach(el => {
+        el.style.display = (cat === 'all' || el.dataset.cat === cat) ? 'block' : 'none';
+      });
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('bg-teal-600','text-white');
+        btn.classList.add('bg-gray-200','text-gray-700');
+      });
+      event.target.classList.remove('bg-gray-200','text-gray-700');
+      event.target.classList.add('bg-teal-600','text-white');
+    }
+
+    function openLightbox(el) {
+      const img = el.querySelector('img');
+      document.getElementById('lightboxImg').src = img.src;
+      document.getElementById('lightboxImg').alt = img.alt;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

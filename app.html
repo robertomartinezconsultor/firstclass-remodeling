@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>First Class Client Portal</title>
+<meta name="theme-color" content="#09111d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FCR Portal">
+<meta name="description" content="Client portal for First Class Remodeling project access, updates, payments, and documents.">
+<link rel="manifest" href="client-app.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<style>
+:root {
+  --bg: #070d16;
+  --text: #f8fbff;
+  --muted: rgba(238, 243, 252, 0.72);
+  --muted-2: rgba(238, 243, 252, 0.5);
+  --line: rgba(255,255,255,0.14);
+  --glass: rgba(255,255,255,0.12);
+  --glass-2: rgba(255,255,255,0.07);
+  --gold: #d8b466;
+  --gold-2: #f2d28e;
+  --green: #44d497;
+  --blue: #79c0ff;
+  --shadow: 0 30px 90px rgba(0,0,0,0.45);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(121, 192, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 85% 12%, rgba(216, 180, 102, 0.15), transparent 20%),
+    linear-gradient(180deg, #102039 0%, #091321 42%, #050a12 100%);
+  background-attachment: fixed;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(42px);
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+body::before {
+  width: 220px;
+  height: 220px;
+  top: -40px;
+  left: -40px;
+  background: rgba(121, 192, 255, 0.2);
+}
+
+body::after {
+  width: 280px;
+  height: 280px;
+  right: -90px;
+  bottom: 100px;
+  background: rgba(216, 180, 102, 0.12);
+}
+
+.app-shell {
+  max-width: 440px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(14px + var(--safe-top)) 14px calc(98px + var(--safe-bottom));
+}
+
+.statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.statusbar-icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dynamic-island {
+  width: 118px;
+  height: 34px;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.78);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.statusbar,
+.dynamic-island {
+  display: none;
+}
+
+.hero-card,
+.glass-card,
+.action-card,
+.dock {
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(26px) saturate(145%);
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
+}
+
+.hero-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.07));
+  padding: 20px 18px 18px;
+  margin-bottom: 14px;
+}
+
+.hero-card::after {
+  content: "";
+  position: absolute;
+  right: -50px;
+  top: 36px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 180, 102, 0.22), transparent 68%);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-2);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 14px rgba(68,212,151,0.7);
+}
+
+.hero-card h1 {
+  margin: 10px 0 10px;
+  font-size: 34px;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  max-width: none;
+}
+
+.hero-sub {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: none;
+}
+
+.hero-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn {
+  min-height: 50px;
+  border-radius: 18px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  border: 0;
+}
+
+.btn-primary {
+  color: #1c1405;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+}
+
+.btn-secondary {
+  color: var(--text);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.btn-ghost {
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.section-title {
+  margin: 18px 4px 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted-2);
+  font-weight: 800;
+}
+
+.search-wrap {
+  position: relative;
+  margin: 14px 0 16px;
+}
+
+.search-wrap input {
+  width: 100%;
+  min-height: 54px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  padding: 0 18px 0 48px;
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+}
+
+.code-card {
+  border-radius: 26px;
+  padding: 18px;
+  margin: 0 0 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(26px) saturate(145%);
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
+}
+
+.code-card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+
+.code-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.code-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.code-input {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  padding: 0 16px;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.code-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+#openSavedBtn {
+  grid-column: 1 / -1;
+}
+
+.install-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted-2);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.action-card {
+  min-height: 136px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+  color: var(--text);
+  text-decoration: none;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  bottom: -24px;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+
+.action-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.12);
+  position: relative;
+  z-index: 1;
+}
+
+.action-card h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  position: relative;
+  z-index: 1;
+}
+
+.action-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+  position: relative;
+  z-index: 1;
+}
+
+.project .action-icon { background: rgba(68,212,151,0.18); }
+.photos .action-icon { background: rgba(121,192,255,0.18); }
+.payments .action-icon { background: rgba(216,180,102,0.18); }
+.docs .action-icon { background: rgba(255,255,255,0.12); }
+
+.glass-card {
+  border-radius: 22px;
+  padding: 18px;
+  margin-top: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+}
+
+.glass-card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  letter-spacing: -0.03em;
+}
+
+.glass-card p,
+.glass-card li,
+.glass-card small {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.stat {
+  background: var(--glass-2);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 12px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  margin-bottom: 4px;
+}
+
+.timeline {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 16px 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 6px;
+  background: var(--gold);
+  box-shadow: 0 0 14px rgba(216,180,102,0.45);
+}
+
+.timeline-copy strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.timeline-copy span,
+.timeline-time {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.portal-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.portal-link {
+  color: var(--text);
+  text-decoration: none;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.portal-link strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.portal-link small {
+  display: block;
+}
+
+.install-guide {
+  display: grid;
+  gap: 14px;
+}
+
+.install-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.install-step-list {
+  display: grid;
+  gap: 10px;
+}
+
+.install-step {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.install-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(216,180,102,0.2);
+  color: var(--gold-2);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.install-callout {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.tab-panels .panel { display: none; }
+.tab-panels .panel.active { display: block; }
+
+.dock-wrap {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(10px + var(--safe-bottom));
+  width: min(398px, calc(100vw - 16px));
+  padding: 0 10px;
+}
+
+.dock {
+  border-radius: 26px;
+  padding: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.dock-btn {
+  min-height: 56px;
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.72);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font: inherit;
+}
+
+.dock-btn span {
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.dock-btn.active {
+  background: rgba(255,255,255,0.14);
+  color: var(--text);
+}
+
+svg { display: block; }
+
+@media (max-width: 390px) {
+  .hero-card h1 { font-size: 34px; }
+  .grid-2, .stats, .code-actions { grid-template-columns: 1fr; }
+  #openSavedBtn { grid-column: auto; }
+}
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="statusbar">
+      <span id="clock">9:41</span>
+      <div class="statusbar-icons">
+        <span>Client Portal</span>
+        <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M2 10c2.3-2.8 11.7-2.8 14 0M4.5 7.4c1.8-1.7 7.2-1.7 9 0M7.1 4.6c1.2-.8 2.6-.8 3.8 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="10" r="1.1" fill="currentColor"/></svg>
+      </div>
+    </div>
+
+    <div class="dynamic-island" aria-hidden="true"></div>
+
+    <div class="tab-panels">
+      <section class="panel active" data-panel="home">
+        <div class="hero-card">
+          <div class="eyebrow"><span class="live-dot"></span> First Class Client Portal</div>
+          <h1>Project access that feels easier on iPhone.</h1>
+          <p class="hero-sub">Save your code once, then open a calmer mobile portal for progress, photos, payments, files, and team updates.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="./portal.html" id="openProjectBtn" data-portal-link data-view="overview">Open Client Portal</a>
+            <a class="btn btn-secondary" href="?panel=install">Install on iPhone</a>
+          </div>
+        </div>
+
+        <div class="code-card">
+          <h3>Project access code</h3>
+          <p>Enter the code First Class sent you. Once it is saved, every portal button on this page can take you straight into the right portal view.</p>
+          <div class="code-row">
+            <input id="projectCodeInput" class="code-input" type="text" placeholder="FCR-XXXXXX" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+            <div class="code-actions">
+              <button class="btn btn-primary" type="button" id="openSavedBtn">Open Portal</button>
+              <button class="btn btn-secondary" type="button" id="saveCodeBtn">Save Code</button>
+              <button class="btn btn-ghost hidden" type="button" id="installBtn">Install</button>
+            </div>
+          </div>
+          <div class="install-note" id="codeStatus">Save your code once, then use Safari and Add to Home Screen for the fastest return path on iPhone.</div>
+        </div>
+
+        <div class="search-wrap">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <input id="searchInput" type="text" placeholder="Search updates, photos, invoices, timeline...">
+        </div>
+
+        <div class="section-title">Quick Access</div>
+        <div class="grid-2" id="quickGrid">
+          <a class="action-card project searchable" data-search="project progress timeline schedule milestones status" href="./portal.html" data-portal-link data-view="overview">
+            <div class="action-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M7 4v6M17 4v6M5 11h14v8H5z" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h2>Project</h2>
+            <p>Track progress, milestones, current phase, and what comes next.</p>
+          </a>
+
+          <a class="action-card photos searchable" data-search="photos gallery images before after updates site progress" href="./portal.html" data-portal-link data-view="progress">
+            <div class="action-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="14" rx="2" stroke="#fff" stroke-width="1.7"/><circle cx="9" cy="10" r="1.6" stroke="#fff" stroke-width="1.4"/><path d="m20 16-4.5-4.5L8 19" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h2>Photos</h2>
+            <p>Review site photos and visual updates without chasing messages.</p>
+          </a>
+
+          <a class="action-card payments searchable" data-search="payments invoices billing balance receipts" href="./portal.html" data-portal-link data-view="payments">
+            <div class="action-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="6" width="17" height="12" rx="2" stroke="#fff" stroke-width="1.7"/><path d="M3.5 10.5h17" stroke="#fff" stroke-width="1.7"/></svg>
+            </div>
+            <h2>Payments</h2>
+            <p>See payment records, balances, and invoice-related items in one view.</p>
+          </a>
+
+          <a class="action-card docs searchable" data-search="documents files pdf contract change orders paperwork" href="./portal.html" data-portal-link data-view="files">
+            <div class="action-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 3.5h6l4 4V20H8z" stroke="#fff" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.5V8h4" stroke="#fff" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </div>
+            <h2>Documents</h2>
+            <p>Contracts, PDFs, paperwork, and project documents in one place.</p>
+          </a>
+        </div>
+
+        <div class="glass-card">
+          <h3>What clients need most</h3>
+          <p>This app is focused on clarity: fewer calls to ask for status, easier access to updates, and a smoother experience from the phone.</p>
+          <div class="stats">
+            <div class="stat"><strong>1 Tap</strong><small>to open project portal</small></div>
+            <div class="stat"><strong>24/7</strong><small>access to project info</small></div>
+            <div class="stat"><strong>Clear</strong><small>updates and documents</small></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="journey">
+        <div class="glass-card">
+          <h3>Project Journey</h3>
+          <p>A client-facing app should feel calm and informative. This view highlights the path of the project in a way clients can understand quickly.</p>
+          <div class="timeline">
+            <div class="timeline-item">
+              <span class="timeline-dot"></span>
+              <div class="timeline-copy">
+                <strong>Planning</strong>
+                <span>Scope, selections, timeline, and project preparation.</span>
+              </div>
+              <span class="timeline-time">Phase 1</span>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-dot"></span>
+              <div class="timeline-copy">
+                <strong>Active Work</strong>
+                <span>Daily progress, photos, and milestones as the work moves forward.</span>
+              </div>
+              <span class="timeline-time">Phase 2</span>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-dot"></span>
+              <div class="timeline-copy">
+                <strong>Final Review</strong>
+                <span>Punch items, approvals, and final closeout documentation.</span>
+              </div>
+              <span class="timeline-time">Phase 3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="help">
+        <div class="glass-card">
+          <h3>Need help?</h3>
+          <p>The client portal should remove stress. These shortcuts take you to the right place faster instead of making you hunt through the whole portal.</p>
+          <div class="portal-list">
+            <a class="portal-link" href="./portal.html" data-portal-link data-view="overview">
+              <div>
+                <strong>Project overview</strong>
+                <small>Open your main dashboard with milestones and next steps.</small>
+              </div>
+              <span>Open</span>
+            </a>
+            <a class="portal-link" href="./portal.html" data-portal-link data-view="files">
+              <div>
+                <strong>Files and approvals</strong>
+                <small>Jump straight to documents, paperwork, and approvals.</small>
+              </div>
+              <span>Open</span>
+            </a>
+            <a class="portal-link" href="https://wa.me/12106065298">
+              <div>
+                <strong>Message the team</strong>
+                <small>Quick line for project questions and updates.</small>
+              </div>
+              <span>Chat</span>
+            </a>
+            <a class="portal-link" href="tel:2106065298">
+              <div>
+                <strong>Call First Class</strong>
+                <small>Direct contact for urgent matters.</small>
+              </div>
+              <span>Call</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="install">
+        <div class="glass-card install-guide">
+          <h3>Add the portal to your iPhone</h3>
+          <p id="installPanelIntro">On iPhone there is no normal app download here. The right path is Safari, then Share, then <strong>Add to Home Screen</strong>.</p>
+          <div class="install-step-list">
+            <div class="install-step">
+              <div class="install-step-num">1</div>
+              <div>Open this page in <strong>Safari</strong>, not inside another app browser.</div>
+            </div>
+            <div class="install-step">
+              <div class="install-step-num">2</div>
+              <div>Tap the <strong>Share</strong> button at the bottom of Safari.</div>
+            </div>
+            <div class="install-step">
+              <div class="install-step-num">3</div>
+              <div>Choose <strong>Add to Home Screen</strong> so the portal opens like an app.</div>
+            </div>
+          </div>
+          <div class="install-callout" id="installPanelCallout">No App Store download is needed. Once installed, the Home Screen shortcut opens the real client portal faster.</div>
+          <div class="install-actions">
+            <button class="btn btn-secondary" type="button" id="copyInstallLinkBtn">Copy Install Link</button>
+          </div>
+          <div class="portal-list" style="margin-top:0">
+            <a class="portal-link" href="./portal.html" data-portal-link data-view="overview">
+              <div>
+                <strong>Open the portal now</strong>
+                <small>Go directly to the real client portal and test your code.</small>
+              </div>
+              <span>Open</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="dock-wrap">
+    <nav class="dock" aria-label="Client app navigation">
+      <button class="dock-btn active" data-target="home" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 10.5 12 4l8 6.5V20H4v-9.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="dock-btn" data-target="journey" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 18h16M7 15l3-4 3 2 4-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Journey</span>
+      </button>
+      <button class="dock-btn" data-target="help" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><path d="M12 15.2v.1M10.1 9.6a2.2 2.2 0 1 1 3.1 2c-.7.4-1.2.9-1.2 1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <span>Help</span>
+      </button>
+      <button class="dock-btn" data-target="install" type="button">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4v10M8.5 10.5 12 14l3.5-3.5M5 19h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Install</span>
+      </button>
+    </nav>
+  </div>
+
+<script>
+const clock = document.getElementById("clock");
+const dockButtons = document.querySelectorAll(".dock-btn");
+const panels = document.querySelectorAll(".panel");
+const searchInput = document.getElementById("searchInput");
+const searchable = document.querySelectorAll(".searchable");
+const projectCodeInput = document.getElementById("projectCodeInput");
+const saveCodeBtn = document.getElementById("saveCodeBtn");
+const openSavedBtn = document.getElementById("openSavedBtn");
+const codeStatus = document.getElementById("codeStatus");
+const installBtn = document.getElementById("installBtn");
+const copyInstallLinkBtn = document.getElementById("copyInstallLinkBtn");
+const installPanelIntro = document.getElementById("installPanelIntro");
+const installPanelCallout = document.getElementById("installPanelCallout");
+const portalLinks = document.querySelectorAll("[data-portal-link]");
+const PORTAL_BASE_URL = "./portal.html";
+let deferredInstallPrompt = null;
+const userAgent = window.navigator.userAgent || "";
+const isIOS = /iphone|ipad|ipod/i.test(userAgent);
+const isIOSInAppBrowser = isIOS && /(crios|fxios|edgios|opios|instagram|fban|fbav|gsa|duckduckgo|line|snapchat|whatsapp)/i.test(userAgent);
+const isIOSSafari = isIOS && !isIOSInAppBrowser;
+
+function isStandaloneMode() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function setActivePanel(target) {
+  dockButtons.forEach((item) => item.classList.toggle("active", item.dataset.target === target));
+  panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.panel === target));
+}
+
+function updateClock() {
+  const now = new Date();
+  clock.textContent = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+}
+
+updateClock();
+setInterval(updateClock, 30000);
+
+dockButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setActivePanel(button.dataset.target);
+  });
+});
+
+function normalizeCode(value) {
+  return (value || "").trim().toUpperCase().replace(/\s+/g, "").replace(/[^A-Z0-9-]/g, "");
+}
+
+function setStatus(message) {
+  codeStatus.textContent = message;
+}
+
+function getInstallMessage() {
+  if (deferredInstallPrompt) {
+    return "This browser supports app install. Tap Install App.";
+  }
+  if (isIOSInAppBrowser) {
+    return "Open this page in Safari first, then use Share > Add to Home Screen.";
+  }
+  if (isIOSSafari) {
+    return "In Safari, tap Share > Add to Home Screen.";
+  }
+  return "Use your browser menu to install this app if the prompt does not appear.";
+}
+
+function refreshInstallPanel() {
+  if (!installPanelIntro || !installPanelCallout) return;
+
+  if (deferredInstallPrompt) {
+    installPanelIntro.innerHTML = "This browser supports an install prompt. Tap <strong>Install App</strong> to keep the portal on your Home Screen.";
+    installPanelCallout.textContent = "If the prompt does not appear, use your browser install menu. No App Store download is needed.";
+    return;
+  }
+
+  if (isIOSInAppBrowser) {
+    installPanelIntro.innerHTML = "You are inside an in-app browser. Copy this link, open it in <strong>Safari</strong>, then tap Share and <strong>Add to Home Screen</strong>.";
+    installPanelCallout.textContent = "This is the fix when iPhone seems like it is not downloading anything. Safari is the path that works.";
+    return;
+  }
+
+  if (isIOSSafari) {
+    installPanelIntro.innerHTML = "On iPhone there is no normal app download here. In <strong>Safari</strong>, tap Share, then <strong>Add to Home Screen</strong>.";
+    installPanelCallout.textContent = "No App Store download is needed. Once installed, the Home Screen shortcut opens the real client portal faster.";
+    return;
+  }
+
+  installPanelIntro.innerHTML = "Use your browser install controls to keep the portal one tap away from your Home Screen.";
+  installPanelCallout.textContent = "If your browser supports install, the prompt will appear. Otherwise use the browser menu.";
+}
+
+function refreshInstallUi() {
+  if (isStandaloneMode()) {
+    installBtn.classList.add("hidden");
+    refreshInstallPanel();
+    return;
+  }
+
+  if (deferredInstallPrompt) {
+    installBtn.classList.remove("hidden");
+    installBtn.textContent = "Install App";
+    refreshInstallPanel();
+    return;
+  }
+
+  if (isIOSInAppBrowser) {
+    installBtn.classList.remove("hidden");
+    installBtn.textContent = "Copy Link for Safari";
+    refreshInstallPanel();
+    return;
+  }
+
+  if (isIOS) {
+    installBtn.classList.remove("hidden");
+    installBtn.textContent = "How to Install";
+    refreshInstallPanel();
+    return;
+  }
+
+  installBtn.classList.add("hidden");
+  refreshInstallPanel();
+}
+
+function getSavedCode() {
+  return normalizeCode(localStorage.getItem("fcr_project_code") || "");
+}
+
+function buildPortalUrl(code, view) {
+  const normalized = normalizeCode(code);
+  const url = new URL(PORTAL_BASE_URL, window.location.href);
+  if (normalized) {
+    url.searchParams.set("code", normalized);
+  }
+  if (view) {
+    url.searchParams.set("view", view);
+  }
+  return url.toString();
+}
+
+function syncPortalLinks(code) {
+  portalLinks.forEach((link) => {
+    const view = link.dataset.view || "";
+    link.href = buildPortalUrl(code || projectCodeInput.value || getSavedCode(), view);
+  });
+}
+
+function persistCode(value) {
+  const code = normalizeCode(value);
+  if (!code) return "";
+  localStorage.setItem("fcr_project_code", code);
+  projectCodeInput.value = code;
+  syncPortalLinks(code);
+  return code;
+}
+
+function loadInitialCode() {
+  const params = new URLSearchParams(window.location.search);
+  const incoming = normalizeCode(params.get("code") || "");
+  const requestedPanel = params.get("panel");
+  const saved = getSavedCode();
+  const code = incoming || saved;
+
+  if (requestedPanel && document.querySelector(`.panel[data-panel="${requestedPanel}"]`)) {
+    setActivePanel(requestedPanel);
+  }
+
+  if (!code) {
+    syncPortalLinks("");
+    return;
+  }
+
+  projectCodeInput.value = code;
+  localStorage.setItem("fcr_project_code", code);
+  syncPortalLinks(code);
+
+  if (incoming) {
+    setStatus("Project code loaded from your secure link.");
+    if (window.history && window.location.search) {
+      const nextUrl = requestedPanel ? `${window.location.pathname}?panel=${requestedPanel}` : window.location.pathname;
+      window.history.replaceState(null, "", nextUrl);
+    }
+    return;
+  }
+
+  if (window.history && window.location.search && !requestedPanel) {
+    window.history.replaceState(null, "", window.location.pathname);
+  }
+
+  setStatus("Saved code ready. Tap Open to go straight to your portal.");
+}
+
+function openPortal(code, view) {
+  window.location.href = buildPortalUrl(code, view);
+}
+
+function getShareablePortalUrl() {
+  const url = new URL(window.location.href);
+  const code = normalizeCode(projectCodeInput.value || getSavedCode());
+  url.searchParams.delete("panel");
+  if (code) {
+    url.searchParams.set("code", code);
+  } else {
+    url.searchParams.delete("code");
+  }
+  return url.toString();
+}
+
+async function copyPortalLink() {
+  const url = getShareablePortalUrl();
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(url);
+    } else {
+      const input = document.createElement("input");
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      input.remove();
+    }
+    setStatus(isIOSInAppBrowser
+      ? "Install link copied. Open Safari, paste the link, then use Add to Home Screen."
+      : "Install link copied.");
+  } catch (error) {
+    setStatus("Could not copy the link. Open this page in Safari and use Add to Home Screen.");
+  }
+}
+
+saveCodeBtn.addEventListener("click", () => {
+  const code = persistCode(projectCodeInput.value);
+  if (!code) {
+    setStatus("Enter your project code first.");
+    return;
+  }
+  setStatus("Project code saved on this device.");
+});
+
+openSavedBtn.addEventListener("click", () => {
+  const code = persistCode(projectCodeInput.value || getSavedCode());
+  if (!code) {
+    setStatus("Enter or save your code before opening the portal.");
+    return;
+  }
+  setStatus("Opening your portal...");
+  openPortal(code, "overview");
+});
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  refreshInstallUi();
+  setStatus(getInstallMessage());
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  refreshInstallUi();
+  setStatus("Portal app added to your Home Screen.");
+});
+
+installBtn.addEventListener("click", async () => {
+  if (!deferredInstallPrompt) {
+    if (isIOSInAppBrowser) {
+      await copyPortalLink();
+      return;
+    }
+    setStatus(getInstallMessage());
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  refreshInstallUi();
+});
+
+copyInstallLinkBtn.addEventListener("click", copyPortalLink);
+
+loadInitialCode();
+refreshInstallUi();
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+  searchable.forEach((item) => {
+    const haystack = item.dataset.search || "";
+    item.style.display = !query || haystack.includes(query) ? "" : "none";
+  });
+});
+
+projectCodeInput.addEventListener("input", () => {
+  syncPortalLinks(projectCodeInput.value);
+});
+
+projectCodeInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    openSavedBtn.click();
+  }
+});
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>

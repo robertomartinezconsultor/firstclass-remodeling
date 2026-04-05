@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>First Class Project Advisor</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <p class="eyebrow">Local Project Advisor MVP</p>
+      <h1>First Class Remodeling TX Project Advisor</h1>
+      <p class="hero-copy">A local chat advisor for kitchen, bathroom and whole-home remodel inquiries. It guides homeowners toward the right service, gives a realistic budget band and helps your team collect follow-up details.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="tel:+12106065298">Call (210) 606-5298</a>
+        <a class="btn btn-secondary" href="https://wa.me/12106065298" target="_blank" rel="noreferrer">Open WhatsApp</a>
+      </div>
+    </section>
+
+    <section class="status-grid" id="statusGrid">
+      <article class="status-card">
+        <span class="status-label">Engine</span>
+        <strong id="engineLabel">Loading...</strong>
+      </article>
+      <article class="status-card">
+        <span class="status-label">Areas Served</span>
+        <strong id="areasServed">Loading...</strong>
+      </article>
+      <article class="status-card">
+        <span class="status-label">Captured Leads</span>
+        <strong id="leadCount">0</strong>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <p class="eyebrow">Service Catalog</p>
+          <h2>What your advisor can help with</h2>
+        </div>
+        <div class="service-list" id="serviceList"></div>
+      </div>
+
+      <div class="panel chat-panel">
+        <div class="panel-head">
+          <p class="eyebrow">Live Demo</p>
+          <h2>Chat with your project advisor</h2>
+          <p class="panel-copy">Try phrases like “I want a kitchen remodel in Stone Oak” or “I need a bathroom remodel and my budget is around $30,000”.</p>
+        </div>
+
+        <div class="quick-actions">
+          <button class="quick-chip" data-message="I want a kitchen remodel in Stone Oak.">Kitchen lead</button>
+          <button class="quick-chip" data-message="I need a bathroom remodel in Alamo Heights.">Bathroom lead</button>
+          <button class="quick-chip" data-message="I need a whole-home remodel and my budget is around $120,000.">Whole-home lead</button>
+        </div>
+
+        <div class="chat-log" id="chatLog"></div>
+
+        <form class="chat-form" id="chatForm">
+          <textarea id="messageInput" placeholder="Type a message..." rows="3" required></textarea>
+          <button class="btn btn-primary" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="content-grid lower-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <p class="eyebrow">Lead Snapshot</p>
+          <h2>What the assistant has collected</h2>
+        </div>
+        <div class="lead-grid" id="leadGrid"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <p class="eyebrow">Next Build</p>
+          <h2>Ready for n8n and Ollama</h2>
+        </div>
+        <ul class="check-list">
+          <li>Catalog already structured in CSV and JSON.</li>
+          <li>Prompt ready for the LLM layer.</li>
+          <li>Lead capture already stored in `data/leads.jsonl`.</li>
+          <li>`workflow/WORKFLOW_SPEC.md` maps the exact n8n flow.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

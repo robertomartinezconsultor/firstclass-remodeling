@@ -1,0 +1,86 @@
+<!--
+  ==============================================================
+  INSTRUCCIONES: Copia este código dentro del <head> de index.html
+  ANTES del cierre </head>
+  ==============================================================
+-->
+
+<!-- Google Analytics GA4 — REEMPLAZA G-XXXXXXXXXX con tu Measurement ID real -->
+<!-- Obtén tu ID en: analytics.google.com > Admin > Data Streams -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<!-- Google Search Console verification — REEMPLAZA content con tu código real -->
+<!-- Obtén el código en: search.google.com/search-console > Add Property > HTML tag -->
+<meta name="google-site-verification" content="REEMPLAZA_CON_TU_CODIGO_GSC" />
+
+<!-- Schema.org LocalBusiness — ayuda a Google a mostrar tu negocio en búsquedas locales -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": "https://www.firstclassremodelingtx.com/#business",
+  "name": "First Class Remodeling TX",
+  "url": "https://www.firstclassremodelingtx.com",
+  "logo": "https://www.firstclassremodelingtx.com/logofirstclass.jpg",
+  "image": "https://www.firstclassremodelingtx.com/logofirstclass.jpg",
+  "description": "Licensed and insured remodeling contractor serving San Antonio TX. Specializing in bathroom remodels, kitchen remodels, flooring, painting, and whole-home transformations.",
+  "telephone": "+12106065298",
+  "email": "hello@firstclassremodelingtx.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "San Antonio",
+    "addressRegion": "TX",
+    "postalCode": "78258",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 29.5897,
+    "longitude": -98.4938
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday"],
+      "opens": "09:00",
+      "closes": "14:00"
+    }
+  ],
+  "areaServed": [
+    {"@type": "City", "name": "San Antonio"},
+    {"@type": "City", "name": "Helotes"},
+    {"@type": "City", "name": "Boerne"},
+    {"@type": "City", "name": "Stone Oak"},
+    {"@type": "City", "name": "Shavano Park"},
+    {"@type": "City", "name": "Converse"},
+    {"@type": "City", "name": "Universal City"}
+  ],
+  "priceRange": "$$-$$$",
+  "sameAs": [
+    "https://www.facebook.com/firstclassremodelingsatx/"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Remodeling Services",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Bathroom Remodel San Antonio"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kitchen Remodel San Antonio"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Flooring Installation San Antonio"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Home Addition San Antonio"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Interior Painting San Antonio"}}
+    ]
+  }
+}
+</script>

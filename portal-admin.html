@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>Admin — First Class Remodeling Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+  <!-- PDF.js for local extraction (no API key needed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+
+  <!-- EmailJS — send from estimates@firstclassremodelingtx.com -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){ emailjs.init({ publicKey: 'Xz5v4VnXrRnPfmKhH' }); })();
+  </script>
+
+  <style>
+    :root {
+      --gold:#C9A84C; --gold-light:#E8C96B; --gold-dim:rgba(201,168,76,0.1);
+      --dark:#0D0D0D; --dark-2:#1A1A1A; --dark-3:#252525; --dark-4:#2E2E2E;
+      --white:#FAFAF8; --green:#22C55E; --red:#EF4444; --blue:#3B82F6;
+      --gray:#6B7280; --border:rgba(255,255,255,0.08);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'DM Sans',sans-serif;background:var(--dark);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased;}
+    button{cursor:pointer;font-family:'DM Sans',sans-serif;}
+    input,textarea,select{font-family:'DM Sans',sans-serif;}
+
+    /* ── PASSWORD GATE ── */
+    #pass-gate{
+      position:fixed;inset:0;background:var(--dark);z-index:9999;
+      display:flex;align-items:center;justify-content:center;padding:24px;
+    }
+    .pass-card{
+      background:var(--dark-2);border:1px solid var(--border);border-radius:24px;
+      padding:48px 40px;width:100%;max-width:380px;text-align:center;
+    }
+    .pass-logo{
+      width:56px;height:56px;background:var(--gold);border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Playfair Display',serif;font-weight:700;color:var(--dark);font-size:22px;
+      margin:0 auto 24px;box-shadow:0 4px 20px rgba(201,168,76,0.3);
+    }
+    .pass-title{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:8px;}
+    .pass-sub{font-size:13px;color:var(--gray);margin-bottom:28px;}
+    .pass-input{
+      width:100%;background:var(--dark-3);border:1px solid var(--border);
+      color:var(--white);padding:14px 18px;border-radius:12px;
+      font-size:16px;text-align:center;letter-spacing:3px;margin-bottom:12px;
+      transition:border-color 0.2s;
+    }
+    .pass-input:focus{outline:none;border-color:var(--gold);}
+    .pass-btn{
+      width:100%;background:var(--gold);color:var(--dark);border:none;
+      padding:14px;border-radius:12px;font-size:15px;font-weight:700;
+      box-shadow:0 4px 20px rgba(201,168,76,0.25);transition:all 0.2s;
+    }
+    .pass-btn:hover{background:var(--gold-light);}
+    .pass-btn:active{transform:scale(0.97);}
+    .pass-error{font-size:12px;color:#FCA5A5;margin-top:10px;display:none;}
+    .pass-lockout{font-size:13px;color:var(--gray);margin-top:12px;display:none;}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+    /* ── HEADER ── */
+    .header{
+      background:var(--dark-2);border-bottom:1px solid var(--border);
+      padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:100;
+    }
+    .header-logo{display:flex;align-items:center;gap:12px;}
+    .logo-icon{
+      width:36px;height:36px;background:var(--gold);border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Playfair Display',serif;font-weight:700;color:var(--dark);font-size:15px;
+    }
+    .logo-text{font-weight:700;font-size:15px;}
+    .logo-sub{font-size:11px;color:var(--gray);}
+    .header-right{display:flex;align-items:center;gap:10px;}
+    .admin-badge{
+      background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);
+      color:var(--red);padding:5px 12px;border-radius:100px;font-size:11px;font-weight:700;
+    }
+    .logout-btn{
+      background:transparent;border:1px solid var(--border);color:var(--gray);
+      padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;
+    }
+    .logout-btn:hover{border-color:var(--red);color:var(--red);}
+
+    /* ── TABS ── */
+    .tabs{
+      display:flex;border-bottom:1px solid var(--border);padding:0 32px;
+      background:var(--dark-2);overflow-x:auto;scrollbar-width:none;
+    }
+    .tabs::-webkit-scrollbar{display:none;}
+    .tab{
+      flex-shrink:0;padding:14px 20px;font-size:13px;font-weight:600;cursor:pointer;
+      color:var(--gray);border-bottom:2px solid transparent;
+      background:none;border-top:none;border-left:none;border-right:none;
+      transition:all 0.2s;
+    }
+    .tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+    .tab:hover{color:var(--white);}
+
+    /* ── PANELS ── */
+    .panel{display:none;padding:32px;animation:fadeIn 0.2s ease;}
+    .panel.active{display:block;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── SECTION TITLE ── */
+    .section-title{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:20px;}
+
+    /* ── FORMS ── */
+    .form-card{background:var(--dark-2);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;}
+    .form-card-title{font-size:15px;font-weight:700;margin-bottom:4px;}
+    .form-card-desc{font-size:12px;color:var(--gray);margin-bottom:20px;line-height:1.5;}
+    .form-grid{display:grid;gap:14px;}
+    .form-grid-2{grid-template-columns:1fr 1fr;}
+    .form-grid-3{grid-template-columns:1fr 1fr 1fr;}
+    .form-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:6px;}
+    .form-input,.form-select,.form-textarea{
+      width:100%;background:var(--dark-3);border:1px solid var(--border);
+      color:var(--white);padding:11px 14px;border-radius:10px;font-size:13px;
+      transition:border-color 0.2s,box-shadow 0.2s;
+    }
+    .form-input:focus,.form-select:focus,.form-textarea:focus{
+      outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.08);
+    }
+    .form-input.filled{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.04);}
+    .form-textarea{resize:vertical;min-height:80px;line-height:1.6;}
+    .form-input::placeholder,.form-textarea::placeholder{color:var(--gray);}
+
+    /* ── BUTTONS ── */
+    .btn-gold{
+      background:var(--gold);color:var(--dark);border:none;
+      padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;
+      transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;
+    }
+    .btn-gold:hover{background:var(--gold-light);}
+    .btn-gold:active{transform:scale(0.97);}
+    .btn-gold:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+    .btn-gold.full{width:100%;justify-content:center;}
+    .btn-outline{
+      background:transparent;border:1px solid var(--border);color:var(--white);
+      padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;
+      transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;
+    }
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+    .btn-danger{
+      background:transparent;border:1px solid rgba(239,68,68,0.3);color:var(--red);
+      padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;
+      transition:all 0.2s;
+    }
+    .btn-danger:hover{background:rgba(239,68,68,0.08);}
+
+    /* ── PDF DROPZONE ── */
+    .dropzone{
+      border:2px dashed rgba(201,168,76,0.3);border-radius:16px;
+      padding:48px 24px;text-align:center;cursor:pointer;
+      transition:all 0.2s;background:var(--dark-3);position:relative;
+    }
+    .dropzone:hover,.dropzone.drag-over{
+      border-color:var(--gold);background:rgba(201,168,76,0.04);
+    }
+    .dropzone input[type=file]{
+      position:absolute;inset:0;opacity:0;cursor:pointer;
+    }
+    .dropzone-icon{font-size:40px;margin-bottom:12px;opacity:0.6;}
+    .dropzone-title{font-size:16px;font-weight:700;margin-bottom:6px;}
+    .dropzone-sub{font-size:13px;color:var(--gray);}
+    .dropzone-filename{
+      margin-top:14px;font-size:13px;color:var(--gold);font-weight:600;display:none;
+    }
+
+    /* ── PDF EXTRACT RESULT ── */
+    .extract-result{
+      background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);
+      border-radius:12px;padding:16px;margin-bottom:16px;
+      font-size:13px;color:var(--gold);display:none;
+    }
+    .extract-result.visible{display:block;}
+
+    /* ── CODE REVEAL ── */
+    .code-reveal{
+      background:var(--dark-3);border:1px solid rgba(201,168,76,0.3);border-radius:12px;
+      padding:24px;text-align:center;display:none;margin-bottom:20px;
+    }
+    .code-reveal.visible{display:block;}
+    .code-reveal-label{font-size:12px;color:var(--gray);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;}
+    .code-reveal-value{
+      font-family:'Playfair Display',serif;font-size:36px;color:var(--gold);
+      letter-spacing:4px;margin-bottom:16px;
+    }
+    .copy-code-btn{
+      background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);color:var(--gold);
+      padding:8px 20px;border-radius:8px;font-size:13px;font-weight:700;transition:all 0.2s;
+    }
+    .copy-code-btn:hover{background:rgba(201,168,76,0.2);}
+
+    /* ── PROJECTS TABLE ── */
+    .table-wrap{background:var(--dark-2);border:1px solid var(--border);border-radius:16px;overflow:hidden;overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;}
+    thead{background:var(--dark-3);}
+    th{padding:12px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray);border-bottom:1px solid var(--border);white-space:nowrap;}
+    td{padding:14px 16px;font-size:13px;border-bottom:1px solid var(--border);color:rgba(255,255,255,0.85);}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(255,255,255,0.02);}
+    .badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;}
+    .badge-planning{background:rgba(107,114,128,0.15);color:var(--gray);}
+    .badge-in_progress{background:rgba(34,197,94,0.12);color:var(--green);}
+    .badge-punch_list{background:rgba(201,168,76,0.12);color:var(--gold);}
+    .badge-complete{background:rgba(34,197,94,0.12);color:var(--green);}
+    .mini-bar{height:4px;border-radius:100px;background:var(--dark-4);width:80px;overflow:hidden;}
+    .mini-bar-fill{height:100%;background:var(--gold);border-radius:100px;}
+
+    /* ── STATS ROW ── */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+    .stat-card{background:var(--dark-2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+    .stat-label{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;font-weight:600;}
+    .stat-value{font-family:'Playfair Display',serif;font-size:26px;}
+    .stat-value.gold{color:var(--gold);}
+    .stat-value.green{color:var(--green);}
+
+    /* ── MANAGE SUB-SECTIONS ── */
+    .manage-section{
+      background:var(--dark-2);border:1px solid var(--border);border-radius:16px;
+      padding:24px;margin-bottom:16px;
+    }
+    .manage-section-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+    .range-wrap{display:flex;align-items:center;gap:16px;}
+    .range-input{flex:1;accent-color:var(--gold);height:6px;}
+    .range-display{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);min-width:50px;text-align:right;}
+
+    /* ── PHOTO UPLOAD AREA ── */
+    .photo-previews{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:16px;}
+    .photo-preview-item{background:var(--dark-3);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+    .photo-preview-img{width:100%;aspect-ratio:4/3;object-fit:cover;}
+    .photo-preview-fields{padding:10px;}
+    .photo-preview-caption{
+      width:100%;background:var(--dark-4);border:1px solid var(--border);
+      color:var(--white);padding:7px 10px;border-radius:6px;font-size:12px;
+      margin-bottom:6px;
+    }
+    .photo-preview-caption:focus{outline:none;border-color:var(--gold);}
+    .photo-preview-phase{
+      width:100%;background:var(--dark-4);border:1px solid var(--border);
+      color:var(--white);padding:6px 10px;border-radius:6px;font-size:12px;
+    }
+    .photo-preview-phase:focus{outline:none;border-color:var(--gold);}
+    .upload-progress{height:4px;border-radius:100px;background:var(--dark-4);margin-top:8px;overflow:hidden;display:none;}
+    .upload-progress-fill{height:100%;background:var(--gold);border-radius:100px;transition:width 0.3s;width:0%;}
+
+    /* ── PHASE TABLE ── */
+    .phase-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+    .phase-row:last-child{border-bottom:none;}
+    .phase-row-name{font-size:13px;font-weight:500;}
+    .phase-row-select{
+      background:var(--dark-3);border:1px solid var(--border);color:var(--white);
+      padding:6px 10px;border-radius:6px;font-size:12px;
+    }
+
+    /* ── LOADING ── */
+    .loading{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.2);border-top-color:var(--dark);border-radius:50%;animation:spin 0.8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-gold{border:2px solid rgba(201,168,76,0.2);border-top-color:var(--gold);display:inline-block;width:16px;height:16px;border-radius:50%;animation:spin 0.8s linear infinite;}
+
+    /* ── TOAST ── */
+    #toast{
+      position:fixed;bottom:24px;right:24px;z-index:3000;
+      background:var(--dark-2);border:1px solid var(--border);border-radius:12px;
+      padding:14px 20px;font-size:13px;
+      transform:translateY(60px);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events:none;max-width:340px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.4);
+    }
+    #toast.visible{transform:translateY(0);opacity:1;}
+    #toast.success{border-color:rgba(34,197,94,0.3);}
+    #toast.error{border-color:rgba(239,68,68,0.3);}
+    #toast.info{border-color:rgba(201,168,76,0.3);}
+
+    @media(max-width:900px){
+      .stats-row{grid-template-columns:repeat(2,1fr);}
+      .form-grid-2,.form-grid-3{grid-template-columns:1fr;}
+      .panel{padding:16px;}
+      .tabs{padding:0 16px;}
+      .header{padding:0 16px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── PASSWORD GATE ── -->
+<div id="pass-gate">
+  <div class="pass-card">
+    <div class="pass-logo">FC</div>
+    <h2 class="pass-title">Admin Access</h2>
+    <p class="pass-sub">First Class Remodeling — Project Portal</p>
+    <input class="pass-input" id="passInput" type="password" placeholder="••••••••"
+      onkeypress="if(event.key==='Enter')checkPass()"/>
+    <button class="pass-btn" onclick="checkPass()">Enter Admin Panel</button>
+    <div class="pass-error" id="passError">Incorrect password. Try again.</div>
+    <div class="pass-lockout" id="passLockout"></div>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="header-logo">
+    <div class="logo-icon">FC</div>
+    <div>
+      <div class="logo-text">First Class Remodeling TX</div>
+      <div class="logo-sub">Admin Panel</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="admin-badge">🔐 Admin</div>
+    <button class="logout-btn" onclick="adminLogout()">Logout</button>
+  </div>
+</div>
+
+<!-- ── TABS ── -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('projects',this)">📁 All Projects</button>
+  <button class="tab" onclick="switchTab('import',this)">📄 Smart Import (PDF)</button>
+  <button class="tab" onclick="switchTab('manage',this)">⚙️ Manage Project</button>
+  <button class="tab" onclick="switchTab('create',this)">➕ New (Manual)</button>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PANEL: ALL PROJECTS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="panel active" id="panel-projects">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+    <h2 class="section-title" style="margin:0">📁 All Projects</h2>
+    <button class="btn-outline" onclick="loadAllProjects()">↻ Refresh</button>
+  </div>
+  <div class="stats-row" id="projectStats">
+    <div class="stat-card"><div class="stat-label">Total Projects</div><div class="stat-value gold" id="sTotal">—</div></div>
+    <div class="stat-card"><div class="stat-label">Active</div><div class="stat-value green" id="sActive">—</div></div>
+    <div class="stat-card"><div class="stat-label">Contract Value</div><div class="stat-value gold" id="sContract">—</div></div>
+    <div class="stat-card"><div class="stat-label">Outstanding</div><div class="stat-value" id="sBalance" style="color:var(--red)">—</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Code</th><th>Client</th><th>Type</th><th>Progress</th><th>Status</th>
+        <th>Estimate</th><th>Contract</th><th>Paid</th><th>Balance</th><th>Action</th>
+      </tr></thead>
+      <tbody id="projectsTableBody">
+        <tr><td colspan="10" style="text-align:center;color:var(--gray);padding:40px">Loading projects...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PANEL: SMART IMPORT -->
+<!-- ══════════════════════════════════════════ -->
+<div class="panel" id="panel-import">
+  <h2 class="section-title">📄 Smart Estimate Import</h2>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:28px;line-height:1.6">
+    Upload a PDF estimate or invoice. Claude AI will automatically extract the client name, address, contract amount, payment schedule, and scope of work — then pre-fill the project form for you.
+  </p>
+
+  <!-- PDF Dropzone -->
+  <div class="form-card">
+    <div class="form-card-title">1. Upload PDF Estimate</div>
+    <div class="form-card-desc">Drag and drop your estimate PDF or click to select.</div>
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="pdfInput" accept="application/pdf" onchange="handlePDFSelect(this)"/>
+      <div class="dropzone-icon">📄</div>
+      <div class="dropzone-title">Drop estimate PDF here</div>
+      <div class="dropzone-sub">or click to browse files</div>
+      <div class="dropzone-filename" id="pdfFilename"></div>
+    </div>
+    <button class="btn-gold full" id="extractBtn" style="margin-top:16px" onclick="extractFromPDF()" disabled>
+      📋 Extract from PDF
+    </button>
+  </div>
+
+  <!-- Extracted Data (auto-filled form) -->
+  <div class="extract-result" id="extractResult">
+    ✓ Data extracted successfully — review and edit below before creating the project.
+  </div>
+
+  <div id="importForm" style="display:none">
+    <!-- Client Info -->
+    <div class="form-card">
+      <div class="form-card-title">2. Client Information</div>
+      <div class="form-card-desc">Extracted from your PDF — edit if needed.</div>
+      <div class="form-grid form-grid-2">
+        <div>
+          <div class="form-label">Client Name</div>
+          <input class="form-input" id="imp-clientName" placeholder="Full name"/>
+        </div>
+        <div>
+          <div class="form-label">Phone</div>
+          <input class="form-input" id="imp-clientPhone" placeholder="(210) 000-0000"/>
+        </div>
+        <div>
+          <div class="form-label">Email</div>
+          <input class="form-input" id="imp-clientEmail" placeholder="email@example.com"/>
+        </div>
+        <div>
+          <div class="form-label">Project Type</div>
+          <select class="form-select" id="imp-projectType">
+            <option value="">Select type...</option>
+            <option>Bathroom Remodel</option>
+            <option>Kitchen Remodel</option>
+            <option>Flooring</option>
+            <option>Painting</option>
+            <option>Room Addition</option>
+            <option>Whole-Home Remodel</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div style="grid-column:1/-1">
+          <div class="form-label">Project Address</div>
+          <input class="form-input" id="imp-address" placeholder="Full address"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Financial -->
+    <div class="form-card">
+      <div class="form-card-title">3. Contract & Financials</div>
+      <div class="form-grid form-grid-3">
+        <div>
+          <div class="form-label">Contract Total ($)</div>
+          <input class="form-input" id="imp-contractAmount" type="number" placeholder="0"/>
+        </div>
+        <div>
+          <div class="form-label">Start Date</div>
+          <input class="form-input" id="imp-startDate" type="date"/>
+        </div>
+        <div>
+          <div class="form-label">Est. Completion</div>
+          <input class="form-input" id="imp-endDate" type="date"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scope -->
+    <div class="form-card">
+      <div class="form-card-title">4. Project Description</div>
+      <textarea class="form-textarea" id="imp-description" placeholder="Scope of work extracted from estimate..." style="min-height:120px"></textarea>
+    </div>
+
+    <!-- Payment schedule extracted -->
+    <div class="form-card" id="payScheduleCard" style="display:none">
+      <div class="form-card-title">5. Payment Schedule (from estimate)</div>
+      <div class="form-card-desc">These will be added as pending payment records automatically.</div>
+      <div id="payScheduleList"></div>
+    </div>
+
+    <!-- Line items -->
+    <div class="form-card" id="lineItemsCard" style="display:none">
+      <div class="form-card-title">6. Line Items</div>
+      <div id="lineItemsList" style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.8"></div>
+    </div>
+
+    <button class="btn-gold full" id="createFromImportBtn" onclick="createProjectFromImport()">
+      ✓ Create Project &amp; Generate Client Code
+    </button>
+  </div>
+
+  <!-- Success: show project code -->
+  <div class="code-reveal" id="importCodeReveal">
+    <div class="code-reveal-label">Project created — share access with your client</div>
+    <div class="code-reveal-value" id="importCodeValue">FCR-XXXXXX</div>
+    <div style="font-size:13px;color:var(--gray);margin-bottom:16px" id="importClientName"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px">
+      <button class="copy-code-btn" onclick="copyCode('importCodeValue')">📋 Copy Code</button>
+      <a id="importSendEmailBtn" href="#" class="btn-gold" style="text-decoration:none;font-size:13px">📧 Send to Client</a>
+    </div>
+    <div style="margin-top:8px">
+      <button class="btn-outline" onclick="resetImportForm()">Import Another</button>
+      <button class="btn-gold" style="margin-left:8px" onclick="openManageForCode(document.getElementById('importCodeValue').textContent)">Manage Project →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PANEL: MANAGE PROJECT -->
+<!-- ══════════════════════════════════════════ -->
+<div class="panel" id="panel-manage">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+    <h2 class="section-title" style="margin:0">⚙️ Manage Project</h2>
+    <div style="display:flex;gap:10px;align-items:center;flex:1;max-width:360px">
+      <select class="form-select" id="manageCodeSelect" style="flex:1">
+        <option value="">Select a project...</option>
+      </select>
+      <button class="btn-gold" onclick="loadProjectForManage()">Load</button>
+    </div>
+  </div>
+
+  <div id="manageContent" style="display:none">
+
+    <!-- Client header -->
+    <div style="background:var(--dark-2);border:1px solid rgba(201,168,76,0.2);border-radius:16px;padding:20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px" id="mgClientName">—</div>
+        <div style="font-size:13px;color:var(--gray)" id="mgAddress">—</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold)" id="mgCode">—</div>
+        <button class="copy-code-btn" onclick="copyCode('mgCode')">📋 Copy</button>
+      </div>
+    </div>
+
+    <!-- Estimate acceptance status -->
+    <div class="manage-section" id="mgEstimateSection" style="display:none">
+      <div class="manage-section-title">📄 Estimate Status</div>
+      <div id="mgEstimateInfo" style="font-size:13px;line-height:1.8;color:rgba(255,255,255,0.7)"></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="manage-section">
+      <div class="manage-section-title">📊 Progress</div>
+      <div class="range-wrap">
+        <input type="range" class="range-input" id="mgProgress" min="0" max="100" value="0"
+          oninput="document.getElementById('mgProgressVal').textContent=this.value+'%'"/>
+        <div class="range-display" id="mgProgressVal">0%</div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <div>
+          <div class="form-label" style="margin-bottom:6px">Status</div>
+          <select class="form-select" id="mgStatus" style="width:auto">
+            <option value="planning">Planning</option>
+            <option value="in_progress">In Progress</option>
+            <option value="punch_list">Punch List</option>
+            <option value="complete">Complete</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <button class="btn-gold" onclick="saveProgress()">Save Progress</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phases -->
+    <div class="manage-section">
+      <div class="manage-section-title">🏗️ Phases</div>
+      <div id="mgPhasesList"></div>
+      <button class="btn-gold" style="margin-top:16px" onclick="savePhases()">Save Phases</button>
+    </div>
+
+    <!-- Upload Photos -->
+    <div class="manage-section">
+      <div class="manage-section-title">📸 Upload Progress Photos</div>
+      <input type="file" id="photoFiles" multiple accept="image/*" onchange="previewPhotos(this)" style="display:none"/>
+      <button class="btn-outline" onclick="document.getElementById('photoFiles').click()">📂 Choose Photos</button>
+      <div class="photo-previews" id="photoPreviews"></div>
+      <button class="btn-gold full" id="uploadPhotosBtn" onclick="uploadPhotos()" style="margin-top:16px;display:none">
+        ⬆️ Upload Photos
+      </button>
+      <div class="upload-progress" id="uploadProgressBar">
+        <div class="upload-progress-fill" id="uploadProgressFill"></div>
+      </div>
+    </div>
+
+    <!-- Add Payment -->
+    <div class="manage-section">
+      <div class="manage-section-title">💳 Add Payment</div>
+      <div class="form-grid form-grid-2">
+        <div>
+          <div class="form-label">Amount ($)</div>
+          <input class="form-input" id="payAmount" type="number" placeholder="5000"/>
+        </div>
+        <div>
+          <div class="form-label">Date</div>
+          <input class="form-input" id="payDate" type="date"/>
+        </div>
+        <div>
+          <div class="form-label">Description</div>
+          <input class="form-input" id="payDesc" placeholder="Draw 1 — Demo complete"/>
+        </div>
+        <div>
+          <div class="form-label">Method</div>
+          <select class="form-select" id="payMethod">
+            <option>Check</option><option>Zelle</option><option>Cash</option>
+            <option>Credit Card</option><option>Bank Transfer</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <select class="form-select" id="payStatus">
+            <option value="paid">Paid</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:flex-end">
+          <button class="btn-gold full" onclick="addPayment()">+ Add Payment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Change Order -->
+    <div class="manage-section">
+      <div class="manage-section-title">📋 Add Change Order</div>
+      <div class="form-grid" style="gap:12px">
+        <div>
+          <div class="form-label">Description</div>
+          <textarea class="form-textarea" id="coDesc" placeholder="Describe the change..."></textarea>
+        </div>
+        <div class="form-grid-2 form-grid" style="gap:12px">
+          <div>
+            <div class="form-label">Additional Amount ($)</div>
+            <input class="form-input" id="coAmount" type="number" placeholder="1500"/>
+          </div>
+          <div>
+            <div class="form-label">Status</div>
+            <select class="form-select" id="coStatus">
+              <option value="pending">Pending Client Approval</option>
+              <option value="approved">Approved</option>
+              <option value="declined">Declined</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="form-label">Reason / Notes</div>
+          <input class="form-input" id="coReason" placeholder="Optional reason..."/>
+        </div>
+        <button class="btn-gold" onclick="addChangeOrder()">+ Add Change Order</button>
+      </div>
+    </div>
+
+    <!-- Post Update -->
+    <div class="manage-section">
+      <div class="manage-section-title">🔔 Post Update to Client</div>
+      <div class="form-grid-2 form-grid" style="gap:12px;margin-bottom:12px">
+        <div>
+          <div class="form-label">Update Type</div>
+          <select class="form-select" id="updateType">
+            <option value="note">📝 General Note</option>
+            <option value="milestone">🏆 Milestone Reached</option>
+            <option value="photo">📸 Photos Added</option>
+            <option value="payment">💳 Payment Received</option>
+            <option value="delay">⚠️ Delay Notice</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-label">Message</div>
+      <textarea class="form-textarea" id="updateMsg" placeholder="Write your update for the client..." style="min-height:100px"></textarea>
+      <button class="btn-gold" style="margin-top:12px" onclick="postUpdate()">📤 Send Update</button>
+    </div>
+
+    <!-- Resend Invite -->
+    <div class="manage-section">
+      <div class="manage-section-title">📧 Client Access</div>
+      <div id="mgClientEmail" style="font-size:13px;color:var(--gray);margin-bottom:10px">—</div>
+      <button class="btn-outline" onclick="resendInvite()" id="resendInviteBtn">📧 Resend Portal Invite</button>
+      <span id="resendStatus" style="font-size:12px;color:var(--green);margin-left:10px;display:none">✓ Sent</span>
+    </div>
+
+    <!-- Client Messages -->
+    <div class="manage-section">
+      <div class="manage-section-title">💬 Client Messages</div>
+      <div id="adminChatMessages" style="max-height:300px;overflow-y:auto;margin-bottom:12px;font-size:13px"></div>
+      <div style="display:flex;gap:8px">
+        <input class="form-input" id="adminChatInput" placeholder="Reply to client..." style="flex:1"
+               onkeydown="if(event.key==='Enter'){event.preventDefault();sendAdminMessage()}">
+        <button class="btn-gold" onclick="sendAdminMessage()" style="white-space:nowrap">Send</button>
+      </div>
+    </div>
+
+    <!-- Danger zone -->
+    <div class="manage-section" style="border-color:rgba(239,68,68,0.15)">
+      <div class="manage-section-title" style="color:var(--red)">⚠️ Danger Zone</div>
+      <button class="btn-danger" onclick="deleteProject()">Delete This Project</button>
+    </div>
+
+  </div><!-- /manageContent -->
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PANEL: CREATE MANUAL -->
+<!-- ══════════════════════════════════════════ -->
+<div class="panel" id="panel-create">
+  <h2 class="section-title">➕ New Project (Manual)</h2>
+
+  <div class="form-card">
+    <div class="form-card-title">Client Information</div>
+    <div class="form-grid form-grid-2">
+      <div><div class="form-label">Client Name</div><input class="form-input" id="cr-clientName" placeholder="Full name"/></div>
+      <div><div class="form-label">Phone</div><input class="form-input" id="cr-clientPhone" placeholder="(210) 000-0000"/></div>
+      <div><div class="form-label">Email</div><input class="form-input" id="cr-clientEmail" placeholder="email@example.com"/></div>
+      <div>
+        <div class="form-label">Project Type</div>
+        <select class="form-select" id="cr-projectType">
+          <option value="">Select type...</option>
+          <option>Bathroom Remodel</option><option>Kitchen Remodel</option>
+          <option>Flooring</option><option>Painting</option>
+          <option>Room Addition</option><option>Whole-Home Remodel</option><option>Other</option>
+        </select>
+      </div>
+      <div style="grid-column:1/-1"><div class="form-label">Project Address</div><input class="form-input" id="cr-address" placeholder="Full address"/></div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-card-title">Project Details</div>
+    <div class="form-grid form-grid-3">
+      <div><div class="form-label">Contract Amount ($)</div><input class="form-input" id="cr-contractAmount" type="number" placeholder="25000"/></div>
+      <div><div class="form-label">Start Date</div><input class="form-input" id="cr-startDate" type="date"/></div>
+      <div><div class="form-label">Est. Completion</div><input class="form-input" id="cr-endDate" type="date"/></div>
+      <div style="grid-column:1/-1"><div class="form-label">Project Description</div><textarea class="form-textarea" id="cr-description" placeholder="Scope of work, materials, special notes..."></textarea></div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-card-title">Initial Phases</div>
+    <div class="form-card-desc">Select the phases for this project. You can update status later.</div>
+    <div id="createPhasesList">
+      <div style="color:var(--gray);font-size:13px">Loading default phases...</div>
+    </div>
+  </div>
+
+  <button class="btn-gold full" id="createManualBtn" onclick="createManualProject()">
+    ✓ Create Project &amp; Generate Code
+  </button>
+  <br/>
+  <div class="code-reveal" id="createCodeReveal">
+    <div class="code-reveal-label">Project created — share access with your client</div>
+    <div class="code-reveal-value" id="createCodeValue">FCR-XXXXXX</div>
+    <div style="font-size:13px;color:var(--gray);margin-bottom:16px" id="createClientNameReveal"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <button class="copy-code-btn" onclick="copyCode('createCodeValue')">📋 Copy Code</button>
+      <a id="createSendEmailBtn" href="#" class="btn-gold" style="text-decoration:none;font-size:13px">📧 Send to Client</a>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── CONSTANTS ──
+const ADMIN_PASSWORD = 'admin2026'; // Change this
+const WRITE_SECRET   = 'FCR_WRITE_2026';
+
+const DEFAULT_PHASES = [
+  'Demolition','Framing','Plumbing','Electrical',
+  'Drywall','Tile & Flooring','Cabinetry','Painting','Finish & Trim','Final Inspection'
+];
+
+// ── FIREBASE CONFIG ──
+// PASTE YOUR FIREBASE CONFIG HERE
+const firebaseConfig = {
+  apiKey: "AIzaSyBdIj8M1G58jQ5byn8LKBIee_OxvQJEj_s",
+  authDomain: "firstclass-portal.firebaseapp.com",
+  projectId: "firstclass-portal",
+  storageBucket: "firstclass-portal.firebasestorage.app",
+  messagingSenderId: "71548509095",
+  appId: "1:71548509095:web:a78f548974b126dc86b482",
+  measurementId: "G-RTVBM0YJPC"
+};
+firebase.initializeApp(firebaseConfig);
+const db      = firebase.firestore();
+const storage = firebase.storage();
+
+// ── STATE ──
+let currentManageCode = '';
+let currentManagePhases = [];
+let extractedPaySchedule = [];
+let photoFilesData = [];
+
+// ── PASSWORD GATE ──
+let passAttempts = 0;
+let passLocked = false;
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('fcr_admin_auth') === '1') {
+    initAdmin();
+  }
+  document.getElementById('passInput').focus();
+  buildCreatePhases();
+  // Set today's date for payment date
+  document.getElementById('payDate').value = new Date().toISOString().slice(0,10);
+});
+
+function checkPass() {
+  if (passLocked) return;
+  const val = document.getElementById('passInput').value;
+  const errEl = document.getElementById('passError');
+  if (val === ADMIN_PASSWORD) {
+    sessionStorage.setItem('fcr_admin_auth', '1');
+    document.getElementById('pass-gate').style.display = 'none';
+    initAdmin();
+  } else {
+    passAttempts++;
+    errEl.style.display = 'block';
+    const card = document.querySelector('.pass-card');
+    card.style.animation = 'shake 0.4s ease';
+    setTimeout(() => { card.style.animation = ''; }, 400);
+    document.getElementById('passInput').value = '';
+    if (passAttempts >= 3) {
+      passLocked = true;
+      let sec = 60;
+      const lockEl = document.getElementById('passLockout');
+      lockEl.style.display = 'block';
+      errEl.style.display = 'none';
+      const iv = setInterval(() => {
+        lockEl.textContent = `Too many attempts. Try again in ${sec--} seconds.`;
+        if (sec < 0) { clearInterval(iv); passLocked = false; passAttempts = 0; lockEl.style.display = 'none'; }
+      }, 1000);
+    }
+  }
+}
+
+function initAdmin() {
+  loadAllProjects();
+  loadProjectSelectOptions();
+}
+
+function adminLogout() {
+  sessionStorage.removeItem('fcr_admin_auth');
+  location.reload();
+}
+
+// ── TABS ──
+function switchTab(id, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+
+// ── LOAD ALL PROJECTS ──
+async function loadAllProjects() {
+  try {
+    const snap = await db.collection('projects').orderBy('startDate','desc').get();
+    const projects = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // Summary stats
+    const totalContract = projects.reduce((a,p) => a + (p.contractAmount||0), 0);
+    const totalPaid = projects.reduce((a,p) => a + (p.paidAmount||0), 0);
+    const active = projects.filter(p => p.status === 'in_progress').length;
+    document.getElementById('sTotal').textContent = projects.length;
+    document.getElementById('sActive').textContent = active;
+    document.getElementById('sContract').textContent = formatCurrency(totalContract);
+    document.getElementById('sBalance').textContent = formatCurrency(totalContract - totalPaid);
+
+    if (projects.length === 0) {
+      document.getElementById('projectsTableBody').innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--gray);padding:40px">No projects yet. Create your first one!</td></tr>';
+      return;
+    }
+
+    const statusLabels = {planning:'Planning',in_progress:'In Progress',punch_list:'Punch List',complete:'Complete'};
+    document.getElementById('projectsTableBody').innerHTML = projects.map(p => {
+      const balance = (p.contractAmount||0) - (p.paidAmount||0);
+      return `<tr>
+        <td style="font-family:monospace;color:var(--gold);font-weight:700">${p.id}</td>
+        <td style="font-weight:500">${esc(p.clientName||'—')}</td>
+        <td style="color:var(--gray)">${esc(p.projectType||'—')}</td>
+        <td>
+          <div class="mini-bar"><div class="mini-bar-fill" style="width:${p.progressPercent||0}%"></div></div>
+          <div style="font-size:10px;color:var(--gray);margin-top:3px">${p.progressPercent||0}%</div>
+        </td>
+        <td><span class="badge badge-${p.status||'planning'}">${statusLabels[p.status]||p.status||'—'}</span></td>
+        <td>${p.estimateStatus==='accepted'
+          ? '<span class="badge" style="background:rgba(34,197,94,0.12);color:var(--green)">✓ Accepted</span>'
+          : p.estimateStatus==='declined'
+            ? '<span class="badge" style="background:rgba(239,68,68,0.1);color:var(--red)">Declined</span>'
+            : '<span class="badge badge-planning">Pending</span>'
+        }</td>
+        <td style="color:var(--gold)">${formatCurrency(p.contractAmount)}</td>
+        <td style="color:var(--green)">${formatCurrency(p.paidAmount)}</td>
+        <td style="color:${balance>0?'var(--red)':'var(--green)'}">${formatCurrency(balance)}</td>
+        <td><button class="btn-outline" style="padding:5px 12px;font-size:11px" onclick="openManageForCode('${p.id}')">Manage</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) {
+    showToast('Error loading projects: ' + e.message, 'error');
+  }
+}
+
+async function loadProjectSelectOptions() {
+  try {
+    const snap = await db.collection('projects').get();
+    const sel = document.getElementById('manageCodeSelect');
+    sel.innerHTML = '<option value="">Select a project...</option>';
+    snap.docs.forEach(d => {
+      const p = d.data();
+      const opt = document.createElement('option');
+      opt.value = d.id;
+      opt.textContent = `${d.id} — ${p.clientName||'Unknown'}`;
+      sel.appendChild(opt);
+    });
+  } catch(e) {}
+}
+
+function openManageForCode(code) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector('[onclick="switchTab(\'manage\',this)"]').classList.add('active');
+  document.getElementById('panel-manage').classList.add('active');
+  document.getElementById('manageCodeSelect').value = code;
+  loadProjectForManage(code);
+}
+
+// ── PDF HANDLING ──
+const dz = document.getElementById('dropzone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) handlePDFSelect({files: e.dataTransfer.files});
+});
+
+let selectedPDFFile = null;
+function handlePDFSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  selectedPDFFile = file;
+  const nameEl = document.getElementById('pdfFilename');
+  nameEl.style.display = 'block';
+  nameEl.textContent = '📄 ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+  document.getElementById('extractBtn').disabled = false;
+}
+
+async function extractFromPDF() {
+  if (!selectedPDFFile) { showToast('⚠️ Select a PDF first', 'error'); return; }
+
+  const btn = document.getElementById('extractBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span> Reading PDF...';
+
+  try {
+    const arrayBuffer = await selectedPDFFile.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+    let fullText = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      fullText += content.items.map(s => s.str).join(' ') + '\n';
+    }
+
+    const json = parseEstimateText(fullText);
+
+    populateImportForm(json);
+    document.getElementById('extractResult').classList.add('visible');
+    document.getElementById('importForm').style.display = 'block';
+    document.getElementById('extractBtn').style.display = 'none';
+    showToast('✅ PDF read — review and edit fields below', 'success');
+
+  } catch(e) {
+    showToast('❌ Could not read PDF: ' + e.message, 'error');
+    btn.disabled = false;
+    btn.innerHTML = '📋 Extract from PDF';
+  }
+}
+
+function parseEstimateText(text) {
+  const t = text.replace(/\s+/g, ' ');
+
+  // ── helpers ──
+  const find = (patterns) => {
+    for (const re of patterns) {
+      const m = t.match(re);
+      if (m) return m[1] ? m[1].trim() : m[0].trim();
+    }
+    return null;
+  };
+
+  const findAmount = (patterns) => {
+    const raw = find(patterns);
+    if (!raw) return null;
+    const n = parseFloat(raw.replace(/[$,]/g, ''));
+    return isNaN(n) ? null : n;
+  };
+
+  // ── client name ──
+  const clientName = find([
+    /(?:bill(?:ed)? to|client|customer|prepared for)[:\s]+([A-Z][a-zA-Z]+(?: [A-Z][a-zA-Z]+){1,3})/i,
+    /(?:name)[:\s]+([A-Z][a-zA-Z]+(?: [A-Z][a-zA-Z]+){1,3})/i
+  ]);
+
+  // ── phone ──
+  const clientPhone = find([
+    /(?:phone|tel|cell|mobile)[:\s]*([\(\d][\d\s\-\(\)\.]{9,14}\d)/i,
+    /(\(?\d{3}\)?[\s\-\.]\d{3}[\s\-\.]\d{4})/
+  ]);
+
+  // ── email ──
+  const clientEmail = find([
+    /([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})/
+  ]);
+
+  // ── address ──
+  const address = find([
+    /(?:address|property|job site|location)[:\s]+([0-9]+[^,\n]{5,60}(?:TX|Texas)[^,\n]{0,20})/i,
+    /([0-9]{3,5}\s+[A-Za-z][^,\n]{5,50}(?:Dr|St|Ave|Blvd|Ln|Rd|Way|Ct|Cir|Trail|Pkwy)\.?[^,\n]{0,30})/i
+  ]);
+
+  // ── contract amount ──
+  const contractAmount = findAmount([
+    /(?:total|contract|amount due|grand total)[:\s]*\$?([\d,]+(?:\.\d{2})?)/i,
+    /\$\s*([\d,]{4,}(?:\.\d{2})?)/
+  ]);
+
+  // ── deposit ──
+  const depositAmount = findAmount([
+    /(?:deposit|down payment|due upon)[:\s]*\$?([\d,]+(?:\.\d{2})?)/i
+  ]);
+
+  // ── dates ──
+  const parseDate = (s) => {
+    if (!s) return null;
+    const d = new Date(s);
+    if (!isNaN(d)) return d.toISOString().slice(0, 10);
+    return null;
+  };
+  const startDate = parseDate(find([
+    /(?:start date|begin|commencement)[:\s]*([\w]+ \d{1,2},?\s+\d{4})/i,
+    /(?:start date|start)[:\s]*(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/i
+  ]));
+  const estimatedCompletion = parseDate(find([
+    /(?:completion|end date|finish|due date)[:\s]*([\w]+ \d{1,2},?\s+\d{4})/i,
+    /(?:completion|end date)[:\s]*(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})/i
+  ]));
+
+  // ── project type ──
+  const types = ['Bathroom Remodel','Kitchen Remodel','Flooring','Painting','Room Addition','Whole-Home Remodel'];
+  let projectType = 'Other';
+  for (const tp of types) {
+    if (t.toLowerCase().includes(tp.toLowerCase())) { projectType = tp; break; }
+  }
+
+  // ── line items: lines with a $ amount ──
+  const lineItems = [];
+  const liRe = /([A-Za-z][^$\n]{5,80})\$\s*([\d,]+(?:\.\d{2})?)/g;
+  let m;
+  while ((m = liRe.exec(t)) !== null) {
+    lineItems.push(m[1].trim() + ' — $' + m[2]);
+    if (lineItems.length >= 20) break;
+  }
+
+  // ── description: first long sentence block ──
+  const descMatch = t.match(/(?:scope of work|description|work to be performed)[:\s]+([^$]{30,300})/i);
+  const description = descMatch ? descMatch[1].trim() : '';
+
+  return { clientName, clientPhone, clientEmail, address, projectType,
+           contractAmount, depositAmount, startDate, estimatedCompletion,
+           description, lineItems, paymentSchedule: [] };
+}
+
+function populateImportForm(json) {
+  const fields = {
+    'imp-clientName': json.clientName,
+    'imp-clientPhone': json.clientPhone,
+    'imp-clientEmail': json.clientEmail,
+    'imp-address': json.address,
+    'imp-contractAmount': json.contractAmount,
+    'imp-startDate': json.startDate,
+    'imp-endDate': json.estimatedCompletion,
+    'imp-description': json.description
+  };
+
+  // Fill with animation delay
+  let i = 0;
+  for (const [id, val] of Object.entries(fields)) {
+    if (val === null || val === undefined) continue;
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = val;
+      el.classList.add('filled');
+      setTimeout(() => el.classList.remove('filled'), 600);
+    }, i * 80);
+    i++;
+  }
+
+  // Project type
+  if (json.projectType) {
+    setTimeout(() => {
+      const sel = document.getElementById('imp-projectType');
+      const opt = [...sel.options].find(o => o.value === json.projectType || o.text === json.projectType);
+      if (opt) sel.value = opt.value;
+    }, i * 80);
+  }
+
+  // Store line items + deposit globally for use when creating project
+  window._extractedLineItems = json.lineItems || [];
+  window._extractedDepositAmount = json.depositAmount || null;
+
+  // Payment schedule
+  extractedPaySchedule = json.paymentSchedule || [];
+  if (extractedPaySchedule.length > 0) {
+    document.getElementById('payScheduleCard').style.display = 'block';
+    document.getElementById('payScheduleList').innerHTML = extractedPaySchedule.map((p, idx) => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px;font-weight:500">${esc(p.description)}</div>
+          ${p.dueDate ? `<div style="font-size:11px;color:var(--gray)">Due: ${p.dueDate}</div>` : ''}
+        </div>
+        <div style="font-family:'Playfair Display',serif;color:var(--gold);font-size:18px">${formatCurrency(p.amount)}</div>
+      </div>`).join('');
+  }
+
+  // Line items
+  if (json.lineItems && json.lineItems.length > 0) {
+    document.getElementById('lineItemsCard').style.display = 'block';
+    document.getElementById('lineItemsList').innerHTML = json.lineItems.map(li => `• ${esc(li)}`).join('<br/>');
+  }
+}
+
+async function createProjectFromImport() {
+  const code = generateCode();
+  const data = {
+    clientName: document.getElementById('imp-clientName').value.trim(),
+    clientPhone: document.getElementById('imp-clientPhone').value.trim(),
+    clientEmail: (document.getElementById('imp-clientEmail').value.trim()).toLowerCase(),
+    address: document.getElementById('imp-address').value.trim(),
+    projectType: document.getElementById('imp-projectType').value,
+    contractAmount: parseFloat(document.getElementById('imp-contractAmount').value) || 0,
+    startDate: document.getElementById('imp-startDate').value || null,
+    estimatedCompletion: document.getElementById('imp-endDate').value || null,
+    description: document.getElementById('imp-description').value.trim(),
+    status: 'planning',
+    progressPercent: 0,
+    estimateStatus: 'pending',
+    lineItems: window._extractedLineItems || [],
+    depositAmount: window._extractedDepositAmount || null,
+    paidAmount: window._extractedDepositAmount || 0,
+    _secret: WRITE_SECRET,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  if (!data.clientName) { showToast('⚠️ Client name required', 'error'); return; }
+
+  const btn = document.getElementById('createFromImportBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span> Creating project...';
+
+  try {
+    const batch = db.batch();
+    const projRef = db.collection('projects').doc(code);
+    batch.set(projRef, data);
+
+    // Default phases
+    DEFAULT_PHASES.forEach((name, idx) => {
+      const ref = projRef.collection('phases').doc();
+      batch.set(ref, { name, order: idx, status: 'pending', _secret: WRITE_SECRET });
+    });
+
+    // Payment schedule from PDF
+    extractedPaySchedule.forEach(ps => {
+      const ref = projRef.collection('payments').doc();
+      batch.set(ref, {
+        amount: ps.amount,
+        description: ps.description,
+        date: ps.dueDate ? firebase.firestore.Timestamp.fromDate(new Date(ps.dueDate)) : firebase.firestore.FieldValue.serverTimestamp(),
+        status: 'pending',
+        method: 'TBD',
+        _secret: WRITE_SECRET
+      });
+    });
+
+    // First update
+    const updateRef = projRef.collection('updates').doc();
+    batch.set(updateRef, {
+      message: `Welcome ${data.clientName}! Your project portal is now active. You can track progress, photos, and payments here.`,
+      type: 'milestone',
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    await batch.commit();
+
+    // Show code
+    document.getElementById('importForm').style.display = 'none';
+    document.getElementById('importCodeValue').textContent = code;
+    document.getElementById('importClientName').textContent = data.clientName + ' · ' + (data.projectType || '');
+    document.getElementById('importCodeReveal').classList.add('visible');
+    sendProjectCreatedNotif(code, data.clientName, data.clientEmail, data.projectType);
+    loadAllProjects();
+    loadProjectSelectOptions();
+
+    // AUTO-SEND email to client (no manual step)
+    if (data.clientEmail) {
+      try {
+        await autoSendClientInvite(code, data.clientName, data.clientEmail, data.projectType);
+        showToast('✅ Project created & email sent to ' + data.clientEmail);
+      } catch(emailErr) {
+        showToast('✅ Project created but email failed — use mailto fallback below', 'info');
+        buildSendEmailBtn('importSendEmailBtn', code, data.clientName, data.clientEmail);
+      }
+    } else {
+      showToast('✅ Project created (no client email — add it in Manage tab)');
+    }
+  } catch(e) {
+    showToast('❌ Error: ' + e.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '✓ Create Project &amp; Generate Client Code';
+}
+
+function resetImportForm() {
+  selectedPDFFile = null;
+  extractedPaySchedule = [];
+  window._extractedLineItems = [];
+  window._extractedDepositAmount = null;
+  document.getElementById('pdfFilename').style.display = 'none';
+  document.getElementById('pdfInput').value = '';
+  document.getElementById('extractBtn').disabled = true;
+  document.getElementById('extractBtn').style.display = 'flex';
+  document.getElementById('extractResult').classList.remove('visible');
+  document.getElementById('importForm').style.display = 'none';
+  document.getElementById('importCodeReveal').classList.remove('visible');
+  document.getElementById('payScheduleCard').style.display = 'none';
+  document.getElementById('lineItemsCard').style.display = 'none';
+}
+
+// ── MANAGE PROJECT ──
+async function loadProjectForManage(codeArg) {
+  const code = codeArg || document.getElementById('manageCodeSelect').value;
+  if (!code) return;
+  currentManageCode = code;
+
+  try {
+    const [projSnap, phasesSnap] = await Promise.all([
+      db.collection('projects').doc(code).get(),
+      db.collection('projects').doc(code).collection('phases').orderBy('order').get()
+    ]);
+
+    if (!projSnap.exists) { showToast('Project not found', 'error'); return; }
+    const p = projSnap.data();
+
+    document.getElementById('mgClientName').textContent = p.clientName || '—';
+    document.getElementById('mgAddress').textContent = p.address || '—';
+    document.getElementById('mgClientEmail').textContent = p.clientEmail ? '📧 ' + p.clientEmail : 'No email on file';
+    document.getElementById('resendStatus').style.display = 'none';
+    document.getElementById('mgCode').textContent = code;
+    document.getElementById('mgProgress').value = p.progressPercent || 0;
+    document.getElementById('mgProgressVal').textContent = (p.progressPercent || 0) + '%';
+    document.getElementById('mgStatus').value = p.status || 'planning';
+
+    // Estimate acceptance info
+    const estSection = document.getElementById('mgEstimateSection');
+    const estInfo    = document.getElementById('mgEstimateInfo');
+    estSection.style.display = 'block';
+    if (p.estimateStatus === 'accepted') {
+      let acceptedAt = '—';
+      if (p.estimateAcceptedAt) {
+        const d = p.estimateAcceptedAt.toDate ? p.estimateAcceptedAt.toDate() : new Date(p.estimateAcceptedAt);
+        acceptedAt = d.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
+      }
+      estInfo.innerHTML =
+        `<span style="color:var(--green);font-weight:600">✅ Estimate Accepted</span><br>` +
+        `Accepted on: <strong style="color:var(--white)">${acceptedAt}</strong><br>` +
+        (p.clientPreferredStartDate ? `Preferred Start Date: <strong style="color:var(--gold)">${p.clientPreferredStartDate}</strong><br>` : '') +
+        (p.clientAcceptNotes ? `Client Notes: <em style="color:rgba(255,255,255,0.6)">"${esc(p.clientAcceptNotes)}"</em>` : '');
+    } else if (p.estimateStatus === 'declined') {
+      estInfo.innerHTML = `<span style="color:var(--red);font-weight:600">❌ Estimate Declined</span>`;
+    } else {
+      estInfo.innerHTML = `<span style="color:var(--gold)">⏳ Pending client acceptance</span>`;
+    }
+
+    // Phases
+    currentManagePhases = phasesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+    document.getElementById('mgPhasesList').innerHTML = currentManagePhases.map(ph => `
+      <div class="phase-row">
+        <div class="phase-row-name">${esc(ph.name)}</div>
+        <select class="phase-row-select" data-phase-id="${ph.id}">
+          <option value="pending"   ${ph.status==='pending'?'selected':''}>Pending</option>
+          <option value="in_progress" ${ph.status==='in_progress'?'selected':''}>In Progress</option>
+          <option value="complete"  ${ph.status==='complete'?'selected':''}>Complete</option>
+        </select>
+      </div>`).join('');
+
+    // Set default payment date
+    document.getElementById('payDate').value = new Date().toISOString().slice(0,10);
+
+    document.getElementById('manageContent').style.display = 'block';
+    loadAdminChat(code);
+  } catch(e) {
+    showToast('Error loading project: ' + e.message, 'error');
+  }
+}
+
+async function saveProgress() {
+  const pct = parseInt(document.getElementById('mgProgress').value);
+  const status = document.getElementById('mgStatus').value;
+  try {
+    await db.collection('projects').doc(currentManageCode).update({
+      progressPercent: pct, status, _secret: WRITE_SECRET
+    });
+    showToast('✅ Progress saved', 'success');
+    setStatusBadge_admin(status);
+  } catch(e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+async function savePhases() {
+  const selects = document.querySelectorAll('[data-phase-id]');
+  const batch = db.batch();
+  selects.forEach(sel => {
+    const ref = db.collection('projects').doc(currentManageCode).collection('phases').doc(sel.dataset.phaseId);
+    const updates = { status: sel.value, _secret: WRITE_SECRET };
+    if (sel.value === 'complete') updates.completedDate = firebase.firestore.FieldValue.serverTimestamp();
+    batch.update(ref, updates);
+  });
+  try {
+    await batch.commit();
+    showToast('✅ Phases updated', 'success');
+  } catch(e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+// ── PHOTO UPLOAD ──
+function previewPhotos(input) {
+  const files = Array.from(input.files);
+  photoFilesData = files;
+  const container = document.getElementById('photoPreviews');
+  container.innerHTML = '';
+  files.forEach((file, i) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const div = document.createElement('div');
+      div.className = 'photo-preview-item';
+      div.innerHTML = `
+        <img class="photo-preview-img" src="${e.target.result}" alt=""/>
+        <div class="photo-preview-fields">
+          <input class="photo-preview-caption" placeholder="Caption (optional)" data-idx="${i}"/>
+          <select class="photo-preview-phase" data-idx="${i}">
+            <option value="">Select phase...</option>
+            ${DEFAULT_PHASES.map(ph => `<option>${ph}</option>`).join('')}
+          </select>
+          <div class="upload-progress" id="uprog-${i}"><div class="upload-progress-fill" id="uprog-fill-${i}"></div></div>
+        </div>`;
+      container.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('uploadPhotosBtn').style.display = files.length > 0 ? 'flex' : 'none';
+}
+
+async function uploadPhotos() {
+  if (!currentManageCode || photoFilesData.length === 0) return;
+  const btn = document.getElementById('uploadPhotosBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-gold"></span> Uploading...';
+
+  for (let i = 0; i < photoFilesData.length; i++) {
+    const file = photoFilesData[i];
+    const caption = document.querySelector(`.photo-preview-caption[data-idx="${i}"]`)?.value || '';
+    const phase = document.querySelector(`.photo-preview-phase[data-idx="${i}"]`)?.value || '';
+    const progBar = document.getElementById('uprog-' + i);
+    const progFill = document.getElementById('uprog-fill-' + i);
+    if (progBar) progBar.style.display = 'block';
+
+    try {
+      // Resize image client-side
+      const resized = await resizeImage(file);
+      const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+      const ref = storage.ref(`projects/${currentManageCode}/photos/${fileName}`);
+      const task = ref.put(resized, { customMetadata: { secret: WRITE_SECRET } });
+
+      await new Promise((resolve, reject) => {
+        task.on('state_changed',
+          snap => {
+            const pct = (snap.bytesTransferred / snap.totalBytes) * 100;
+            if (progFill) progFill.style.width = pct + '%';
+          },
+          reject,
+          resolve
+        );
+      });
+
+      const url = await ref.getDownloadURL();
+      await db.collection('projects').doc(currentManageCode).collection('photos').add({
+        url, caption, phase,
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+        _secret: WRITE_SECRET
+      });
+    } catch(e) {
+      showToast('❌ Upload failed for ' + file.name, 'error');
+    }
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '⬆️ Upload Photos';
+  document.getElementById('photoPreviews').innerHTML = '';
+  document.getElementById('photoFiles').value = '';
+  photoFilesData = [];
+  document.getElementById('uploadPhotosBtn').style.display = 'none';
+  showToast('✅ Photos uploaded successfully');
+}
+
+async function resizeImage(file, maxW = 1200, quality = 0.82) {
+  return new Promise(resolve => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(blob => {
+        resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+        URL.revokeObjectURL(url);
+      }, 'image/jpeg', quality);
+    };
+    img.src = url;
+  });
+}
+
+// ── ADD PAYMENT ──
+async function addPayment() {
+  const amount = parseFloat(document.getElementById('payAmount').value);
+  const desc = document.getElementById('payDesc').value.trim();
+  if (!amount || !desc) { showToast('⚠️ Amount and description required', 'error'); return; }
+
+  try {
+    const dateVal = document.getElementById('payDate').value;
+    await db.collection('projects').doc(currentManageCode).collection('payments').add({
+      amount,
+      description: desc,
+      date: dateVal ? firebase.firestore.Timestamp.fromDate(new Date(dateVal)) : firebase.firestore.FieldValue.serverTimestamp(),
+      method: document.getElementById('payMethod').value,
+      status: document.getElementById('payStatus').value,
+      _secret: WRITE_SECRET
+    });
+
+    // Update paidAmount on project
+    if (document.getElementById('payStatus').value === 'paid') {
+      await db.collection('projects').doc(currentManageCode).update({
+        paidAmount: firebase.firestore.FieldValue.increment(amount),
+        _secret: WRITE_SECRET
+      });
+    }
+
+    // Auto-post update
+    await db.collection('projects').doc(currentManageCode).collection('updates').add({
+      message: `Payment of ${formatCurrency(amount)} received — ${desc}. Thank you!`,
+      type: 'payment',
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    document.getElementById('payAmount').value = '';
+    document.getElementById('payDesc').value = '';
+    showToast('✅ Payment added');
+  } catch(e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+// ── ADD CHANGE ORDER ──
+async function addChangeOrder() {
+  const desc = document.getElementById('coDesc').value.trim();
+  const amount = parseFloat(document.getElementById('coAmount').value) || 0;
+  if (!desc) { showToast('⚠️ Description required', 'error'); return; }
+
+  try {
+    await db.collection('projects').doc(currentManageCode).collection('changeOrders').add({
+      description: desc,
+      amount,
+      reason: document.getElementById('coReason').value.trim(),
+      status: document.getElementById('coStatus').value,
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    await db.collection('projects').doc(currentManageCode).collection('updates').add({
+      message: `Change order added: ${desc}${amount ? ' (+' + formatCurrency(amount) + ')' : ''}.`,
+      type: 'note',
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    document.getElementById('coDesc').value = '';
+    document.getElementById('coAmount').value = '';
+    document.getElementById('coReason').value = '';
+    showToast('✅ Change order added');
+  } catch(e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+// ── POST UPDATE ──
+async function postUpdate() {
+  const msg = document.getElementById('updateMsg').value.trim();
+  const type = document.getElementById('updateType').value;
+  if (!msg) { showToast('⚠️ Write a message first', 'error'); return; }
+
+  try {
+    await db.collection('projects').doc(currentManageCode).collection('updates').add({
+      message: msg, type,
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+    document.getElementById('updateMsg').value = '';
+    showToast('✅ Update sent to client');
+  } catch(e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+// ── DELETE PROJECT ──
+async function deleteProject() {
+  if (!confirm(`Delete project ${currentManageCode}? This cannot be undone.`)) return;
+  if (!confirm('Are you absolutely sure? All data will be lost.')) return;
+
+  try {
+    // Delete subcollections first
+    const subs = ['phases','photos','payments','changeOrders','updates'];
+    for (const sub of subs) {
+      const snap = await db.collection('projects').doc(currentManageCode).collection(sub).get();
+      const batch = db.batch();
+      snap.docs.forEach(d => batch.delete(d.ref));
+      if (snap.docs.length > 0) await batch.commit();
+    }
+    await db.collection('projects').doc(currentManageCode).delete();
+    document.getElementById('manageContent').style.display = 'none';
+    showToast('✅ Project deleted');
+    loadAllProjects();
+    loadProjectSelectOptions();
+  } catch(e) { showToast('❌ ' + e.message, 'error'); }
+}
+
+// ── CREATE MANUAL ──
+function buildCreatePhases() {
+  document.getElementById('createPhasesList').innerHTML = DEFAULT_PHASES.map((ph, i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <input type="checkbox" id="ph-${i}" checked style="accent-color:var(--gold);width:16px;height:16px;"/>
+      <label for="ph-${i}" style="font-size:13px;cursor:pointer">${ph}</label>
+    </div>`).join('');
+}
+
+async function createManualProject() {
+  const clientName = document.getElementById('cr-clientName').value.trim();
+  if (!clientName) { showToast('⚠️ Client name required', 'error'); return; }
+
+  const code = generateCode();
+  const data = {
+    clientName,
+    clientPhone: document.getElementById('cr-clientPhone').value.trim(),
+    clientEmail: (document.getElementById('cr-clientEmail').value.trim()).toLowerCase(),
+    address: document.getElementById('cr-address').value.trim(),
+    projectType: document.getElementById('cr-projectType').value,
+    contractAmount: parseFloat(document.getElementById('cr-contractAmount').value) || 0,
+    paidAmount: 0,
+    startDate: document.getElementById('cr-startDate').value || null,
+    estimatedCompletion: document.getElementById('cr-endDate').value || null,
+    description: document.getElementById('cr-description').value.trim(),
+    status: 'planning',
+    progressPercent: 0,
+    estimateStatus: 'pending',
+    _secret: WRITE_SECRET,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  const btn = document.getElementById('createManualBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"></span> Creating...';
+
+  try {
+    const batch = db.batch();
+    const projRef = db.collection('projects').doc(code);
+    batch.set(projRef, data);
+
+    // Selected phases
+    DEFAULT_PHASES.forEach((name, i) => {
+      if (document.getElementById('ph-' + i)?.checked) {
+        const ref = projRef.collection('phases').doc();
+        batch.set(ref, { name, order: i, status: 'pending', _secret: WRITE_SECRET });
+      }
+    });
+
+    // Welcome update
+    batch.set(projRef.collection('updates').doc(), {
+      message: `Welcome ${clientName}! Your project portal is now ready. You'll see updates, photos, and payment info here as we get started.`,
+      type: 'milestone',
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    await batch.commit();
+    document.getElementById('createCodeValue').textContent = code;
+    document.getElementById('createClientNameReveal').textContent = clientName;
+    document.getElementById('createCodeReveal').classList.add('visible');
+    sendProjectCreatedNotif(code, clientName, data.clientEmail, data.projectType);
+    loadAllProjects();
+    loadProjectSelectOptions();
+
+    // AUTO-SEND email to client (no manual step)
+    if (data.clientEmail) {
+      try {
+        await autoSendClientInvite(code, clientName, data.clientEmail, data.projectType);
+        showToast('✅ Project created & email sent to ' + data.clientEmail);
+      } catch(emailErr) {
+        showToast('✅ Project created but email failed — use fallback below', 'info');
+        buildSendEmailBtn('createSendEmailBtn', code, clientName, data.clientEmail);
+      }
+    } else {
+      showToast('✅ Project created (no client email provided)');
+    }
+  } catch(e) {
+    showToast('❌ ' + e.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '✓ Create Project &amp; Generate Code';
+}
+
+// ── UTILITIES ──
+function generateCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'FCR-';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+async function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = e => res(e.target.result.split(',')[1]);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+}
+
+function formatCurrency(n) {
+  if (!n && n !== 0) return '—';
+  return '$' + Number(n).toLocaleString('en-US');
+}
+
+function copyCode(elId) {
+  const text = document.getElementById(elId).textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('✅ Code copied: ' + text));
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'visible ' + type;
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.className = ''; }, 3500);
+}
+
+function setStatusBadge_admin(status) {
+  // Used after saving progress
+}
+
+// ── EMAIL TO CLIENT ──
+const PORTAL_BASE = 'https://robertomartinezconsultor.github.io/firstclass-remodeling/client-portal.html';
+// EmailJS IDs — fill these in after creating your templates on emailjs.com
+const EMAILJS_SERVICE_ID  = 'service_4xfy3lb';   // e.g. 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'template_agrdwcq';  // e.g. 'template_xyz789'
+
+function buildSendEmailBtn(btnId, code, clientName, clientEmail) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+
+  // Try EmailJS first (sends from estimates@)
+  if (clientEmail && typeof emailjs !== 'undefined' &&
+      EMAILJS_SERVICE_ID !== 'EMAILJS_SERVICE_ID') {
+    sendClientEmailViaEmailJS(code, clientName, clientEmail).then(() => {
+      // Update button to "Sent ✓"
+      btn.textContent = '✓ Email Sent';
+      btn.style.background = 'rgba(34,197,94,0.15)';
+      btn.style.border = '1px solid rgba(34,197,94,0.3)';
+      btn.style.color = 'var(--green)';
+      btn.style.pointerEvents = 'none';
+    }).catch(() => {
+      // Fallback to mailto
+      setMailtoFallback(btn, code, clientName, clientEmail);
+    });
+    btn.textContent = '⏳ Sending...';
+    return;
+  }
+
+  // Fallback: open email client (always works)
+  setMailtoFallback(btn, code, clientName, clientEmail);
+}
+
+function setMailtoFallback(btn, code, clientName, clientEmail) {
+  const portalLink = clientEmail ? PORTAL_BASE + '?email=' + encodeURIComponent(clientEmail) : PORTAL_BASE;
+  const subject = encodeURIComponent('Your Remodeling Estimate Is Ready — First Class Remodeling TX');
+  const body = encodeURIComponent(
+`Hi ${clientName || 'there'},
+
+Your estimate and project portal are ready!
+
+Click the link below to set up your account and view your project:
+
+${portalLink}
+
+In your portal you can:
+• Review and accept your estimate online
+• Pick your preferred start date
+• Track project progress in real time
+• See photos from your job site
+• Message your project team directly
+
+Questions? Call or text us at (210) 606-5298
+
+— First Class Remodeling TX
+(210) 606-5298 | firstclassremodelingtx.com`
+  );
+  const to = clientEmail ? encodeURIComponent(clientEmail) : '';
+  btn.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  btn.textContent = '📧 Send to Client';
+}
+
+async function sendClientEmailViaEmailJS(code, clientName, clientEmail) {
+  const portalLink = clientEmail ? PORTAL_BASE + '?email=' + encodeURIComponent(clientEmail) : PORTAL_BASE;
+  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    to_name:      clientName || 'there',
+    to_email:     clientEmail,
+    project_code: code,
+    portal_link:  portalLink,
+    from_name:    'First Class Remodeling TX',
+    reply_to:     'hello@firstclassremodelingtx.com'
+  });
+}
+
+// ── RESEND INVITE FROM MANAGE TAB ──
+async function resendInvite() {
+  if (!currentManageCode) return;
+  const btn = document.getElementById('resendInviteBtn');
+  const status = document.getElementById('resendStatus');
+  btn.disabled = true;
+  btn.textContent = '⏳ Sending...';
+
+  try {
+    const snap = await db.collection('projects').doc(currentManageCode).get();
+    const p = snap.data();
+    if (!p.clientEmail) { showToast('⚠️ No client email on this project', 'error'); return; }
+
+    await autoSendClientInvite(currentManageCode, p.clientName, p.clientEmail, p.projectType);
+    status.style.display = 'inline';
+    showToast('✅ Invite resent to ' + p.clientEmail);
+  } catch(e) {
+    showToast('❌ Failed: ' + e.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '📧 Resend Portal Invite';
+}
+
+// ── AUTO-SEND CLIENT INVITE (fully autonomous — no manual steps) ──
+async function autoSendClientInvite(code, clientName, clientEmail, projectType) {
+  const portalLink = PORTAL_BASE + '?email=' + encodeURIComponent(clientEmail);
+
+  // Try EmailJS first (sends from estimates@firstclassremodelingtx.com)
+  if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID !== 'EMAILJS_SERVICE_ID') {
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_name:      clientName || 'there',
+      to_email:     clientEmail,
+      project_code: code,
+      portal_link:  portalLink,
+      project_type: projectType || 'Remodeling',
+      from_name:    'First Class Remodeling TX',
+      reply_to:     'hello@firstclassremodelingtx.com'
+    });
+    // Log the invite in Firestore for audit trail
+    await db.collection('emailLog').add({
+      to: clientEmail,
+      clientName,
+      projectCode: code,
+      type: 'invite',
+      status: 'sent',
+      sentAt: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+    return;
+  }
+
+  throw new Error('EmailJS not configured');
+}
+
+// ── ADMIN CHAT ──
+let unsubAdminChat = null;
+
+function loadAdminChat(code) {
+  if (unsubAdminChat) unsubAdminChat();
+  const el = document.getElementById('adminChatMessages');
+  el.innerHTML = '<span style="color:var(--gray)">Loading messages...</span>';
+
+  unsubAdminChat = db.collection('projects').doc(code).collection('messages')
+    .orderBy('timestamp', 'asc')
+    .onSnapshot(snap => {
+      const msgs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      if (!msgs.length) {
+        el.innerHTML = '<span style="color:var(--gray)">No messages yet</span>';
+        return;
+      }
+      el.innerHTML = msgs.map(m => {
+        const isClient = m.sender === 'client';
+        const time = m.timestamp ? new Date(m.timestamp.toDate()).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }) : '';
+        return `<div style="padding:8px 12px;margin:4px 0;border-radius:10px;background:${isClient ? 'rgba(201,168,76,0.08)' : 'var(--dark-3)'};${isClient ? '' : 'border:1px solid var(--border)'}">
+          <div style="font-size:10px;color:${isClient ? 'var(--gold)' : 'var(--green)'};font-weight:600;margin-bottom:2px">${isClient ? esc(m.senderName || 'Client') : 'You (Admin)'}</div>
+          <div>${esc(m.text)}</div>
+          <div style="font-size:10px;color:var(--gray);margin-top:2px">${time}</div>
+        </div>`;
+      }).join('');
+      el.scrollTop = el.scrollHeight;
+    });
+}
+
+async function sendAdminMessage() {
+  const input = document.getElementById('adminChatInput');
+  const text = input.value.trim();
+  if (!text || !currentManageCode) return;
+  input.value = '';
+
+  try {
+    await db.collection('projects').doc(currentManageCode).collection('messages').add({
+      text,
+      sender: 'admin',
+      senderName: 'First Class Team',
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      read: false,
+      _secret: WRITE_SECRET
+    });
+  } catch(e) {
+    showToast('❌ ' + e.message, 'error');
+    input.value = text;
+  }
+}
+
+// ── NOTIFY ROBERTO (Formspree) when project is created ──
+async function sendProjectCreatedNotif(code, clientName, clientEmail, projectType) {
+  try {
+    await fetch('https://formspree.io/f/mwvwvqoq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `New Project Created: ${code} — ${clientName}`,
+        project_code: code,
+        client_name: clientName || '—',
+        client_email: clientEmail || '—',
+        project_type: projectType || '—',
+        portal_link: PORTAL_BASE,
+        message: `New project ${code} created for ${clientName}. Portal link: ${PORTAL_BASE}`
+      })
+    });
+  } catch(e) { /* non-blocking */ }
+}
+</script>
+</body>
+</html>

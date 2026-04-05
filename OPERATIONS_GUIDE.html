@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>First Class Remodeling TX — Operations Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #f5f5f0; color: #1a1a1a; font-size: 14px; }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    .no-print { display: none; }
+    .page-break { page-break-before: always; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd !important; }
+    header { background: #0a0a0a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  header {
+    background: #0a0a0a;
+    color: white;
+    padding: 40px 48px 32px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px;
+  }
+  .logo-area h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.04em; color: #C9A84C; }
+  .logo-area p  { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 4px; }
+  .doc-meta { text-align: right; }
+  .doc-meta .label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .doc-meta .value { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+  .print-btn {
+    position: fixed; top: 20px; right: 24px; z-index: 999;
+    background: #C9A84C; color: #000; border: none;
+    padding: 10px 20px; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border-radius: 4px; cursor: pointer;
+  }
+  .print-btn:hover { background: #e0bd6a; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  h2 {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #C9A84C; margin-bottom: 14px; margin-top: 40px;
+    padding-bottom: 6px; border-bottom: 1px solid #e0d5c0;
+    display: flex; align-items: center; gap: 8px;
+  }
+  h2:first-child { margin-top: 0; }
+  h2 .icon { font-size: 14px; }
+
+  .card {
+    background: white; border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.05);
+    overflow: hidden; margin-bottom: 16px;
+  }
+  .card-header {
+    background: #1a1a1a; color: white;
+    padding: 12px 20px; font-size: 11px;
+    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-header .badge {
+    background: #C9A84C; color: #000; font-size: 9px;
+    padding: 2px 7px; border-radius: 20px; font-weight: 700;
+  }
+  .card-header .badge.green { background: #4CAF50; color: white; }
+  .card-header .badge.red   { background: #e53935; color: white; }
+  .card-header .badge.gray  { background: #666; color: white; }
+
+  .rows { padding: 0; }
+  .row {
+    display: grid; grid-template-columns: 180px 1fr;
+    gap: 0; border-bottom: 1px solid #f0ede8;
+  }
+  .row:last-child { border-bottom: none; }
+  .row-label {
+    padding: 12px 20px;
+    font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: #888; font-weight: 600; background: #faf9f7;
+    display: flex; align-items: center;
+    border-right: 1px solid #f0ede8;
+  }
+  .row-value {
+    padding: 12px 20px; font-size: 13px; color: #1a1a1a;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    word-break: break-all;
+  }
+  .row-value a { color: #1976D2; text-decoration: none; }
+  .row-value a:hover { text-decoration: underline; }
+  .mono { font-family: 'Courier New', monospace; background: #f4f4f4; padding: 2px 7px; border-radius: 3px; font-size: 12px; }
+  .pill {
+    display: inline-block; font-size: 10px; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; letter-spacing: 0.05em;
+  }
+  .pill-green { background: #e8f5e9; color: #2e7d32; }
+  .pill-red   { background: #ffebee; color: #c62828; }
+  .pill-gold  { background: #fff8e1; color: #f57f17; }
+
+  .note {
+    background: #fff8e1; border-left: 3px solid #C9A84C;
+    padding: 12px 16px; margin: 12px 0; border-radius: 0 4px 4px 0;
+    font-size: 12px; line-height: 1.6; color: #555;
+  }
+  .note strong { color: #1a1a1a; }
+
+  .steps { padding: 16px 20px; }
+  .step {
+    display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start;
+  }
+  .step:last-child { margin-bottom: 0; }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #C9A84C; color: #000;
+    font-size: 11px; font-weight: 800; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step-text { font-size: 13px; line-height: 1.6; padding-top: 3px; }
+  .step-text strong { display: block; margin-bottom: 2px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .row { grid-template-columns: 1fr; } .row-label { border-right: none; border-bottom: 1px solid #f0ede8; } }
+
+  .divider { height: 1px; background: #e8e4dc; margin: 32px 0; }
+
+  .warning {
+    background: #ffebee; border: 1px solid #ffcdd2;
+    border-radius: 6px; padding: 12px 16px; font-size: 12px;
+    color: #b71c1c; margin-bottom: 12px; line-height: 1.6;
+  }
+  .warning strong { display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨 Print / Save PDF</button>
+
+<header>
+  <div class="logo-area">
+    <h1>FIRST CLASS REMODELING TX</h1>
+    <p>Operations & Access Guide — Confidential</p>
+  </div>
+  <div class="doc-meta">
+    <div class="label">Generated</div>
+    <div class="value">March 2026</div>
+    <div class="label" style="margin-top:8px">Owner</div>
+    <div class="value">Roberto Martinez</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ═══ PORTAL LINKS ═══ -->
+  <h2><span class="icon">🔗</span> Portal Links</h2>
+
+  <div class="card">
+    <div class="card-header">Admin Portal <span class="badge">Owner Only</span></div>
+    <div class="rows">
+      <div class="row">
+        <div class="row-label">URL</div>
+        <div class="row-value"><span class="mono">Stored internally only</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Password</div>
+        <div class="row-value"><span class="mono">Stored separately; do not publish in docs</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">What you do here</div>
+        <div class="row-value">Crear clientes, subir PDFs (el AI extrae los datos), ver todos los proyectos, subir fotos, agregar pagos, cambiar estatus</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Client Portal <span class="badge green">Para el Cliente</span></div>
+    <div class="rows">
+      <div class="row">
+        <div class="row-label">Entrada rápida</div>
+        <div class="row-value"><a href="https://firstclassremodelingtx.com/app.html" target="_blank">firstclassremodelingtx.com/app.html</a> o botón <strong>Client Portal</strong> en la página principal</div>
+      </div>
+      <div class="row">
+        <div class="row-label">URL</div>
+        <div class="row-value"><a href="https://firstclassremodelingtx.com/portal.html" target="_blank">firstclassremodelingtx.com/portal.html</a></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Cómo entrar</div>
+        <div class="row-value">El cliente escribe su código único (ej. <span class="mono">FCR-XXXXXX</span>) que tú le generas</div>
+      </div>
+      <div class="row">
+        <div class="row-label">Qué ve el cliente</div>
+        <div class="row-value">Estatus del proyecto, fotos, pagos, documentos, change orders, actualizaciones</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Bot Monitor <span class="badge gray">Interno</span></div>
+    <div class="rows">
+      <div class="row">
+        <div class="row-label">URL</div>
+        <div class="row-value"><a href="https://firstclassremodelingtx.com/monitor.html" target="_blank">firstclassremodelingtx.com/monitor.html</a></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Qué hace</div>
+        <div class="row-value">Muestra el estado de todos los bots automáticos (lead hunter, blog writer, etc.)</div>
+      </div>
+      <div class="row">
+        <div class="row-label">Requiere</div>
+        <div class="row-value">GitHub token al primer uso (se guarda automáticamente)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Sitio Web Principal</div>
+    <div class="rows">
+      <div class="row">
+        <div class="row-label">URL</div>
+        <div class="row-value"><a href="https://firstclassremodelingtx.com" target="_blank">firstclassremodelingtx.com</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FLUJO DE OPERACIÓN ═══ -->
+  <h2><span class="icon">⚙️</span> Flujo de Operación — Cómo Crear un Cliente Nuevo</h2>
+
+  <div class="card">
+    <div class="card-header">Paso a paso desde que firmas un contrato hasta que el cliente entra al portal</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Entra al Admin Portal</strong>
+        Usa la URL interna y credenciales guardadas fuera de este documento.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Sube el Invoice / Contrato (PDF)</strong>
+        En la sección "Create Project" → arrastra o selecciona el PDF. El AI lee el documento y llena los datos automáticamente (nombre, dirección, monto, fechas).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Revisa y confirma los datos</strong>
+        Verifica que el AI extrajo bien la información. Puedes editar cualquier campo. Ajusta las fases del proyecto si quieres.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Crea el proyecto → Código generado automáticamente</strong>
+        El sistema genera un código único tipo <span class="mono">FCR-XXXXXX</span>. Este es el código del cliente.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-text"><strong>Envía el código al cliente</strong>
+        Por texto, WhatsApp o email:<br><em>"Tu portal de proyecto está listo. Entra en firstclassremodelingtx.com/app.html o usa el botón Client Portal en la página principal y escribe este código: FCR-XXXXXX"</em></div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-text"><strong>El cliente entra y ve su proyecto en tiempo real</strong>
+        Tú actualizas fotos, pagos y estatus desde el admin. El cliente lo ve al instante.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ CREDENCIALES ═══ -->
+  <h2><span class="icon">🔐</span> Credenciales & Accesos</h2>
+
+  <div class="two-col">
+
+    <div class="card">
+      <div class="card-header">Email Profesional <span class="badge green">Activo</span></div>
+      <div class="rows">
+        <div class="row">
+          <div class="row-label">Correo</div>
+          <div class="row-value">estimates@firstclassremodelingtx.com</div>
+        </div>
+        <div class="row">
+          <div class="row-label">Proveedor</div>
+          <div class="row-value">Zoho Mail (gratuito)</div>
+        </div>
+        <div class="row">
+          <div class="row-label">App Password</div>
+          <div class="row-value"><span class="mono">VscyR9kw62nb</span></div>
+        </div>
+        <div class="row">
+          <div class="row-label">Acceso web</div>
+          <div class="row-value"><a href="https://mail.zoho.com" target="_blank">mail.zoho.com</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Gmail Personal</div>
+      <div class="rows">
+        <div class="row">
+          <div class="row-label">Cuenta</div>
+          <div class="row-value">roberto.martinezconsultor@gmail.com</div>
+        </div>
+        <div class="row">
+          <div class="row-label">Nota</div>
+          <div class="row-value">Gmail recibe/envía desde estimates@ también. Usa para bots.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="two-col">
+
+    <div class="card">
+      <div class="card-header">GitHub <span class="badge green">Activo</span></div>
+      <div class="rows">
+        <div class="row">
+          <div class="row-label">Cuenta</div>
+          <div class="row-value">robertomartinezconsultor</div>
+        </div>
+        <div class="row">
+          <div class="row-label">Repo</div>
+          <div class="row-value"><a href="https://github.com/robertomartinezconsultor/firstclass-remodeling" target="_blank">firstclass-remodeling</a></div>
+        </div>
+        <div class="row">
+          <div class="row-label">Token API</div>
+          <div class="row-value"><span class="mono" style="font-size:10px">ghp_1kPm2xQzIh...</span> <span class="pill pill-red">Expira Abr 4</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Firebase <span class="badge green">Activo</span></div>
+      <div class="rows">
+        <div class="row">
+          <div class="row-label">Proyecto</div>
+          <div class="row-value">firstclass-portal</div>
+        </div>
+        <div class="row">
+          <div class="row-label">Consola</div>
+          <div class="row-value"><a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a></div>
+        </div>
+        <div class="row">
+          <div class="row-label">Servicios</div>
+          <div class="row-value">Firestore (datos) + Storage (fotos/PDFs)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="two-col">
+
+    <div class="card">
+      <div class="card-header">Facebook Bot <span class="badge gold">Pendiente $5</span></div>
+      <div class="rows">
+        <div class="row">
+          <div class="row-label">Página</div>
+          <div class="row-value">firstclassremodelingsatx</div>
+        </div>
+        <div class="row">
+          <div class="row-label">Page ID</div>
+          <div class="row-value"><span class="mono">103694595838689</span></div>
+        </div>
+        <div class="row">
+          <div class="row-label">Token expira</div>
+          <div class="row-value"><span class="pill pill-red">~Mayo 28, 2026</span> — renovar en developers.facebook.com</div>
+        </div>
+        <div class="row">
+          <div class="row-label">Pendiente</div>
+          <div class="row-value">Agregar ~$5 en console.anthropic.com/settings/billing para activar</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">GoDaddy (Dominio)</div>
+      <div class="rows">
+        <div class="row">
+          <div class="row-label">Dominio</div>
+          <div class="row-value">firstclassremodelingtx.com</div>
+        </div>
+        <div class="row">
+          <div class="row-label">DNS</div>
+          <div class="row-value">Configurado: MX, SPF, DKIM ✓</div>
+        </div>
+        <div class="row">
+          <div class="row-label">Pendiente</div>
+          <div class="row-value">Agregar DMARC record en DNS (reduce spam)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ BOTS ACTIVOS ═══ -->
+  <h2><span class="icon">🤖</span> Bots Automáticos (GitHub Actions)</h2>
+
+  <div class="card">
+    <div class="rows">
+      <div class="row">
+        <div class="row-label">Lead Hunter</div>
+        <div class="row-value">Busca pre-foreclosures en San Antonio · Corre Lun-Sáb 7am y 11am CST <span class="pill pill-gold">0 leads — IPs bloqueadas</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Blog Writer</div>
+        <div class="row-value">Publica artículos SEO automáticos · Corre semanalmente <span class="pill pill-green">Activo ✓</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Review Monitor</div>
+        <div class="row-value">Monitorea reseñas de Google · Corre diario <span class="pill pill-green">Activo ✓</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Facebook Publisher</div>
+        <div class="row-value">Publica contenido en Fan Page automáticamente <span class="pill pill-red">Pendiente créditos Anthropic</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Monitor en vivo</div>
+        <div class="row-value"><a href="https://firstclassremodelingtx.com/monitor.html" target="_blank">firstclassremodelingtx.com/monitor.html</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══ PENDIENTES ═══ -->
+  <h2><span class="icon">📋</span> Pendientes Importantes</h2>
+
+  <div class="warning">
+    <strong>⚠️ GitHub Token expira aproximadamente el 4 de Abril 2026</strong>
+    Renovar en github.com → Settings → Developer Settings → Personal Access Tokens → Tokens (classic). Permiso: repo (full).
+  </div>
+
+  <div class="warning">
+    <strong>⚠️ Facebook Page Token expira ~28 de Mayo 2026</strong>
+    Renovar en developers.facebook.com/tools/explorer — genera un token de larga duración para la página firstclassremodelingsatx.
+  </div>
+
+  <div class="card">
+    <div class="rows">
+      <div class="row">
+        <div class="row-label">DMARC DNS</div>
+        <div class="row-value">Agregar en GoDaddy: Type TXT | Name: _dmarc | Value: <span class="mono">v=DMARC1; p=none; rua=mailto:estimates@firstclassremodelingtx.com</span></div>
+      </div>
+      <div class="row">
+        <div class="row-label">Anthropic</div>
+        <div class="row-value">Agregar ~$5 en <a href="https://console.anthropic.com/settings/billing" target="_blank">console.anthropic.com/settings/billing</a> para activar Facebook bot</div>
+      </div>
+      <div class="row">
+        <div class="row-label">Google Business</div>
+        <div class="row-value">Verificar perfil — mayor impacto SEO local en San Antonio</div>
+      </div>
+      <div class="row">
+        <div class="row-label">Directorios</div>
+        <div class="row-value">Registrar gratis en: Yelp, Houzz, Angi, Thumbtack</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Nota sobre leads pre-foreclosure:</strong> El bot corre pero GitHub Actions tiene IPs bloqueadas por Zillow y Bexar County. La solución es ejecutar el script directamente desde tu Mac en un horario automático. Pídele a Claude que lo configure cuando estés listo.
+  </div>
+
+  <div style="text-align:center;margin-top:48px;color:#aaa;font-size:11px;letter-spacing:0.08em">
+    FIRST CLASS REMODELING TX &nbsp;·&nbsp; CONFIDENTIAL &nbsp;·&nbsp; Roberto Martinez &nbsp;·&nbsp; (210) 606-5298
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Dashboard — First Class Remodeling TX</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Arial,sans-serif;background:#0d0d0d;color:#e8e4dc;min-height:100vh}
+:root{--gold:#C9A84C;--gold2:#F0D080;--dark:#141414;--card:#1a1a1a;--border:rgba(201,168,76,0.15);--muted:#666;--green:#4CAF50;--red:#e53935;--blue:#2196F3;--purple:#9C27B0}
+
+/* HEADER */
+header{background:#0a0a0a;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.logo{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.logo span{color:#fff}
+.header-right{display:flex;align-items:center;gap:16px}
+.header-status{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.next-post-time{font-size:10px;color:var(--muted);background:#111;border:1px solid var(--border);padding:4px 10px;border-radius:20px}
+.btn-settings{background:transparent;border:1px solid var(--border);color:var(--muted);padding:7px 12px;border-radius:6px;cursor:pointer;font-size:14px;transition:.2s}
+.btn-settings:hover{border-color:var(--gold);color:var(--gold)}
+
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px 24px;background:#0a0a0a;border-bottom:1px solid var(--border)}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;text-align:center}
+.stat-num{font-size:28px;font-weight:700;color:var(--gold);line-height:1}
+.stat-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+@media(max-width:600px){.stats-bar{grid-template-columns:repeat(2,1fr)}}
+
+/* TABS */
+.tabs-bar{display:flex;border-bottom:1px solid var(--border);background:#0f0f0f;overflow-x:auto;padding:0 24px}
+.tab{padding:14px 18px;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab:hover:not(.active){color:#ccc}
+
+/* MAIN */
+.main{max-width:1280px;margin:0 auto;padding:24px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.card-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.card-body{padding:20px}
+
+/* CALENDAR */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-month-title{font-size:16px;font-weight:600}
+.cal-btn{background:transparent;border:1px solid var(--border);color:#e8e4dc;width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.cal-btn:hover{border-color:var(--gold);color:var(--gold)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-name{text-align:center;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 0}
+.cal-day{min-height:100px;background:#111;border:1px solid var(--border);border-radius:6px;padding:6px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.cal-day:hover{border-color:var(--gold)}
+.cal-day.today{border-color:rgba(201,168,76,.6);background:rgba(201,168,76,.04)}
+.cal-day.empty{background:transparent;border-color:transparent;cursor:default}
+.cal-day.empty:hover{border-color:transparent}
+.cal-num{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.cal-day.today .cal-num{color:var(--gold)}
+.cal-post-badge{font-size:8px;padding:2px 5px;border-radius:3px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:block}
+.cal-post-badge.scheduled{background:rgba(201,168,76,.2);color:var(--gold)}
+.cal-post-badge.published{background:rgba(76,175,80,.2);color:#4CAF50}
+.cal-time-badge{font-size:8px;color:var(--muted);display:block;margin-bottom:3px}
+.cal-thumb{width:100%;height:50px;object-fit:cover;border-radius:3px;margin-top:3px;display:block;background:#222}
+.type-icon{font-size:10px}
+@media(max-width:768px){.cal-day{min-height:70px}.cal-thumb{display:none}}
+
+/* POST LIST */
+.post-list{display:flex;flex-direction:column;gap:10px}
+.post-item{background:#111;border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:.2s}
+.post-item:hover{border-color:rgba(201,168,76,.3)}
+.post-num{min-width:32px;height:32px;background:rgba(201,168,76,.1);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gold);flex-shrink:0}
+.post-thumb-sm{width:80px;height:60px;border-radius:6px;object-fit:cover;flex-shrink:0;background:#1a1a1a}
+.post-info{flex:1;min-width:0}
+.post-caption-preview{font-size:12px;line-height:1.5;color:#ccc;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.post-meta{font-size:10px;color:var(--muted);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.badge{font-size:9px;padding:2px 8px;border-radius:20px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.badge-value{background:rgba(201,168,76,.15);color:var(--gold)}
+.badge-tip{background:rgba(33,150,243,.15);color:#64B5F6}
+.badge-education{background:rgba(156,39,176,.15);color:#CE93D8}
+.badge-social_proof{background:rgba(76,175,80,.15);color:#81C784}
+.badge-neighborhood{background:rgba(255,152,0,.15);color:#FFB74D}
+.badge-engagement{background:rgba(233,30,99,.15);color:#F48FB1}
+.badge-urgency{background:rgba(229,57,53,.15);color:#EF9A9A}
+.badge-cta{background:rgba(201,168,76,.25);color:var(--gold2)}
+.badge-scheduled{background:rgba(201,168,76,.12);color:var(--gold)}
+.badge-published{background:rgba(76,175,80,.12);color:#4CAF50}
+.badge-pending{background:rgba(255,152,0,.12);color:#FFB74D}
+
+/* FORMS */
+input,textarea,select{width:100%;background:#111;border:1px solid var(--border);color:#e8e4dc;padding:10px 14px;border-radius:6px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+textarea{resize:vertical;min-height:120px;line-height:1.6}
+label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+.form-group{margin-bottom:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+/* BUTTONS */
+.btn{padding:10px 20px;border:none;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:7px}
+.btn-gold{background:var(--gold);color:#000}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:#e8e4dc}.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{filter:brightness(1.1)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{filter:brightness(1.1)}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{filter:brightness(1.1)}
+.btn-sm{padding:6px 14px;font-size:10px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+/* DROPZONE */
+.dropzone{border:2px dashed var(--border);border-radius:8px;padding:40px;text-align:center;cursor:pointer;transition:.2s;position:relative;background:#111}
+.dropzone:hover,.dropzone.drag-over{border-color:var(--gold);background:rgba(201,168,76,.04)}
+.dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.dropzone-icon{font-size:40px;margin-bottom:12px;opacity:.5}
+.dropzone p{font-size:13px;color:var(--muted);line-height:1.6}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.preview-item{position:relative;aspect-ratio:1;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.preview-item img{width:100%;height:100%;object-fit:cover}
+.preview-item .remove-btn{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.8);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;line-height:1}
+
+/* ANALYSIS BOX */
+.analysis-box{background:#0d0d0d;border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:16px;display:none}
+.analysis-box.visible{display:block}
+.analysis-caption{font-size:13px;line-height:1.7;color:#ddd;white-space:pre-wrap}
+
+/* TOPICS */
+.topic-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.topic-chip{background:#111;border:1px solid var(--border);color:#ccc;padding:7px 14px;border-radius:20px;font-size:11px;cursor:pointer;transition:.2s;user-select:none}
+.topic-chip:hover,.topic-chip.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+
+/* NEIGHBORHOOD CHECKBOXES */
+.hood-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.hood-item{display:flex;align-items:center;gap:10px;font-size:13px;color:#ccc;cursor:pointer}
+.hood-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
+
+/* INFO BOX */
+.info-box{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:16px}
+.info-box h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.info-box ol,.info-box ul{padding-left:20px;font-size:13px;color:#ccc;line-height:2}
+.info-box li{margin-bottom:4px}
+
+/* CAMPAIGN STATUS */
+.campaign-status{background:#111;border:1px solid var(--border);border-radius:8px;padding:16px}
+.focus-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.focus-chip{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.stat-row:last-child{border-bottom:none}
+.stat-row-label{color:var(--muted)}
+.stat-row-val{color:#e8e4dc;font-weight:600}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#1a1a1a;border:1px solid var(--border);border-radius:12px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+.modal-close{background:transparent;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px;line-height:1;transition:.2s}
+.modal-close:hover{color:#fff}
+.modal-body{padding:20px}
+.modal-img{width:100%;border-radius:8px;margin-bottom:16px;display:block;background:#111;min-height:200px;object-fit:cover}
+.caption-text{font-size:13px;line-height:1.8;color:#ddd;white-space:pre-wrap;background:#111;border:1px solid var(--border);border-radius:6px;padding:14px;margin-bottom:14px}
+
+/* SETTINGS MODAL */
+.settings-modal .modal{max-width:480px}
+.help-toggle{font-size:11px;color:var(--gold);cursor:pointer;background:none;border:none;text-decoration:underline;padding:0;margin-top:8px;display:block}
+.help-content{display:none;background:#111;border:1px solid var(--border);border-radius:6px;padding:12px;margin-top:8px;font-size:11px;color:#aaa;line-height:1.8}
+.help-content.open{display:block}
+
+/* TOAST */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:2000;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.toast{background:#1a1a1a;border:1px solid var(--border);border-radius:8px;padding:12px 18px;font-size:12px;color:#e8e4dc;max-width:320px;box-shadow:0 4px 20px rgba(0,0,0,.5);animation:slideIn .3s ease;display:flex;align-items:center;gap:10px}
+.toast.success{border-color:rgba(76,175,80,.4)}
+.toast.error{border-color:rgba(229,57,53,.4)}
+.toast.info{border-color:rgba(201,168,76,.3)}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* IMAGE PREVIEW GENERATED */
+.gen-preview{width:100%;border-radius:8px;margin-top:12px;display:none;background:#111;min-height:150px;object-fit:cover}
+.gen-preview.visible{display:block}
+
+/* SECTION DIVIDER */
+.section-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+/* DOWNLOAD BTN */
+.download-notice{background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:6px;padding:12px 16px;font-size:12px;color:#81C784;margin-top:12px;display:none}
+.download-notice.visible{display:block}
+
+/* PROGRESS */
+.progress-bar{background:#111;border-radius:20px;height:6px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;background:var(--gold);border-radius:20px;transition:width .5s}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">First Class Remodeling TX <span>— Social Dashboard</span></div>
+  <div class="header-right">
+    <div class="header-status">
+      <div class="status-dot"></div>
+      <span>Bot Active</span>
+    </div>
+    <div class="next-post-time" id="nextPostTime">Next post: calculating...</div>
+    <button class="btn-settings" onclick="openSettings()" title="Settings">⚙️</button>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-box">
+    <div class="stat-num">30</div>
+    <div class="stat-label">Posts in Library</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" id="statPublished">0</div>
+    <div class="stat-label">Published</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" id="statQueue">0</div>
+    <div class="stat-label">Pending Queue</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" id="statFocus">3</div>
+    <div class="stat-label">Week Focus Topics</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <div class="tab active" data-tab="calendar">📅 Calendar</div>
+  <div class="tab" data-tab="queue">📋 Queue</div>
+  <div class="tab" data-tab="create">✏️ Create Post</div>
+  <div class="tab" data-tab="upload">📸 Upload & Analyze</div>
+  <div class="tab" data-tab="campaign">🎯 Campaign</div>
+</div>
+
+<div class="main">
+
+  <!-- TAB 1: CALENDAR -->
+  <div class="tab-content active" id="tab-calendar">
+    <div class="card">
+      <div class="card-header">
+        <div class="cal-nav" style="width:100%">
+          <button class="cal-btn" id="calPrev">‹</button>
+          <div class="cal-month-title" id="calTitle"></div>
+          <button class="cal-btn" id="calNext">›</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: QUEUE -->
+  <div class="tab-content" id="tab-queue">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">All 30 Posts — Content Queue</div>
+        <span style="font-size:11px;color:var(--muted)" id="queueSummary"></span>
+      </div>
+      <div class="card-body">
+        <div class="post-list" id="postList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: CREATE POST -->
+  <div class="tab-content" id="tab-create">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Create Post</div></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Caption</label>
+              <textarea id="createCaption" rows="8" placeholder="Write your caption here, or use a template below..."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="createDate">
+              </div>
+              <div class="form-group">
+                <label>Time (CST)</label>
+                <input type="time" id="createTime" value="08:00">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Post Type</label>
+              <select id="createType">
+                <option value="value">Value / Brand</option>
+                <option value="tip">Pro Tip</option>
+                <option value="education">Education</option>
+                <option value="social_proof">Social Proof</option>
+                <option value="neighborhood">Neighborhood</option>
+                <option value="engagement">Engagement / Poll</option>
+                <option value="urgency">Urgency / CTA</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Topic for Caption Generation</label>
+              <input type="text" id="createTopic" placeholder="e.g. granite countertops, bathroom remodel...">
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-outline btn-sm" onclick="generateCaption()">✨ Generate Caption</button>
+              <button class="btn btn-outline btn-sm" onclick="generatePreviewImage()">🖼 Preview Image</button>
+            </div>
+            <img id="createPreviewImg" class="gen-preview" alt="Preview">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Publish</div></div>
+          <div class="card-body">
+            <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.7">Review your post, then choose to schedule it locally or post it directly to Facebook. Token required for live posting.</p>
+            <div class="btn-group" style="flex-direction:column">
+              <button class="btn btn-outline" onclick="schedulePost()" style="width:100%;justify-content:center">📅 Save to Schedule</button>
+              <button class="btn btn-gold" onclick="postNow()" style="width:100%;justify-content:center">🚀 Post Now to Facebook</button>
+            </div>
+            <div style="margin-top:20px">
+              <div class="section-title">Scheduled Posts</div>
+              <div id="scheduledList" style="font-size:12px;color:var(--muted)">No scheduled posts yet.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <div class="card-header"><div class="card-title">Caption Templates</div></div>
+          <div class="card-body">
+            <div class="topic-chips" id="templateChips"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: UPLOAD & ANALYZE -->
+  <div class="tab-content" id="tab-upload">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">📸 Analyze Photo with Claude</div></div>
+          <div class="card-body">
+            <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6">Upload a remodeling photo and Claude AI will generate a professional Facebook caption for it. Requires your Anthropic API key in Settings.</p>
+            <div class="dropzone" id="dropzone">
+              <input type="file" id="fileInput" accept="image/*" multiple>
+              <div class="dropzone-icon">📁</div>
+              <p>Drag & drop your photos here<br><small>or click to browse</small></p>
+            </div>
+            <div class="preview-grid" id="previewGrid"></div>
+            <div class="btn-group" style="margin-top:16px">
+              <button class="btn btn-gold" onclick="analyzePhotos()" id="analyzeBtn" disabled>🔍 Analyze with Claude</button>
+              <button class="btn btn-outline btn-sm" onclick="clearPhotos()">Clear</button>
+            </div>
+            <div class="analysis-box" id="analysisBox">
+              <div class="section-title">Generated Caption</div>
+              <textarea class="analysis-caption" id="analysisCaption" rows="8"></textarea>
+              <div class="btn-group" style="margin-top:12px">
+                <button class="btn btn-gold btn-sm" onclick="useCaptionInCreate()">Use This Caption</button>
+                <button class="btn btn-outline btn-sm" onclick="reanalyze()">Regenerate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Upload to GitHub Queue</div></div>
+          <div class="card-body">
+            <div class="info-box">
+              <h4>Auto-Post Your Real Photos</h4>
+              <ol>
+                <li>Go to your GitHub repo</li>
+                <li>Navigate to the <strong style="color:var(--gold)">analizar/</strong> folder</li>
+                <li>Click <strong>Add file → Upload files</strong></li>
+                <li>Drag & drop your remodeling photo</li>
+                <li>Commit the file — GitHub Action runs automatically</li>
+                <li>Claude Vision analyzes the photo and writes a caption</li>
+                <li>Photo moves to <strong style="color:var(--gold)">mis-fotos/</strong> and is added to the queue</li>
+                <li>Your photo posts in the next scheduled slot</li>
+              </ol>
+            </div>
+            <div style="margin-top:16px" class="info-box" style="margin-top:16px">
+              <h4>What the Bot Does</h4>
+              <ul>
+                <li>Checks queue FIRST before regular posts</li>
+                <li>Uploads your real photo as the Facebook image</li>
+                <li>Uses the Claude-generated caption</li>
+                <li>Marks it processed after publishing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <div class="card-header"><div class="card-title">Queue Status</div></div>
+          <div class="card-body">
+            <div id="queueStatus" style="font-size:13px;color:var(--muted)">Queue data loads from localStorage / GitHub.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: CAMPAIGN -->
+  <div class="tab-content" id="tab-campaign">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Active Campaign Settings</div></div>
+          <div class="card-body">
+            <div class="section-title">Week Focus Topics</div>
+            <p style="font-size:11px;color:var(--muted);margin-bottom:8px">Select topics and the bot will prioritize posts matching these keywords.</p>
+            <div class="topic-chips" id="campaignChips"></div>
+            <div class="form-group" style="margin-top:16px">
+              <label>Custom Instructions (optional)</label>
+              <textarea id="campaignInstructions" rows="3" placeholder="E.g. 'Focus on outdoor kitchens this week' or 'Mention summer sale pricing'"></textarea>
+            </div>
+            <div class="section-title" style="margin-top:8px">Priority Neighborhoods</div>
+            <div class="hood-list" id="hoodList"></div>
+            <div class="btn-group" style="margin-top:20px">
+              <button class="btn btn-gold" onclick="saveCampaign()">💾 Save Campaign</button>
+            </div>
+            <div class="download-notice" id="downloadNotice">
+              ✅ Campaign saved! <strong>Download campaign.json</strong> and upload it to GitHub → <code>.github/scripts/</code> to activate on the bot.
+              <div style="margin-top:10px">
+                <button class="btn btn-outline btn-sm" onclick="downloadCampaign()">⬇ Download campaign.json</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Campaign Status</div></div>
+          <div class="card-body">
+            <div class="campaign-status">
+              <div class="section-title">Current Focus</div>
+              <div class="focus-chips" id="focusChips">
+                <span style="font-size:11px;color:var(--muted)">No active focus topics</span>
+              </div>
+              <div style="margin-top:16px" id="campaignStatRows"></div>
+            </div>
+            <div style="margin-top:16px">
+              <div class="section-title">Post Match Rate</div>
+              <div id="matchStats" style="font-size:12px;color:var(--muted)">Select focus topics to see matches.</div>
+              <div class="progress-bar" style="margin-top:8px">
+                <div class="progress-fill" id="matchProgress" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- POST DETAIL MODAL -->
+<div class="modal-overlay" id="postModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Post Preview</div>
+      <button class="modal-close" onclick="closeModal('postModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <img id="modalImg" class="modal-img" src="" alt="Post image" loading="lazy">
+      <div class="post-meta" style="margin-bottom:14px" id="modalMeta"></div>
+      <div class="caption-text" id="modalCaption"></div>
+      <div id="modalPhotoSection"></div>
+      <div class="btn-group">
+        <button class="btn btn-outline btn-sm" onclick="copyModalCaption()">📋 Copy Caption</button>
+        <button class="btn btn-gold btn-sm" onclick="scheduleModalPost()">📅 Schedule for Today</button>
+        <button class="btn btn-green btn-sm" onclick="postModalNow()">🚀 Post Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay settings-modal" id="settingsModal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <div class="modal-title">Settings</div>
+      <button class="modal-close" onclick="closeModal('settingsModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Facebook Page Access Token</label>
+        <input type="password" id="settingToken" placeholder="EAAxxxxxxxxx...">
+      </div>
+      <div class="form-group">
+        <label>Anthropic API Key</label>
+        <input type="password" id="settingAnthropicKey" placeholder="sk-ant-...">
+      </div>
+      <div class="form-group">
+        <label>Facebook Page ID</label>
+        <input type="text" id="settingPageId" value="103694595838689">
+      </div>
+      <button class="btn btn-gold" onclick="saveSettings()" style="width:100%;justify-content:center">Save Settings</button>
+      <button class="help-toggle" onclick="toggleHelp()">How to get tokens ▾</button>
+      <div class="help-content" id="helpContent">
+        <strong style="color:var(--gold)">Facebook Page Token:</strong><br>
+        1. Go to developers.facebook.com → My Apps<br>
+        2. Create an app or use existing one<br>
+        3. Add Facebook Login + Pages API<br>
+        4. Go to Graph API Explorer<br>
+        5. Select your page, generate token with pages_manage_posts permission<br><br>
+        <strong style="color:var(--gold)">Anthropic API Key:</strong><br>
+        1. Go to console.anthropic.com<br>
+        2. Settings → API Keys → Create Key<br>
+        3. Copy the sk-ant-... key
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  CONTENT DATA — All 30 Posts
+// ═══════════════════════════════════════════════════════
+const CONTENT_DATA = {
+  posts: [
+    {id:1,type:'value',day_of_week:'monday',best_time:'08:00',
+     image_prompt:'bright modern kitchen remodel San Antonio Texas white cabinets granite island morning sunlight warm wood accents professional real estate photography no text',
+     caption:`Monday motivation for San Antonio homeowners 🏠\n\nYour kitchen is the heart of your home — and it should feel like it.\n\nWe've transformed over 1,800 homes across San Antonio. From The Dominion to Alamo Heights, Stone Oak to Terrell Hills — we know what it takes to build spaces that last.\n\n✅ Licensed & Insured\n✅ 16+ Years in San Antonio\n✅ Craftsmanship Warranty\n\nReady to start your transformation? Call us for a FREE estimate 👇\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#SanAntonioRemodeling #FirstClassRemodelingTX #KitchenRemodel #SanAntonio #MondayMotivation #HomeTransformation #SATXHomes #LicensedContractor #FreeEstimate`},
+    {id:2,type:'tip',day_of_week:'tuesday',best_time:'12:00',
+     image_prompt:'kitchen under-cabinet LED lighting modern pendant lights over quartz island warm glow Texas home interior design professional photography no text',
+     caption:`💡 PRO TIP TUESDAY: The #1 mistake San Antonio homeowners make before a kitchen remodel...\n\nThey focus 100% on countertops and forget about LIGHTING.\n\nHere's what we tell every client:\n→ Under-cabinet lighting adds $0 to perceived value but costs very little to install\n→ A statement pendant over your island instantly elevates the entire kitchen\n→ Recessed lighting on dimmers = restaurant quality at home prices\n\nThe result? A kitchen that photographs beautifully and feels expensive every single day.\n\nWe're in San Antonio. We know this market. We build kitchens that sell homes AND make your family fall in love with cooking again.\n\n📞 Free consultation: (210) 606-5298\n\n#KitchenTips #SanAntonioHomes #KitchenRemodel #FirstClassRemodelingTX #HomeDesign #SATXContractor #KitchenLighting #HomeRenovation #TipTuesday`},
+    {id:3,type:'social_proof',day_of_week:'wednesday',best_time:'18:00',
+     image_prompt:'professional contractor team handshake happy homeowners finished kitchen remodel San Antonio Texas warm professional photography no text',
+     caption:`1,800+ projects completed across San Antonio 🏆\n\nThat's 1,800 families who trusted us with their most important investment — their home.\n\nEvery project we've built since 2008:\n✔ On time\n✔ On budget\n✔ Built to last\n\nWe don't cut corners. We don't disappear after the check clears. We stand behind every tile, every cabinet, every detail.\n\nIf you're thinking about a kitchen or bathroom remodel in San Antonio — don't guess. Call the team that's done it 1,800 times.\n\n📞 (210) 606-5298 — FREE Estimate\n🌐 firstclassremodelingtx.com\n\n#SanAntonioContractor #FirstClassRemodelingTX #1800Projects #HomeRenovation #KitchenRemodel #BathroomRemodel #SATXHomes #TrustedContractor #SanAntonio`},
+    {id:4,type:'education',day_of_week:'thursday',best_time:'10:00',
+     image_prompt:'luxury kitchen remodel materials layout custom cabinets quartz countertops appliances San Antonio Texas professional interior photography no text',
+     caption:`HOW MUCH DOES A KITCHEN REMODEL COST IN SAN ANTONIO? 🤔\n\nHere's the honest breakdown:\n\n💰 Entry Level ($15K–$30K)\n→ New cabinets, countertops, appliances\n→ Great value, solid transformation\n\n💰💰 Mid-Range ($30K–$65K)\n→ Custom cabinets, quartz or granite, full layout change\n→ What most Stone Oak & Alamo Heights families choose\n\n💰💰💰 High-End ($65K+)\n→ Full custom, premium materials, chef-grade appliances\n→ Dominion & Terrell Hills level\n\nThe ROI? A kitchen remodel returns 60–80 cents on every dollar in San Antonio's current market.\n\n📞 Get a real number for YOUR kitchen: (210) 606-5298 — FREE\n\n#KitchenRemodel #SanAntonioRealEstate #HomeValue #FirstClassRemodelingTX #SATXHomes #RemodelCost #HomeInvestment #SanAntonio #ContractorSA`},
+    {id:5,type:'urgency',day_of_week:'friday',best_time:'17:00',
+     image_prompt:'kitchen remodel construction crew working San Antonio Texas summer project transformation in progress professional photography no text',
+     caption:`🗓 FRIDAY REMINDER: Summer bookings are filling fast.\n\nIf you want your kitchen or bathroom done before the holidays — the time to call is NOW, not October.\n\nOur process:\n📋 Week 1: Free in-home estimate\n🎨 Week 2-3: Design & materials selection\n🔨 Week 4+: Construction begins\n\nMost projects: 3–8 weeks depending on scope.\n\nWe're currently scheduling for San Antonio homeowners in:\n• The Dominion\n• Stone Oak\n• Alamo Heights\n• Terrell Hills\n• Shavano Park\n• Leon Springs\n• New Braunfels\n\n📞 Call today: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#SanAntonioRemodeling #FirstClassRemodelingTX #KitchenRemodel #BathroomRemodel #SummerRemodel #SATXHomes #BookNow #SanAntonio`},
+    {id:6,type:'engagement',day_of_week:'saturday',best_time:'10:00',
+     image_prompt:'four panel dream home upgrades kitchen island spa bathroom open concept Texas home professional photography collage no text',
+     caption:`POLL: San Antonio homeowners — what's your #1 dream upgrade? 👇\n\n🍳 A) Chef's kitchen with island\n🛁 B) Spa-style master bathroom\n🏠 C) Open floor plan & living area\n🏡 D) Full home transformation\n\nComment your answer below! We build all of them across San Antonio 😄\n\nAnd if you're ready to stop dreaming and start building — we offer FREE in-home estimates. No pressure, just numbers.\n\n📞 (210) 606-5298\n\n#SanAntonio #SATXHomes #HomeRemodel #KitchenGoals #BathroomGoals #FirstClassRemodelingTX #DreamHome #HomeRenovation #SanAntonioHomes`},
+    {id:7,type:'value',day_of_week:'monday',best_time:'08:00',
+     image_prompt:'perfect tile grout lines granite edge polished close up quality craftsmanship kitchen countertop San Antonio Texas no text',
+     caption:`The truth about cheap contractors in San Antonio 🚨\n\nWe get calls every week from homeowners who hired the cheapest bid — and are now paying double to fix it.\n\nHere's what "the cheapest guy" usually skips:\n❌ Permits (your problem when you sell)\n❌ Proper waterproofing (mold in 18 months)\n❌ Licensed subcontractors (liability is yours)\n❌ Written warranty (disappears after payment)\n\nWe're not the cheapest. We never will be.\n\nBut in 16+ years and 1,800+ projects, we've never left a client with a problem we didn't fix.\n\nThat's the First Class difference.\n\n📞 Get it done right: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#SanAntonioRemodeling #LicensedContractor #FirstClassRemodelingTX #DoneRight #HomeRenovation #SATXHomes #ContractorTips #SanAntonio`},
+    {id:8,type:'tip',day_of_week:'tuesday',best_time:'12:00',
+     image_prompt:'frameless glass shower enclosure large format tile spa bathroom San Antonio Texas professional interior photography natural light no text',
+     caption:`💡 PRO TIP: The ONE thing that makes a bathroom feel $50K more expensive...\n\nIt's not marble. It's not a soaking tub.\n\nIt's FRAMELESS GLASS.\n\nA frameless shower enclosure:\n→ Opens up any bathroom visually\n→ Photographs beautifully (great for resale)\n→ Easier to clean than framed doors\n→ Timeless — doesn't go out of style\n\nWe install frameless glass in bathrooms across San Antonio from Alamo Heights to Shavano Park. The impact is immediate.\n\nCombine it with large-format tile, a floating vanity, and proper lighting — and you have a spa bathroom that appraisers love.\n\n📞 Free estimate: (210) 606-5298\n\n#BathroomRemodel #SanAntonio #FramelessShower #BathroomDesign #FirstClassRemodelingTX #SATXHomes #HomeValue #BathroomTips #LuxuryBathroom`},
+    {id:9,type:'neighborhood',day_of_week:'wednesday',best_time:'18:00',
+     image_prompt:'Stone Oak San Antonio neighborhood upscale homes aerial view Texas sunset mature trees professional photography no text',
+     caption:`🏘 Shoutout to our Stone Oak families! 🏘\n\nStone Oak is one of San Antonio's most active remodeling neighborhoods — and we've been building there for over a decade.\n\nWhat Stone Oak homeowners are doing right now:\n✅ Kitchen expansions with island additions\n✅ Master bathroom spa conversions\n✅ Outdoor kitchens & entertainment areas\n✅ Full open-concept renovations\n\nIf you live in Stone Oak and you're thinking about a remodel — you're in our wheelhouse.\n\nCall us. We probably know your neighbors.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#StoneOak #SanAntonioRemodeling #FirstClassRemodelingTX #StoneOakSA #KitchenRemodel #BathroomRemodel #SATXHomes #HomeRenovation`},
+    {id:10,type:'education',day_of_week:'thursday',best_time:'10:00',
+     image_prompt:'granite slab versus quartz countertop side by side close up texture comparison San Antonio kitchen showroom professional photography no text',
+     caption:`GRANITE vs QUARTZ: Which is right for your San Antonio kitchen? 🪨\n\nWe get this question every week. Here's the real answer:\n\n🔷 GRANITE\n→ Natural stone, unique pattern every slab\n→ Heat resistant (perfect for Texas kitchens)\n→ Requires sealing every 1-2 years\n→ Classic look, great resale in SA market\n→ Price: $40–$100 per sq ft installed\n\n⬜ QUARTZ\n→ Engineered, consistent look\n→ Zero maintenance (no sealing)\n→ Slightly more scratch resistant\n→ Better for busy families\n→ Price: $50–$120 per sq ft installed\n\n🏆 Our recommendation for San Antonio: GRANITE\nThe Texas heat, the cooking culture, the resale market — granite wins here.\n\nWant to see samples? We bring them to your home.\n\n📞 (210) 606-5298 — FREE in-home consultation\n\n#GraniteCountertops #QuartzCountertops #SanAntonioKitchen #KitchenRemodel #FirstClassRemodelingTX #SATXHomes #CountertopInstall #HomeRenovation`},
+    {id:11,type:'urgency',day_of_week:'friday',best_time:'17:00',
+     image_prompt:'remodeling consultation appointment calendar San Antonio Texas contractor client meeting professional photography no text',
+     caption:`📞 3 spots left this month for FREE in-home estimates.\n\nEvery month we take a limited number of new consultations to make sure every client gets our full attention.\n\nThis is not a sales tactic — it's how we've maintained 5-star quality for 16 years.\n\nIf you're in:\n• San Antonio\n• New Braunfels\n• Boerne\n• Helotes\n• Live Oak\n• Schertz\n\n...and you're thinking about a kitchen or bathroom remodel — call before the month fills up.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\nFIRST CLASS REMODELING TX\nLicensed • Insured • 16+ Years • 1,800+ Projects\n\n#SanAntonioRemodeling #FirstClassRemodelingTX #FreeEstimate #LimitedSpots #KitchenRemodel #BathroomRemodel #SATXContractor`},
+    {id:12,type:'engagement',day_of_week:'saturday',best_time:'10:00',
+     image_prompt:'homeowner thoughtfully looking at outdated kitchen contemplating remodel San Antonio Texas relatable warm photography no text',
+     caption:`Real talk: How long have you been thinking about remodeling your kitchen? 😅\n\n→ 6 months?\n→ 1 year?\n→ "Since we moved in" 😂\n\nYou're not alone. Most of our clients tell us they waited WAY longer than they should have.\n\nThe most common thing we hear after a project is done:\n\n"I wish we had done this years ago."\n\nEvery year you wait, you lose:\n⏰ Years of enjoying the space\n📈 Home value appreciation\n💰 Prices only go up (materials + labor)\n\nThe best time to remodel was last year. The second best time is now.\n\nFREE estimate — no obligation.\n📞 (210) 606-5298\n\n#SanAntonio #HomeRemodel #FirstClassRemodelingTX #KitchenGoals #SATXHomes #NoMoreWaiting #HomeRenovation`},
+    {id:13,type:'value',day_of_week:'monday',best_time:'08:00',
+     image_prompt:'contractor client trust handshake finished beautiful kitchen remodel San Antonio Texas professional photography no text',
+     caption:`Why San Antonio homeowners choose First Class Remodeling TX 🥇\n\nAfter 16 years and 1,800+ projects, here's what we've learned about what really matters:\n\n1️⃣ COMMUNICATION\nYou know what's happening every step. No surprises.\n\n2️⃣ CLEAN JOBSITE\nWe treat your home with respect. Every day, before we leave.\n\n3️⃣ TIMELINE\nWe set realistic dates and we hit them.\n\n4️⃣ WARRANTY\nOur craftsmanship warranty means we stand behind our work — period.\n\n5️⃣ LOCAL KNOWLEDGE\nWe know San Antonio's climate, building codes, and what appraisers value here.\n\nThis is why our clients refer their neighbors. This is why we've been in business since 2008.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#FirstClassRemodelingTX #SanAntonioContractor #WhyChooseUs #HomeRenovation #SATXHomes #KitchenRemodel #BathroomRemodel`},
+    {id:14,type:'tip',day_of_week:'tuesday',best_time:'12:00',
+     image_prompt:'bathroom remodel transformation walk-in shower double vanity tile floor to ceiling San Antonio Texas before after professional no text',
+     caption:`💡 PRO TIP: How to add $30K in value to your San Antonio home for under $15K...\n\nThe secret? A strategic bathroom remodel.\n\nHere's what moves the needle on appraisals in SA:\n\n1. Walk-in shower (replace the tub if it's not the master)\n2. Double vanity (buyers ALWAYS ask about this)\n3. Tile floor to ceiling in the shower\n4. Updated fixtures — brushed nickel or matte black\n5. Proper exhaust ventilation\n\nDone right, a $12K–$15K bathroom remodel in San Antonio adds $25K–$40K in appraised value.\n\nThat's not renovation. That's investing.\n\n📞 Let's talk numbers: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#BathroomRemodel #SanAntonioRealEstate #HomeValue #ROI #FirstClassRemodelingTX #SATXHomes #BathroomDesign #HomeInvestment`},
+    {id:15,type:'neighborhood',day_of_week:'wednesday',best_time:'18:00',
+     image_prompt:'Alamo Heights San Antonio elegant historic neighborhood tree-lined streets Texas architecture professional photography golden hour no text',
+     caption:`🏰 Alamo Heights — we see you. 🏰\n\nAlamo Heights homeowners have some of the highest standards in San Antonio — and we love it.\n\nWhat we build in Alamo Heights:\n🍳 Full chef's kitchens with custom cabinetry\n🛁 Master suite transformations\n🏠 Whole-home renovations that respect the architecture\n📐 Additions that blend seamlessly with original construction\n\nWe understand that in Alamo Heights, details matter. The craftsmanship is visible. The materials are premium. And the result has to be exceptional.\n\nThat's exactly what we deliver.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#AlamoHeights #SanAntonioRemodeling #FirstClassRemodelingTX #AlamoHeightsSA #KitchenRemodel #HomeRenovation #SATXHomes #PremiumRemodeling`},
+    {id:16,type:'education',day_of_week:'thursday',best_time:'10:00',
+     image_prompt:'open concept kitchen living room wall removed beam structural renovation San Antonio Texas bright natural light professional photography no text',
+     caption:`OPEN CONCEPT: Is it right for your San Antonio home? 🤔\n\nOpen concept is everywhere — but it's not for every home.\n\nWhen it WORKS:\n✅ When the kitchen is isolated from living/dining\n✅ When natural light is blocked by walls\n✅ When resale value is the goal\n✅ When the family wants connection during cooking\n\nWhen to THINK TWICE:\n⚠️ Load-bearing walls (we handle these with beams)\n⚠️ Older SA homes with unique wall configurations\n⚠️ When you need sound separation\n\nThe good news: almost any wall can be opened up.\nThe key is knowing which ones require structural work — and pricing that properly upfront.\n\nWe've done hundreds of open concepts across San Antonio. We know every challenge.\n\n📞 Free consultation: (210) 606-5298\n\n#OpenConcept #HomeRenovation #SanAntonio #FirstClassRemodelingTX #KitchenRemodel #HomeDesign #SATXHomes #LoadBearingWall`},
+    {id:17,type:'social_proof',day_of_week:'friday',best_time:'17:00',
+     image_prompt:'happy family enjoying remodeled kitchen breakfast San Antonio Texas warm morning light professional photography no text',
+     caption:`"I wish we had called sooner."\n\nThat's the most common thing we hear after completing a project.\n\nNot because we're fast (though we are).\nNot because we're cheap (we're not).\n\nBut because once it's done — homeowners realize they spent years living in a space that didn't match who they are.\n\nYour home should feel like YOU.\n\nFirst Class Remodeling TX has been building that feeling for San Antonio families since 2008.\n\nKitchens. Bathrooms. Whole homes. All across San Antonio.\n\n📞 Call today — FREE estimate: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#SanAntonioRemodeling #FirstClassRemodelingTX #HomeTransformation #SATXHomes #KitchenRemodel #BathroomRemodel #CustomerFirst #SanAntonio`},
+    {id:18,type:'engagement',day_of_week:'saturday',best_time:'10:00',
+     image_prompt:'dream kitchen massive island waterfall quartz countertops pendant lights open concept Texas luxury home professional photography no text',
+     caption:`If budget was NO object — what would you do to your home? 🏠✨\n\nDream big in the comments 👇\n\nWe've built kitchens with $200K budgets and incredible bathrooms for $18K.\n\nThe truth? The transformation isn't always about the budget — it's about knowing where every dollar goes.\n\nThat's what 16 years in San Antonio teaches you.\n\nTag a friend who needs a remodel 😄\n\n📞 (210) 606-5298 — Let's make it real\n🌐 firstclassremodelingtx.com\n\n#DreamHome #SanAntonio #HomeRemodel #FirstClassRemodelingTX #KitchenGoals #BathroomGoals #SATXHomes #HomeRenovation`},
+    {id:19,type:'value',day_of_week:'monday',best_time:'08:00',
+     image_prompt:'Texas style durable kitchen remodel materials granite countertops solid construction San Antonio summer professional real estate photography no text',
+     caption:`TEXAS STRONG 🤠\n\nBuilding in San Antonio means building for TEXAS conditions:\n\n🌡️ 100°F+ summers → We spec materials that don't warp\n💧 Hard water → We use tile and fixtures rated for SA's water\n🌪️ Storm season → Proper ventilation and waterproofing every time\n🏚️ Older foundations → We know how SA homes settle and shift\n\nA contractor from out of state doesn't know what we know.\n\nWe're LOCAL. We've been here since 2008. We've seen every challenge San Antonio throws at a home — and we've built against every single one.\n\nFirst Class Remodeling TX.\nSan Antonio born. San Antonio built.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#TexasStrong #SanAntonioContractor #FirstClassRemodelingTX #LocalContractor #HomeRenovation #SATXHomes #BuiltForTexas`},
+    {id:20,type:'tip',day_of_week:'tuesday',best_time:'12:00',
+     image_prompt:'two tone kitchen cabinets navy lower white upper quartz countertops matte black hardware San Antonio Texas 2026 professional photography no text',
+     caption:`💡 PRO TIP: The cabinet color that sells homes fastest in San Antonio right now...\n\nTwo-tone kitchens.\n\nUpper cabinets: White or Greige\nLower cabinets: Navy, Forest Green, or Charcoal\n\nWhy it works:\n→ Upper whites reflect light = kitchen feels bigger\n→ Lower darks hide wear (kids, pets, daily use)\n→ Two-tone photographs beautifully for Zillow\n→ It's 2026 — buyers expect it\n\nPaired with white quartz countertops and gold or matte black hardware?\n\nYou have a kitchen that buyers will pay a premium for.\n\nWe've done this in Stone Oak, Alamo Heights, and The Dominion. The results speak for themselves.\n\n📞 Free design consultation: (210) 606-5298\n\n#KitchenDesign #CabinetColors #SanAntonioHomes #KitchenRemodel #FirstClassRemodelingTX #TwoToneKitchen #HomeValue #SATXHomes`},
+    {id:21,type:'neighborhood',day_of_week:'wednesday',best_time:'18:00',
+     image_prompt:'The Dominion San Antonio luxury neighborhood gated community upscale estate homes professional photography aerial no text',
+     caption:`The Dominion — where we do our best work. 🏆\n\nThe Dominion sets the standard for San Antonio living. The homes are exceptional — and they deserve exceptional craftsmanship.\n\nWhat we build in The Dominion:\n🍳 Chef's kitchens with 10+ foot islands\n🛁 Master spa bathrooms with steam showers\n🏠 Whole-home renovations with custom millwork\n🎨 Full-custom cabinetry from floor to ceiling\n\nEvery project in The Dominion is a portfolio piece. Every detail is intentional.\n\nIf you're a Dominion homeowner thinking about a remodel — let's have a conversation.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#TheDominion #SanAntonioRemodeling #FirstClassRemodelingTX #DominionSA #LuxuryRemodel #KitchenRemodel #CustomCabinetry #SATXHomes`},
+    {id:22,type:'education',day_of_week:'thursday',best_time:'10:00',
+     image_prompt:'contractor license certificate insurance documents professional San Antonio Texas trust verification no text',
+     caption:`HOW TO HIRE A CONTRACTOR IN SAN ANTONIO — without getting burned 🔥\n\nAfter 16 years, here's our honest checklist:\n\n✅ Verify their Texas license (search: TDLR.texas.gov)\n✅ Check they carry liability insurance + workers comp\n✅ Ask for 3 local references — and CALL them\n✅ Get everything in writing (scope, timeline, payment schedule)\n✅ NEVER pay 100% upfront\n✅ Verify their physical address (not just a cell #)\n✅ Check BBB + Google reviews\n\n🚩 Red flags:\n❌ No permit pulled\n❌ Cash only, no contract\n❌ Dramatically lower than other bids\n❌ Can start tomorrow (good contractors are booked)\n\nWe welcome every one of these checks.\nWe have nothing to hide.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#HiringContractor #SanAntonio #HomeRenovation #FirstClassRemodelingTX #ContractorTips #SATXHomes #DoYourResearch`},
+    {id:23,type:'urgency',day_of_week:'friday',best_time:'17:00',
+     image_prompt:'spa style master bathroom remodel finished San Antonio Texas warm evening lighting soaking tub frameless shower no text',
+     caption:`Weekend thought for San Antonio homeowners 💭\n\nYou walk into your kitchen every morning.\nYou use your bathroom every single day.\n\nThese aren't just rooms — they're the spaces where your life happens.\n\nIf those spaces don't inspire you...\nIf they feel outdated, cramped, or just not YOU...\n\nThat's not a small thing. That affects your mood, your family, your home value.\n\nWe've seen it hundreds of times: 6 weeks of construction = years of happiness.\n\nFREE in-home estimate. No commitment.\n\n📞 Call this weekend: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\nFirst Class Remodeling TX\n📍 San Antonio, TX | Licensed & Insured | Est. 2008\n\n#SanAntonioRemodeling #WeekendThoughts #HomeTransformation #FirstClassRemodelingTX #KitchenRemodel #BathroomRemodel #SATXHomes`},
+    {id:24,type:'engagement',day_of_week:'saturday',best_time:'10:00',
+     image_prompt:'split image gourmet kitchen left spa bathroom right San Antonio remodel professional photography comparison no text',
+     caption:`San Antonio homeowners — tell us: KITCHEN or BATHROOM? 🤔\n\nWhich would you remodel first?\n\n🍳 KITCHEN — because that's where family happens\n🛁 BATHROOM — because I deserve a spa in my own home\n\nComment below! The debate is always good 😄\n\n(And if you said BOTH — we do that too. Call us 😂)\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#KitchenVsBathroom #SanAntonio #HomeRemodel #FirstClassRemodelingTX #SATXHomes #LetUsBuildIt #WeekendVibes`},
+    {id:25,type:'value',day_of_week:'monday',best_time:'08:00',
+     image_prompt:'contractor client walkthrough inspection finished kitchen remodel San Antonio Texas professional photography no text',
+     caption:`Our promise to every San Antonio homeowner 🤝\n\nWhen you hire First Class Remodeling TX:\n\n📋 You get a detailed written proposal — before we touch a thing\n🔑 You keep access to your home at all times\n🧹 We clean up every single day before we leave\n📱 You have my personal number — not an answering service\n📸 Weekly photo updates of your project's progress\n✅ Final walkthrough together — nothing is done until YOU say it's done\n\nThis is what 1,800 projects teaches you.\n\nTreat people's homes like your own. Do what you say you'll do. Stand behind your work.\n\nSimple. Consistent. First Class.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#FirstClassRemodelingTX #OurPromise #SanAntonioRemodeling #CustomerFirst #HomeRenovation #SATXHomes #TrustedContractor`},
+    {id:26,type:'tip',day_of_week:'tuesday',best_time:'12:00',
+     image_prompt:'2026 primary bathroom walk-in shower no tub double vanity heated floors frameless glass San Antonio Texas professional photography no text',
+     caption:`💡 PRO TIP: The #1 thing San Antonio buyers look for in 2026...\n\nIt's not square footage.\nIt's not the neighborhood.\n\nIt's the PRIMARY BATHROOM.\n\nReal estate agents across San Antonio confirm this:\nA renovated primary bathroom can single-handedly change a buyer's offer.\n\nWhat buyers want in 2026:\n✅ Walk-in shower (no tub in master)\n✅ Double vanity with storage\n✅ Large format floor tile (24x24 minimum)\n✅ Frameless glass\n✅ Heated floors (yes, even in Texas — it's a luxury signal)\n\nIf you're planning to sell in the next 3 years — the primary bathroom is where your remodeling dollars go first.\n\nWe'll tell you exactly what to spend and what to skip.\n\n📞 (210) 606-5298 — FREE estimate\n\n#BathroomRemodel #SanAntonioRealEstate #HomeValue #FirstClassRemodelingTX #SATXHomes #2026Trends #BathroomDesign #ROI`},
+    {id:27,type:'neighborhood',day_of_week:'wednesday',best_time:'18:00',
+     image_prompt:'Terrell Hills San Antonio historic neighborhood charming homes mature oak trees classic Texas architecture professional photography no text',
+     caption:`Terrell Hills — history meets modern living. 🏡\n\nTerrell Hills homes have character that newer neighborhoods simply don't have. Our job isn't to change that — it's to honor it while bringing it fully into 2026.\n\nWhat we love building in Terrell Hills:\n🏛️ Kitchen updates that respect the original architecture\n🛁 Bathrooms that feel timeless, not trendy\n🪟 Natural light maximization — working with the existing layout\n🔨 Quality that matches the permanence of the neighborhood itself\n\nIf you're a Terrell Hills homeowner — you know quality. So do we.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#TerrellHills #SanAntonioRemodeling #FirstClassRemodelingTX #TerrellHillsSA #HistoricHomes #KitchenRemodel #HomeRenovation #SATXHomes`},
+    {id:28,type:'education',day_of_week:'thursday',best_time:'10:00',
+     image_prompt:'bathroom remodel tile installation professional crew San Antonio Texas construction in progress clean organized no text',
+     caption:`BATHROOM REMODEL TIMELINE: What to realistically expect 📅\n\nWe get this question constantly. Here's the real answer:\n\n📋 Week 1: Design, permits, material ordering\n🔨 Week 2: Demo (the exciting part)\n🪣 Week 3: Plumbing rough-in, waterproofing\n🧱 Week 4: Tile work (floor + shower)\n🚿 Week 5: Fixtures, vanity, glass\n✅ Week 6: Final details, punchlist, walkthrough\n\nTotal: 5–7 weeks for a full primary bathroom renovation.\n\nSmaller bathrooms: 3–4 weeks.\n\nWhat causes delays?\n→ Custom tile orders (we tell you upfront)\n→ Permit timing (we manage this)\n→ Unexpected plumbing (we find it, we fix it)\n\nNo surprises. That's our standard.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#BathroomRemodel #Timeline #SanAntonio #FirstClassRemodelingTX #HomeRenovation #SATXHomes #WhatToExpect`},
+    {id:29,type:'social_proof',day_of_week:'friday',best_time:'17:00',
+     image_prompt:'before and after collage multiple kitchen bathroom remodels San Antonio Texas professional photography portfolio grid no text',
+     caption:`16 years. 1,800+ projects. Thousands of San Antonio families. 🏠\n\nWe've built in every neighborhood:\n📍 The Dominion\n📍 Stone Oak\n📍 Alamo Heights\n📍 Terrell Hills\n📍 Shavano Park\n📍 Leon Springs\n📍 New Braunfels\n📍 Boerne\n📍 Helotes\n📍 And dozens more across Greater San Antonio\n\nEvery single project — from a $12K bathroom to a $200K whole-home renovation — got the same standard of craftsmanship.\n\nThat's not marketing. That's our reputation.\n\nAnd our reputation is why 40% of our business comes from referrals.\n\n📞 (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#SanAntonioRemodeling #FirstClassRemodelingTX #16Years #1800Projects #LocalContractor #SATXHomes #Reputation #HomeRenovation`},
+    {id:30,type:'cta',day_of_week:'saturday',best_time:'10:00',
+     image_prompt:'cinematic kitchen transformation golden hour light San Antonio Texas finished remodel dramatic professional photography no text',
+     caption:`This is your sign. 🪧\n\nYou've been thinking about it.\nYou've been saving the Pinterest boards.\nYou've been watching the HGTV episodes.\n\nNow it's time.\n\nFirst Class Remodeling TX is ready when you are.\n\n✅ FREE in-home estimate\n✅ No pressure, no obligation\n✅ Real numbers, real timeline, real craftsmanship\n\nSan Antonio's most trusted remodeling team since 2008.\n1,800+ completed projects.\nLicensed & Insured.\n\n📞 Call or text: (210) 606-5298\n📧 estimates@firstclassremodelingtx.com\n🌐 firstclassremodelingtx.com\n📍 San Antonio, TX\n\nTag someone who needs to see this 👇\n\n#SanAntonioRemodeling #FirstClassRemodelingTX #ThisIsYourSign #KitchenRemodel #BathroomRemodel #FreeEstimate #SATXHomes #SanAntonio #HomeTransformation`}
+  ]
+};
+
+// ═══════════════════════════════════════════════════════
+//  CONSTANTS & STATE
+// ═══════════════════════════════════════════════════════
+const TOPICS = ['Kitchen Remodel','Bathroom Remodel','Granite Countertops','Quartz Countertops',
+  'Frameless Shower','Open Concept','Custom Cabinets','Free Estimate','Stone Oak','Alamo Heights',
+  'The Dominion','Terrell Hills','Tile Installation','Home Value','Before After'];
+const NEIGHBORHOODS = ['Stone Oak','Alamo Heights','The Dominion','Terrell Hills','Shavano Park',
+  'Leon Springs','New Braunfels','Boerne','Helotes','Schertz'];
+const TYPE_ICONS = {value:'🏠',tip:'💡',education:'📚',social_proof:'⭐',
+  neighborhood:'📍',engagement:'💬',urgency:'⏰',cta:'🎯'};
+const DAY_ORDER = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let activeCampaignTopics = [];
+let activeNeighborhoods = [];
+let uploadedFiles = [];
+let currentModalPost = null;
+let scheduledPosts = [];
+
+// ═══════════════════════════════════════════════════════
+//  SETTINGS
+// ═══════════════════════════════════════════════════════
+function getSettings() {
+  return {
+    token: localStorage.getItem('fb_token') || '',
+    anthropicKey: localStorage.getItem('anthropic_key') || '',
+    pageId: localStorage.getItem('fb_page_id') || '103694595838689'
+  };
+}
+function saveSettings() {
+  localStorage.setItem('fb_token', document.getElementById('settingToken').value);
+  localStorage.setItem('anthropic_key', document.getElementById('settingAnthropicKey').value);
+  localStorage.setItem('fb_page_id', document.getElementById('settingPageId').value);
+  closeModal('settingsModal');
+  toast('Settings saved', 'success');
+}
+function openSettings() {
+  const s = getSettings();
+  document.getElementById('settingToken').value = s.token;
+  document.getElementById('settingAnthropicKey').value = s.anthropicKey;
+  document.getElementById('settingPageId').value = s.pageId;
+  openModal('settingsModal');
+}
+function toggleHelp() {
+  const el = document.getElementById('helpContent');
+  el.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const name = tab.dataset.tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+    localStorage.setItem('activeTab', name);
+    if (name === 'queue') renderQueue();
+    if (name === 'campaign') renderCampaign();
+  });
+});
+
+// ═══════════════════════════════════════════════════════
+//  POLLINATIONS IMAGE URL
+// ═══════════════════════════════════════════════════════
+function pollinationsUrl(post, w=400, h=267) {
+  const prompt = encodeURIComponent(post.image_prompt + ', hyperrealistic, cinematic');
+  const seed = post.id * 1337 + 42;
+  return `https://image.pollinations.ai/prompt/${prompt}?width=${w}&height=${h}&seed=${seed}&nologo=true`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  CALENDAR
+// ═══════════════════════════════════════════════════════
+function renderCalendar() {
+  const title = document.getElementById('calTitle');
+  const grid = document.getElementById('calGrid');
+  const monthNames = ['January','February','March','April','May','June',
+    'July','August','September','October','November','December'];
+  title.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+  const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const today = new Date();
+
+  // Day name headers
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html = dayNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+
+  // Empty cells before first day
+  for (let i = 0; i < firstDay; i++) html += `<div class="cal-day empty"></div>`;
+
+  // Get state for published info
+  const state = JSON.parse(localStorage.getItem('fb_state') || '{"posted_ids":[]}');
+  const postedIds = state.posted_ids || [];
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(currentYear, currentMonth, d);
+    const dayName = DAY_ORDER[date.getDay()];
+    const isToday = date.toDateString() === today.toDateString();
+
+    // Find post(s) for this day of week, cycling through posts
+    const dayPosts = CONTENT_DATA.posts.filter(p => p.day_of_week === dayName);
+    // Pick the post based on week number in month
+    const weekNum = Math.floor((d + firstDay - 1) / 7);
+    const post = dayPosts[weekNum % dayPosts.length];
+
+    let classes = 'cal-day';
+    if (isToday) classes += ' today';
+    if (post) classes += ' has-post';
+
+    const timeStr = post ? post.best_time + ' CST' : '';
+    const isPublished = post && postedIds.includes(post.id);
+    const badgeClass = isPublished ? 'published' : 'scheduled';
+    const badgeText = post ? (TYPE_ICONS[post.type] || '') + ' ' + post.caption.substring(0,20) + '...' : '';
+    const thumbHtml = post ? `<img class="cal-thumb" src="${pollinationsUrl(post, 80, 50)}" loading="lazy" alt="">` : '';
+
+    html += `<div class="${classes}" onclick="${post ? `openPostModal(${post.id})` : ''}">
+      <div class="cal-num">${d}</div>
+      ${post ? `<span class="cal-time-badge">${timeStr}</span>` : ''}
+      ${post ? `<span class="cal-post-badge ${badgeClass}">${badgeText}</span>` : ''}
+      ${thumbHtml}
+    </div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+document.getElementById('calPrev').onclick = () => {
+  currentMonth--;
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  renderCalendar();
+};
+document.getElementById('calNext').onclick = () => {
+  currentMonth++;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  renderCalendar();
+};
+
+// ═══════════════════════════════════════════════════════
+//  QUEUE TAB
+// ═══════════════════════════════════════════════════════
+// Fotos adjuntas por post ID { postId: {dataUrl, file} }
+const postPhotos = JSON.parse(localStorage.getItem('post_photos_meta') || '{}');
+
+function attachPhotoToPost(postId, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    postPhotos[postId] = { dataUrl: e.target.result, name: file.name, type: file.type };
+    localStorage.setItem('post_photos_meta', JSON.stringify(
+      Object.fromEntries(Object.entries(postPhotos).map(([k,v]) => [k, {name:v.name, type:v.type}]))
+    ));
+    // Store full dataUrl separately per post
+    localStorage.setItem('post_photo_data_' + postId, e.target.result);
+    toast(`📷 Foto adjuntada al post #${postId}`, 'success');
+    renderQueue();
+  };
+  reader.readAsDataURL(file);
+}
+
+function getPostPhoto(postId) {
+  const data = localStorage.getItem('post_photo_data_' + postId);
+  const meta = postPhotos[postId];
+  if (data && meta) return { dataUrl: data, name: meta.name, type: meta.type };
+  return null;
+}
+
+function removePostPhoto(postId) {
+  delete postPhotos[postId];
+  localStorage.removeItem('post_photo_data_' + postId);
+  localStorage.setItem('post_photos_meta', JSON.stringify(postPhotos));
+  toast('Foto removida', 'info');
+  renderQueue();
+  if (currentModalPost && currentModalPost.id === postId) openPostModal(postId);
+}
+
+function renderQueue() {
+  const state = JSON.parse(localStorage.getItem('fb_state') || '{"posted_ids":[]}');
+  const postedIds = state.posted_ids || [];
+  const list = document.getElementById('postList');
+  const summary = document.getElementById('queueSummary');
+
+  summary.textContent = `${postedIds.length} published · ${30 - postedIds.length} remaining`;
+
+  list.innerHTML = CONTENT_DATA.posts.map(post => {
+    const isPublished = postedIds.includes(post.id);
+    const status = isPublished ? 'published' : 'scheduled';
+    const statusLabel = isPublished ? 'Published' : 'Scheduled';
+    return `<div class="post-item" onclick="openPostModal(${post.id})">
+      <div class="post-num">${post.id}</div>
+      <img class="post-thumb-sm" src="${pollinationsUrl(post, 80, 60)}" loading="lazy" alt="">
+      <div class="post-info">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap">
+          <span class="badge badge-${post.type}">${TYPE_ICONS[post.type] || ''} ${post.type}</span>
+          <span class="badge badge-${status}">${statusLabel}</span>
+          <span style="font-size:10px;color:var(--muted)">${post.day_of_week} · ${post.best_time} CST</span>
+        </div>
+        <div class="post-caption-preview">${post.caption}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0">
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openPostModal(${post.id})">Preview</button>
+        <label class="btn btn-outline btn-sm" style="cursor:pointer;margin:0;display:flex;align-items:center;gap:4px" title="Agregar foto a este post">
+          📷 Foto
+          <input type="file" accept="image/*" style="display:none" onchange="event.stopPropagation();attachPhotoToPost(${post.id}, this)">
+        </label>
+        ${postPhotos[post.id] ? `<span style="font-size:9px;color:var(--green);text-align:center">✓ foto lista</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  POST DETAIL MODAL
+// ═══════════════════════════════════════════════════════
+function openPostModal(postId) {
+  const post = CONTENT_DATA.posts.find(p => p.id === postId);
+  if (!post) return;
+  currentModalPost = post;
+  document.getElementById('modalTitle').textContent = `Post #${post.id} — ${post.type.toUpperCase()}`;
+  document.getElementById('modalImg').src = pollinationsUrl(post, 600, 400);
+  document.getElementById('modalCaption').textContent = post.caption;
+  const state = JSON.parse(localStorage.getItem('fb_state') || '{"posted_ids":[]}');
+  const isPublished = state.posted_ids && state.posted_ids.includes(post.id);
+  document.getElementById('modalMeta').innerHTML = `
+    <span class="badge badge-${post.type}">${TYPE_ICONS[post.type] || ''} ${post.type}</span>
+    <span class="badge badge-${isPublished ? 'published' : 'scheduled'}">${isPublished ? 'Published' : 'Scheduled'}</span>
+    <span style="font-size:10px;color:var(--muted)">${post.day_of_week} · ${post.best_time} CST</span>`;
+
+  // Show attached photo or upload option
+  const photo = getPostPhoto(post.id);
+  const photoSection = document.getElementById('modalPhotoSection');
+  if (photo) {
+    photoSection.innerHTML = `
+      <div style="margin-top:14px">
+        <div style="font-size:11px;color:var(--gold);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em">📷 Foto adjunta</div>
+        <img src="${photo.dataUrl}" style="width:100%;border-radius:8px;max-height:240px;object-fit:cover;margin-bottom:8px">
+        <div style="display:flex;gap:8px">
+          <span style="font-size:11px;color:var(--muted);flex:1">${photo.name}</span>
+          <button class="btn btn-outline btn-sm" onclick="removePostPhoto(${post.id})" style="color:var(--red);border-color:var(--red)">✕ Remover</button>
+        </div>
+      </div>`;
+  } else {
+    photoSection.innerHTML = `
+      <div style="margin-top:14px">
+        <label class="btn btn-outline" style="cursor:pointer;width:100%;justify-content:center">
+          📷 Agregar foto a este post
+          <input type="file" accept="image/*" style="display:none" onchange="attachPhotoToPost(${post.id}, this);openPostModal(${post.id})">
+        </label>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center">Sin foto — se publicará solo texto</div>
+      </div>`;
+  }
+  openModal('postModal');
+}
+
+function copyModalCaption() {
+  if (!currentModalPost) return;
+  navigator.clipboard.writeText(currentModalPost.caption).then(() => toast('Caption copied!','success'));
+}
+function scheduleModalPost() {
+  if (!currentModalPost) return;
+  document.getElementById('createCaption').value = currentModalPost.caption;
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('createDate').value = today;
+  document.getElementById('createTime').value = currentModalPost.best_time;
+  document.getElementById('createType').value = currentModalPost.type;
+  closeModal('postModal');
+  switchTab('create');
+  toast('Caption loaded in Create Post tab', 'info');
+}
+function postModalNow() {
+  if (!currentModalPost) return;
+  closeModal('postModal');
+  switchTab('create');
+  document.getElementById('createCaption').value = currentModalPost.caption;
+  postNow();
+}
+
+// ═══════════════════════════════════════════════════════
+//  CREATE POST TAB
+// ═══════════════════════════════════════════════════════
+function renderTemplateChips() {
+  const container = document.getElementById('templateChips');
+  container.innerHTML = TOPICS.map(t =>
+    `<div class="topic-chip" onclick="loadTemplate('${t}')">${t}</div>`
+  ).join('');
+}
+
+const CAPTION_TEMPLATES = {
+  'Kitchen Remodel': `🍳 Thinking about a new kitchen in San Antonio?\n\nFirst Class Remodeling TX has completed 1,800+ projects — including kitchens that transform daily life.\n\nFrom custom islands to new layouts, we build kitchens that work for YOUR family.\n\n📞 FREE estimate: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#KitchenRemodel #SanAntonio #FirstClassRemodelingTX #SATXHomes`,
+  'Bathroom Remodel': `🛁 Your bathroom should feel like a retreat.\n\nFirst Class Remodeling TX builds spa-quality bathrooms in San Antonio homes — from Alamo Heights to Stone Oak.\n\nFrameless glass. Floor-to-ceiling tile. Custom vanities. We do it all.\n\n📞 (210) 606-5298 — FREE estimate\n🌐 firstclassremodelingtx.com\n\n#BathroomRemodel #SanAntonio #FirstClassRemodelingTX #SATXHomes`,
+  'Granite Countertops': `🪨 Granite countertops in San Antonio — the right choice for Texas homes.\n\nHeat resistant. Beautiful. Adds real resale value.\n\nWe install granite across San Antonio from The Dominion to Terrell Hills. We bring samples to YOUR home.\n\n📞 FREE in-home consultation: (210) 606-5298\n\n#GraniteCountertops #SanAntonio #KitchenRemodel #FirstClassRemodelingTX`,
+  'Free Estimate': `📋 We offer FREE in-home estimates — no pressure, no obligation.\n\nJust honest numbers and a real plan for your remodel.\n\nFirst Class Remodeling TX has served San Antonio homeowners since 2008. Licensed. Insured. 1,800+ projects.\n\n📞 Call or text: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#FreeEstimate #SanAntonio #HomeRemodel #FirstClassRemodelingTX`
+};
+
+function loadTemplate(topic) {
+  const caption = CAPTION_TEMPLATES[topic] || `✨ ${topic} experts in San Antonio — First Class Remodeling TX.\n\n16+ years. 1,800+ projects. Licensed & Insured.\n\n📞 FREE estimate: (210) 606-5298\n🌐 firstclassremodelingtx.com\n\n#SanAntonio #FirstClassRemodelingTX #${topic.replace(/\s/g,'')}`;
+  document.getElementById('createCaption').value = caption;
+  document.getElementById('createTopic').value = topic;
+  toast(`Template loaded: ${topic}`, 'info');
+}
+
+function generateCaption() {
+  const topic = document.getElementById('createTopic').value || 'kitchen remodel';
+  loadTemplate(topic);
+}
+
+function generatePreviewImage() {
+  const caption = document.getElementById('createCaption').value;
+  const topic = document.getElementById('createTopic').value || caption.substring(0, 60);
+  const prompt = encodeURIComponent(`${topic}, professional remodeling photography San Antonio Texas modern interior, hyperrealistic, cinematic`);
+  const seed = Math.floor(Math.random() * 9999);
+  const url = `https://image.pollinations.ai/prompt/${prompt}?width=600&height=400&seed=${seed}&nologo=true`;
+  const img = document.getElementById('createPreviewImg');
+  img.src = url;
+  img.classList.add('visible');
+  img.style.display = 'block';
+  toast('Generating preview image...', 'info');
+}
+
+function schedulePost() {
+  const caption = document.getElementById('createCaption').value;
+  const date = document.getElementById('createDate').value;
+  const time = document.getElementById('createTime').value;
+  if (!caption.trim()) { toast('Please add a caption first', 'error'); return; }
+  scheduledPosts.push({ caption, date, time, type: document.getElementById('createType').value, created: new Date().toISOString() });
+  localStorage.setItem('scheduled_posts', JSON.stringify(scheduledPosts));
+  renderScheduledList();
+  toast('Post saved to schedule', 'success');
+}
+
+function renderScheduledList() {
+  const el = document.getElementById('scheduledList');
+  if (!scheduledPosts.length) { el.textContent = 'No scheduled posts yet.'; return; }
+  el.innerHTML = scheduledPosts.map((p, i) =>
+    `<div style="background:#111;border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px">
+      <div style="font-size:11px;color:var(--gold)">${p.date} ${p.time} — ${p.type}</div>
+      <div style="font-size:11px;color:#aaa;margin-top:4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${p.caption.substring(0,80)}...</div>
+      <button class="btn btn-outline btn-sm" style="margin-top:6px" onclick="removeScheduled(${i})">Remove</button>
+    </div>`
+  ).join('');
+}
+
+function removeScheduled(idx) {
+  scheduledPosts.splice(idx, 1);
+  localStorage.setItem('scheduled_posts', JSON.stringify(scheduledPosts));
+  renderScheduledList();
+}
+
+async function postNow() {
+  const caption = document.getElementById('createCaption').value;
+  if (!caption.trim()) { toast('Please add a caption first', 'error'); return; }
+  const { token, pageId } = getSettings();
+  if (!token) { toast('No Facebook token in Settings', 'error'); openSettings(); return; }
+  toast('Posting to Facebook...', 'info');
+  try {
+    const resp = await fetch(`https://graph.facebook.com/v18.0/${pageId}/feed`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: caption, access_token: token })
+    });
+    const result = await resp.json();
+    if (result.id) {
+      toast(`Posted! ID: ${result.id}`, 'success');
+      document.getElementById('createCaption').value = '';
+    } else {
+      toast(`Error: ${result.error?.message || 'Unknown error'}`, 'error');
+    }
+  } catch (e) {
+    toast('Post failed: ' + e.message, 'error');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  UPLOAD & ANALYZE TAB
+// ═══════════════════════════════════════════════════════
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropzone.classList.remove('drag-over');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+function handleFiles(files) {
+  uploadedFiles = [...files];
+  const grid = document.getElementById('previewGrid');
+  grid.innerHTML = '';
+  uploadedFiles.forEach((file, i) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      grid.innerHTML += `<div class="preview-item" id="preview-${i}">
+        <img src="${e.target.result}" alt="">
+        <button class="remove-btn" onclick="removeFile(${i})">×</button>
+      </div>`;
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('analyzeBtn').disabled = uploadedFiles.length === 0;
+}
+
+function removeFile(idx) {
+  uploadedFiles.splice(idx, 1);
+  handleFiles(uploadedFiles);
+}
+
+function clearPhotos() {
+  uploadedFiles = [];
+  document.getElementById('previewGrid').innerHTML = '';
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('analysisBox').classList.remove('visible');
+  fileInput.value = '';
+}
+
+async function analyzePhotos() {
+  if (!uploadedFiles.length) return;
+  const { anthropicKey } = getSettings();
+  if (!anthropicKey) { toast('No Anthropic API key in Settings', 'error'); openSettings(); return; }
+
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  btn.textContent = 'Analyzing...';
+  toast('Sending to Claude Vision...', 'info');
+
+  const file = uploadedFiles[0];
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result.split(',')[1];
+    const mediaType = file.type || 'image/jpeg';
+
+    const campaign = loadCampaignFromStorage();
+    const focus = campaign.week_focus || ['kitchen remodel', 'San Antonio'];
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': anthropicKey,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 1024,
+          system: `You are a professional social media manager for First Class Remodeling TX, a premium kitchen and bathroom remodeling company in San Antonio, Texas. Business info: 16+ years, 1,800+ projects, phone (210) 606-5298, website firstclassremodelingtx.com. Write authentic, engaging Facebook posts. Never use words like luxury, premier, bespoke, discerning. Use words like: exceptional, trusted, craftsmanship, elevated, refined, custom. Always include: phone number, website, relevant hashtags.`,
+          messages: [{
+            role: 'user',
+            content: [
+              { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
+              { type: 'text', text: `Look at this remodeling photo and write a professional Facebook post caption.\n\nCurrent campaign focus: ${focus.join(', ')}\n\nThe caption should:\n1. Start with an engaging hook describing what's visible in the photo\n2. Highlight specific materials, finishes, or techniques visible\n3. Include 2-3 value points about First Class Remodeling TX\n4. End with CTA: call (210) 606-5298 for free estimate\n5. Include 8-10 relevant hashtags\n\nWrite only the caption, no explanations.` }
+            ]
+          }]
+        })
+      });
+      const result = await resp.json();
+      const caption = result.content?.[0]?.text || '';
+      if (caption) {
+        document.getElementById('analysisCaption').value = caption;
+        document.getElementById('analysisBox').classList.add('visible');
+        toast('Caption generated by Claude!', 'success');
+      } else {
+        toast('No caption returned: ' + (result.error?.message || 'Unknown'), 'error');
+      }
+    } catch (e) {
+      toast('Analysis failed: ' + e.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🔍 Analyze with Claude';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function reanalyze() {
+  analyzePhotos();
+}
+
+function useCaptionInCreate() {
+  const caption = document.getElementById('analysisCaption').value;
+  document.getElementById('createCaption').value = caption;
+  switchTab('create');
+  toast('Caption loaded in Create Post', 'success');
+}
+
+// ═══════════════════════════════════════════════════════
+//  CAMPAIGN TAB
+// ═══════════════════════════════════════════════════════
+function renderCampaign() {
+  // Topic chips
+  const chips = document.getElementById('campaignChips');
+  chips.innerHTML = TOPICS.map(t =>
+    `<div class="topic-chip ${activeCampaignTopics.includes(t) ? 'active' : ''}" onclick="toggleTopic('${t}')">${t}</div>`
+  ).join('');
+
+  // Neighborhood checkboxes
+  const hoods = document.getElementById('hoodList');
+  hoods.innerHTML = NEIGHBORHOODS.map(n =>
+    `<label class="hood-item"><input type="checkbox" ${activeNeighborhoods.includes(n) ? 'checked' : ''} onchange="toggleNeighborhood('${n}')"> ${n}</label>`
+  ).join('');
+
+  // Instructions
+  const saved = loadCampaignFromStorage();
+  document.getElementById('campaignInstructions').value = saved.custom_instructions || '';
+
+  updateCampaignStatus();
+}
+
+function toggleTopic(t) {
+  const idx = activeCampaignTopics.indexOf(t);
+  if (idx >= 0) activeCampaignTopics.splice(idx, 1);
+  else activeCampaignTopics.push(t);
+  renderCampaign();
+}
+
+function toggleNeighborhood(n) {
+  const idx = activeNeighborhoods.indexOf(n);
+  if (idx >= 0) activeNeighborhoods.splice(idx, 1);
+  else activeNeighborhoods.push(n);
+  updateCampaignStatus();
+}
+
+function updateCampaignStatus() {
+  const focusChips = document.getElementById('focusChips');
+  if (activeCampaignTopics.length) {
+    focusChips.innerHTML = activeCampaignTopics.map(t => `<span class="focus-chip">${t}</span>`).join('');
+  } else {
+    focusChips.innerHTML = '<span style="font-size:11px;color:var(--muted)">No active focus topics</span>';
+  }
+
+  // Match stats
+  const matchEl = document.getElementById('matchStats');
+  const progressEl = document.getElementById('matchProgress');
+  if (activeCampaignTopics.length) {
+    const focusLower = activeCampaignTopics.map(t => t.toLowerCase());
+    const matches = CONTENT_DATA.posts.filter(p => focusLower.some(f => p.caption.toLowerCase().includes(f)));
+    const pct = Math.round((matches.length / 30) * 100);
+    matchEl.textContent = `${matches.length} of 30 posts match your focus topics (${pct}%)`;
+    progressEl.style.width = pct + '%';
+  } else {
+    matchEl.textContent = 'Select focus topics to see matches.';
+    progressEl.style.width = '0%';
+  }
+
+  // Stat rows
+  const statsEl = document.getElementById('campaignStatRows');
+  const saved = loadCampaignFromStorage();
+  statsEl.innerHTML = `
+    <div class="stat-row"><span class="stat-row-label">Focus Topics</span><span class="stat-row-val">${activeCampaignTopics.length}</span></div>
+    <div class="stat-row"><span class="stat-row-label">Priority Neighborhoods</span><span class="stat-row-val">${activeNeighborhoods.length}</span></div>
+    <div class="stat-row"><span class="stat-row-label">Last Updated</span><span class="stat-row-val">${saved.updated_at ? new Date(saved.updated_at).toLocaleDateString() : 'Never'}</span></div>
+  `;
+}
+
+function saveCampaign() {
+  const campaign = {
+    week_focus: activeCampaignTopics,
+    custom_instructions: document.getElementById('campaignInstructions').value,
+    priority_neighborhoods: activeNeighborhoods,
+    updated_at: new Date().toISOString()
+  };
+  localStorage.setItem('campaign_data', JSON.stringify(campaign));
+  document.getElementById('statFocus').textContent = activeCampaignTopics.length;
+  document.getElementById('downloadNotice').classList.add('visible');
+  updateCampaignStatus();
+  toast('Campaign saved! Download campaign.json to activate on bot.', 'success');
+}
+
+function downloadCampaign() {
+  const campaign = loadCampaignFromStorage();
+  const blob = new Blob([JSON.stringify(campaign, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'campaign.json';
+  a.click();
+  toast('campaign.json downloaded', 'success');
+}
+
+function loadCampaignFromStorage() {
+  try {
+    return JSON.parse(localStorage.getItem('campaign_data') || '{}');
+  } catch { return {}; }
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODAL HELPERS
+// ═══════════════════════════════════════════════════════
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ═══════════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════════
+function toast(msg, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  el.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${msg}</span>`;
+  container.appendChild(el);
+  setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity .3s'; setTimeout(() => el.remove(), 300); }, 3500);
+}
+
+// ═══════════════════════════════════════════════════════
+//  STATS & NEXT POST TIME
+// ═══════════════════════════════════════════════════════
+function updateStats() {
+  const state = JSON.parse(localStorage.getItem('fb_state') || '{"posted_ids":[]}');
+  const postedIds = state.posted_ids || [];
+  document.getElementById('statPublished').textContent = postedIds.length;
+
+  // Queue count from localStorage or 0
+  try {
+    const q = JSON.parse(localStorage.getItem('posts_queue') || '{"pending":[]}');
+    document.getElementById('statQueue').textContent = (q.pending || []).length;
+  } catch { document.getElementById('statQueue').textContent = 0; }
+
+  // Campaign focus count
+  const campaign = loadCampaignFromStorage();
+  document.getElementById('statFocus').textContent = (campaign.week_focus || []).length || 3;
+}
+
+function updateNextPostTime() {
+  const now = new Date();
+  const times = ['08:00','10:00','12:00','17:00','18:00'];
+  const todayDay = now.getDay(); // 0=sun
+  let nextTime = null;
+  let nextDate = null;
+  for (const t of times) {
+    const [h, m] = t.split(':').map(Number);
+    const candidate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
+    if (candidate > now) { nextTime = t; nextDate = 'Today'; break; }
+  }
+  if (!nextTime) {
+    nextTime = '08:00';
+    const tomorrow = new Date(now.getTime() + 86400000);
+    nextDate = tomorrow.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+  document.getElementById('nextPostTime').textContent = `Next post: ${nextDate} ${nextTime} CST`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  TAB SWITCH HELPER
+// ═══════════════════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.dataset.tab === name) t.click();
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+function init() {
+  // Restore last tab
+  const lastTab = localStorage.getItem('activeTab');
+  if (lastTab) {
+    const tabEl = document.querySelector(`.tab[data-tab="${lastTab}"]`);
+    if (tabEl) tabEl.click();
+  }
+
+  // Load campaign
+  const saved = loadCampaignFromStorage();
+  activeCampaignTopics = saved.week_focus || ['Kitchen Remodel', 'Granite Countertops', 'Free Estimate'];
+  activeNeighborhoods = saved.priority_neighborhoods || ['Stone Oak', 'Alamo Heights', 'The Dominion'];
+
+  // Load scheduled posts
+  try { scheduledPosts = JSON.parse(localStorage.getItem('scheduled_posts') || '[]'); } catch { scheduledPosts = []; }
+
+  renderCalendar();
+  renderQueue();
+  renderCampaign();
+  renderTemplateChips();
+  renderScheduledList();
+  updateStats();
+  updateNextPostTime();
+
+  // Set today's date in create post
+  document.getElementById('createDate').value = new Date().toISOString().split('T')[0];
+
+  setInterval(updateNextPostTime, 60000);
+}
+
+init();
+</script>
+</body>
+</html>

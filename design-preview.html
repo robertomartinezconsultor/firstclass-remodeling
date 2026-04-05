@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCR — Design Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #0A0A0A;
+      --dark:   #1A1A1A;
+      --dark2:  #242424;
+      --dark3:  #2E2E2E;
+      --border: #3A3A3A;
+      --gold:   #C9A84C;
+      --gold-l: #E0C06A;
+      --gold-d: #A8872E;
+      --gold-s: rgba(201,168,76,0.12);
+      --white:  #F5F5F5;
+      --muted:  rgba(245,245,245,0.55);
+      --dim:    rgba(245,245,245,0.80);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
+
+    /* ── PREVIEW NAV ─────────────────────────────── */
+    .preview-nav {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .preview-nav__logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+    .preview-nav__logo span { color: var(--gold); }
+    .preview-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .preview-tab {
+      padding: 8px 20px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+    .preview-tab.active {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .preview-note {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── SCREENS ─────────────────────────────────── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ═══════════════════════════════════════════════
+       SCREEN 1 — HOMEPAGE
+    ═══════════════════════════════════════════════ */
+
+    /* NAV */
+    .site-nav {
+      position: relative;
+      height: 72px;
+      background: rgba(10,10,10,0.0);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      background: linear-gradient(180deg, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.4) 100%);
+    }
+    .site-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+    .site-logo span { color: var(--gold); }
+    .site-logo em {
+      font-style: normal;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-top: 1px;
+    }
+    .site-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .site-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .site-links a:hover { color: var(--white); }
+    /* Opción A — "Mi Proyecto" en nav */
+    .nav-cta-a {
+      background: var(--gold-s);
+      border: 1px solid rgba(201,168,76,0.35);
+      color: var(--gold) !important;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-weight: 700 !important;
+    }
+    .nav-cta-a:hover {
+      background: rgba(201,168,76,0.2) !important;
+    }
+    .nav-phone {
+      background: linear-gradient(135deg, var(--gold-l), var(--gold));
+      color: var(--black) !important;
+      border-radius: 8px;
+      padding: 8px 20px;
+      font-weight: 800 !important;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.7) 55%, rgba(10,10,10,0.5) 100%),
+        url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&q=80') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      padding: 0 48px;
+      padding-top: 40px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-s);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .hero-title {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, var(--gold-l) 0%, var(--gold) 50%, var(--gold-d) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--dim);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 520px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--gold-l), var(--gold));
+      color: var(--black);
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 24px rgba(201,168,76,0.35);
+      transition: all 0.25s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 36px rgba(201,168,76,0.45);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 28px;
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      backdrop-filter: blur(8px);
+      transition: all 0.25s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-s);
+    }
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .trust-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .trust-label {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      max-width: 80px;
+    }
+    .trust-sep {
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    /* SERVICES SECTION */
+    .services {
+      background: var(--dark);
+      padding: 100px 48px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 56px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .svc-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 20px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .svc-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.15);
+    }
+    .svc-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .svc-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .svc-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── "MY PROJECT" SECTION (PORTAL) ───────────── */
+    .portal-section {
+      padding: 100px 48px;
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+    }
+    .portal-section::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .portal-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .portal-left {}
+    .portal-title {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.08;
+    }
+    .portal-title span {
+      background: linear-gradient(135deg, var(--gold-l), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .portal-sub {
+      font-size: 17px;
+      color: var(--dim);
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .portal-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+    .portal-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--dim);
+    }
+    .portal-feature::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 10px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+    .portal-cta-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* App download buttons */
+    .app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .app-btn:hover {
+      border-color: var(--gold);
+      background: var(--gold-s);
+    }
+    .app-btn__icon { font-size: 24px; }
+    .app-btn__text { text-align: left; }
+    .app-btn__label {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .app-btn__name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    /* Portal mockup — teléfono */
+    .portal-right {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .phone-frame {
+      width: 280px;
+      background: var(--dark);
+      border: 2px solid var(--border);
+      border-radius: 40px;
+      padding: 16px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,168,76,0.08);
+      position: relative;
+    }
+    .phone-notch {
+      width: 100px;
+      height: 28px;
+      background: var(--dark2);
+      border-radius: 0 0 18px 18px;
+      margin: 0 auto 16px;
+    }
+    .phone-screen {
+      background: var(--black);
+      border-radius: 28px;
+      overflow: hidden;
+      min-height: 520px;
+    }
+    .phone-header {
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      padding: 20px 20px 24px;
+      text-align: center;
+    }
+    .phone-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--black);
+      margin-bottom: 2px;
+    }
+    .phone-tagline {
+      font-size: 9px;
+      font-weight: 600;
+      color: rgba(0,0,0,0.55);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .phone-body {
+      padding: 20px 16px;
+    }
+    .phone-welcome {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .phone-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    /* Progress en el teléfono */
+    .phone-progress-card {
+      background: var(--dark);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .phone-proj-name {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .phone-proj-status {
+      font-size: 10px;
+      color: var(--gold);
+      margin-bottom: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .phone-bar-track {
+      height: 6px;
+      background: var(--dark3);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .phone-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-l));
+      border-radius: 100px;
+      width: 65%;
+    }
+    .phone-pct {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: right;
+    }
+    .phone-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .phone-action {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .phone-action-icon { font-size: 18px; margin-bottom: 4px; }
+    .phone-install-banner {
+      background: var(--gold-s);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .phone-install-icon { font-size: 20px; }
+    .phone-install-text { flex: 1; font-size: 10px; color: var(--gold); font-weight: 600; line-height: 1.4; }
+    .phone-install-btn {
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 9px;
+      font-weight: 800;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Floating decoration */
+    .portal-glow {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* NAME OPTIONS */
+    .name-options {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 60px 48px;
+    }
+    .name-options h3 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .names-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .name-option {
+      background: var(--dark2);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .name-option:hover,
+    .name-option.selected {
+      border-color: var(--gold);
+      background: var(--gold-s);
+    }
+    .name-option.selected .name-opt-tag {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .name-opt-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--dark3);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+    }
+    .name-opt-main {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .name-opt-sub {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .name-opt-example {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SCREEN 2 — PORTAL LOGIN
+    ═══════════════════════════════════════════════ */
+    .login-screen {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-glow-1 {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .login-glow-2 {
+      position: absolute;
+      bottom: -15%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 460px;
+      background: var(--dark);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 28px;
+      padding: 48px 44px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 28px 28px 0 0;
+    }
+    .login-logo-area {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .login-logo-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 24px rgba(201,168,76,0.35);
+    }
+    .login-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .login-brand span { color: var(--gold); }
+    .login-tagline {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .login-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .login-sub {
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    /* Code input visual */
+    .code-input-wrapper {
+      margin-bottom: 24px;
+    }
+    .code-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .code-input {
+      width: 100%;
+      background: var(--dark2);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.12em;
+      text-align: center;
+      text-transform: uppercase;
+      outline: none;
+      transition: all 0.25s;
+    }
+    .code-input:focus {
+      border-color: var(--gold);
+      background: var(--dark3);
+      box-shadow: 0 0 0 4px rgba(201,168,76,0.12);
+    }
+    .code-input::placeholder {
+      color: rgba(245,245,245,0.18);
+      font-size: 18px;
+      letter-spacing: 0.1em;
+    }
+    .code-hint {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .code-hint strong { color: var(--gold); font-weight: 700; }
+    .login-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--gold-l), var(--gold));
+      color: var(--black);
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+      transition: all 0.25s;
+      margin-bottom: 20px;
+    }
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.45);
+    }
+    .login-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .login-divider::before,
+    .login-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .login-divider span {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    /* App download en login */
+    .login-app-section {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .login-app-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .login-app-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .download-btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .dl-btn:hover {
+      border-color: var(--gold);
+      background: var(--gold-s);
+    }
+    .dl-btn__icon { font-size: 22px; }
+    .dl-btn__info { text-align: left; }
+    .dl-btn__pre {
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .dl-btn__name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .login-help {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .login-help a {
+      color: var(--gold);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ═══════════════════════════════════════════════
+       SCREEN 3 — CLIENT DASHBOARD
+    ═══════════════════════════════════════════════ */
+    .dashboard {
+      min-height: 100vh;
+      background: var(--black);
+    }
+    .dash-nav {
+      height: 64px;
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+    .dash-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+    }
+    .dash-logo span { color: var(--gold); }
+    .dash-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .dash-code {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      background: var(--gold-s);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 8px;
+      padding: 5px 12px;
+      letter-spacing: 0.08em;
+    }
+    .dash-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--black);
+    }
+    .dash-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+    .dash-hello {
+      margin-bottom: 32px;
+    }
+    .dash-hello-sub {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .dash-hello-name {
+      font-size: 28px;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+    }
+    /* Main project card */
+    .project-card {
+      background: var(--dark);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-l));
+    }
+    .proj-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .proj-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .proj-addr { font-size: 13px; color: var(--muted); }
+    .proj-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(46,204,113,0.12);
+      border: 1px solid rgba(46,204,113,0.3);
+      color: #2ECC71;
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .proj-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #2ECC71;
+      animation: pulse-dot 2s infinite;
+    }
+    .progress-section { margin-bottom: 24px; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .progress-title { font-size: 14px; font-weight: 700; }
+    .progress-pct { font-size: 14px; font-weight: 800; color: var(--gold); }
+    .progress-track {
+      height: 10px;
+      background: var(--dark2);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-d), var(--gold), var(--gold-l));
+      border-radius: 100px;
+      width: 65%;
+      position: relative;
+    }
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 40px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%,100% { opacity: 0; } 50% { opacity: 1; }
+    }
+    /* Steps */
+    .steps-row {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+    }
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 13px; left: 0; right: 0;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 1;
+      min-width: 60px;
+    }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .step-item.done .step-dot {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--black);
+    }
+    .step-item.active .step-dot {
+      border-color: var(--gold);
+      color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201,168,76,0.15);
+    }
+    .step-lbl {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .step-item.done .step-lbl,
+    .step-item.active .step-lbl { color: var(--dim); }
+
+    /* Quick actions */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .quick-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--gold);
+      background: var(--gold-s);
+      transform: translateY(-3px);
+    }
+    .quick-icon { font-size: 28px; margin-bottom: 10px; }
+    .quick-label { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .quick-sub { font-size: 11px; color: var(--muted); }
+
+    /* Install app banner */
+    .install-banner {
+      background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.03) 100%);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .install-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .install-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+    .install-text {}
+    .install-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .install-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .install-right {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ── ANNOTATIONS (design notes) ─────────────── */
+    .annotations {
+      background: rgba(201,168,76,0.04);
+      border: 1px dashed rgba(201,168,76,0.25);
+      padding: 24px 32px;
+      border-radius: 12px;
+      margin: 0 48px 32px;
+    }
+    .annotations h4 {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .annotations ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .annotations li {
+      font-size: 13px;
+      color: var(--dim);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .annotations li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- PREVIEW NAVIGATION -->
+<nav class="preview-nav">
+  <div class="preview-nav__logo">First <span>Class</span> Remodeling TX — <span style="color:var(--muted);font-weight:400">Design Preview</span></div>
+  <div class="preview-tabs">
+    <button class="preview-tab active" onclick="showScreen('home')">🏠 Homepage</button>
+    <button class="preview-tab" onclick="showScreen('login')">🔑 Portal Login</button>
+    <button class="preview-tab" onclick="showScreen('dash')">📱 Dashboard</button>
+  </div>
+  <div class="preview-note">Elige nombre del portal ↓</div>
+</nav>
+
+
+<!-- ═════════════════════════════════════════════
+     SCREEN 1: HOMEPAGE
+═════════════════════════════════════════════ -->
+<div class="screen active" id="screen-home">
+
+  <!-- NAVIGATION -->
+  <nav class="site-nav">
+    <div class="site-logo">
+      First <span>Class</span> Remodeling
+      <em>San Antonio, Texas</em>
+    </div>
+    <ul class="site-links">
+      <li><a href="#">Servicios</a></li>
+      <li><a href="#">Galería</a></li>
+      <li><a href="#">Nosotros</a></li>
+      <li><a href="#">Contacto</a></li>
+      <!-- ← OPCIONES DE NOMBRE AQUÍ -->
+      <li><a href="#" class="nav-cta-a" id="nav-portal-label">Mi Proyecto ✦</a></li>
+      <li><a href="#" class="nav-phone">📞 (210) XXX-XXXX</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">⭐ #1 Remodeling en San Antonio, TX</div>
+      <h1 class="hero-title">
+        Tu hogar,<br>
+        <span>transformado.</span>
+      </h1>
+      <p class="hero-sub">
+        Baños de lujo, cocinas premium, pisos y más.
+        Calidad de primera clase — garantizada.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">Obtener Estimado Gratis →</a>
+        <a href="#" class="btn-ghost">📁 Ver Galería</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <div class="trust-num">500+</div>
+          <div class="trust-label">Proyectos completados</div>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <div class="trust-num">12</div>
+          <div class="trust-label">Años de experiencia</div>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <div class="trust-num">5★</div>
+          <div class="trust-label">Calificación Google</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <div style="max-width:1200px;margin:0 auto">
+      <span class="section-eyebrow">Lo que hacemos</span>
+      <h2 class="section-title">Servicios de primera clase</h2>
+      <p class="section-sub">Cada proyecto es tratado con la más alta calidad, materiales premium y artesanía experta.</p>
+      <div class="services-grid">
+        <div class="svc-card">
+          <div class="svc-icon">🛁</div>
+          <div class="svc-name">Baños</div>
+          <div class="svc-desc">Renovaciones completas de baño con materiales de lujo.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🍳</div>
+          <div class="svc-name">Cocinas</div>
+          <div class="svc-desc">Cocinas modernas con gabinetes custom y encimeras premium.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🏠</div>
+          <div class="svc-name">Pisos</div>
+          <div class="svc-desc">Laminado, hardwood, tile y vinilo de alta calidad.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🎨</div>
+          <div class="svc-name">Pintura</div>
+          <div class="svc-desc">Interior y exterior con pinturas premium y acabados perfectos.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-icon">🏗️</div>
+          <div class="svc-name">Adiciones</div>
+          <div class="svc-desc">Expansión de cuartos, patios y espacios nuevos.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTAL / APP SECTION -->
+  <section class="portal-section">
+    <div class="portal-inner">
+      <div class="portal-left">
+        <span class="section-eyebrow">Para nuestros clientes</span>
+        <h2 class="portal-title">
+          Sigue tu proyecto<br>
+          en tiempo <span>real.</span>
+        </h2>
+        <p class="portal-sub">
+          Accede a tu estimado, ve el progreso de tu proyecto,
+          aprueba cambios y comunícate con el equipo — desde
+          tu teléfono, en cualquier momento.
+        </p>
+        <ul class="portal-features">
+          <li class="portal-feature">Ve el porcentaje de avance de tu proyecto en vivo</li>
+          <li class="portal-feature">Revisa y aprueba tu estimado con firma digital</li>
+          <li class="portal-feature">Fotos de progreso subidas por el equipo</li>
+          <li class="portal-feature">Chat directo con tu coordinador de proyecto</li>
+          <li class="portal-feature">Acceso solo con tu código de cliente — sin contraseñas</li>
+        </ul>
+        <div class="portal-cta-group">
+          <a href="#" class="btn-primary" onclick="showScreen('login'); return false;">
+            Acceder a mi proyecto →
+          </a>
+        </div>
+        <!-- App download -->
+        <div style="margin-top:24px">
+          <div style="font-size:12px;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px">
+            También disponible como app
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="#" class="app-btn">
+              <div class="app-btn__icon"> </div>
+              <div class="app-btn__text">
+                <div class="app-btn__label">Agregar a</div>
+                <div class="app-btn__name">iPhone / iPad</div>
+              </div>
+            </a>
+            <a href="#" class="app-btn">
+              <div class="app-btn__icon">🤖</div>
+              <div class="app-btn__text">
+                <div class="app-btn__label">Instalar en</div>
+                <div class="app-btn__name">Android</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHONE MOCKUP -->
+      <div class="portal-right">
+        <div class="portal-glow"></div>
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-header">
+              <div class="phone-logo">First Class Remodeling</div>
+              <div class="phone-tagline">Mi Proyecto · San Antonio TX</div>
+            </div>
+            <div class="phone-body">
+              <div class="phone-welcome">Bienvenido,</div>
+              <div class="phone-name">Roberto M. 👋</div>
+              <div class="phone-progress-card">
+                <div class="phone-proj-name">Renovación de Baño Principal</div>
+                <div class="phone-proj-status">⚡ En Progreso</div>
+                <div class="phone-bar-track">
+                  <div class="phone-bar-fill"></div>
+                </div>
+                <div class="phone-pct">65% completado</div>
+              </div>
+              <div class="phone-actions">
+                <div class="phone-action">
+                  <div class="phone-action-icon">📄</div>
+                  Estimado
+                </div>
+                <div class="phone-action">
+                  <div class="phone-action-icon">💬</div>
+                  Chat
+                </div>
+                <div class="phone-action">
+                  <div class="phone-action-icon">📸</div>
+                  Fotos
+                </div>
+                <div class="phone-action">
+                  <div class="phone-action-icon">✍️</div>
+                  Firmar
+                </div>
+              </div>
+              <div class="phone-install-banner">
+                <div class="phone-install-icon"> </div>
+                <div class="phone-install-text">Agrega esta app a tu pantalla de inicio</div>
+                <button class="phone-install-btn">Instalar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAME OPTIONS SECTION -->
+  <section class="name-options">
+    <div style="max-width:1200px;margin:0 auto">
+      <h3>🎯 Elige el nombre del portal — haz clic para previsualizar</h3>
+      <div class="names-grid">
+
+        <div class="name-option selected" onclick="selectName(this,'Mi Proyecto','My Project')">
+          <div class="name-opt-tag">Opción A — Recomendada</div>
+          <div class="name-opt-main">Mi Proyecto</div>
+          <div class="name-opt-sub">Simple, personal y directo. El cliente sabe exactamente dónde está y qué es suyo.</div>
+          <div class="name-opt-example">En nav: "Mi Proyecto ✦"</div>
+        </div>
+
+        <div class="name-option" onclick="selectName(this,'FCR Suite','FCR Suite')">
+          <div class="name-opt-tag">Opción B — Premium</div>
+          <div class="name-opt-main">FCR Suite</div>
+          <div class="name-opt-sub">Suena a software profesional. Eleva la percepción de marca y diferencia del mercado.</div>
+          <div class="name-opt-example">En nav: "FCR Suite →"</div>
+        </div>
+
+        <div class="name-option" onclick="selectName(this,'My Build','My Build')">
+          <div class="name-opt-tag">Opción C — Bilingual</div>
+          <div class="name-opt-main">My Build</div>
+          <div class="name-opt-sub">Funciona en inglés y español. Conecta emocionalmente — "mi construcción" es personal.</div>
+          <div class="name-opt-example">En nav: "My Build 🏠"</div>
+        </div>
+
+        <div class="name-option" onclick="selectName(this,'Project Hub','Project Hub')">
+          <div class="name-opt-tag">Opción D — Tech</div>
+          <div class="name-opt-main">Project Hub</div>
+          <div class="name-opt-sub">Evoca centralización y control. Ideal si quieres comunicar que todo está en un solo lugar.</div>
+          <div class="name-opt-example">En nav: "Project Hub ⚡"</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div><!-- end screen-home -->
+
+
+<!-- ═════════════════════════════════════════════
+     SCREEN 2: PORTAL LOGIN
+═════════════════════════════════════════════ -->
+<div class="screen" id="screen-login">
+  <div class="login-screen">
+    <div class="login-glow-1"></div>
+    <div class="login-glow-2"></div>
+
+    <div class="login-card">
+      <div class="login-logo-area">
+        <div class="login-logo-icon">✦</div>
+        <div class="login-brand">First <span>Class</span> Remodeling</div>
+        <div class="login-tagline">San Antonio, Texas</div>
+      </div>
+
+      <h2 class="login-title" id="login-title">Mi Proyecto</h2>
+      <p class="login-sub">Ingresa tu código único de cliente para acceder a tu proyecto.</p>
+
+      <div class="code-input-wrapper">
+        <label class="code-label">Tu código de acceso</label>
+        <input
+          type="text"
+          class="code-input"
+          placeholder="FCR-2026-XXXX"
+          maxlength="13"
+          oninput="formatCode(this)"
+        >
+        <p class="code-hint">
+          Tu código fue enviado por <strong>email y SMS</strong> cuando se creó tu estimado.<br>
+          Ejemplo: <strong>FCR-2026-A3B7</strong>
+        </p>
+      </div>
+
+      <button class="login-btn" onclick="showScreen('dash')">
+        Acceder a mi proyecto →
+      </button>
+
+      <div class="login-divider"><span>o descarga la app</span></div>
+
+      <!-- APP DOWNLOAD -->
+      <div class="login-app-section">
+        <div class="login-app-title">📲 Accede más fácil con la app</div>
+        <div class="login-app-desc">
+          Instala la app de First Class Remodeling en tu iPhone o Android.<br>
+          Sin App Store — se instala directo desde aquí.
+        </div>
+        <div class="download-btns">
+          <a href="#" class="dl-btn">
+            <span class="dl-btn__icon"> </span>
+            <div class="dl-btn__info">
+              <div class="dl-btn__pre">Instalar en</div>
+              <div class="dl-btn__name">iPhone</div>
+            </div>
+          </a>
+          <a href="#" class="dl-btn">
+            <span class="dl-btn__icon">🤖</span>
+            <div class="dl-btn__info">
+              <div class="dl-btn__pre">Instalar en</div>
+              <div class="dl-btn__name">Android</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <p class="login-help">
+        ¿No tienes código? <a href="#">Contáctanos →</a>
+      </p>
+    </div>
+  </div>
+</div><!-- end screen-login -->
+
+
+<!-- ═════════════════════════════════════════════
+     SCREEN 3: CLIENT DASHBOARD
+═════════════════════════════════════════════ -->
+<div class="screen" id="screen-dash">
+  <div class="dashboard">
+
+    <!-- DASH NAV -->
+    <nav class="dash-nav">
+      <div class="dash-logo">First <span>Class</span> Remodeling — <span id="dash-portal-name" style="color:var(--dim);font-weight:600">Mi Proyecto</span></div>
+      <div class="dash-user">
+        <span class="dash-code">FCR-2026-A3B7</span>
+        <div class="dash-avatar">RM</div>
+      </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="dash-content">
+      <div class="dash-hello">
+        <div class="dash-hello-sub">Bienvenido de nuevo</div>
+        <div class="dash-hello-name">Roberto Martinez 👋</div>
+      </div>
+
+      <!-- PROJECT CARD -->
+      <div class="project-card">
+        <div class="proj-header">
+          <div>
+            <div class="proj-title">Renovación Baño Principal</div>
+            <div class="proj-addr">📍 123 Oak Street, San Antonio TX 78201</div>
+          </div>
+          <div class="proj-badge">En Progreso</div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-label">
+            <span class="progress-title">Progreso del Proyecto</span>
+            <span class="progress-pct">65%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+
+          <!-- STEPS -->
+          <div class="steps-row">
+            <div class="step-item done">
+              <div class="step-dot">✓</div>
+              <div class="step-lbl">Estimado aprobado</div>
+            </div>
+            <div class="step-item done">
+              <div class="step-dot">✓</div>
+              <div class="step-lbl">Contrato firmado</div>
+            </div>
+            <div class="step-item done">
+              <div class="step-dot">✓</div>
+              <div class="step-lbl">Materiales listos</div>
+            </div>
+            <div class="step-item active">
+              <div class="step-dot">⚡</div>
+              <div class="step-lbl">En construcción</div>
+            </div>
+            <div class="step-item">
+              <div class="step-dot">5</div>
+              <div class="step-lbl">Inspección final</div>
+            </div>
+            <div class="step-item">
+              <div class="step-dot">6</div>
+              <div class="step-lbl">Entregado</div>
+            </div>
+          </div>
+        </div>
+      </div><!-- end project-card -->
+
+      <!-- QUICK ACTIONS -->
+      <div class="quick-grid">
+        <div class="quick-card">
+          <div class="quick-icon">📄</div>
+          <div class="quick-label">Mi Estimado</div>
+          <div class="quick-sub">Ver desglose completo</div>
+        </div>
+        <div class="quick-card">
+          <div class="quick-icon">📸</div>
+          <div class="quick-label">Fotos de Progreso</div>
+          <div class="quick-sub">12 fotos nuevas</div>
+        </div>
+        <div class="quick-card">
+          <div class="quick-icon">💬</div>
+          <div class="quick-label">Chat con el Equipo</div>
+          <div class="quick-sub">2 mensajes sin leer</div>
+        </div>
+        <div class="quick-card">
+          <div class="quick-icon">✍️</div>
+          <div class="quick-label">Firmar Documentos</div>
+          <div class="quick-sub">1 pendiente</div>
+        </div>
+      </div>
+
+      <!-- INSTALL APP BANNER -->
+      <div class="install-banner">
+        <div class="install-left">
+          <div class="install-icon">📲</div>
+          <div class="install-text">
+            <div class="install-title">Instala la app en tu iPhone</div>
+            <div class="install-desc">
+              Recibe notificaciones de progreso, accede más rápido y úsala sin internet.
+              Sin App Store — se instala en segundos desde Safari.
+            </div>
+          </div>
+        </div>
+        <div class="install-right">
+          <button class="btn-primary" style="padding:12px 22px;font-size:12px">
+             Instalar en iPhone
+          </button>
+          <button class="btn-ghost" style="padding:12px 18px;font-size:12px">
+            Después
+          </button>
+        </div>
+      </div>
+
+    </div><!-- end dash-content -->
+  </div>
+</div><!-- end screen-dash -->
+
+
+<script>
+  // Screen switcher
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.preview-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('screen-' + id).classList.add('active');
+    const tabs = document.querySelectorAll('.preview-tab');
+    const map = { home: 0, login: 1, dash: 2 };
+    tabs[map[id]].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Portal name switcher
+  let currentName = 'Mi Proyecto';
+  function selectName(el, name, engName) {
+    document.querySelectorAll('.name-option').forEach(n => n.classList.remove('selected'));
+    el.classList.add('selected');
+    currentName = name;
+
+    // Update all instances
+    const navLabel = document.getElementById('nav-portal-label');
+    if (navLabel) navLabel.textContent = name + ' ✦';
+
+    const loginTitle = document.getElementById('login-title');
+    if (loginTitle) loginTitle.textContent = name;
+
+    const dashName = document.getElementById('dash-portal-name');
+    if (dashName) dashName.textContent = name;
+
+    const phoneLogo = document.querySelector('.phone-tagline');
+    if (phoneLogo) phoneLogo.textContent = name + ' · San Antonio TX';
+  }
+
+  // Code formatter
+  function formatCode(input) {
+    let val = input.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+    if (val.length > 3) val = val.slice(0,3) + '-' + val.slice(3);
+    if (val.length > 8) val = val.slice(0,8) + '-' + val.slice(8);
+    input.value = val.slice(0, 13);
+  }
+</script>
+
+</body>
+</html>

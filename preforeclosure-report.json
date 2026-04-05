@@ -1,0 +1,846 @@
+{
+  "run": "2026-03-28T13:54:51.171627",
+  "leads_found": 30,
+  "leads": [
+    {
+      "address": "2019 Crooked Creek St, San Antonio, Tx 78232",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$385,000",
+      "zestimate": 373100,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/2019-Crooked-Creek-St-San-Antonio-TX-78232/26349689_zpid/",
+      "beds": 4,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 373100,
+        "purchase_price": 268632,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 255200,
+        "balance_remaining": 255200,
+        "equity": 117900,
+        "equity_pct": 31.6,
+        "amount_paid": 13432
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:17.739890"
+    },
+    {
+      "address": "23119 Casey Canyon, San Antonio, Tx 78255",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$1,410,000",
+      "zestimate": 1350700,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/23119-Casey-Cyn-San-Antonio-TX-78255/244684305_zpid/",
+      "beds": 4,
+      "baths": 5,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 1350700,
+        "purchase_price": 972504,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 923879,
+        "balance_remaining": 923879,
+        "equity": 426821,
+        "equity_pct": 31.6,
+        "amount_paid": 48625
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:22.941584"
+    },
+    {
+      "address": "3610 Pinnacle Dr, San Antonio, Tx 78261",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$586,000",
+      "zestimate": 575200,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/3610-Pinnacle-Dr-San-Antonio-TX-78261/80039593_zpid/",
+      "beds": 4,
+      "baths": 4,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 575200,
+        "purchase_price": 414144,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 393437,
+        "balance_remaining": 393437,
+        "equity": 181763,
+        "equity_pct": 31.6,
+        "amount_paid": 20707
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:28.152848"
+    },
+    {
+      "address": "12008 Vista Nogal St, San Antonio, Tx 78213",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$275,000",
+      "zestimate": "",
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/12008-Vista-Nogal-St-San-Antonio-TX-78213/26394311_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 275000,
+        "purchase_price": 198000,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 188100,
+        "balance_remaining": 188100,
+        "equity": 86900,
+        "equity_pct": 31.6,
+        "amount_paid": 9900
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:33.370340"
+    },
+    {
+      "address": "13710 Astros, San Antonio, Tx 78245",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$545,000",
+      "zestimate": 533500,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/13710-Astros-San-Antonio-TX-78245/244667173_zpid/",
+      "beds": 4,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 533500,
+        "purchase_price": 384120,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 364914,
+        "balance_remaining": 364914,
+        "equity": 168586,
+        "equity_pct": 31.6,
+        "amount_paid": 19206
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:38.597210"
+    },
+    {
+      "address": "8518 Wild Trace, Garden Ridge, Tx 78266",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$995,900",
+      "zestimate": 960800,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/8518-Wild-Trce-Garden-Ridge-TX-78266/84002513_zpid/",
+      "beds": 4,
+      "baths": 5,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 960800,
+        "purchase_price": 691776,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 657187,
+        "balance_remaining": 657187,
+        "equity": 303613,
+        "equity_pct": 31.6,
+        "amount_paid": 34589
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:43.813638"
+    },
+    {
+      "address": "9119 Autumn Leaf, San Antonio, Tx 78217",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$599,999",
+      "zestimate": 596100,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/9119-Autumn-Leaf-St-San-Antonio-TX-78217/26337164_zpid/",
+      "beds": 6,
+      "baths": 5,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 596100,
+        "purchase_price": 429192,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 407732,
+        "balance_remaining": 407732,
+        "equity": 188368,
+        "equity_pct": 31.6,
+        "amount_paid": 21460
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:49.029028"
+    },
+    {
+      "address": "12206 Hart Crest, San Antonio, Tx 78249",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$375,000",
+      "zestimate": 363300,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/12206-Hart-Crst-San-Antonio-TX-78249/26444952_zpid/",
+      "beds": 4,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 363300,
+        "purchase_price": 261576,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 248497,
+        "balance_remaining": 248497,
+        "equity": 114803,
+        "equity_pct": 31.6,
+        "amount_paid": 13079
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:54.250552"
+    },
+    {
+      "address": "9114 Rustlers Creek Dr, San Antonio, Tx 78230",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$485,000",
+      "zestimate": 484400,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/9114-Rustlers-Creek-Dr-San-Antonio-TX-78230/26389961_zpid/",
+      "beds": 3,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 484400,
+        "purchase_price": 348768,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 331330,
+        "balance_remaining": 331330,
+        "equity": 153070,
+        "equity_pct": 31.6,
+        "amount_paid": 17438
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:52:59.519319"
+    },
+    {
+      "address": "11507 Lily Blair, San Antonio, Tx 78253",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$535,000",
+      "zestimate": 525000,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/11507-Lily-Blair-San-Antonio-TX-78253/122146664_zpid/",
+      "beds": 6,
+      "baths": 4,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 525000,
+        "purchase_price": 378000,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 359100,
+        "balance_remaining": 359100,
+        "equity": 165900,
+        "equity_pct": 31.6,
+        "amount_paid": 18900
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:04.738854"
+    },
+    {
+      "address": "391 W Broadview, San Antonio, Tx 78228",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$375,000",
+      "zestimate": 373900,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/391-W-Broadview-Dr-San-Antonio-TX-78228/26289438_zpid/",
+      "beds": 4,
+      "baths": 4,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 373900,
+        "purchase_price": 269208,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 255748,
+        "balance_remaining": 255748,
+        "equity": 118152,
+        "equity_pct": 31.6,
+        "amount_paid": 13460
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:09.965020"
+    },
+    {
+      "address": "6508 Buffalo Ranch, San Antonio, Tx 78244",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$140,000",
+      "zestimate": 137800,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/6508-Buffalo-Rnch-San-Antonio-TX-78244/250995205_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 137800,
+        "purchase_price": 99216,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 94255,
+        "balance_remaining": 94255,
+        "equity": 43545,
+        "equity_pct": 31.6,
+        "amount_paid": 4961
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:15.159380"
+    },
+    {
+      "address": "8802 Boise Hills Dr, San Antonio, Tx 78250",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$257,400",
+      "zestimate": 257300,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/8802-Boise-Hills-Dr-San-Antonio-TX-78250/26448067_zpid/",
+      "beds": 5,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 257300,
+        "purchase_price": 185256,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 175993,
+        "balance_remaining": 175993,
+        "equity": 81307,
+        "equity_pct": 31.6,
+        "amount_paid": 9263
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:20.397258"
+    },
+    {
+      "address": "10538 Elderpond, San Antonio, Tx 78254",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$139,000",
+      "zestimate": 135200,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/10538-Elderpond-San-Antonio-TX-78254/60079324_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 135200,
+        "purchase_price": 97344,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 92477,
+        "balance_remaining": 92477,
+        "equity": 42723,
+        "equity_pct": 31.6,
+        "amount_paid": 4867
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:25.606270"
+    },
+    {
+      "address": "16351 County Road 281, San Antonio, Tx 78253",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$595,000",
+      "zestimate": 583500,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/16351-County-Road-281-San-Antonio-TX-78253/87443114_zpid/",
+      "beds": 3,
+      "baths": 4,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 583500,
+        "purchase_price": 420120,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 399114,
+        "balance_remaining": 399114,
+        "equity": 184386,
+        "equity_pct": 31.6,
+        "amount_paid": 21006
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:30.826804"
+    },
+    {
+      "address": "6286 Apple Valley, San Antonio, Tx 78242",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$99,900",
+      "zestimate": "",
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/6286-Apple-Valley-Dr-San-Antonio-TX-78242/26352425_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 99900,
+        "purchase_price": 71928,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 68332,
+        "balance_remaining": 68332,
+        "equity": 31568,
+        "equity_pct": 31.6,
+        "amount_paid": 3596
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:36.041021"
+    },
+    {
+      "address": "5147 Senisa Springs, San Antonio, Tx 78251",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$270,000",
+      "zestimate": 269200,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/5147-Senisa-Spgs-San-Antonio-TX-78251/26420413_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 269200,
+        "purchase_price": 193824,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 184133,
+        "balance_remaining": 184133,
+        "equity": 85067,
+        "equity_pct": 31.6,
+        "amount_paid": 9691
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:41.262624"
+    },
+    {
+      "address": "10362 Martin Crk, San Antonio, Tx 78252",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$173,000",
+      "zestimate": 172900,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/10362-Martin-Crk-San-Antonio-TX-78252/2055542665_zpid/",
+      "beds": 3,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 172900,
+        "purchase_price": 124488,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 118264,
+        "balance_remaining": 118264,
+        "equity": 54636,
+        "equity_pct": 31.6,
+        "amount_paid": 6224
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:46.463871"
+    },
+    {
+      "address": "8614 Ridge Pilot, San Antonio, Tx 78239",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$209,000",
+      "zestimate": 200500,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/8614-Ridge-Pilot-San-Antonio-TX-78239/26181750_zpid/",
+      "beds": 4,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 200500,
+        "purchase_price": 144360,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 137142,
+        "balance_remaining": 137142,
+        "equity": 63358,
+        "equity_pct": 31.6,
+        "amount_paid": 7218
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:51.679743"
+    },
+    {
+      "address": "10922 Livewater, San Antonio, Tx 78245",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$269,000",
+      "zestimate": 266200,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/10922-Livewater-Trl-San-Antonio-TX-78245/89608666_zpid/",
+      "beds": 3,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 266200,
+        "purchase_price": 191664,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 182081,
+        "balance_remaining": 182081,
+        "equity": 84119,
+        "equity_pct": 31.6,
+        "amount_paid": 9583
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:53:56.873776"
+    },
+    {
+      "address": "4126 Bear Oak, San Antonio, Tx 78223",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$185,000",
+      "zestimate": 179700,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/4126-Bear-Oak-Path-San-Antonio-TX-78223/69644866_zpid/",
+      "beds": 4,
+      "baths": 4,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 179700,
+        "purchase_price": 129384,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 122915,
+        "balance_remaining": 122915,
+        "equity": 56785,
+        "equity_pct": 31.6,
+        "amount_paid": 6469
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:02.104048"
+    },
+    {
+      "address": "7927 Colonia, San Antonio, Tx 78254",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$208,330",
+      "zestimate": "",
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/7927-Colonia-San-Antonio-TX-78254/80023893_zpid/",
+      "beds": 4,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 208330,
+        "purchase_price": 149997,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 142497,
+        "balance_remaining": 142497,
+        "equity": 65833,
+        "equity_pct": 31.6,
+        "amount_paid": 7500
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:07.321982"
+    },
+    {
+      "address": "14319 Apache Wls, San Antonio, Tx 78254",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$499,999",
+      "zestimate": 493100,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/14319-Apache-Wls-San-Antonio-TX-78245/347760196_zpid/",
+      "beds": 4,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 493100,
+        "purchase_price": 355032,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 337280,
+        "balance_remaining": 337280,
+        "equity": 155820,
+        "equity_pct": 31.6,
+        "amount_paid": 17752
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:12.543364"
+    },
+    {
+      "address": "7407 Silent Path, San Antonio, Tx 78250",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$310,000",
+      "zestimate": 306300,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/7407-Silent-Path-San-Antonio-TX-78250/26448463_zpid/",
+      "beds": 4,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 306300,
+        "purchase_price": 220536,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 209509,
+        "balance_remaining": 209509,
+        "equity": 96791,
+        "equity_pct": 31.6,
+        "amount_paid": 11027
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:17.840232"
+    },
+    {
+      "address": "15403 Steves Run, San Antonio, Tx 78232",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$349,000",
+      "zestimate": 345500,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/15403-Steves-Run-San-Antonio-TX-78232/26327545_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 345500,
+        "purchase_price": 248760,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 236322,
+        "balance_remaining": 236322,
+        "equity": 109178,
+        "equity_pct": 31.6,
+        "amount_paid": 12438
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:23.051111"
+    },
+    {
+      "address": "9510 Ranch Loop, San Antonio, Tx 78254",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$219,000",
+      "zestimate": "",
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/9510-Ranch-Loop-San-Antonio-TX-78254/2057678538_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 219000,
+        "purchase_price": 157680,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 149796,
+        "balance_remaining": 149796,
+        "equity": 69204,
+        "equity_pct": 31.6,
+        "amount_paid": 7884
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:28.270211"
+    },
+    {
+      "address": "124 Pigeon Green, San Antonio, Tx 78253",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$335,000",
+      "zestimate": 334200,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/124-Pigeon-Grn-San-Antonio-TX-78253/459860814_zpid/",
+      "beds": 4,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 334200,
+        "purchase_price": 240624,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 228593,
+        "balance_remaining": 228593,
+        "equity": 105607,
+        "equity_pct": 31.6,
+        "amount_paid": 12031
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:33.516469"
+    },
+    {
+      "address": "16106 Ponderosa Pass, Helotes, Tx 78023",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$500,000",
+      "zestimate": 489900,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/16106-Ponderosa-Pass-Helotes-TX-78023/69659072_zpid/",
+      "beds": 4,
+      "baths": 4,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 489900,
+        "purchase_price": 352728,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 335092,
+        "balance_remaining": 335092,
+        "equity": 154808,
+        "equity_pct": 31.6,
+        "amount_paid": 17636
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:38.729280"
+    },
+    {
+      "address": "13118 Levi, San Antonio, Tx 78221",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$245,000",
+      "zestimate": "",
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/13118-Levi-Ter-San-Antonio-TX-78221/2057563269_zpid/",
+      "beds": 4,
+      "baths": 3,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 245000,
+        "purchase_price": 176400,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 167580,
+        "balance_remaining": 167580,
+        "equity": 77420,
+        "equity_pct": 31.6,
+        "amount_paid": 8820
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:43.945377"
+    },
+    {
+      "address": "12022 Stoney Bridge, San Antonio, Tx 78247",
+      "source": "Zillow Pre-Foreclosure",
+      "sale_date": "Unknown",
+      "zillow_price": "$219,995",
+      "zestimate": 215200,
+      "zillow_url": "https://www.zillow.comhttps://www.zillow.com/homedetails/12022-Stoney-Brg-San-Antonio-TX-78247/26417120_zpid/",
+      "beds": 3,
+      "baths": 2,
+      "owner_name": null,
+      "equity_data": {
+        "market_value": 215200,
+        "purchase_price": 154944,
+        "purchase_date": "~2018-2020 (estimado)",
+        "years_paid": 0,
+        "original_loan": 147197,
+        "balance_remaining": 147197,
+        "equity": 68003,
+        "equity_pct": 31.6,
+        "amount_paid": 7747
+      },
+      "contact": {
+        "phones": [],
+        "emails": [],
+        "source": []
+      },
+      "found_at": "2026-03-28T13:54:49.163000"
+    }
+  ]
+}

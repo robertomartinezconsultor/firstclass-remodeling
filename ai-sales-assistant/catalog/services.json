@@ -1,0 +1,156 @@
+{
+  "company": {
+    "name": "First Class Remodeling TX",
+    "assistant_name": "First Class Project Advisor",
+    "phone": "(210) 606-5298",
+    "whatsapp": "https://wa.me/12106065298",
+    "website": "https://firstclassremodelingtx.com",
+    "established": 2008,
+    "projects_completed": 1800,
+    "value_props": [
+      "Licensed, bonded and insured",
+      "Dedicated project director from design to completion",
+      "5-year craftsmanship warranty",
+      "Trusted kitchen and bathroom remodeling team in San Antonio"
+    ],
+    "areas_served": [
+      "San Antonio",
+      "Stone Oak",
+      "Alamo Heights",
+      "The Dominion",
+      "Helotes",
+      "Boerne",
+      "Shavano Park",
+      "Converse",
+      "Terrell Hills",
+      "Hollywood Park"
+    ]
+  },
+  "services": [
+    {
+      "id": "kitchen_remodel",
+      "name": "Kitchen Remodel",
+      "headline": "Custom Kitchens",
+      "budget_min": 25000,
+      "budget_max": 80000,
+      "budget_label": "$25,000 - $80,000+",
+      "roi_label": "Avg. 78% ROI on home value",
+      "description": "A full kitchen transformation focused on cabinetry, countertops, layout, tile, appliances and lighting.",
+      "best_for": "Homeowners who want a higher-function kitchen with a strong resale and lifestyle upgrade.",
+      "includes": [
+        "Custom cabinetry and hardware",
+        "Premium stone countertops",
+        "Professional appliance integration",
+        "Custom tile and flooring",
+        "Lighting design and electrical",
+        "5-year craftsmanship warranty"
+      ],
+      "keywords": [
+        "kitchen",
+        "cocina",
+        "cabinet",
+        "cabinets",
+        "countertop",
+        "countertops",
+        "island",
+        "backsplash",
+        "chef",
+        "appliance"
+      ]
+    },
+    {
+      "id": "bathroom_remodel",
+      "name": "Bathroom Remodel",
+      "headline": "Elevated Bathrooms",
+      "budget_min": 15000,
+      "budget_max": 45000,
+      "budget_label": "$15,000 - $45,000+",
+      "roi_label": "Avg. 71% ROI on home value",
+      "description": "A spa-style bathroom remodel with shower, tile, flooring, vanity, fixtures and layout updates.",
+      "best_for": "Homeowners who want a more functional and premium bathroom with comfort-focused finishes.",
+      "includes": [
+        "Freestanding soaking tub",
+        "Custom frameless glass shower",
+        "Radiant heated flooring",
+        "Imported tile and stone",
+        "Custom vanity and mirrors",
+        "5-year craftsmanship warranty"
+      ],
+      "keywords": [
+        "bathroom",
+        "bath",
+        "bano",
+        "baño",
+        "shower",
+        "tub",
+        "vanity",
+        "tile",
+        "glass",
+        "master bath"
+      ]
+    },
+    {
+      "id": "kitchen_bath_combo",
+      "name": "Kitchen + Bathroom",
+      "headline": "Multi-Room Refresh",
+      "budget_min": 40000,
+      "budget_max": 130000,
+      "budget_label": "$40,000 - $130,000+",
+      "roi_label": "Custom scope based on layout and finish level",
+      "description": "A bundled remodel for homeowners who want a kitchen and bathroom done under one scope and timeline.",
+      "best_for": "Clients who want a coordinated project plan and one team handling more than one core space.",
+      "includes": [
+        "Unified design direction",
+        "Coordinated scheduling",
+        "Cabinetry, tile and countertop packages",
+        "Single project director",
+        "Budget and finish-level planning"
+      ],
+      "keywords": [
+        "both",
+        "multiple rooms",
+        "kitchen and bathroom",
+        "kitchen + bathroom",
+        "dos cuartos",
+        "cocina y baño",
+        "multiple spaces"
+      ]
+    },
+    {
+      "id": "whole_home",
+      "name": "Whole-Home Transformation",
+      "headline": "Complete Home Transformations",
+      "budget_min": 80000,
+      "budget_max": 250000,
+      "budget_label": "$80,000 - $250,000+",
+      "roi_label": "Custom investment based on scope and structural needs",
+      "description": "A full-home remodel delivered under one vision, one team and one accountability path.",
+      "best_for": "Homeowners planning a large-scope transformation across multiple rooms or the entire house.",
+      "includes": [
+        "Single project vision across the home",
+        "Phased planning and sequencing",
+        "Design-build coordination",
+        "Budget review by space and finish level",
+        "Dedicated project director",
+        "5-year craftsmanship warranty"
+      ],
+      "keywords": [
+        "whole home",
+        "full home",
+        "complete home",
+        "entire house",
+        "casa completa",
+        "full remodel",
+        "renovation",
+        "transformacion"
+      ]
+    }
+  ],
+  "qualification_questions": [
+    "What are you looking to remodel?",
+    "Which neighborhood or area is the property in?",
+    "What budget range feels realistic for you?",
+    "When are you hoping to start?",
+    "What is the best phone number or email for follow-up?"
+  ]
+}

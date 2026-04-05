@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /app.html
+Disallow: /portal.html
+Disallow: /portal-admin.html
+Disallow: /ops-app.html
+Disallow: /monitor.html
+Disallow: /OPERATIONS_GUIDE.html
+

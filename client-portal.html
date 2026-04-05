@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>My Project | First Class Remodeling TX</title>
+<meta name="theme-color" content="#0a0a0a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FCR Portal">
+<link rel="manifest" href="client-app.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #1a1a1a;
+  --bg4: #222222;
+  --gold: #C9A84C;
+  --gold-light: #E8C96B;
+  --gold-dim: rgba(201,168,76,0.12);
+  --gold-glow: rgba(201,168,76,0.25);
+  --text: #F5F0E8;
+  --text2: rgba(245,240,232,0.7);
+  --text3: rgba(245,240,232,0.45);
+  --green: #22C55E;
+  --green-dim: rgba(34,197,94,0.12);
+  --red: #EF4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --radius: 16px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100dvh; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Subtle gold ambient glow */
+body::before {
+  content: '';
+  position: fixed;
+  top: -120px; right: -120px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(201,168,76,0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
+input, textarea, select { font-family: inherit; }
+[hidden] { display: none !important; }
+
+/* ── AUTH SCREENS ── */
+.auth-screen {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(24px + var(--safe-top)) 20px calc(24px + var(--safe-bottom));
+  position: relative;
+  z-index: 1;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.auth-logo {
+  width: 56px; height: 56px;
+  background: var(--gold);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 20px;
+  color: var(--bg);
+  margin: 0 auto 24px;
+  box-shadow: 0 4px 24px var(--gold-glow);
+}
+
+.auth-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: var(--text3);
+  text-align: center;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.auth-field { margin-bottom: 14px; }
+
+.auth-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+
+.auth-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+.auth-input:focus { outline: none; border-color: var(--gold); }
+.auth-input::placeholder { color: var(--text3); }
+
+.auth-btn {
+  width: 100%;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 6px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px var(--gold-glow);
+}
+.auth-btn:hover { background: var(--gold-light); }
+.auth-btn:active { transform: scale(0.98); }
+.auth-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text3);
+}
+.auth-switch a {
+  color: var(--gold);
+  font-weight: 600;
+  cursor: pointer;
+}
+.auth-switch a:hover { text-decoration: underline; }
+
+.auth-error {
+  background: var(--red-dim);
+  border: 1px solid rgba(239,68,68,0.25);
+  color: #FCA5A5;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 14px;
+  display: none;
+  text-align: center;
+}
+.auth-error.visible { display: block; }
+
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0;
+  font-size: 11px; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.auth-forgot {
+  text-align: right;
+  margin-top: -8px;
+  margin-bottom: 14px;
+}
+.auth-forgot a {
+  font-size: 12px;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+/* ── LOADING SPINNER ── */
+.spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2px solid rgba(10,10,10,0.2);
+  border-top-color: var(--bg);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── APP SHELL ── */
+.app-wrap {
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(var(--safe-top)) 0 calc(80px + var(--safe-bottom));
+  position: relative;
+  z-index: 1;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: calc(12px + var(--safe-top)) 20px 12px;
+}
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-icon {
+  width: 32px; height: 32px;
+  background: var(--gold);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 13px;
+  color: var(--bg);
+}
+
+.topbar-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.topbar-project {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.topbar-actions {
+  display: flex; gap: 8px;
+}
+
+.topbar-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+.topbar-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── STATUS CARD ── */
+.status-card {
+  margin: 16px 16px 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.status-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text3);
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.status-badge.planning { background: rgba(107,114,128,0.15); color: #9CA3AF; }
+.status-badge.in_progress { background: var(--green-dim); color: var(--green); }
+.status-badge.punch_list { background: var(--gold-dim); color: var(--gold); }
+.status-badge.complete { background: var(--green-dim); color: var(--green); }
+
+.progress-bar {
+  height: 6px;
+  background: var(--bg4);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 100px;
+  transition: width 0.6s ease;
+}
+
+.progress-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--gold);
+}
+
+.progress-subtext {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* ── QUICK STATS ── */
+.quick-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 16px 0;
+}
+
+.qstat {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.qstat-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+
+.qstat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+}
+.qstat-value.gold { color: var(--gold); }
+.qstat-value.green { color: var(--green); }
+
+/* ── TAB BAR ── */
+.tab-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 calc(8px + var(--safe-bottom));
+}
+
+.tab-bar-inner {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 6px 12px;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.tab-item.active { color: var(--gold); }
+.tab-item:hover { color: var(--text2); }
+
+.tab-icon { font-size: 20px; line-height: 1; }
+
+.tab-badge {
+  position: absolute;
+  top: 2px; right: 6px;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: none;
+}
+.tab-badge.visible { display: block; }
+
+/* ── PANELS ── */
+.panel {
+  display: none;
+  padding: 16px;
+  animation: fadeUp 0.25s ease;
+}
+.panel.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+/* ── TIMELINE ── */
+.timeline-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.timeline-item:last-child { border-bottom: none; }
+
+.timeline-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.timeline-dot.complete { background: var(--green); box-shadow: 0 0 8px rgba(34,197,94,0.4); }
+.timeline-dot.in_progress { background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+.timeline-dot.pending { background: var(--bg4); border: 2px solid var(--border2); }
+
+.timeline-name { font-size: 14px; font-weight: 600; }
+.timeline-status { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+/* ── GALLERY ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.gallery-item {
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 20px 10px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.9);
+}
+
+.gallery-empty {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text3);
+  font-size: 14px;
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lightbox.visible { opacity: 1; pointer-events: auto; }
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: calc(16px + var(--safe-top));
+  right: 16px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: white;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: white;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+}
+.lightbox-nav.prev { left: 12px; }
+.lightbox-nav.next { right: 12px; }
+
+.lightbox-caption {
+  position: absolute;
+  bottom: calc(24px + var(--safe-bottom));
+  left: 0; right: 0;
+  text-align: center;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+}
+
+/* ── FINANCIALS ── */
+.finance-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.finance-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+.finance-card.full { grid-column: 1/-1; }
+
+.finance-label {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text3);
+  margin-bottom: 4px;
+}
+
+.finance-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+}
+
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.payment-item:last-child { border-bottom: none; }
+
+.pay-desc { font-size: 13px; font-weight: 500; }
+.pay-date { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.pay-amount { font-weight: 700; color: var(--green); font-size: 14px; }
+
+.change-order-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 8px;
+}
+
+.co-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.co-desc { font-size: 13px; font-weight: 600; }
+.co-amount { font-size: 13px; font-weight: 700; color: var(--gold); }
+.co-reason { font-size: 12px; color: var(--text3); }
+
+.co-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.co-badge.approved { background: var(--green-dim); color: var(--green); }
+.co-badge.pending { background: var(--gold-dim); color: var(--gold); }
+.co-badge.declined { background: var(--red-dim); color: var(--red); }
+
+/* ── ESTIMATE SECTION ── */
+.estimate-card {
+  background: linear-gradient(135deg, var(--bg2), rgba(201,168,76,0.06));
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.estimate-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.estimate-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--gold);
+  margin: 12px 0;
+}
+
+.estimate-status {
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.estimate-actions {
+  display: flex; gap: 10px;
+}
+
+.btn-accept {
+  flex: 1;
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.btn-accept:hover { background: #16A34A; }
+
+.btn-decline {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-decline:hover { background: var(--red-dim); }
+
+/* ── MESSAGES / CHAT ── */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 160px - var(--safe-top) - var(--safe-bottom));
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-msg {
+  max-width: 82%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+
+.chat-msg.client {
+  align-self: flex-end;
+  background: var(--gold);
+  color: var(--bg);
+  border-bottom-right-radius: 4px;
+}
+
+.chat-msg.admin {
+  align-self: flex-start;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg-time {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+.chat-msg.admin .chat-msg-sender {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.chat-input-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 24px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+.chat-input:focus { outline: none; border-color: var(--gold); }
+.chat-input::placeholder { color: var(--text3); }
+
+.chat-send {
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.chat-send:hover { background: var(--gold-light); }
+
+/* ── UPDATES LIST ── */
+.update-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.update-item:last-child { border-bottom: none; }
+
+.update-icon {
+  width: 36px; height: 36px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.update-text { font-size: 13px; line-height: 1.5; }
+.update-time { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+/* ── EMPTY STATES ── */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text3);
+}
+.empty-state-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.5; }
+.empty-state-title { font-size: 15px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.empty-state-desc { font-size: 13px; line-height: 1.5; }
+
+/* ── ACCEPT ESTIMATE MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.visible { opacity: 1; pointer-events: auto; }
+
+.modal-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.modal-field { margin-bottom: 14px; }
+
+.modal-input, .modal-textarea {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.modal-textarea { resize: vertical; min-height: 80px; }
+.modal-input:focus, .modal-textarea:focus { outline: none; border-color: var(--gold); }
+
+.modal-actions {
+  display: flex; gap: 10px; margin-top: 20px;
+}
+
+.modal-btn-primary {
+  flex: 1;
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.modal-btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* ── TOAST ── */
+#toast {
+  position: fixed;
+  top: calc(16px + var(--safe-top));
+  left: 50%;
+  transform: translateX(-50%) translateY(-60px);
+  z-index: 2000;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  max-width: 340px;
+  text-align: center;
+}
+#toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ── LOADING SCREEN ── */
+.loading-screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.loading-logo {
+  width: 64px; height: 64px;
+  background: var(--gold);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 24px;
+  color: var(--bg);
+  box-shadow: 0 4px 24px var(--gold-glow);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 4px 24px var(--gold-glow); }
+  50% { box-shadow: 0 4px 40px rgba(201,168,76,0.4); }
+}
+
+.loading-text { font-size: 13px; color: var(--text3); }
+
+/* Responsive */
+@media (max-width: 380px) {
+  .auth-card { padding: 32px 20px; }
+  .quick-stats { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOADING SCREEN ── -->
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-logo">FC</div>
+  <div class="loading-text">Loading your project...</div>
+</div>
+
+<!-- ── AUTH: LOGIN ── -->
+<div id="loginScreen" class="auth-screen" hidden>
+  <div class="auth-card">
+    <div class="auth-logo">FC</div>
+    <h1 class="auth-title">Welcome Back</h1>
+    <p class="auth-subtitle">Sign in to view your project</p>
+    <div id="loginError" class="auth-error"></div>
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="auth-field">
+        <label class="auth-label">Email</label>
+        <input class="auth-input" type="email" id="loginEmail" placeholder="your@email.com" required autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Password</label>
+        <input class="auth-input" type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+      </div>
+      <div class="auth-forgot">
+        <a onclick="handleForgotPassword()">Forgot password?</a>
+      </div>
+      <button class="auth-btn" type="submit" id="loginBtn">Sign In</button>
+    </form>
+    <div class="auth-divider">or</div>
+    <p class="auth-switch">First time here? <a onclick="showScreen('setupScreen')">Set up your account</a></p>
+  </div>
+</div>
+
+<!-- ── AUTH: FIRST TIME SETUP ── -->
+<div id="setupScreen" class="auth-screen" hidden>
+  <div class="auth-card">
+    <div class="auth-logo">FC</div>
+    <h1 class="auth-title">Set Up Your Account</h1>
+    <p class="auth-subtitle">Use the email where you received your project invitation</p>
+    <div id="setupError" class="auth-error"></div>
+    <form id="setupForm" onsubmit="handleSetup(event)">
+      <div class="auth-field">
+        <label class="auth-label">Email</label>
+        <input class="auth-input" type="email" id="setupEmail" placeholder="your@email.com" required autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Create Password</label>
+        <input class="auth-input" type="password" id="setupPassword" placeholder="At least 6 characters" required minlength="6" autocomplete="new-password">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label">Confirm Password</label>
+        <input class="auth-input" type="password" id="setupConfirm" placeholder="Confirm your password" required minlength="6" autocomplete="new-password">
+      </div>
+      <button class="auth-btn" type="submit" id="setupBtn">Create Account & View Project</button>
+    </form>
+    <p class="auth-switch" style="margin-top:20px">Already have an account? <a onclick="showScreen('loginScreen')">Sign in</a></p>
+  </div>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="appShell" class="app-wrap" hidden>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="topbar-brand">
+        <div class="topbar-icon">FC</div>
+        <div>
+          <div class="topbar-name" id="topbarName">—</div>
+          <div class="topbar-project" id="topbarProject">—</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn" onclick="location.reload()" title="Refresh">&#8635;</button>
+        <button class="topbar-btn" onclick="handleLogout()" title="Sign out">&#x2192;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview (shown above tabs) -->
+  <div id="overviewSection">
+    <div class="status-card" id="statusCard">
+      <div class="status-header">
+        <span class="status-label">Project Progress</span>
+        <span class="status-badge" id="statusBadge">—</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-text" id="progressText">0%</div>
+      <div class="progress-subtext" id="progressSub">—</div>
+    </div>
+    <div class="quick-stats" id="quickStats"></div>
+  </div>
+
+  <!-- Estimate Card (shown when pending) -->
+  <div id="estimateSection" style="padding:16px;display:none">
+    <div class="estimate-card">
+      <div class="estimate-title">Your Estimate</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:4px" id="estimateType">—</div>
+      <div class="estimate-amount" id="estimateAmount">—</div>
+      <div class="estimate-status" id="estimateStatusText">—</div>
+      <div class="estimate-actions" id="estimateActions">
+        <button class="btn-accept" onclick="showAcceptModal()">Accept Estimate</button>
+        <button class="btn-decline" onclick="declineEstimate()">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panels -->
+  <div class="panel active" data-panel="timeline" id="panelTimeline">
+    <div class="panel-title">Project Timeline</div>
+    <div id="timelineList"></div>
+    <div style="margin-top:20px">
+      <div class="panel-title" style="font-size:16px">Recent Updates</div>
+      <div id="updatesList"></div>
+    </div>
+  </div>
+
+  <div class="panel" data-panel="gallery" id="panelGallery">
+    <div class="panel-title">Project Photos</div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <div class="panel" data-panel="financials" id="panelFinancials">
+    <div class="panel-title">Financials</div>
+    <div class="finance-summary" id="financeSummary"></div>
+    <div style="margin-top:16px">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px">Payments</div>
+      <div id="paymentsList"></div>
+    </div>
+    <div style="margin-top:20px">
+      <div style="font-size:14px;font-weight:700;margin-bottom:10px">Change Orders</div>
+      <div id="changeOrdersList"></div>
+    </div>
+  </div>
+
+  <div class="panel" data-panel="messages" id="panelMessages">
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-bar">
+        <input class="chat-input" id="chatInput" placeholder="Type a message..." maxlength="500"
+               onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
+        <button class="chat-send" onclick="sendMessage()">&#10148;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <div class="tab-bar-inner">
+      <button class="tab-item active" data-tab="timeline" onclick="switchTab('timeline')">
+        <span class="tab-icon">&#128197;</span>
+        <span>Timeline</span>
+      </button>
+      <button class="tab-item" data-tab="gallery" onclick="switchTab('gallery')">
+        <span class="tab-icon">&#128247;</span>
+        <span>Photos</span>
+      </button>
+      <button class="tab-item" data-tab="financials" onclick="switchTab('financials')">
+        <span class="tab-icon">&#128176;</span>
+        <span>Financials</span>
+      </button>
+      <button class="tab-item" data-tab="messages" onclick="switchTab('messages')">
+        <span class="tab-icon">&#128172;</span>
+        <span>Messages</span>
+        <span class="tab-badge" id="msgBadge"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <button class="lightbox-nav prev" onclick="stepLightbox(-1)">&#8249;</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav next" onclick="stepLightbox(1)">&#8250;</button>
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- Accept Estimate Modal -->
+<div class="modal-overlay" id="acceptModal">
+  <div class="modal-card">
+    <div class="modal-title">Accept Estimate</div>
+    <div class="modal-field">
+      <label class="auth-label">Preferred Start Date</label>
+      <input class="modal-input" type="date" id="acceptStartDate">
+    </div>
+    <div class="modal-field">
+      <label class="auth-label">Notes (optional)</label>
+      <textarea class="modal-textarea" id="acceptNotes" placeholder="Any questions or notes for the team..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" onclick="closeAcceptModal()">Cancel</button>
+      <button class="modal-btn-primary" onclick="confirmAcceptEstimate()">Confirm & Accept</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ── FIREBASE CONFIG ──
+const firebaseConfig = {
+  apiKey: "AIzaSyBdIj8M1G58jQ5byn8LKBIee_OxvQJEj_s",
+  authDomain: "firstclass-portal.firebaseapp.com",
+  projectId: "firstclass-portal",
+  storageBucket: "firstclass-portal.firebasestorage.app",
+  messagingSenderId: "71548509095",
+  appId: "1:71548509095:web:a78f548974b126dc86b482"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// ── STATE ──
+let currentUser = null;
+let currentProject = null;
+let currentProjectId = null;
+let allPhotos = [];
+let photoIndex = 0;
+let unsubProject = null;
+let unsubMessages = null;
+let unsubPhotos = null;
+let unsubPhases = null;
+let unsubPayments = null;
+let unsubChangeOrders = null;
+let unsubUpdates = null;
+let currentTab = 'timeline';
+
+const WRITE_SECRET = 'fcr2025admin';
+
+// ── AUTH STATE LISTENER ──
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    currentUser = user;
+    await loadUserProject(user.email);
+  } else {
+    currentUser = null;
+    showScreen('loginScreen');
+  }
+});
+
+// ── SCREEN MANAGEMENT ──
+function showScreen(id) {
+  ['loadingScreen', 'loginScreen', 'setupScreen', 'appShell'].forEach(s => {
+    document.getElementById(s).hidden = s !== id;
+  });
+}
+
+// ── LOGIN ──
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginError');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  err.classList.remove('visible');
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    let msg = 'Invalid email or password.';
+    if (error.code === 'auth/user-not-found') msg = 'No account found. Set up your account first.';
+    if (error.code === 'auth/too-many-requests') msg = 'Too many attempts. Try again later.';
+    err.textContent = msg;
+    err.classList.add('visible');
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+}
+
+// ── FIRST TIME SETUP ──
+async function handleSetup(e) {
+  e.preventDefault();
+  const email = document.getElementById('setupEmail').value.trim();
+  const password = document.getElementById('setupPassword').value;
+  const confirm = document.getElementById('setupConfirm').value;
+  const btn = document.getElementById('setupBtn');
+  const err = document.getElementById('setupError');
+
+  if (password !== confirm) {
+    err.textContent = 'Passwords do not match.';
+    err.classList.add('visible');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+  err.classList.remove('visible');
+
+  try {
+    // Check if there's a project for this email first
+    const projectCheck = await db.collection('projects')
+      .where('clientEmail', '==', email.toLowerCase())
+      .limit(1)
+      .get();
+
+    if (projectCheck.empty) {
+      err.textContent = 'No project found for this email. Please use the email where you received your invitation.';
+      err.classList.add('visible');
+      btn.disabled = false;
+      btn.textContent = 'Create Account & View Project';
+      return;
+    }
+
+    await auth.createUserWithEmailAndPassword(email, password);
+    // onAuthStateChanged will handle the rest
+  } catch (error) {
+    let msg = 'Could not create account. ';
+    if (error.code === 'auth/email-already-in-use') msg = 'Account already exists. Please sign in instead.';
+    else if (error.code === 'auth/weak-password') msg = 'Password must be at least 6 characters.';
+    else msg += error.message;
+    err.textContent = msg;
+    err.classList.add('visible');
+    btn.disabled = false;
+    btn.textContent = 'Create Account & View Project';
+  }
+}
+
+// ── FORGOT PASSWORD ──
+async function handleForgotPassword() {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) {
+    document.getElementById('loginError').textContent = 'Enter your email first, then click Forgot Password.';
+    document.getElementById('loginError').classList.add('visible');
+    return;
+  }
+  try {
+    await auth.sendPasswordResetEmail(email);
+    showToast('Password reset email sent. Check your inbox.');
+  } catch (e) {
+    showToast('Could not send reset email. Check the email address.');
+  }
+}
+
+// ── LOGOUT ──
+function handleLogout() {
+  cleanup();
+  auth.signOut();
+}
+
+function cleanup() {
+  [unsubProject, unsubMessages, unsubPhotos, unsubPhases, unsubPayments, unsubChangeOrders, unsubUpdates].forEach(fn => fn && fn());
+  unsubProject = unsubMessages = unsubPhotos = unsubPhases = unsubPayments = unsubChangeOrders = unsubUpdates = null;
+}
+
+// ── LOAD PROJECT BY EMAIL ──
+async function loadUserProject(email) {
+  showScreen('loadingScreen');
+  try {
+    const snap = await db.collection('projects')
+      .where('clientEmail', '==', email.toLowerCase())
+      .limit(1)
+      .get();
+
+    if (snap.empty) {
+      showToast('No project found for your email. Contact us at (210) 606-5298.');
+      showScreen('loginScreen');
+      return;
+    }
+
+    const doc = snap.docs[0];
+    currentProjectId = doc.id;
+    currentProject = doc.data();
+
+    showScreen('appShell');
+    renderProject();
+    setupRealtimeListeners();
+  } catch (e) {
+    console.error('Load error:', e);
+    showToast('Error loading project. Please try again.');
+    showScreen('loginScreen');
+  }
+}
+
+// ── RENDER PROJECT ──
+function renderProject() {
+  const p = currentProject;
+
+  // Topbar
+  document.getElementById('topbarName').textContent = p.clientName || 'Your Project';
+  document.getElementById('topbarProject').textContent = (p.projectType || 'Remodeling') + ' — ' + (p.address || '');
+
+  // Status
+  const badge = document.getElementById('statusBadge');
+  const status = p.status || 'planning';
+  badge.textContent = status.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  badge.className = 'status-badge ' + status;
+
+  // Progress
+  const pct = p.progressPercent || 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '%';
+  document.getElementById('progressSub').textContent = p.estimatedCompletion
+    ? 'Est. completion: ' + p.estimatedCompletion
+    : p.startDate ? 'Started: ' + p.startDate : '';
+
+  // Quick stats
+  const contract = p.contractAmount || 0;
+  const paid = p.paidAmount || 0;
+  document.getElementById('quickStats').innerHTML = `
+    <div class="qstat">
+      <div class="qstat-label">Contract</div>
+      <div class="qstat-value gold">${formatCurrency(contract)}</div>
+    </div>
+    <div class="qstat">
+      <div class="qstat-label">Paid</div>
+      <div class="qstat-value green">${formatCurrency(paid)}</div>
+    </div>
+  `;
+
+  // Estimate
+  renderEstimate(p);
+}
+
+function renderEstimate(p) {
+  const section = document.getElementById('estimateSection');
+  const estStatus = p.estimateStatus || 'pending';
+
+  if (estStatus === 'accepted') {
+    section.style.display = 'block';
+    section.querySelector('.estimate-card').style.borderColor = 'rgba(34,197,94,0.3)';
+    document.getElementById('estimateAmount').textContent = formatCurrency(p.contractAmount);
+    document.getElementById('estimateType').textContent = p.projectType || '';
+    document.getElementById('estimateStatusText').innerHTML = '<span style="color:var(--green)">&#10003; Accepted</span>';
+    document.getElementById('estimateActions').style.display = 'none';
+  } else if (estStatus === 'declined') {
+    section.style.display = 'block';
+    document.getElementById('estimateAmount').textContent = formatCurrency(p.contractAmount);
+    document.getElementById('estimateType').textContent = p.projectType || '';
+    document.getElementById('estimateStatusText').innerHTML = '<span style="color:var(--red)">Declined</span>';
+    document.getElementById('estimateActions').style.display = 'none';
+  } else if (p.contractAmount > 0) {
+    section.style.display = 'block';
+    document.getElementById('estimateAmount').textContent = formatCurrency(p.contractAmount);
+    document.getElementById('estimateType').textContent = p.projectType || '';
+    document.getElementById('estimateStatusText').innerHTML = '<span style="color:var(--gold)">Awaiting your review</span>';
+    document.getElementById('estimateActions').style.display = 'flex';
+  } else {
+    section.style.display = 'none';
+  }
+}
+
+// ── ACCEPT / DECLINE ESTIMATE ──
+function showAcceptModal() {
+  document.getElementById('acceptModal').classList.add('visible');
+}
+function closeAcceptModal() {
+  document.getElementById('acceptModal').classList.remove('visible');
+}
+
+async function confirmAcceptEstimate() {
+  const startDate = document.getElementById('acceptStartDate').value;
+  const notes = document.getElementById('acceptNotes').value.trim();
+
+  try {
+    await db.collection('projects').doc(currentProjectId).update({
+      estimateStatus: 'accepted',
+      estimateAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      clientPreferredStartDate: startDate || null,
+      clientAcceptNotes: notes || null,
+      _secret: WRITE_SECRET
+    });
+
+    await db.collection('projects').doc(currentProjectId).collection('updates').add({
+      message: 'Client accepted the estimate!' + (startDate ? ' Preferred start: ' + startDate : ''),
+      type: 'milestone',
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    closeAcceptModal();
+    showToast('Estimate accepted! We\'ll be in touch soon.');
+  } catch (e) {
+    showToast('Error: ' + e.message);
+  }
+}
+
+async function declineEstimate() {
+  if (!confirm('Are you sure you want to decline this estimate?')) return;
+  try {
+    await db.collection('projects').doc(currentProjectId).update({
+      estimateStatus: 'declined',
+      _secret: WRITE_SECRET
+    });
+    showToast('Estimate declined.');
+  } catch (e) {
+    showToast('Error: ' + e.message);
+  }
+}
+
+// ── REALTIME LISTENERS ──
+function setupRealtimeListeners() {
+  cleanup();
+  const projRef = db.collection('projects').doc(currentProjectId);
+
+  // Project doc
+  unsubProject = projRef.onSnapshot(snap => {
+    if (!snap.exists) return;
+    currentProject = snap.data();
+    renderProject();
+  });
+
+  // Phases
+  unsubPhases = projRef.collection('phases').orderBy('order').onSnapshot(snap => {
+    renderTimeline(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  });
+
+  // Photos
+  unsubPhotos = projRef.collection('photos').orderBy('date', 'desc').onSnapshot(snap => {
+    allPhotos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderGallery(allPhotos);
+  });
+
+  // Payments
+  unsubPayments = projRef.collection('payments').orderBy('date', 'desc').onSnapshot(snap => {
+    renderPayments(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  });
+
+  // Change orders
+  unsubChangeOrders = projRef.collection('changeOrders').orderBy('date', 'desc').onSnapshot(snap => {
+    renderChangeOrders(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  });
+
+  // Updates
+  unsubUpdates = projRef.collection('updates').orderBy('date', 'desc').onSnapshot(snap => {
+    renderUpdates(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  });
+
+  // Messages
+  unsubMessages = projRef.collection('messages').orderBy('timestamp', 'asc').onSnapshot(snap => {
+    renderMessages(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+  });
+}
+
+// ── RENDER TIMELINE ──
+function renderTimeline(phases) {
+  const el = document.getElementById('timelineList');
+  if (!phases.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128197;</div><div class="empty-state-title">No phases yet</div><div class="empty-state-desc">Your project timeline will appear here once work begins.</div></div>';
+    return;
+  }
+  el.innerHTML = phases.map(ph => {
+    const s = ph.status || 'pending';
+    const label = s === 'complete' ? 'Completed' : s === 'in_progress' ? 'In Progress' : 'Upcoming';
+    return `<div class="timeline-item">
+      <div class="timeline-dot ${s}"></div>
+      <div>
+        <div class="timeline-name">${esc(ph.name)}</div>
+        <div class="timeline-status">${label}${ph.completedDate ? ' — ' + formatDate(ph.completedDate) : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER UPDATES ──
+const UPDATE_ICONS = { milestone: '&#127942;', payment: '&#128176;', note: '&#128221;', photo: '&#128247;' };
+
+function renderUpdates(updates) {
+  const el = document.getElementById('updatesList');
+  if (!updates.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-desc">No updates yet</div></div>';
+    return;
+  }
+  el.innerHTML = updates.slice(0, 20).map(u => `
+    <div class="update-item">
+      <div class="update-icon">${UPDATE_ICONS[u.type] || '&#128221;'}</div>
+      <div>
+        <div class="update-text">${esc(u.message)}</div>
+        <div class="update-time">${formatDateTime(u.date)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER GALLERY ──
+function renderGallery(photos) {
+  const el = document.getElementById('galleryGrid');
+  if (!photos.length) {
+    el.innerHTML = '<div class="gallery-empty"><div class="empty-state-icon">&#128247;</div><div class="empty-state-title">No photos yet</div><div class="empty-state-desc">Job site photos will appear here as work progresses.</div></div>';
+    return;
+  }
+  el.innerHTML = photos.map((p, i) => `
+    <div class="gallery-item" onclick="openLightbox(${i})">
+      <img src="${esc(p.url)}" alt="${esc(p.caption || '')}" loading="lazy">
+      ${p.caption ? `<div class="gallery-caption">${esc(p.caption)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ── LIGHTBOX ──
+function openLightbox(i) {
+  photoIndex = i;
+  renderLightboxImg();
+  document.getElementById('lightbox').classList.add('visible');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('visible');
+}
+function stepLightbox(dir) {
+  photoIndex = (photoIndex + dir + allPhotos.length) % allPhotos.length;
+  renderLightboxImg();
+}
+function renderLightboxImg() {
+  const p = allPhotos[photoIndex];
+  if (!p) return;
+  document.getElementById('lightboxImg').src = p.url || '';
+  document.getElementById('lightboxCaption').textContent = p.caption || '';
+}
+
+// ── RENDER FINANCIALS ──
+function renderPayments(payments) {
+  const el = document.getElementById('paymentsList');
+  const p = currentProject;
+  const contract = p.contractAmount || 0;
+  const paid = p.paidAmount || 0;
+  const remaining = contract - paid;
+
+  document.getElementById('financeSummary').innerHTML = `
+    <div class="finance-card">
+      <div class="finance-label">Contract Total</div>
+      <div class="finance-value" style="color:var(--gold)">${formatCurrency(contract)}</div>
+    </div>
+    <div class="finance-card">
+      <div class="finance-label">Paid</div>
+      <div class="finance-value" style="color:var(--green)">${formatCurrency(paid)}</div>
+    </div>
+    <div class="finance-card full">
+      <div class="finance-label">Remaining Balance</div>
+      <div class="finance-value">${formatCurrency(remaining)}</div>
+      <div style="margin-top:8px">
+        <div class="progress-bar"><div class="progress-fill" style="width:${contract ? (paid/contract*100) : 0}%;background:var(--green)"></div></div>
+      </div>
+    </div>
+  `;
+
+  if (!payments.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-desc">No payments recorded yet</div></div>';
+    return;
+  }
+  el.innerHTML = payments.map(pay => `
+    <div class="payment-item">
+      <div>
+        <div class="pay-desc">${esc(pay.description)}</div>
+        <div class="pay-date">${formatDate(pay.date)}${pay.method ? ' — ' + esc(pay.method) : ''}</div>
+      </div>
+      <div class="pay-amount">${formatCurrency(pay.amount)}</div>
+    </div>
+  `).join('');
+}
+
+function renderChangeOrders(orders) {
+  const el = document.getElementById('changeOrdersList');
+  if (!orders.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-desc">No change orders</div></div>';
+    return;
+  }
+  el.innerHTML = orders.map(co => `
+    <div class="change-order-item">
+      <div class="co-header">
+        <div class="co-desc">${esc(co.description)}</div>
+        <span class="co-badge ${(co.status||'pending').toLowerCase()}">${esc(co.status || 'Pending')}</span>
+      </div>
+      ${co.reason ? `<div class="co-reason">${esc(co.reason)}</div>` : ''}
+      <div class="co-amount">${co.amount ? '+' + formatCurrency(co.amount) : ''}</div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER MESSAGES ──
+function renderMessages(messages) {
+  const el = document.getElementById('chatMessages');
+  if (!messages.length) {
+    el.innerHTML = `
+      <div class="empty-state" style="margin-top:40px">
+        <div class="empty-state-icon">&#128172;</div>
+        <div class="empty-state-title">Start a conversation</div>
+        <div class="empty-state-desc">Send a message to your project team. We typically respond within a few hours.</div>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = messages.map(m => {
+    const isClient = m.sender === 'client';
+    return `
+      <div class="chat-msg ${isClient ? 'client' : 'admin'}">
+        ${!isClient ? `<div class="chat-msg-sender">${esc(m.senderName || 'First Class Team')}</div>` : ''}
+        <div>${esc(m.text)}</div>
+        <div class="chat-msg-time">${formatTime(m.timestamp)}</div>
+      </div>`;
+  }).join('');
+
+  // Auto-scroll to bottom
+  el.scrollTop = el.scrollHeight;
+}
+
+// ── SEND MESSAGE ──
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || !currentProjectId) return;
+
+  input.value = '';
+  try {
+    await db.collection('projects').doc(currentProjectId).collection('messages').add({
+      text,
+      sender: 'client',
+      senderName: currentProject.clientName || 'Client',
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      read: false,
+      _secret: WRITE_SECRET
+    });
+  } catch (e) {
+    showToast('Could not send message. Try again.');
+    input.value = text;
+  }
+}
+
+// ── TAB SWITCHING ──
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.dataset.panel === tab));
+
+  // Show/hide overview section (always visible for timeline)
+  const overview = document.getElementById('overviewSection');
+  if (tab === 'timeline') {
+    overview.style.display = '';
+    if (currentProject) renderEstimate(currentProject);
+  } else {
+    overview.style.display = 'none';
+    document.getElementById('estimateSection').style.display = 'none';
+  }
+}
+
+// ── UTILITIES ──
+function formatCurrency(n) {
+  return '$' + Number(n || 0).toLocaleString('en-US');
+}
+
+function toDate(v) {
+  if (!v) return null;
+  if (typeof v.toDate === 'function') return v.toDate();
+  const d = new Date(v);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function formatDate(v) {
+  const d = toDate(v);
+  if (!d) return '';
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function formatDateTime(v) {
+  const d = toDate(v);
+  if (!d) return '';
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' +
+         d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+}
+
+function formatTime(v) {
+  const d = toDate(v);
+  if (!d) return '';
+  return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('visible');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('visible'), 3000);
+}
+
+// Pre-fill email from URL param
+const urlParams = new URLSearchParams(window.location.search);
+const emailParam = urlParams.get('email');
+if (emailParam) {
+  document.getElementById('loginEmail').value = emailParam;
+  document.getElementById('setupEmail').value = emailParam;
+}
+</script>
+</body>
+</html>

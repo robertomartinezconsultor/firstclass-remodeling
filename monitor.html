@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FCR Bot Monitor</title>
+  <style>
+    :root {
+      --bg: #0a0a0f; --bg2: #12121a; --bg3: #1a1a26;
+      --gold: #f0b429; --gold2: #ffd166;
+      --green: #22c55e; --red: #ef4444; --yellow: #f59e0b;
+      --blue: #3b82f6; --purple: #8b5cf6;
+      --text: #f0f0f0; --muted: #6b7280; --border: rgba(255,255,255,0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+           background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* HEADER */
+    header {
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-badge {
+      width: 32px; height: 32px; background: var(--gold); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: #000; font-size: 15px;
+    }
+    .logo-name { font-weight: 700; font-size: 15px; }
+    .logo-sub { font-size: 11px; color: var(--muted); }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .pill {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 14px; border-radius: 99px; font-size: 12px; font-weight: 600;
+      border: 1px solid;
+    }
+    .pill.live { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.25); color: var(--green); }
+    .pill.warn { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); color: var(--yellow); }
+    .pulse { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .btn-refresh {
+      background: rgba(240,180,41,0.1); border: 1px solid rgba(240,180,41,0.3);
+      color: var(--gold); padding: 6px 16px; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s;
+    }
+    .btn-refresh:hover { background: rgba(240,180,41,0.2); }
+    .btn-refresh:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* MAIN */
+    main { padding: 24px; max-width: 1200px; margin: 0 auto; }
+
+    /* STATS ROW */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px;
+    }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .stat-value { font-size: 30px; font-weight: 700; line-height: 1; }
+    .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.red { color: var(--red); }
+    .stat-value.yellow { color: var(--yellow); }
+    .stat-value.gold { color: var(--gold); }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--muted); margin-bottom: 14px;
+    }
+
+    /* BOT GRID */
+    .bots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin-bottom: 28px; }
+    .bot-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; transition: border-color .2s;
+    }
+    .bot-card:hover { border-color: rgba(240,180,41,0.3); }
+    .bot-card.success { border-left: 3px solid var(--green); }
+    .bot-card.failure { border-left: 3px solid var(--red); }
+    .bot-card.running { border-left: 3px solid var(--blue); }
+    .bot-card.skipped { border-left: 3px solid var(--muted); }
+    .bot-card.unknown { border-left: 3px solid var(--border); }
+
+    .bot-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px 12px; }
+    .bot-info { display: flex; align-items: center; gap: 12px; }
+    .bot-icon { font-size: 22px; }
+    .bot-name { font-size: 14px; font-weight: 700; }
+    .bot-schedule { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .badge {
+      padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .04em;
+    }
+    .badge.success { background: rgba(34,197,94,0.15); color: var(--green); }
+    .badge.failure { background: rgba(239,68,68,0.15); color: var(--red); }
+    .badge.running { background: rgba(59,130,246,0.15); color: var(--blue); }
+    .badge.skipped { background: rgba(107,114,128,0.15); color: var(--muted); }
+    .badge.unknown { background: rgba(107,114,128,0.1); color: var(--muted); }
+
+    .bot-body { padding: 0 18px 16px; }
+    .bot-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    .meta-item { background: var(--bg3); border-radius: 8px; padding: 8px 10px; }
+    .meta-key { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; }
+    .meta-val { font-size: 13px; font-weight: 600; }
+
+    .bot-log {
+      background: #0d0d14; border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px;
+      color: #a0a0b0; max-height: 80px; overflow: hidden;
+      line-height: 1.5; position: relative;
+    }
+    .bot-log::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 24px; background: linear-gradient(transparent, #0d0d14);
+    }
+    .log-success { color: var(--green); }
+    .log-error { color: var(--red); }
+    .log-warn { color: var(--yellow); }
+
+    .bot-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .btn-run {
+      flex: 1; background: rgba(240,180,41,0.1); border: 1px solid rgba(240,180,41,0.25);
+      color: var(--gold); padding: 7px; border-radius: 8px;
+      font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s;
+    }
+    .btn-run:hover { background: rgba(240,180,41,0.2); }
+    .btn-run:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-logs {
+      flex: 1; background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text); padding: 7px; border-radius: 8px;
+      font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none;
+      text-align: center; display: block; transition: all .2s;
+    }
+    .btn-logs:hover { border-color: rgba(255,255,255,0.2); }
+
+    /* LEAD TICKER */
+    .lead-section { margin-bottom: 28px; }
+    .lead-table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .lead-table { width: 100%; border-collapse: collapse; }
+    .lead-table th {
+      background: var(--bg3); padding: 11px 16px; text-align: left;
+      font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .lead-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .lead-table tr:last-child td { border-bottom: none; }
+    .lead-table tr:hover td { background: var(--bg3); }
+    .equity-high { color: var(--green); font-weight: 700; }
+    .equity-med { color: var(--yellow); font-weight: 600; }
+    .equity-low { color: var(--muted); }
+    .source-badge {
+      padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700;
+      background: rgba(139,92,246,0.15); color: var(--purple);
+    }
+
+    /* EMPTY */
+    .empty { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+
+    /* ACTIVITY LOG */
+    .activity-list { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .activity-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 18px; border-bottom: 1px solid var(--border);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .activity-dot.success { background: var(--green); }
+    .activity-dot.failure { background: var(--red); }
+    .activity-dot.running { background: var(--blue); animation: pulse 1s infinite; }
+    .activity-text { flex: 1; font-size: 13px; }
+    .activity-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    /* LOADING */
+    .loading {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 200px; flex-direction: column; gap: 12px; color: var(--muted);
+    }
+    .spinner { width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--gold); border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* LAST UPDATED */
+    .last-updated { text-align: right; font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 20px; font-size: 13px;
+      transform: translateY(80px); opacity: 0; transition: all .3s;
+      z-index: 999;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { border-color: rgba(34,197,94,0.4); color: var(--green); }
+    .toast.error { border-color: rgba(239,68,68,0.4); color: var(--red); }
+
+    @media (max-width: 640px) {
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+      .bots-grid { grid-template-columns: 1fr; }
+      header { padding: 0 14px; }
+      main { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-badge">FC</div>
+    <div>
+      <div class="logo-name">FCR Bot Monitor</div>
+      <div class="logo-sub">First Class Remodeling TX</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="pill live" id="headerStatus">
+      <span class="pulse"></span>
+      <span>Cargando...</span>
+    </div>
+    <button class="btn-refresh" id="btnRefresh" onclick="loadAll()">↻ Actualizar</button>
+  </div>
+</header>
+
+<main>
+  <div class="last-updated" id="lastUpdated">—</div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Bots Activos</div>
+      <div class="stat-value green" id="statActive">—</div>
+      <div class="stat-sub" id="statActiveOf">de — bots</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Corridas Hoy</div>
+      <div class="stat-value gold" id="statToday">—</div>
+      <div class="stat-sub" id="statTodaySub">workflows ejecutados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Tasa de Éxito</div>
+      <div class="stat-value" id="statSuccess">—</div>
+      <div class="stat-sub">últimas 24h</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Último Fallo</div>
+      <div class="stat-value red" id="statFailed">—</div>
+      <div class="stat-sub" id="statFailedName">sin fallos recientes</div>
+    </div>
+  </div>
+
+  <!-- BOTS -->
+  <div class="section-title">Estado de Bots</div>
+  <div id="botsGrid" class="bots-grid">
+    <div class="loading"><div class="spinner"></div><span>Conectando a GitHub...</span></div>
+  </div>
+
+  <!-- LEADS -->
+  <div class="lead-section">
+    <div class="section-title">Últimos Leads — Pre-Foreclosure</div>
+    <div class="lead-table-wrap" id="leadsTable">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+  <!-- ACTIVIDAD -->
+  <div>
+    <div class="section-title">Actividad Reciente</div>
+    <div class="activity-list" id="activityList">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const REPO  = 'robertomartinezconsultor/firstclass-remodeling';
+const TOKEN = localStorage.getItem('gh_token') || '';
+
+// Prompt for token if not set
+if (!TOKEN) {
+  const t = prompt('Ingresa tu GitHub Token para ver datos en tiempo real:\n(ghp_... — lo encuentras en GitHub → Settings → Tokens)');
+  if (t) localStorage.setItem('gh_token', t.trim());
+  location.reload();
+}
+
+const BOTS = [
+  { id: 252939438, name: 'Pre-Foreclosure Hunter',  icon: '🏠', schedule: 'Lun-Sab 7am + 11am CST', file: 'preforeclosure-hunter.yml' },
+  { id: 252772843, name: 'Lead Hunter (Craigslist)', icon: '🔍', schedule: 'Lun-Sab 8am + 2pm CST',  file: 'lead-hunter.yml' },
+  { id: 252775776, name: 'Reddit Lead Hunter',       icon: '💬', schedule: 'Lun-Sab 9am CST',        file: 'reddit-hunter.yml' },
+  { id: 252935801, name: 'Google News Hunter',       icon: '📰', schedule: 'Lun-Sab 7am + 1pm CST',  file: 'google-news-hunter.yml' },
+  { id: 252765128, name: 'Pre-Foreclosure Hunter',   icon: '📊', schedule: 'Diario',                  file: 'lead-monitor.yml' },
+  { id: 252775777, name: 'Blog Writer Bot',          icon: '✍️', schedule: 'Lunes 6am CST',           file: 'blog-writer.yml' },
+  { id: 252775778, name: 'Competitor Spy Bot',       icon: '🕵️', schedule: 'Miércoles 8am CST',       file: 'competitor-spy.yml' },
+  { id: 252775780, name: 'Ranking Tracker',          icon: '📈', schedule: 'Lun-Vie 7am CST',         file: 'ranking-tracker.yml' },
+  { id: 252775781, name: 'Review Monitor',           icon: '⭐', schedule: 'Diario 10am CST',          file: 'review-monitor.yml' },
+  { id: 252765120, name: 'SEO Audit Bot',            icon: '🔎', schedule: 'Domingos 6am CST',         file: 'seo-audit.yml' },
+  { id: 252775784, name: 'Daily Lead Checklist',     icon: '📋', schedule: 'Lun-Vie 8am CST',          file: 'email-followup.yml' },
+  { id: 252765125, name: 'Auto Sitemap Updater',     icon: '🗺️', schedule: 'Cada push',                file: 'sitemap-updater.yml' },
+];
+
+async function ghFetch(path) {
+  const tk = localStorage.getItem('gh_token') || '';
+  const r = await fetch(`https://api.github.com/repos/${REPO}/${path}`, {
+    headers: { Authorization: `token ${tk}`, Accept: 'application/vnd.github+json' }
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+function timeAgo(isoStr) {
+  if (!isoStr) return '—';
+  const diff = Date.now() - new Date(isoStr).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'ahora';
+  if (m < 60) return `hace ${m}m`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `hace ${h}h`;
+  return `hace ${Math.floor(h/24)}d`;
+}
+
+function conclusionLabel(c, s) {
+  if (s === 'in_progress') return 'running';
+  if (!c) return 'unknown';
+  return c; // success, failure, skipped, cancelled
+}
+
+function statusBadge(status) {
+  const map = { success:'✅ OK', failure:'❌ Falló', running:'⏳ Corriendo', skipped:'⏭ Saltado', unknown:'⬜ Sin datos', cancelled:'🚫 Cancelado' };
+  return map[status] || status;
+}
+
+function durationStr(run) {
+  if (!run || !run.run_started_at || !run.updated_at) return '—';
+  const ms = new Date(run.updated_at) - new Date(run.run_started_at);
+  const s = Math.round(ms / 1000);
+  if (s < 60) return `${s}s`;
+  return `${Math.floor(s/60)}m ${s%60}s`;
+}
+
+async function runWorkflow(workflowId, botName) {
+  const tk = localStorage.getItem('gh_token') || '';
+  const r = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${workflowId}/dispatches`, {
+    method: 'POST',
+    headers: { Authorization: `token ${tk}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ref: 'main' })
+  });
+  if (r.status === 204) {
+    showToast(`✅ ${botName} iniciado. Refresca en 30s.`, 'success');
+    setTimeout(loadAll, 8000);
+  } else {
+    showToast(`❌ Error al iniciar ${botName} (${r.status})`, 'error');
+  }
+}
+
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+async function loadAll() {
+  const btn = document.getElementById('btnRefresh');
+  btn.disabled = true; btn.textContent = '↻ Actualizando...';
+
+  try {
+    // Cargar runs de todos los bots en paralelo
+    const runs = await Promise.allSettled(
+      BOTS.map(bot => ghFetch(`actions/workflows/${bot.id}/runs?per_page=5`))
+    );
+
+    let successCount = 0, failCount = 0, runToday = 0, lastFail = null;
+    const allRuns = [];
+    const botData = [];
+
+    runs.forEach((result, i) => {
+      const bot = BOTS[i];
+      let latestRun = null;
+      let recentRuns = [];
+
+      if (result.status === 'fulfilled') {
+        recentRuns = result.value.workflow_runs || [];
+        latestRun = recentRuns[0] || null;
+      }
+
+      const status = conclusionLabel(latestRun?.conclusion, latestRun?.status);
+
+      if (status === 'success') successCount++;
+      if (status === 'failure') { failCount++; if (!lastFail) lastFail = bot.name; }
+
+      // Contar runs de hoy
+      const today = new Date().toISOString().slice(0, 10);
+      recentRuns.forEach(r => { if (r.created_at?.startsWith(today)) runToday++; });
+
+      recentRuns.forEach(r => allRuns.push({ ...r, botName: bot.name, botIcon: bot.icon }));
+
+      botData.push({ bot, latestRun, recentRuns, status });
+    });
+
+    // STATS
+    const total = BOTS.length;
+    const activeCount = successCount;
+    document.getElementById('statActive').textContent = activeCount;
+    document.getElementById('statActiveOf').textContent = `de ${total} bots`;
+    document.getElementById('statToday').textContent = runToday;
+    document.getElementById('statSuccess').textContent = (failCount + successCount > 0)
+      ? Math.round(successCount / (successCount + failCount) * 100) + '%' : '—';
+    document.getElementById('statSuccess').className = 'stat-value ' + (failCount > 0 ? 'yellow' : 'green');
+    document.getElementById('statFailed').textContent = failCount || '0';
+    if (lastFail) document.getElementById('statFailedName').textContent = lastFail;
+
+    // Header status
+    const hdr = document.getElementById('headerStatus');
+    if (failCount === 0) {
+      hdr.className = 'pill live';
+      hdr.innerHTML = '<span class="pulse"></span><span>Todos OK</span>';
+    } else {
+      hdr.className = 'pill warn';
+      hdr.innerHTML = `<span class="pulse"></span><span>${failCount} con fallo</span>`;
+    }
+
+    // BOTS GRID
+    const grid = document.getElementById('botsGrid');
+    grid.innerHTML = '';
+    botData.forEach(({ bot, latestRun, recentRuns, status }) => {
+      const card = document.createElement('div');
+      card.className = `bot-card ${status}`;
+
+      const miniBar = recentRuns.slice(0,5).reverse().map(r => {
+        const s = conclusionLabel(r.conclusion, r.status);
+        const colors = { success:'#22c55e', failure:'#ef4444', running:'#3b82f6', skipped:'#6b7280', unknown:'#2a2a3a' };
+        return `<span title="${s}" style="display:inline-block;width:14px;height:14px;border-radius:3px;background:${colors[s]||'#2a2a3a'}"></span>`;
+      }).join('');
+
+      card.innerHTML = `
+        <div class="bot-header">
+          <div class="bot-info">
+            <span class="bot-icon">${bot.icon}</span>
+            <div>
+              <div class="bot-name">${bot.name}</div>
+              <div class="bot-schedule">⏰ ${bot.schedule}</div>
+            </div>
+          </div>
+          <span class="badge ${status}">${statusBadge(status)}</span>
+        </div>
+        <div class="bot-body">
+          <div class="bot-meta">
+            <div class="meta-item">
+              <div class="meta-key">Última corrida</div>
+              <div class="meta-val">${timeAgo(latestRun?.created_at)}</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key">Duración</div>
+              <div class="meta-val">${durationStr(latestRun)}</div>
+            </div>
+          </div>
+          <div style="margin-bottom:10px;display:flex;gap:4px;align-items:center">
+            <span style="font-size:10px;color:var(--muted);margin-right:4px">Historial:</span>
+            ${miniBar || '<span style="font-size:11px;color:var(--muted)">Sin datos</span>'}
+          </div>
+          <div class="bot-actions">
+            <button class="btn-run" onclick="runWorkflow(${bot.id}, '${bot.name}')">▶ Ejecutar ahora</button>
+            <a class="btn-logs" href="https://github.com/${REPO}/actions/workflows/${bot.file}" target="_blank">Ver logs →</a>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+
+    // ACTIVIDAD RECIENTE
+    allRuns.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+    const actList = document.getElementById('activityList');
+    actList.innerHTML = '';
+    allRuns.slice(0, 20).forEach(r => {
+      const s = conclusionLabel(r.conclusion, r.status);
+      const item = document.createElement('div');
+      item.className = 'activity-item';
+      const msgs = { success: 'completó exitosamente', failure: 'FALLÓ', running: 'está corriendo', skipped: 'fue saltado', unknown: 'sin datos' };
+      item.innerHTML = `
+        <div class="activity-dot ${s}"></div>
+        <div class="activity-text">${r.botIcon} <strong>${r.botName}</strong> ${msgs[s]||s}</div>
+        <div class="activity-time">${timeAgo(r.created_at)}</div>`;
+      actList.appendChild(item);
+    });
+    if (allRuns.length === 0) actList.innerHTML = '<div class="empty">Sin actividad reciente</div>';
+
+    // LEADS (desde archivo JSON en repo)
+    loadLeads();
+
+    document.getElementById('lastUpdated').textContent = `Actualizado: ${new Date().toLocaleTimeString('es-MX')}`;
+
+  } catch(e) {
+    console.error(e);
+    showToast('Error conectando a GitHub: ' + e.message, 'error');
+    if (e.message.includes('401')) {
+      localStorage.removeItem('gh_token');
+      showToast('Token inválido. Recarga la página para ingresar uno nuevo.', 'error');
+    }
+  }
+
+  btn.disabled = false; btn.textContent = '↻ Actualizar';
+}
+
+async function loadLeads() {
+  const wrap = document.getElementById('leadsTable');
+  try {
+    const data = await ghFetch('contents/leads/preforeclosure-latest.json');
+    const json = JSON.parse(atob(data.content));
+    const leads = Array.isArray(json) ? json : (json.leads || []);
+
+    if (leads.length === 0) {
+      wrap.innerHTML = '<div class="empty">Sin leads hoy todavía — el bot corre a las 7am CST</div>';
+      return;
+    }
+
+    const rows = leads.slice(0,10).map(lead => {
+      const eq = lead.equity_data || {};
+      const equity = eq.equity || 0;
+      const eqClass = equity > 100000 ? 'equity-high' : equity > 50000 ? 'equity-med' : 'equity-low';
+      const phones = (lead.contact?.phones || []).map(p => `(${p.slice(0,3)}) ${p.slice(3,6)}-${p.slice(6)}`).join(', ') || '—';
+      return `<tr>
+        <td>${lead.address || '—'}</td>
+        <td class="${eqClass}">$${(equity||0).toLocaleString()}</td>
+        <td>$${(eq.market_value||0).toLocaleString()}</td>
+        <td>${lead.owner_name || '—'}</td>
+        <td>${phones}</td>
+        <td><span class="source-badge">${lead.source || 'Zillow'}</span></td>
+      </tr>`;
+    }).join('');
+
+    wrap.innerHTML = `<table class="lead-table">
+      <thead><tr>
+        <th>Dirección</th><th>Equity Est.</th><th>Valor Mercado</th>
+        <th>Dueño</th><th>Teléfono</th><th>Fuente</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  } catch(e) {
+    wrap.innerHTML = '<div class="empty">Sin reporte de leads disponible aún</div>';
+  }
+}
+
+// Auto-refresh cada 2 minutos
+setInterval(loadAll, 120000);
+loadAll();
+</script>
+</body>
+</html>
