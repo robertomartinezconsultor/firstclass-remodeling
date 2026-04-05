@@ -763,73 +763,38 @@ input,textarea{outline:none;font-family:var(--f-body);}
       </div>
 
       <div class="greeting-section fade-in fade-in-1">
-        <div class="greeting-sub">Good morning</div>
-        <div class="t-h2" style="font-family:var(--f-display);">Maria González 👋</div>
+        <div class="greeting-sub" id="homeGreetingSub">Welcome back</div>
+        <div class="t-h2" style="font-family:var(--f-display);" id="homeGreetingName">— 👋</div>
       </div>
 
-      <div class="hero-card fade-in fade-in-2">
-        <div class="badge badge-gold" style="margin-bottom:12px;">● Active Project</div>
-        <div style="font-size:15px;font-weight:500;color:var(--c-txt-1);margin-bottom:2px;">Kitchen Remodel</div>
-        <div class="t-xs text-3 t-mono">Alamo Heights · FCR-2026-014</div>
+      <div class="hero-card fade-in fade-in-2" onclick="switchTab('projects')" style="cursor:pointer;">
+        <div class="badge badge-gold" style="margin-bottom:12px;" id="heroBadge">● Active Project</div>
+        <div style="font-size:15px;font-weight:500;color:var(--c-txt-1);margin-bottom:2px;" id="heroTitle">—</div>
+        <div class="t-xs text-3 t-mono" id="heroSub">—</div>
         <div class="hero-stats">
-          <div class="hero-stat"><div class="hero-stat-val">68%</div><div class="hero-stat-lbl">Progress</div></div>
-          <div class="hero-stat"><div class="hero-stat-val">14</div><div class="hero-stat-lbl">Days left</div></div>
-          <div class="hero-stat"><div class="hero-stat-val">$2.4k</div><div class="hero-stat-lbl">Due</div></div>
+          <div class="hero-stat"><div class="hero-stat-val" id="heroProgress">0%</div><div class="hero-stat-lbl">Progress</div></div>
+          <div class="hero-stat"><div class="hero-stat-val" id="heroDays">—</div><div class="hero-stat-lbl">Days left</div></div>
+          <div class="hero-stat"><div class="hero-stat-val" id="heroDue">$0</div><div class="hero-stat-lbl">Due</div></div>
         </div>
       </div>
 
       <div class="section-row fade-in fade-in-3"><span class="section-title">Project Status</span><span class="section-action" onclick="switchTab('projects')">Ver detalles →</span></div>
 
-      <div class="phase-card fade-in fade-in-3">
-        <div class="phase-top">
-          <div>
-            <div style="font-size:13px;font-weight:500;color:var(--c-txt-1);margin-bottom:2px;">Cabinet Installation</div>
-            <div class="t-xs t-mono text-3">Phase 4 of 5</div>
-          </div>
-          <div class="badge badge-amber">In Progress</div>
-        </div>
-        <div class="phase-dots">
-          <div class="phase-seg done"></div>
-          <div class="phase-seg done"></div>
-          <div class="phase-seg done"></div>
-          <div class="phase-seg active"></div>
-          <div class="phase-seg"></div>
-        </div>
-        <div class="phase-names-row">
-          <div class="phase-name done">Demo</div>
-          <div class="phase-name done">Plumbing</div>
-          <div class="phase-name done">Electric</div>
-          <div class="phase-name active">Cabinets</div>
-          <div class="phase-name">Finish</div>
-        </div>
-        <div class="pct-row">
-          <div><div class="pct-big">68%</div><div class="t-xs text-3" style="margin-top:2px;">Overall complete</div></div>
-          <div class="ai-pill" onclick="switchTab('chat'); setTimeout(()=>sendQ('Give me today\\'s full project update'),200)">
-            <div class="ai-blink"></div>
-            <span class="ai-pill-txt">AI Update ↗</span>
-          </div>
-        </div>
-      </div>
+      <div class="phase-card fade-in fade-in-3" id="homePhaseCard"></div>
 
       <div class="section-row fade-in fade-in-4"><span class="section-title">Quick Actions</span></div>
       <div class="quick-grid fade-in fade-in-4">
-        <div class="quick-card gold" onclick="openModal()">
-          <div class="qc-icon" style="background:var(--c-gold-10);">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--c-gold)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-          </div>
-          <div class="qc-label">Approve Change Order #3</div>
-        </div>
         <div class="quick-card" onclick="switchTab('pay')">
           <div class="qc-icon" style="background:var(--c-green-bg);">
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--c-green)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           </div>
-          <div class="qc-label">Pay Invoice $2,400</div>
+          <div class="qc-label" id="qaPayLabel">View payments</div>
         </div>
-        <div class="quick-card" onclick="switchTab('chat'); setTimeout(()=>sendQ('How much do I still owe?'),200)">
+        <div class="quick-card" onclick="switchTab('chat')">
           <div class="qc-icon" style="background:var(--c-blue-bg);">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--c-blue)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--c-blue)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
-          <div class="qc-label">Ask AI anything</div>
+          <div class="qc-label">Ask Joe anything</div>
         </div>
         <div class="quick-card" onclick="switchTab('projects')">
           <div class="qc-icon" style="background:rgba(251,191,36,0.1);">
@@ -837,34 +802,16 @@ input,textarea{outline:none;font-family:var(--f-body);}
           </div>
           <div class="qc-label">View progress photos</div>
         </div>
+        <div class="quick-card" onclick="window.open('tel:2106065298')">
+          <div class="qc-icon" style="background:var(--c-amber-bg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--c-amber)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.58 1.31h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l1.02-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="qc-label">Call Roberto</div>
+        </div>
       </div>
 
       <div class="section-row fade-in fade-in-5"><span class="section-title">Recent Activity</span></div>
-      <div class="activity-list fade-in fade-in-5">
-        <div class="activity-item">
-          <div class="ac-left"><div class="ac-dot gold"></div><div class="ac-line"></div></div>
-          <div>
-            <div class="ac-title">Cabinets delivered to job site</div>
-            <div class="ac-time">Today · 8:14 AM</div>
-            <div class="ac-extra">All 12 units confirmed. Installation starts Apr 4, 8am.</div>
-          </div>
-        </div>
-        <div class="activity-item">
-          <div class="ac-left"><div class="ac-dot blue"></div><div class="ac-line"></div></div>
-          <div>
-            <div class="ac-title">Change Order #3 sent for approval</div>
-            <div class="ac-time">Yesterday · 3:40 PM</div>
-            <div class="ac-extra">Upgraded quartz + tile backsplash. +$2,200</div>
-          </div>
-        </div>
-        <div class="activity-item">
-          <div class="ac-left"><div class="ac-dot green"></div></div>
-          <div>
-            <div class="ac-title">Electrical inspection passed ✓</div>
-            <div class="ac-time">Apr 2 · 2:00 PM</div>
-          </div>
-        </div>
-      </div>
+      <div class="activity-list fade-in fade-in-5" id="homeActivity"></div>
     </div>
 
     <!-- ══ PROJECTS ══ -->
@@ -954,70 +901,17 @@ input,textarea{outline:none;font-family:var(--f-body);}
     <div class="screen" id="screen-pay">
       <div style="padding:16px 20px 0;"><div class="t-xs text-3 t-cap" style="margin-bottom:2px;">Payments</div><div class="t-h3">Billing Center</div></div>
 
-      <div class="pay-hero">
+      <div class="pay-hero" id="payHero">
         <div class="pay-label">Total Balance Due</div>
-        <div class="pay-amount">$2,400</div>
-        <div class="pay-due">Invoice #4 · Due April 10, 2026</div>
+        <div class="pay-amount" id="payAmount">$0</div>
+        <div class="pay-due" id="payDue">—</div>
       </div>
 
-      <div class="pay-btns">
-        <button class="btn btn-primary btn-block" onclick="showToast('Redirecting to Stripe secure payment...')">Pay Now — Stripe</button>
-        <button class="btn btn-secondary" onclick="showToast('Schedule options sent to your email')" style="width:120px;flex-shrink:0;">Schedule</button>
-      </div>
-
-      <div class="section-row" style="margin-top:6px;"><span class="section-title">Invoice History</span></div>
-      <div class="inv-list">
-        <div class="inv-card">
-          <div class="inv-head">
-            <span class="t-mono" style="font-size:11px;color:var(--c-gold);">Invoice #4 — PENDING</span>
-            <span class="t-xs text-3 t-mono">Due Apr 10</span>
-          </div>
-          <div class="inv-body">
-            <div class="inv-line"><span class="inv-lbl">Cabinets & hardware</span><span class="inv-amt">$1,800</span></div>
-            <div class="inv-line"><span class="inv-lbl">Labor — Week 3</span><span class="inv-amt">$600</span></div>
-          </div>
-          <div class="inv-foot"><span class="inv-total-lbl">Total due</span><span class="inv-total-amt">$2,400</span></div>
-        </div>
-        <div class="inv-card paid">
-          <div class="inv-head">
-            <span class="t-mono" style="font-size:11px;color:var(--c-green);">Invoice #3 — PAID ✓</span>
-            <span class="t-xs text-3 t-mono">Mar 28</span>
-          </div>
-          <div class="inv-body">
-            <div class="inv-line"><span class="inv-lbl">Electrical work</span><span class="inv-amt">$2,200</span></div>
-          </div>
-          <div class="inv-foot"><span class="inv-total-lbl">Paid</span><span class="inv-total-amt" style="color:var(--c-green);">$2,200</span></div>
-        </div>
-        <div class="inv-card paid">
-          <div class="inv-head">
-            <span class="t-mono" style="font-size:11px;color:var(--c-green);">Invoice #2 — PAID ✓</span>
-            <span class="t-xs text-3 t-mono">Mar 22</span>
-          </div>
-          <div class="inv-body">
-            <div class="inv-line"><span class="inv-lbl">Plumbing rough-in</span><span class="inv-amt">$1,800</span></div>
-          </div>
-          <div class="inv-foot"><span class="inv-total-lbl">Paid</span><span class="inv-total-amt" style="color:var(--c-green);">$1,800</span></div>
-        </div>
-      </div>
+      <div class="section-row" style="margin-top:6px;"><span class="section-title">Payment History</span></div>
+      <div class="inv-list" id="payInvoiceList"></div>
 
       <div class="section-row"><span class="section-title">Documents</span></div>
-      <div class="doc-list">
-        <div class="doc-item" onclick="showToast('Opening Contract PDF...')">
-          <div class="doc-icon pdf">PDF</div>
-          <div><div class="doc-name">Contract_FCR2026-014.pdf</div><div class="doc-meta">Signed · 340 KB · Mar 15</div></div>
-          <span class="doc-arrow">↓</span>
-        </div>
-        <div class="doc-item" onclick="openModal()">
-          <div class="doc-icon co">CO</div>
-          <div><div class="doc-name">Change Order #3 — Pending</div><div class="doc-meta">Awaiting approval · +$2,200</div></div>
-          <span class="doc-arrow" style="color:var(--c-gold);">→</span>
-        </div>
-        <div class="doc-item" onclick="showToast('Opening Original Proposal...')">
-          <div class="doc-icon pdf">PDF</div>
-          <div><div class="doc-name">Original Proposal.pdf</div><div class="doc-meta">Accepted · 680 KB · Mar 10</div></div>
-          <span class="doc-arrow">↓</span>
-        </div>
-      </div>
+      <div class="doc-list" id="payDocList"></div>
     </div>
 
     <!-- ══ PROFILE ══ -->
@@ -1312,36 +1206,64 @@ function setupRealtimeListeners() {
 function updateDashboard() {
   const p = currentProject;
   if (!p) return;
-  // Hero stats
-  const stats = document.querySelectorAll('.hero-stat-val');
-  if (stats[0]) stats[0].textContent = (p.progressPercent || 0) + '%';
-  if (stats[2]) stats[2].textContent = formatCurrency(Math.max(0,(p.contractAmount||0)-(p.paidAmount||0))).replace('$','$');
-  // Progress in phase card
-  const pctBig = document.querySelector('.pct-big');
-  if (pctBig) pctBig.textContent = (p.progressPercent||0) + '%';
-  // Hero project name
-  const heroTitle = document.querySelector('.hero-card [style*="font-size:15px"]');
-  if (heroTitle) heroTitle.textContent = p.projectType || 'Remodeling Project';
+  const pct = p.progressPercent || 0;
+  const contract = p.contractAmount || 0;
+  const paid = p.paidAmount || 0;
+  const bal = Math.max(0, contract - paid);
+
+  // Greeting
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  const greetSub = document.getElementById('homeGreetingSub');
+  const greetName = document.getElementById('homeGreetingName');
+  if (greetSub) greetSub.textContent = greeting;
+  if (greetName) greetName.innerHTML = esc(p.clientName || 'Client') + ' 👋';
+
+  // Hero card
+  const el = (id) => document.getElementById(id);
+  if (el('heroTitle')) el('heroTitle').textContent = p.projectType || 'Remodeling';
+  if (el('heroSub')) el('heroSub').textContent = (p.address || '') + ' · ' + (currentProjectId || '');
+  if (el('heroProgress')) el('heroProgress').textContent = pct + '%';
+  if (el('heroDue')) el('heroDue').textContent = bal > 0 ? formatCurrency(bal) : '$0';
+  if (el('heroBadge')) el('heroBadge').innerHTML = '● ' + (p.status||'planning').replace(/_/g,' ');
+
+  // Days left
+  if (p.estimatedCompletion && el('heroDays')) {
+    const end = new Date(p.estimatedCompletion);
+    const diff = Math.max(0, Math.ceil((end - new Date()) / 86400000));
+    el('heroDays').textContent = diff + 'd';
+  }
+
+  // Quick action pay label
+  if (el('qaPayLabel')) el('qaPayLabel').textContent = bal > 0 ? 'Pay ' + formatCurrency(bal) : 'Payment history';
 }
 
 function updatePhases() {
   const phases = projectContext.phases || [];
-  // Update phase segments
-  const segs = document.querySelectorAll('.phase-seg');
-  const names = document.querySelectorAll('.phase-name');
-  phases.forEach((ph,i) => {
-    if (segs[i]) {
-      segs[i].className = 'phase-seg' + (ph.status==='complete'?' done':'') + (ph.status==='in_progress'?' active':'');
-    }
-    if (names[i]) {
-      names[i].textContent = ph.name;
-      names[i].className = 'phase-name' + (ph.status==='complete'?' done':'') + (ph.status==='in_progress'?' active':'');
-    }
-  });
-  // Update active phase name
+  const card = document.getElementById('homePhaseCard');
+  if (!card || !phases.length) { if(card) card.innerHTML=''; return; }
+
   const active = phases.find(p=>p.status==='in_progress');
-  const phaseTitle = document.querySelector('.phase-top [style*="font-size:13px"]');
-  if (phaseTitle && active) phaseTitle.textContent = active.name;
+  const activeIdx = phases.indexOf(active);
+  const pct = currentProject?.progressPercent || 0;
+
+  card.innerHTML = `
+    <div class="phase-top">
+      <div>
+        <div style="font-size:13px;font-weight:500;color:var(--c-txt-1);margin-bottom:2px;">${esc(active?.name||'Project Setup')}</div>
+        <div class="t-xs t-mono text-3">Phase ${activeIdx>=0?activeIdx+1:'?'} of ${phases.length}</div>
+      </div>
+      <div class="badge ${active?'badge-amber':'badge-blue'}">${active?'In Progress':'Planning'}</div>
+    </div>
+    <div class="phase-dots">${phases.map(ph=>`<div class="phase-seg${ph.status==='complete'?' done':''}${ph.status==='in_progress'?' active':''}"></div>`).join('')}</div>
+    <div class="phase-names-row">${phases.map(ph=>`<div class="phase-name${ph.status==='complete'?' done':''}${ph.status==='in_progress'?' active':''}">${esc(ph.name.length>10?ph.name.slice(0,8)+'…':ph.name)}</div>`).join('')}</div>
+    <div class="pct-row">
+      <div><div class="pct-big">${pct}%</div><div class="t-xs text-3" style="margin-top:2px;">Overall complete</div></div>
+      <div class="ai-pill" onclick="switchTab('chat'); setTimeout(()=>sendQ('Give me a full project update'),200)">
+        <div class="ai-blink"></div>
+        <span class="ai-pill-txt">Ask Joe ↗</span>
+      </div>
+    </div>`;
 }
 
 function updatePayments() {
@@ -1354,8 +1276,9 @@ function updatePayments() {
 
 function updateActivity() {
   const updates = projectContext.updates || [];
-  const list = document.querySelector('.activity-list');
-  if (!list || !updates.length) return;
+  const list = document.getElementById('homeActivity');
+  if (!list) return;
+  if (!updates.length) { list.innerHTML = '<div class="empty-state" style="padding:20px;"><div class="empty-sub">No activity yet — updates will appear here</div></div>'; return; }
   list.innerHTML = updates.slice(0,5).map((u,i) => {
     const colors = ['gold','blue','green'];
     const color = colors[i % colors.length];
@@ -1365,6 +1288,52 @@ function updateActivity() {
       <div><div class="ac-title">${esc(u.message)}</div><div class="ac-time">${formatDateTime(u.date)}</div></div>
     </div>`;
   }).join('');
+}
+
+function renderPayTab() {
+  const p = currentProject;
+  if (!p) return;
+  const contract = p.contractAmount || 0;
+  const paid = p.paidAmount || 0;
+  const bal = Math.max(0, contract - paid);
+
+  document.getElementById('payAmount').textContent = formatCurrency(bal);
+  document.getElementById('payDue').textContent = bal > 0 ? 'Contract: ' + formatCurrency(contract) + ' · Paid: ' + formatCurrency(paid) : 'All paid — thank you!';
+
+  // Payments list
+  const payments = projectContext.payments || [];
+  const invList = document.getElementById('payInvoiceList');
+  if (payments.length) {
+    invList.innerHTML = payments.map(pay => {
+      const isPaid = (pay.status||'').toLowerCase() === 'paid';
+      const date = pay.date ? (pay.date.toDate ? pay.date.toDate() : new Date(pay.date)) : null;
+      const dateStr = date ? date.toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
+      return `<div class="inv-card ${isPaid?'paid':''}">
+        <div class="inv-head">
+          <span class="t-mono" style="font-size:11px;color:${isPaid?'var(--c-green)':'var(--c-gold)'};">${esc(pay.description||'Payment')} — ${isPaid?'PAID ✓':'PENDING'}</span>
+          <span class="t-xs text-3 t-mono">${dateStr}</span>
+        </div>
+        <div class="inv-foot">
+          <span class="inv-total-lbl">${isPaid?'Paid':'Due'}</span>
+          <span class="inv-total-amt" ${isPaid?'style="color:var(--c-green);"':''}>${formatCurrency(pay.amount)}</span>
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    invList.innerHTML = '<div class="empty-state" style="padding:30px;"><div class="empty-title">No payments yet</div><div class="empty-sub">Payment history will appear here</div></div>';
+  }
+
+  // Documents
+  const docs = document.getElementById('payDocList');
+  const changeOrders = projectContext.changeOrders || [];
+  let docHtml = '';
+  if (p.contractAmount > 0) {
+    docHtml += `<div class="doc-item"><div class="doc-icon pdf">PDF</div><div><div class="doc-name">Project Estimate</div><div class="doc-meta">${p.estimateStatus==='accepted'?'Accepted':'Pending'} · ${formatCurrency(contract)}</div></div><span class="doc-arrow">→</span></div>`;
+  }
+  changeOrders.forEach(co => {
+    docHtml += `<div class="doc-item"><div class="doc-icon co">CO</div><div><div class="doc-name">${esc(co.description||'Change Order')}</div><div class="doc-meta">${esc(co.status||'pending')} · ${formatCurrency(co.amount)}</div></div><span class="doc-arrow" style="color:var(--c-gold);">→</span></div>`;
+  });
+  docs.innerHTML = docHtml || '<div class="t-xs text-3" style="padding:12px 14px;">No documents yet</div>';
 }
 
 // ═══════════════════════════════════════
@@ -1513,6 +1482,7 @@ const origSwitchTab = switchTab;
 switchTab = function(tab) {
   origSwitchTab(tab);
   if (tab === 'projects') renderProjectsScreen();
+  if (tab === 'pay') renderPayTab();
   if (tab === 'profile') renderProfile();
 };
 
