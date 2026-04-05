@@ -1199,7 +1199,15 @@ function setupRealtimeListeners() {
   });
 
   ref.collection('messages').orderBy('timestamp','asc').onSnapshot(snap => {
-    renderChatMessages(snap.docs.map(d => ({id:d.id,...d.data()})));
+    const msgs = snap.docs.map(d => ({id:d.id,...d.data()}));
+    renderChatMessages(msgs);
+    // Sync conversation history for AI context
+    if (joeConversation.length === 0 && msgs.length > 0) {
+      msgs.slice(-20).forEach(m => {
+        if (m.sender === 'client') joeConversation.push({role:'user',content:m.text});
+        else if (m.sender === 'joe') joeConversation.push({role:'assistant',content:m.text});
+      });
+    }
   });
 }
 
