@@ -1723,6 +1723,25 @@ async function sendClientEmailViaEmailJS(code, clientName, clientEmail) {
   });
 }
 
+// ── INIT JOE AI CONFIG ──
+async function initJoeConfig() {
+  const key = prompt('Enter Groq API key for Ask Joe AI:');
+  if (!key) return;
+  try {
+    await db.collection('config').doc('joe').set({
+      groqKey: key,
+      _secret: WRITE_SECRET
+    }, { merge: true });
+    showToast('✅ Joe AI configured');
+  } catch(e) { showToast('❌ ' + e.message, 'error'); }
+}
+// Check if Joe needs config — show subtle alert
+db.collection('config').doc('joe').get().then(s => {
+  if (!s.exists || !s.data().groqKey) {
+    showToast('⚠️ Ask Joe AI not configured — go to Settings', 'info');
+  }
+});
+
 // ── RESEND INVITE FROM MANAGE TAB ──
 async function resendInvite() {
   if (!currentManageCode) return;

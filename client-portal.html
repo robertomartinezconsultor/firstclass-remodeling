@@ -933,6 +933,37 @@ input, textarea, select { font-family: inherit; }
 
 .loading-text { font-size: 13px; color: var(--text3); }
 
+/* ── CHAT INLINE PHOTOS ── */
+.chat-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  margin-top: 8px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.chat-photo-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+}
+.chat-photo-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.chat-photo-item:hover img { transform: scale(1.05); }
+.chat-photo-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+  padding: 12px 6px 5px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.9);
+}
+
 /* ── QUICK PROMPTS ── */
 .quick-prompt {
   background: var(--gold-dim);
@@ -1132,6 +1163,7 @@ input, textarea, select { font-family: inherit; }
         <button class="quick-prompt" onclick="askJoe('What\\'s the latest update?')">Latest update?</button>
         <button class="quick-prompt" onclick="askJoe('When will my project be done?')">When will it be done?</button>
         <button class="quick-prompt" onclick="askJoe('What phase are we in?')">Current phase?</button>
+        <button class="quick-prompt" onclick="askJoe('Show me progress photos')">Show photos</button>
       </div>
       <div class="chat-input-bar">
         <input class="chat-input" id="chatInput" placeholder="Ask Joe anything about your project..." maxlength="500"
@@ -1226,7 +1258,7 @@ let unsubChangeOrders = null;
 let unsubUpdates = null;
 let currentTab = 'timeline';
 
-const WRITE_SECRET = 'fcr2025admin';
+const WRITE_SECRET = 'FCR_WRITE_2026';
 
 // ── AUTH STATE LISTENER ──
 auth.onAuthStateChanged(async (user) => {
@@ -1625,6 +1657,13 @@ function renderLightboxImg() {
   document.getElementById('lightboxCaption').textContent = p.caption || '';
 }
 
+// Open lightbox from a direct URL (used by chat inline photos)
+function openLightboxFromUrl(url, caption) {
+  document.getElementById('lightboxImg').src = url;
+  document.getElementById('lightboxCaption').textContent = caption || '';
+  document.getElementById('lightbox').classList.add('visible');
+}
+
 // ── RENDER FINANCIALS ──
 function renderPayments(payments) {
   const el = document.getElementById('paymentsList');
@@ -1775,10 +1814,22 @@ function renderMessages(messages) {
     const isClient = m.sender === 'client';
     const isJoe = m.sender === 'joe';
     const cls = isClient ? 'client' : 'admin';
+
+    // Render inline photos if message has them
+    let photosHtml = '';
+    if (m.photos && m.photos.length) {
+      photosHtml = `<div class="chat-photos">${m.photos.map((p, i) => `
+        <div class="chat-photo-item" onclick="openLightboxFromUrl('${esc(p.url)}', '${esc(p.caption || '')}')">
+          <img src="${esc(p.url)}" alt="${esc(p.caption || 'Project photo')}" loading="lazy">
+          ${p.caption ? `<div class="chat-photo-caption">${esc(p.caption)}</div>` : ''}
+        </div>`).join('')}</div>`;
+    }
+
     return `
       <div class="chat-msg ${cls}">
         ${!isClient ? `<div class="chat-msg-sender" style="color:${isJoe ? 'var(--gold)' : 'var(--green)'}">${esc(m.senderName || (isJoe ? 'Joe' : 'First Class Team'))}</div>` : ''}
         <div>${esc(m.text)}</div>
+        ${photosHtml}
         <div class="chat-msg-time">${formatTime(m.timestamp)}</div>
       </div>`;
   }).join('');
@@ -1831,6 +1882,37 @@ async function askJoe(question) {
   await getJoeResponse(question);
 }
 
+// Detect if user is asking for photos
+function isPhotoRequest(msg) {
+  const q = msg.toLowerCase();
+  const triggers = ['foto','photo','picture','pic','imagen','image','show me','enseña','enséña',
+    'enseñame','enséñame','avance','progress pic','before','after','como va','how does it look',
+    'muestra','muéstrame','ver foto','see photo','ver imagen','cabaña','cabin','cocina','kitchen',
+    'baño','bathroom','piso','floor','sala','living'];
+  return triggers.some(t => q.includes(t));
+}
+
+// Find matching photos based on keywords
+function findMatchingPhotos(msg) {
+  const photos = projectContext.photos || [];
+  if (!photos.length) return [];
+
+  const q = msg.toLowerCase();
+
+  // Try to match by phase/caption keywords
+  const keywords = q.split(/\s+/).filter(w => w.length > 2);
+  let matches = photos.filter(p => {
+    const searchable = ((p.caption || '') + ' ' + (p.phase || '')).toLowerCase();
+    return keywords.some(k => searchable.includes(k));
+  });
+
+  // If no keyword match, return most recent photos
+  if (!matches.length) matches = photos;
+
+  // Return up to 4 photos
+  return matches.slice(0, 4).map(p => ({ url: p.url, caption: p.caption || p.phase || '' }));
+}
+
 async function getJoeResponse(userMessage) {
   // Show typing indicator
   const el = document.getElementById('chatMessages');
@@ -1841,10 +1923,21 @@ async function getJoeResponse(userMessage) {
   el.scrollTop = el.scrollHeight;
 
   const ctx = buildProjectContext();
-  joeConversation.push({ role: 'user', content: userMessage });
+  const wantsPhotos = isPhotoRequest(userMessage);
+  const matchedPhotos = wantsPhotos ? findMatchingPhotos(userMessage) : [];
 
-  // Keep conversation short (last 10 exchanges)
+  joeConversation.push({ role: 'user', content: userMessage });
   if (joeConversation.length > 20) joeConversation = joeConversation.slice(-20);
+
+  // If asking for photos, tell the AI how many we found
+  let extraSystemNote = '';
+  if (wantsPhotos) {
+    if (matchedPhotos.length > 0) {
+      extraSystemNote = `\n\nThe client asked for photos. You found ${matchedPhotos.length} photo(s) that will be displayed below your message. Describe what they'll see briefly and enthusiastically. Don't say "check the Photos tab" — the photos are shown right here.`;
+    } else {
+      extraSystemNote = `\n\nThe client asked for photos but no photos have been uploaded yet. Let them know photos will be added as work progresses.`;
+    }
+  }
 
   try {
     const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -1856,7 +1949,7 @@ async function getJoeResponse(userMessage) {
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         messages: [
-          { role: 'system', content: buildJoeSystemPrompt(ctx) },
+          { role: 'system', content: buildJoeSystemPrompt(ctx) + extraSystemNote },
           ...joeConversation
         ],
         max_tokens: 250,
@@ -1868,34 +1961,37 @@ async function getJoeResponse(userMessage) {
 
     const data = await resp.json();
     const joeText = data.choices?.[0]?.message?.content || 'Let me check on that and get back to you shortly!';
-
     joeConversation.push({ role: 'assistant', content: joeText });
 
-    // Remove typing indicator
     typingEl.remove();
 
-    // Save Joe's response to Firestore
-    await db.collection('projects').doc(currentProjectId).collection('messages').add({
+    // Save Joe's response with inline photos
+    const msgData = {
       text: joeText,
       sender: 'joe',
       senderName: 'Joe',
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       read: true,
       _secret: WRITE_SECRET
-    });
+    };
+    if (matchedPhotos.length > 0) msgData.photos = matchedPhotos;
+
+    await db.collection('projects').doc(currentProjectId).collection('messages').add(msgData);
 
   } catch (e) {
     typingEl.remove();
-    // Fallback: answer from data directly without AI
     const fallbackAnswer = getFallbackAnswer(userMessage, ctx);
-    await db.collection('projects').doc(currentProjectId).collection('messages').add({
+    const msgData = {
       text: fallbackAnswer,
       sender: 'joe',
       senderName: 'Joe',
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       read: true,
       _secret: WRITE_SECRET
-    });
+    };
+    if (matchedPhotos.length > 0) msgData.photos = matchedPhotos;
+
+    await db.collection('projects').doc(currentProjectId).collection('messages').add(msgData);
   }
 }
 
@@ -1917,8 +2013,10 @@ function getFallbackAnswer(question, ctx) {
     const active = ctx.phases.find(p => p.status === 'in_progress');
     return active ? `We're currently in the "${active.name}" phase. Check the Timeline tab for all phases!` : `Current status: ${ctx.status}. Check Timeline for details.`;
   }
-  if (q.includes('photo') || q.includes('foto') || q.includes('picture')) {
-    return `We have ${ctx.photoCount} photo${ctx.photoCount !== 1 ? 's' : ''} uploaded. Tap the Photos tab to see them!`;
+  if (q.includes('photo') || q.includes('foto') || q.includes('picture') || q.includes('enseña') || q.includes('muestra')) {
+    return ctx.photoCount > 0
+      ? `Here are your latest project photos! We have ${ctx.photoCount} total. Tap any photo to see it full size.`
+      : `No photos uploaded yet — we'll add them as work progresses!`;
   }
   if (q.includes('pay') || q.includes('pago') || q.includes('payment')) {
     return ctx.payments.length > 0
