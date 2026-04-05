@@ -778,7 +778,7 @@ input,textarea{outline:none;font-family:var(--f-body);}
         </div>
       </div>
 
-      <div class="section-row fade-in fade-in-3"><span class="section-title">Project Status</span><span class="section-action" onclick="switchTab('projects')">Details →</span></div>
+      <div class="section-row fade-in fade-in-3"><span class="section-title">Project Status</span><span class="section-action" onclick="switchTab('projects')">Ver detalles →</span></div>
 
       <div class="phase-card fade-in fade-in-3">
         <div class="phase-top">
@@ -871,152 +871,36 @@ input,textarea{outline:none;font-family:var(--f-body);}
     <div class="screen" id="screen-projects">
       <div class="proj-header">
         <div>
-          <div class="t-xs text-3 t-cap" style="margin-bottom:2px;">Your Projects</div>
-          <div class="t-h3">Maria González</div>
+          <div class="t-xs text-3 t-cap" style="margin-bottom:2px;">Project Details</div>
+          <div class="t-h3" id="projScreenName">—</div>
         </div>
-        <div class="badge badge-gold">3 Active</div>
+        <button onclick="switchTab('home')" class="btn btn-secondary btn-sm">← Back</button>
       </div>
 
-      <div class="client-selector">
-        <div class="logo-mark" style="width:32px;height:32px;"><div class="logo-f" style="font-size:14px;">F</div></div>
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:500;color:var(--c-txt-1);">Maria González</div>
-          <div class="t-xs text-3">Tap to switch client view</div>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--c-txt-3)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <!-- Project info card -->
+      <div style="margin:12px 20px 0;" class="card card-gold" id="projInfoCard"></div>
 
-      <div class="section-row"><span class="section-title">Active Projects</span><span class="section-action">+ New</span></div>
-
-      <div class="proj-list">
-        <div class="proj-item active-proj" onclick="showToast('Opening Kitchen Remodel details...')">
-          <div class="proj-item-header">
-            <div>
-              <div class="proj-item-name">Kitchen Remodel</div>
-              <div class="proj-item-id">FCR-2026-014 · Alamo Heights</div>
-            </div>
-            <div class="badge badge-amber">68%</div>
+      <!-- Before/After Slider -->
+      <div id="baSection" style="display:none;margin:16px 20px 0;">
+        <div class="section-row" style="padding:0 0 10px;"><span class="section-title">Before & After</span></div>
+        <div style="position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:16/10;cursor:ew-resize;box-shadow:var(--shadow-card);" id="baSlider">
+          <img id="baBefore" src="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <img id="baAfter" src="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 0 0 50%);">
+          <div id="baHandle" style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--c-gold);z-index:10;transform:translateX(-50%);box-shadow:0 0 12px rgba(201,168,76,0.4);">
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:var(--c-gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--c-bg-0);font-weight:700;">⇔</div>
           </div>
-          <div class="proj-item-bar">
-            <div class="proj-bar-labels">
-              <span class="proj-bar-pct">68%</span>
-              <span class="proj-bar-phase">Cabinets · Apr 18</span>
-            </div>
-            <div class="progress-track"><div class="progress-fill" style="width:68%;"></div></div>
-          </div>
-          <div class="proj-meta">
-            <div class="proj-meta-item"><div class="proj-meta-val">$18,400</div><div class="proj-meta-lbl">Contract</div></div>
-            <div class="proj-meta-item"><div class="proj-meta-val">$2,400</div><div class="proj-meta-lbl">Due</div></div>
-            <div class="proj-meta-item"><div class="proj-meta-val">14d</div><div class="proj-meta-lbl">Remaining</div></div>
-          </div>
-        </div>
-
-        <div class="proj-item" onclick="showToast('Opening Master Bath details...')">
-          <div class="proj-item-header">
-            <div>
-              <div class="proj-item-name">Master Bath Remodel</div>
-              <div class="proj-item-id">FCR-2026-008 · Stone Oak</div>
-            </div>
-            <div class="badge badge-green">90%</div>
-          </div>
-          <div class="proj-item-bar">
-            <div class="proj-bar-labels">
-              <span class="proj-bar-pct">90%</span>
-              <span class="proj-bar-phase">Finishing · Apr 7</span>
-            </div>
-            <div class="progress-track"><div class="progress-fill" style="width:90%;"></div></div>
-          </div>
-          <div class="proj-meta">
-            <div class="proj-meta-item"><div class="proj-meta-val">$11,200</div><div class="proj-meta-lbl">Contract</div></div>
-            <div class="proj-meta-item"><div class="proj-meta-val">$0</div><div class="proj-meta-lbl">Due</div></div>
-            <div class="proj-meta-item"><div class="proj-meta-val">5d</div><div class="proj-meta-lbl">Remaining</div></div>
-          </div>
-        </div>
-
-        <div class="proj-item" onclick="showToast('Opening Flooring details...')">
-          <div class="proj-item-header">
-            <div>
-              <div class="proj-item-name">Flooring — Whole House</div>
-              <div class="proj-item-id">FCR-2026-021 · Helotes</div>
-            </div>
-            <div class="badge badge-blue">25%</div>
-          </div>
-          <div class="proj-item-bar">
-            <div class="proj-bar-labels">
-              <span class="proj-bar-pct">25%</span>
-              <span class="proj-bar-phase">Demo · May 2</span>
-            </div>
-            <div class="progress-track"><div class="progress-fill" style="width:25%;"></div></div>
-          </div>
-          <div class="proj-meta">
-            <div class="proj-meta-item"><div class="proj-meta-val">$8,800</div><div class="proj-meta-lbl">Contract</div></div>
-            <div class="proj-meta-item"><div class="proj-meta-val">$4,400</div><div class="proj-meta-lbl">Due</div></div>
-            <div class="proj-meta-item"><div class="proj-meta-val">28d</div><div class="proj-meta-lbl">Remaining</div></div>
-          </div>
+          <span style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.6);color:white;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:600;z-index:5;">BEFORE</span>
+          <span style="position:absolute;top:10px;right:10px;background:var(--c-gold);color:var(--c-bg-0);padding:3px 10px;border-radius:6px;font-size:10px;font-weight:600;z-index:5;">AFTER</span>
         </div>
       </div>
 
-      <div class="section-row"><span class="section-title">Timeline — Kitchen Remodel</span></div>
-      <div class="timeline">
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-dot done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div class="tl-line"></div>
-          </div>
-          <div class="tl-content">
-            <div class="tl-title">Demolition complete</div>
-            <div class="tl-date">Mar 15–17, 2026</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-dot done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div class="tl-line"></div>
-          </div>
-          <div class="tl-content">
-            <div class="tl-title">Plumbing rough-in</div>
-            <div class="tl-date">Mar 18–22, 2026</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-dot done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div class="tl-line"></div>
-          </div>
-          <div class="tl-content">
-            <div class="tl-title">Electrical — inspection passed ✓</div>
-            <div class="tl-date">Mar 23 – Apr 2, 2026</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-left">
-            <div class="tl-dot active"></div>
-            <div class="tl-line"></div>
-          </div>
-          <div class="tl-content">
-            <div class="tl-title">Cabinet installation</div>
-            <div class="tl-date">Apr 4–12, 2026 · In progress</div>
-            <div class="tl-note">Cabinets delivered Apr 3. Installation 8am daily.</div>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-left"><div class="tl-dot pending"></div></div>
-          <div class="tl-content">
-            <div class="tl-title" style="color:var(--c-txt-3);">Finishing & final walkthrough</div>
-            <div class="tl-date">Apr 13–18, 2026 · Upcoming</div>
-          </div>
-        </div>
-      </div>
+      <!-- Timeline -->
+      <div class="section-row"><span class="section-title">Timeline</span></div>
+      <div class="timeline" id="projTimeline"></div>
 
-      <div class="section-row"><span class="section-title">Progress Photos</span><span class="section-action">View all 24</span></div>
-      <div class="photo-gallery">
-        <div class="photo-item pb1"><div class="photo-overlay"></div><div class="photo-tag">Day 18</div><div class="photo-date">Apr 3</div></div>
-        <div class="photo-item pb2"><div class="photo-overlay"></div><div class="photo-tag">Cabinets</div><div class="photo-date">Apr 2</div></div>
-        <div class="photo-item pb3"><div class="photo-overlay"></div><div class="photo-tag">Electrical</div><div class="photo-date">Apr 1</div></div>
-        <div class="photo-item pb4"><div class="photo-overlay"></div><div class="photo-tag">Framing</div><div class="photo-date">Mar 28</div></div>
-        <div class="photo-item pb5"><div class="photo-overlay"></div><div class="photo-tag">Demo</div><div class="photo-date">Mar 16</div></div>
-        <div class="photo-item photo-add" onclick="showToast('Photo request sent to Roberto')"><div class="photo-plus">+</div></div>
-      </div>
+      <!-- Photos -->
+      <div class="section-row"><span class="section-title">Progress Photos</span><span class="section-action" id="photoCount"></span></div>
+      <div class="photo-gallery" id="projPhotos"></div>
     </div>
 
     <!-- ══ AI CHAT ══ -->
@@ -1480,6 +1364,116 @@ function updateActivity() {
     </div>`;
   }).join('');
 }
+
+// ═══════════════════════════════════════
+// RENDER PROJECTS SCREEN (real data)
+// ═══════════════════════════════════════
+function renderProjectsScreen() {
+  const p = currentProject;
+  if (!p) return;
+  const pct = p.progressPercent || 0;
+  const contract = p.contractAmount || 0;
+  const paid = p.paidAmount || 0;
+  const bal = Math.max(0, contract - paid);
+  const active = (projectContext.phases||[]).find(ph=>ph.status==='in_progress');
+
+  document.getElementById('projScreenName').textContent = p.projectType || 'Project';
+  document.getElementById('projInfoCard').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:var(--c-txt-1);margin-bottom:3px;">${esc(p.projectType||'Remodeling')}</div>
+        <div class="t-xs t-mono text-3">${esc(currentProjectId)} · ${esc(p.address||'')}</div>
+      </div>
+      <div class="badge badge-gold">${pct}%</div>
+    </div>
+    <div class="progress-track" style="margin-bottom:12px;"><div class="progress-fill" style="width:${pct}%;"></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div class="hero-stat"><div class="hero-stat-val">${formatCurrency(contract).replace('$','')}</div><div class="hero-stat-lbl">Contract</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">${formatCurrency(bal).replace('$','')}</div><div class="hero-stat-lbl">Balance</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">${active?active.name:'—'}</div><div class="hero-stat-lbl">Current Phase</div></div>
+    </div>`;
+
+  // Timeline
+  const phases = projectContext.phases || [];
+  const tl = document.getElementById('projTimeline');
+  if (phases.length) {
+    tl.innerHTML = phases.map((ph,i) => {
+      const s = ph.status||'pending';
+      const isLast = i === phases.length-1;
+      const dotClass = s==='complete'?'done':s==='in_progress'?'active':'pending';
+      const checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+      const phPhotos = (projectContext.photos||[]).filter(p=>p.phase&&p.phase.toLowerCase().includes(ph.name.toLowerCase()));
+      return `<div class="tl-item" onclick="this.querySelector('.tl-detail')?.classList.toggle('open')" style="cursor:pointer;">
+        <div class="tl-left">
+          <div class="tl-dot ${dotClass}">${s==='complete'?checkSvg:''}</div>
+          ${isLast?'':'<div class="tl-line"></div>'}
+        </div>
+        <div class="tl-content">
+          <div class="tl-title" ${s==='pending'?'style="color:var(--c-txt-3)"':''}>${esc(ph.name)}</div>
+          <div class="tl-date">${s==='complete'?'Completed':s==='in_progress'?'In progress':'Upcoming'}</div>
+          <div class="tl-detail" style="display:none;margin-top:8px;">
+            ${phPhotos.length?`<div style="display:flex;gap:6px;overflow-x:auto;margin-top:6px;">${phPhotos.slice(0,4).map(p=>`<img src="${esc(p.url)}" style="width:72px;height:54px;object-fit:cover;border-radius:8px;flex-shrink:0;cursor:pointer;" onclick="event.stopPropagation();window.open('${esc(p.url)}','_blank')">`).join('')}</div>`
+            :'<div class="t-xs text-3">No photos for this phase yet</div>'}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    tl.innerHTML = '<div class="empty-state" style="padding:30px;"><div class="empty-icon">🏗️</div><div class="empty-title">No phases yet</div><div class="empty-sub">Timeline will appear as work begins</div></div>';
+  }
+
+  // Photos
+  const photos = projectContext.photos || [];
+  document.getElementById('photoCount').textContent = photos.length + ' photos';
+  const pg = document.getElementById('projPhotos');
+  if (photos.length) {
+    pg.innerHTML = photos.map(p => `
+      <div class="photo-item" onclick="window.open('${esc(p.url)}','_blank')" style="background:var(--c-bg-3);">
+        <img src="${esc(p.url)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+        <div class="photo-overlay"></div>
+        ${p.phase?`<div class="photo-tag">${esc(p.phase)}</div>`:''}
+        ${p.caption?`<div class="photo-date">${esc(p.caption)}</div>`:''}
+      </div>
+    `).join('') + `<div class="photo-item photo-add" onclick="switchTab('chat');setTimeout(()=>sendQ('Can you show me the latest photos?'),300)"><div class="photo-plus">+</div></div>`;
+  } else {
+    pg.innerHTML = '<div class="photo-item photo-add" style="grid-column:1/-1;aspect-ratio:auto;padding:40px;" onclick="showToast(\'Photo request sent to Roberto\')"><div style="text-align:center;"><div class="photo-plus" style="font-size:32px;margin-bottom:8px;">📸</div><div class="t-xs text-3">Photos will appear here as work progresses</div></div></div>';
+  }
+
+  // Before/After
+  initBeforeAfter();
+}
+
+function initBeforeAfter() {
+  const photos = (projectContext.photos||[]).filter(p=>p.url&&p.type!=='video');
+  if (photos.length < 2) { document.getElementById('baSection').style.display='none'; return; }
+  const sorted = [...photos].sort((a,b)=>{
+    const da=a.date?.toDate?a.date.toDate():new Date(a.date||0);
+    const db=b.date?.toDate?b.date.toDate():new Date(b.date||0);
+    return da-db;
+  });
+  document.getElementById('baBefore').src = sorted[0].url;
+  document.getElementById('baAfter').src = sorted[sorted.length-1].url;
+  document.getElementById('baSection').style.display = '';
+
+  const slider = document.getElementById('baSlider');
+  const handle = document.getElementById('baHandle');
+  const after = document.getElementById('baAfter');
+  let dragging = false;
+  function update(x){const r=slider.getBoundingClientRect();let pct=((x-r.left)/r.width)*100;pct=Math.max(2,Math.min(98,pct));handle.style.left=pct+'%';after.style.clipPath=`inset(0 0 0 ${pct}%)`;}
+  slider.addEventListener('mousedown',e=>{dragging=true;update(e.clientX);});
+  slider.addEventListener('mousemove',e=>{if(dragging)update(e.clientX);});
+  document.addEventListener('mouseup',()=>dragging=false);
+  slider.addEventListener('touchstart',e=>{dragging=true;update(e.touches[0].clientX);},{passive:true});
+  slider.addEventListener('touchmove',e=>{if(dragging)update(e.touches[0].clientX);},{passive:true});
+  document.addEventListener('touchend',()=>dragging=false);
+}
+
+// Call render when switching to projects tab
+const origSwitchTab = switchTab;
+switchTab = function(tab) {
+  origSwitchTab(tab);
+  if (tab === 'projects') renderProjectsScreen();
+};
 
 // ═══════════════════════════════════════
 // CHAT / ASK JOE
