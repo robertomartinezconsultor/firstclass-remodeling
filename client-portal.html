@@ -933,6 +933,35 @@ input, textarea, select { font-family: inherit; }
 
 .loading-text { font-size: 13px; color: var(--text3); }
 
+/* ── PROJECT PICKER CARDS ── */
+.picker-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.picker-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 20px var(--gold-glow);
+  transform: translateY(-2px);
+}
+.picker-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.picker-card-type {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+.picker-card-address {
+  font-size: 12px;
+  color: var(--text3);
+}
+
 /* ── CHAT INLINE PHOTOS ── */
 .chat-photos {
   display: grid;
@@ -1070,6 +1099,21 @@ input, textarea, select { font-family: inherit; }
   </div>
 </div>
 
+<!-- ── PROJECT PICKER (multi-project clients) ── -->
+<div id="projectPicker" class="auth-screen" hidden>
+  <div style="width:100%;max-width:440px">
+    <div style="text-align:center;margin-bottom:24px">
+      <div class="auth-logo">FC</div>
+      <h1 class="auth-title">Your Projects</h1>
+      <p class="auth-subtitle">Select a project to view</p>
+    </div>
+    <div id="projectPickerList" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div style="text-align:center;margin-top:20px">
+      <a style="color:var(--gold);font-size:13px;cursor:pointer" onclick="handleLogout()">Sign out</a>
+    </div>
+  </div>
+</div>
+
 <!-- ── MAIN APP ── -->
 <div id="appShell" class="app-wrap" hidden>
 
@@ -1084,6 +1128,7 @@ input, textarea, select { font-family: inherit; }
         </div>
       </div>
       <div class="topbar-actions">
+        <button class="topbar-btn" id="projectSwitcher" onclick="goToProjectPicker()" title="Switch project" style="display:none;font-size:13px">&#9776;</button>
         <button class="topbar-btn" onclick="location.reload()" title="Refresh">&#8635;</button>
         <button class="topbar-btn" onclick="handleLogout()" title="Sign out">&#x2192;</button>
       </div>
@@ -1273,7 +1318,7 @@ auth.onAuthStateChanged(async (user) => {
 
 // ── SCREEN MANAGEMENT ──
 function showScreen(id) {
-  ['loadingScreen', 'loginScreen', 'setupScreen', 'appShell'].forEach(s => {
+  ['loadingScreen', 'loginScreen', 'setupScreen', 'projectPicker', 'appShell'].forEach(s => {
     document.getElementById(s).hidden = s !== id;
   });
 }
@@ -1378,13 +1423,15 @@ function cleanup() {
   unsubProject = unsubMessages = unsubPhotos = unsubPhases = unsubPayments = unsubChangeOrders = unsubUpdates = null;
 }
 
-// ── LOAD PROJECT BY EMAIL ──
+// ── STATE: ALL PROJECTS ──
+let allUserProjects = [];
+
+// ── LOAD ALL PROJECTS BY EMAIL ──
 async function loadUserProject(email) {
   showScreen('loadingScreen');
   try {
     const snap = await db.collection('projects')
       .where('clientEmail', '==', email.toLowerCase())
-      .limit(1)
       .get();
 
     if (snap.empty) {
@@ -1393,24 +1440,71 @@ async function loadUserProject(email) {
       return;
     }
 
-    const doc = snap.docs[0];
-    currentProjectId = doc.id;
-    currentProject = doc.data();
+    allUserProjects = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    // Load Joe AI key from Firestore config
+    // Load Joe AI key
     try {
       const cfgSnap = await db.collection('config').doc('joe').get();
       if (cfgSnap.exists) GROQ_API_KEY = cfgSnap.data().groqKey || null;
     } catch(e) {}
 
-    showScreen('appShell');
-    renderProject();
-    setupRealtimeListeners();
+    if (allUserProjects.length === 1) {
+      // Single project → go directly
+      selectProject(allUserProjects[0].id, allUserProjects[0]);
+    } else {
+      // Multiple projects → show picker
+      showScreen('projectPicker');
+      renderProjectPicker();
+    }
   } catch (e) {
     console.error('Load error:', e);
-    showToast('Error loading project. Please try again.');
+    showToast('Error loading projects. Please try again.');
     showScreen('loginScreen');
   }
+}
+
+function selectProject(id, data) {
+  currentProjectId = id;
+  currentProject = data;
+  joeConversation = [];
+  projectContext = {};
+
+  showScreen('appShell');
+  renderProject();
+  setupRealtimeListeners();
+
+  // Show project switcher if multi-project client
+  const switcher = document.getElementById('projectSwitcher');
+  if (switcher) switcher.style.display = allUserProjects.length > 1 ? 'flex' : 'none';
+}
+
+function renderProjectPicker() {
+  const el = document.getElementById('projectPickerList');
+  el.innerHTML = allUserProjects.map(p => {
+    const status = (p.status || 'planning').replace(/_/g, ' ');
+    const pct = p.progressPercent || 0;
+    return `
+      <div class="picker-card" onclick="selectProject('${esc(p.id)}', allUserProjects.find(x=>x.id==='${esc(p.id)}'))">
+        <div class="picker-card-header">
+          <div>
+            <div class="picker-card-type">${esc(p.projectType || 'Remodeling')}</div>
+            <div class="picker-card-address">${esc(p.address || 'Project')}</div>
+          </div>
+          <div class="status-badge ${p.status || 'planning'}">${status}</div>
+        </div>
+        <div class="progress-bar" style="margin:12px 0 8px"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px">
+          <span style="color:var(--text3)">${pct}% complete</span>
+          <span style="color:var(--gold);font-weight:600">${formatCurrency(p.contractAmount)}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function goToProjectPicker() {
+  cleanup();
+  showScreen('projectPicker');
+  renderProjectPicker();
 }
 
 // ── RENDER PROJECT ──
