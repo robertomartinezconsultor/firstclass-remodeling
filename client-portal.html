@@ -890,7 +890,7 @@ input, textarea, select { font-family: inherit; }
   transform: translateX(-50%) translateY(-60px);
   z-index: 2000;
   background: var(--bg2);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(201,168,76,0.2);
   border-radius: 12px;
   padding: 12px 20px;
   font-size: 13px;
@@ -901,6 +901,9 @@ input, textarea, select { font-family: inherit; }
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   max-width: 340px;
   text-align: center;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 #toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
 
@@ -2830,6 +2833,35 @@ document.addEventListener('click', e => {
     haptic('light');
   }
 });
+
+// ── PULL TO REFRESH ──
+let pullStartY = 0;
+document.addEventListener('touchstart', e => { pullStartY = e.touches[0].pageY; }, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (window.scrollY === 0 && e.touches[0].pageY - pullStartY > 100) {
+    haptic('medium');
+    showToast('Refreshing...');
+    setTimeout(() => location.reload(), 300);
+  }
+}, { passive: true });
+
+// ── ENHANCED TOAST WITH PROGRESS BAR ──
+const _origShowToast = showToast;
+showToast = function(msg, duration) {
+  const t = document.getElementById('toast');
+  t.innerHTML = `<span>${msg}</span><div style="position:absolute;bottom:0;left:0;height:3px;background:var(--gold);border-radius:0 0 12px 12px;animation:toastDrain ${duration || 3000}ms linear forwards;width:100%"></div>`;
+  t.classList.add('visible');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('visible'), duration || 3000);
+};
+
+// Inject toast drain keyframe
+if (!document.getElementById('toast-drain-style')) {
+  const s = document.createElement('style');
+  s.id = 'toast-drain-style';
+  s.textContent = '@keyframes toastDrain { from { width: 100%; } to { width: 0%; } }';
+  document.head.appendChild(s);
+}
 
 // Pre-fill email from URL param
 const urlParams = new URLSearchParams(window.location.search);
