@@ -933,6 +933,45 @@ input, textarea, select { font-family: inherit; }
 
 .loading-text { font-size: 13px; color: var(--text3); }
 
+/* ── QUICK PROMPTS ── */
+.quick-prompt {
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--gold);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.quick-prompt:hover {
+  background: rgba(201,168,76,0.2);
+  border-color: var(--gold);
+}
+
+/* ── JOE TYPING INDICATOR ── */
+.joe-typing {
+  display: flex; gap: 4px; padding: 12px 16px;
+  align-self: flex-start;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  border-bottom-left-radius: 4px;
+}
+.joe-typing span {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: typingDot 1.4s ease infinite;
+}
+.joe-typing span:nth-child(2) { animation-delay: 0.2s; }
+.joe-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
 /* Responsive */
 @media (max-width: 380px) {
   .auth-card { padding: 32px 20px; }
@@ -1078,9 +1117,24 @@ input, textarea, select { font-family: inherit; }
 
   <div class="panel" data-panel="messages" id="panelMessages">
     <div class="chat-container">
+      <!-- Joe header -->
+      <div style="display:flex;align-items:center;gap:12px;padding:4px 0 12px;border-bottom:1px solid var(--border)">
+        <div style="width:40px;height:40px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--bg);font-size:16px;flex-shrink:0">J</div>
+        <div>
+          <div style="font-weight:700;font-size:15px">Ask Joe</div>
+          <div style="font-size:11px;color:var(--text3)">Your AI project assistant &middot; Available 24/7</div>
+        </div>
+        <div style="margin-left:auto;width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 6px rgba(34,197,94,0.5)"></div>
+      </div>
       <div class="chat-messages" id="chatMessages"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;padding:8px 0" id="quickPrompts">
+        <button class="quick-prompt" onclick="askJoe('How much do I owe?')">How much do I owe?</button>
+        <button class="quick-prompt" onclick="askJoe('What\\'s the latest update?')">Latest update?</button>
+        <button class="quick-prompt" onclick="askJoe('When will my project be done?')">When will it be done?</button>
+        <button class="quick-prompt" onclick="askJoe('What phase are we in?')">Current phase?</button>
+      </div>
       <div class="chat-input-bar">
-        <input class="chat-input" id="chatInput" placeholder="Type a message..." maxlength="500"
+        <input class="chat-input" id="chatInput" placeholder="Ask Joe anything about your project..." maxlength="500"
                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}">
         <button class="chat-send" onclick="sendMessage()">&#10148;</button>
       </div>
@@ -1103,8 +1157,8 @@ input, textarea, select { font-family: inherit; }
         <span>Financials</span>
       </button>
       <button class="tab-item" data-tab="messages" onclick="switchTab('messages')">
-        <span class="tab-icon">&#128172;</span>
-        <span>Messages</span>
+        <span class="tab-icon">&#129302;</span>
+        <span>Ask Joe</span>
         <span class="tab-badge" id="msgBadge"></span>
       </button>
     </div>
@@ -1311,6 +1365,12 @@ async function loadUserProject(email) {
     currentProjectId = doc.id;
     currentProject = doc.data();
 
+    // Load Joe AI key from Firestore config
+    try {
+      const cfgSnap = await db.collection('config').doc('joe').get();
+      if (cfgSnap.exists) GROQ_API_KEY = cfgSnap.data().groqKey || null;
+    } catch(e) {}
+
     showScreen('appShell');
     renderProject();
     setupRealtimeListeners();
@@ -1451,28 +1511,37 @@ function setupRealtimeListeners() {
 
   // Phases
   unsubPhases = projRef.collection('phases').orderBy('order').onSnapshot(snap => {
-    renderTimeline(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    const phases = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    projectContext.phases = phases;
+    renderTimeline(phases);
   });
 
   // Photos
   unsubPhotos = projRef.collection('photos').orderBy('date', 'desc').onSnapshot(snap => {
     allPhotos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    projectContext.photos = allPhotos;
     renderGallery(allPhotos);
   });
 
   // Payments
   unsubPayments = projRef.collection('payments').orderBy('date', 'desc').onSnapshot(snap => {
-    renderPayments(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    const payments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    projectContext.payments = payments;
+    renderPayments(payments);
   });
 
   // Change orders
   unsubChangeOrders = projRef.collection('changeOrders').orderBy('date', 'desc').onSnapshot(snap => {
-    renderChangeOrders(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    const cos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    projectContext.changeOrders = cos;
+    renderChangeOrders(cos);
   });
 
   // Updates
   unsubUpdates = projRef.collection('updates').orderBy('date', 'desc').onSnapshot(snap => {
-    renderUpdates(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    const updates = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    projectContext.updates = updates;
+    renderUpdates(updates);
   });
 
   // Messages
@@ -1615,40 +1684,117 @@ function renderChangeOrders(orders) {
   `).join('');
 }
 
-// ── RENDER MESSAGES ──
+// ── ASK JOE AI — AUTONOMOUS PROJECT ASSISTANT ──
+let GROQ_API_KEY = null; // loaded from Firestore config/joe doc
+let joeConversation = [];
+let projectContext = {};
+
+function buildProjectContext() {
+  const p = currentProject || {};
+  const contract = p.contractAmount || 0;
+  const paid = p.paidAmount || 0;
+  const remaining = contract - paid;
+  const paidPct = contract > 0 ? Math.round(paid / contract * 100) : 0;
+
+  return {
+    clientName: p.clientName || 'Client',
+    projectType: p.projectType || 'Remodeling',
+    address: p.address || 'N/A',
+    status: (p.status || 'planning').replace(/_/g, ' '),
+    progress: (p.progressPercent || 0) + '%',
+    contractAmount: formatCurrency(contract),
+    paidAmount: formatCurrency(paid),
+    remainingBalance: formatCurrency(remaining),
+    paidPercent: paidPct + '%',
+    startDate: p.startDate || 'TBD',
+    estimatedCompletion: p.estimatedCompletion || 'TBD',
+    estimateStatus: p.estimateStatus || 'pending',
+    description: p.description || '',
+    phases: projectContext.phases || [],
+    payments: projectContext.payments || [],
+    changeOrders: projectContext.changeOrders || [],
+    updates: projectContext.updates || [],
+    photoCount: (projectContext.photos || []).length
+  };
+}
+
+function buildJoeSystemPrompt(ctx) {
+  return `You are Joe, the friendly AI project assistant for First Class Remodeling TX. You help clients understand their remodeling project status.
+
+CURRENT PROJECT DATA:
+- Client: ${ctx.clientName}
+- Project: ${ctx.projectType} at ${ctx.address}
+- Status: ${ctx.status} | Progress: ${ctx.progress}
+- Contract: ${ctx.contractAmount} | Paid: ${ctx.paidAmount} (${ctx.paidPercent}) | Balance due: ${ctx.remainingBalance}
+- Start date: ${ctx.startDate} | Est. completion: ${ctx.estimatedCompletion}
+- Estimate status: ${ctx.estimateStatus}
+- Photos uploaded: ${ctx.photoCount}
+${ctx.description ? '- Description: ' + ctx.description : ''}
+
+PHASES:
+${ctx.phases.length ? ctx.phases.map(ph => `- ${ph.name}: ${ph.status}${ph.completedDate ? ' (completed)' : ''}`).join('\n') : 'No phases set yet'}
+
+RECENT UPDATES (newest first):
+${ctx.updates.length ? ctx.updates.slice(0, 5).map(u => `- ${u.message}`).join('\n') : 'No updates yet'}
+
+PAYMENTS:
+${ctx.payments.length ? ctx.payments.map(pay => `- ${pay.description}: ${formatCurrency(pay.amount)} (${pay.status || 'paid'})`).join('\n') : 'No payments recorded'}
+
+CHANGE ORDERS:
+${ctx.changeOrders.length ? ctx.changeOrders.map(co => `- ${co.description}: ${formatCurrency(co.amount)} (${co.status})`).join('\n') : 'None'}
+
+RULES:
+- Answer in the same language the client uses (English or Spanish)
+- Be warm, professional, and concise (2-4 sentences max)
+- Always use the REAL data above — never make up numbers or dates
+- If the client asks something you don't have data for, say you'll have the team get back to them
+- For urgent matters or complaints, suggest calling (210) 606-5298
+- Never reveal you're an AI unless directly asked. You're "Joe from the First Class team"
+- If client asks about balance/payments, be precise with real numbers
+- If asked about timeline, reference the phases and estimated completion
+- Encourage clients to check the Photos and Timeline tabs for visual updates`;
+}
+
+// ── RENDER MESSAGES (Joe + human messages combined) ──
 function renderMessages(messages) {
   const el = document.getElementById('chatMessages');
+
+  // Store context data from Firestore listeners
+  // (phases, payments etc are updated via their own listeners)
+
   if (!messages.length) {
     el.innerHTML = `
-      <div class="empty-state" style="margin-top:40px">
-        <div class="empty-state-icon">&#128172;</div>
-        <div class="empty-state-title">Start a conversation</div>
-        <div class="empty-state-desc">Send a message to your project team. We typically respond within a few hours.</div>
+      <div class="chat-msg admin" style="margin-top:20px">
+        <div class="chat-msg-sender" style="color:var(--gold)">Joe</div>
+        <div>Hey ${esc(currentProject?.clientName || 'there')}! I'm Joe, your project assistant. Ask me anything about your project — balance, timeline, updates, you name it.</div>
       </div>`;
     return;
   }
 
   el.innerHTML = messages.map(m => {
     const isClient = m.sender === 'client';
+    const isJoe = m.sender === 'joe';
+    const cls = isClient ? 'client' : 'admin';
     return `
-      <div class="chat-msg ${isClient ? 'client' : 'admin'}">
-        ${!isClient ? `<div class="chat-msg-sender">${esc(m.senderName || 'First Class Team')}</div>` : ''}
+      <div class="chat-msg ${cls}">
+        ${!isClient ? `<div class="chat-msg-sender" style="color:${isJoe ? 'var(--gold)' : 'var(--green)'}">${esc(m.senderName || (isJoe ? 'Joe' : 'First Class Team'))}</div>` : ''}
         <div>${esc(m.text)}</div>
         <div class="chat-msg-time">${formatTime(m.timestamp)}</div>
       </div>`;
   }).join('');
 
-  // Auto-scroll to bottom
   el.scrollTop = el.scrollHeight;
 }
 
-// ── SEND MESSAGE ──
+// ── SEND MESSAGE + JOE AUTO-REPLY ──
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text || !currentProjectId) return;
-
   input.value = '';
+  document.getElementById('quickPrompts').style.display = 'none';
+
+  // Save client message to Firestore
   try {
     await db.collection('projects').doc(currentProjectId).collection('messages').add({
       text,
@@ -1661,7 +1807,126 @@ async function sendMessage() {
   } catch (e) {
     showToast('Could not send message. Try again.');
     input.value = text;
+    return;
   }
+
+  // Joe auto-replies
+  await getJoeResponse(text);
+}
+
+async function askJoe(question) {
+  document.getElementById('chatInput').value = '';
+  document.getElementById('quickPrompts').style.display = 'none';
+
+  // Save as client message
+  await db.collection('projects').doc(currentProjectId).collection('messages').add({
+    text: question,
+    sender: 'client',
+    senderName: currentProject.clientName || 'Client',
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    read: false,
+    _secret: WRITE_SECRET
+  });
+
+  await getJoeResponse(question);
+}
+
+async function getJoeResponse(userMessage) {
+  // Show typing indicator
+  const el = document.getElementById('chatMessages');
+  const typingEl = document.createElement('div');
+  typingEl.className = 'joe-typing';
+  typingEl.innerHTML = '<span></span><span></span><span></span>';
+  el.appendChild(typingEl);
+  el.scrollTop = el.scrollHeight;
+
+  const ctx = buildProjectContext();
+  joeConversation.push({ role: 'user', content: userMessage });
+
+  // Keep conversation short (last 10 exchanges)
+  if (joeConversation.length > 20) joeConversation = joeConversation.slice(-20);
+
+  try {
+    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + GROQ_API_KEY
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          { role: 'system', content: buildJoeSystemPrompt(ctx) },
+          ...joeConversation
+        ],
+        max_tokens: 250,
+        temperature: 0.7
+      })
+    });
+
+    if (!resp.ok) throw new Error('API error');
+
+    const data = await resp.json();
+    const joeText = data.choices?.[0]?.message?.content || 'Let me check on that and get back to you shortly!';
+
+    joeConversation.push({ role: 'assistant', content: joeText });
+
+    // Remove typing indicator
+    typingEl.remove();
+
+    // Save Joe's response to Firestore
+    await db.collection('projects').doc(currentProjectId).collection('messages').add({
+      text: joeText,
+      sender: 'joe',
+      senderName: 'Joe',
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      read: true,
+      _secret: WRITE_SECRET
+    });
+
+  } catch (e) {
+    typingEl.remove();
+    // Fallback: answer from data directly without AI
+    const fallbackAnswer = getFallbackAnswer(userMessage, ctx);
+    await db.collection('projects').doc(currentProjectId).collection('messages').add({
+      text: fallbackAnswer,
+      sender: 'joe',
+      senderName: 'Joe',
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      read: true,
+      _secret: WRITE_SECRET
+    });
+  }
+}
+
+// Fallback answers if Groq API fails — uses real data
+function getFallbackAnswer(question, ctx) {
+  const q = question.toLowerCase();
+
+  if (q.includes('owe') || q.includes('balance') || q.includes('debo') || q.includes('cuanto')) {
+    return `Your current balance is ${ctx.remainingBalance}. You've paid ${ctx.paidAmount} of ${ctx.contractAmount} (${ctx.paidPercent}). Check the Financials tab for a full breakdown!`;
+  }
+  if (q.includes('update') || q.includes('novedad') || q.includes('news') || q.includes('latest')) {
+    const latest = ctx.updates[0];
+    return latest ? `Latest update: "${latest.message}". Check the Timeline tab for all updates!` : 'No updates posted yet — we\'ll keep you informed as work progresses!';
+  }
+  if (q.includes('done') || q.includes('finish') || q.includes('complete') || q.includes('cuando') || q.includes('termina')) {
+    return `Your project is at ${ctx.progress} progress. Estimated completion: ${ctx.estimatedCompletion}. Current status: ${ctx.status}.`;
+  }
+  if (q.includes('phase') || q.includes('fase') || q.includes('stage') || q.includes('etapa')) {
+    const active = ctx.phases.find(p => p.status === 'in_progress');
+    return active ? `We're currently in the "${active.name}" phase. Check the Timeline tab for all phases!` : `Current status: ${ctx.status}. Check Timeline for details.`;
+  }
+  if (q.includes('photo') || q.includes('foto') || q.includes('picture')) {
+    return `We have ${ctx.photoCount} photo${ctx.photoCount !== 1 ? 's' : ''} uploaded. Tap the Photos tab to see them!`;
+  }
+  if (q.includes('pay') || q.includes('pago') || q.includes('payment')) {
+    return ctx.payments.length > 0
+      ? `${ctx.payments.length} payment(s) on record. Total paid: ${ctx.paidAmount}. Check Financials for details.`
+      : 'No payments recorded yet. Check the Financials tab for your estimate details.';
+  }
+
+  return 'Great question! Let me have the team get back to you on that. For urgent matters, call us at (210) 606-5298.';
 }
 
 // ── TAB SWITCHING ──
