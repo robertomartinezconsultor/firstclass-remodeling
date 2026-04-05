@@ -1323,6 +1323,9 @@ a{color:inherit;text-decoration:none;}
     <!-- ══ ASK JOE ══ -->
     <div class="screen chat-screen" id="screen-askjoe">
       <div class="chat-header">
+        <button onclick="switchTab('home')" style="background:var(--c-bg-3);border:0.5px solid rgba(255,255,255,0.08);width:36px;height:36px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--c-txt-2)" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
         <div class="chat-ai-av">J<div class="chat-online"></div></div>
         <div class="chat-ai-info">
           <div class="chat-ai-name">Ask Joe</div>
@@ -2563,15 +2566,7 @@ function switchTab(tab) {
     if (n) n.classList.toggle('active', id === tab);
   });
 
-  // Show/hide bottom nav for chat screen
-  const bottomNav = document.querySelector('.bottom-nav');
-  if (tab === 'askjoe') {
-    bottomNav.style.display = 'none';
-    document.querySelector('.app-wrap').style.paddingBottom = '0';
-  } else {
-    bottomNav.style.display = 'flex';
-    document.querySelector('.app-wrap').style.paddingBottom = '';
-  }
+  // Bottom nav always visible
 
   // Scroll to top
   window.scrollTo(0, 0);
