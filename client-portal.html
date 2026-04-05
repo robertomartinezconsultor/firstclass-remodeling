@@ -48,6 +48,11 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  overflow-y: scroll;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
 html, body { min-height: 100dvh; }
 body {
   font-family: 'Inter', -apple-system, sans-serif;
@@ -55,7 +60,14 @@ body {
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
+
 
 /* Subtle gold ambient glow */
 body::before {
@@ -80,8 +92,11 @@ input, textarea, select { font-family: inherit; }
   align-items: center;
   justify-content: center;
   padding: calc(24px + var(--safe-top)) 20px calc(24px + var(--safe-bottom));
-  position: relative;
+  position: fixed;
+  inset: 0;
   z-index: 1;
+  overflow-y: auto;
+  overscroll-behavior: none;
 }
 
 .auth-card {
@@ -223,11 +238,15 @@ input, textarea, select { font-family: inherit; }
 /* ── APP SHELL ── */
 .app-wrap {
   max-width: 480px;
-  min-height: 100dvh;
   margin: 0 auto;
-  padding: calc(var(--safe-top)) 0 calc(80px + var(--safe-bottom));
+  padding: calc(var(--safe-top)) 0 calc(90px + var(--safe-bottom));
   position: relative;
   z-index: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100dvh;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ── TOPBAR ── */
@@ -455,23 +474,51 @@ input, textarea, select { font-family: inherit; }
 .timeline-item {
   display: flex;
   gap: 14px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 16px;
+  margin-bottom: 8px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.timeline-item:last-child { border-bottom: none; }
+.timeline-item:hover, .timeline-item:active { border-color: rgba(201,168,76,0.3); }
 
 .timeline-dot {
-  width: 10px; height: 10px;
+  width: 12px; height: 12px;
   border-radius: 50%;
-  margin-top: 5px;
+  margin-top: 4px;
   flex-shrink: 0;
 }
 .timeline-dot.complete { background: var(--green); box-shadow: 0 0 8px rgba(34,197,94,0.4); }
-.timeline-dot.in_progress { background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); }
+.timeline-dot.in_progress { background: var(--gold); box-shadow: 0 0 8px var(--gold-glow); animation: pulse 2s ease infinite; }
 .timeline-dot.pending { background: var(--bg4); border: 2px solid var(--border2); }
 
 .timeline-name { font-size: 14px; font-weight: 600; }
 .timeline-status { font-size: 12px; color: var(--text3); margin-top: 2px; }
+.timeline-detail {
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.timeline-detail.open { display: block; animation: fadeUp 0.2s ease; }
+.timeline-photos {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  overflow-x: auto;
+}
+.timeline-photos img {
+  width: 80px; height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
 
 /* ── GALLERY ── */
 .gallery-grid {
@@ -2001,14 +2048,31 @@ function renderTimeline(phases) {
     el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128197;</div><div class="empty-state-title">No phases yet</div><div class="empty-state-desc">Your project timeline will appear here once work begins.</div></div>';
     return;
   }
-  el.innerHTML = phases.map(ph => {
+  // Get photos for each phase
+  const photos = projectContext.photos || [];
+
+  el.innerHTML = phases.map((ph, i) => {
     const s = ph.status || 'pending';
     const label = s === 'complete' ? 'Completed' : s === 'in_progress' ? 'In Progress' : 'Upcoming';
-    return `<div class="timeline-item">
+    const phasePhotos = photos.filter(p => p.phase && p.phase.toLowerCase().includes(ph.name.toLowerCase()));
+    const photosHtml = phasePhotos.length > 0
+      ? `<div class="timeline-photos">${phasePhotos.slice(0, 5).map((p, pi) => `<img src="${esc(p.url)}" alt="${esc(p.caption || '')}" onclick="event.stopPropagation();openLightboxFromUrl('${esc(p.url)}','${esc(p.caption || '')}')" loading="lazy">`).join('')}</div>`
+      : '';
+
+    return `<div class="timeline-item" onclick="toggleTimelineDetail(${i})">
       <div class="timeline-dot ${s}"></div>
-      <div>
-        <div class="timeline-name">${esc(ph.name)}</div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="timeline-name">${esc(ph.name)}</div>
+          <span style="font-size:11px;color:var(--text3)">&#9662;</span>
+        </div>
         <div class="timeline-status">${label}${ph.completedDate ? ' — ' + formatDate(ph.completedDate) : ''}</div>
+        <div class="timeline-detail" id="tl-detail-${i}">
+          ${s === 'complete' ? '<div style="color:var(--green);margin-bottom:6px">&#10003; This phase is complete</div>' : ''}
+          ${s === 'in_progress' ? '<div style="color:var(--gold);margin-bottom:6px">&#9679; Currently in progress</div>' : ''}
+          ${phasePhotos.length > 0 ? `<div style="font-size:12px;color:var(--text3);margin-bottom:4px">${phasePhotos.length} photo${phasePhotos.length > 1 ? 's' : ''}</div>` : '<div style="font-size:12px;color:var(--text3)">No photos yet for this phase</div>'}
+          ${photosHtml}
+        </div>
       </div>
     </div>`;
   }).join('');
@@ -2511,6 +2575,15 @@ function showToast(msg) {
   t.classList.add('visible');
   clearTimeout(t._t);
   t._t = setTimeout(() => t.classList.remove('visible'), 3000);
+}
+
+// ── TIMELINE DETAIL TOGGLE ──
+function toggleTimelineDetail(i) {
+  const el = document.getElementById('tl-detail-' + i);
+  if (el) {
+    el.classList.toggle('open');
+    haptic('light');
+  }
 }
 
 // ── BEFORE/AFTER SLIDER ──
