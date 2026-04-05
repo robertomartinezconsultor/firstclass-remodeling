@@ -555,8 +555,15 @@
     <!-- Upload Photos -->
     <div class="manage-section">
       <div class="manage-section-title">📸 Upload Progress Photos</div>
-      <input type="file" id="photoFiles" multiple accept="image/*" onchange="previewPhotos(this)" style="display:none"/>
-      <button class="btn-outline" onclick="document.getElementById('photoFiles').click()">📂 Choose Photos</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <input type="file" id="photoFiles" multiple accept="image/*" onchange="previewPhotos(this)" style="display:none"/>
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="previewPhotos(this)" style="display:none"/>
+        <button class="btn-gold" onclick="document.getElementById('cameraInput').click()" style="font-size:13px">📷 Take Photo</button>
+        <button class="btn-outline" onclick="document.getElementById('photoFiles').click()" style="font-size:13px">📂 Gallery</button>
+        <input type="file" id="videoInput" accept="video/*" capture="environment" onchange="previewVideo(this)" style="display:none"/>
+        <button class="btn-outline" onclick="document.getElementById('videoInput').click()" style="font-size:13px">🎥 Video</button>
+      </div>
+      <div style="font-size:11px;color:var(--gray);margin-bottom:8px">Photos auto-compressed. Videos max 60s / 50MB.</div>
       <div class="photo-previews" id="photoPreviews"></div>
       <button class="btn-gold full" id="uploadPhotosBtn" onclick="uploadPhotos()" style="margin-top:16px;display:none">
         ⬆️ Upload Photos
@@ -1741,6 +1748,37 @@ db.collection('config').doc('joe').get().then(s => {
     showToast('⚠️ Ask Joe AI not configured — go to Settings', 'info');
   }
 });
+
+// ── VIDEO UPLOAD ──
+async function previewVideo(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 50 * 1024 * 1024) { showToast('⚠️ Video max 50MB', 'error'); return; }
+  if (!currentManageCode) { showToast('⚠️ Select a project first', 'error'); return; }
+
+  const container = document.getElementById('photoPreviews');
+  container.innerHTML = `<div style="padding:20px;text-align:center"><span class="loading-gold"></span> Uploading video (${(file.size/1024/1024).toFixed(1)}MB)...</div>`;
+
+  try {
+    const fileName = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+    const ref = storage.ref(`projects/${currentManageCode}/videos/${fileName}`);
+    await ref.put(file, { customMetadata: { secret: WRITE_SECRET } });
+    const url = await ref.getDownloadURL();
+
+    await db.collection('projects').doc(currentManageCode).collection('photos').add({
+      url, caption: '', phase: '', type: 'video',
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    container.innerHTML = '';
+    input.value = '';
+    showToast('✅ Video uploaded');
+  } catch(e) {
+    showToast('❌ Upload failed: ' + e.message, 'error');
+    container.innerHTML = '';
+  }
+}
 
 // ── RESEND INVITE FROM MANAGE TAB ──
 async function resendInvite() {

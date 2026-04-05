@@ -1032,6 +1032,283 @@ input, textarea, select { font-family: inherit; }
   30% { opacity: 1; transform: translateY(-4px); }
 }
 
+/* ── BEFORE/AFTER SLIDER ── */
+.ba-slider {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: ew-resize;
+  aspect-ratio: 16/10;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.ba-slider img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.ba-slider .ba-after {
+  clip-path: inset(0 0 0 50%);
+  transition: clip-path 0.05s linear;
+}
+.ba-slider .ba-handle {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold-glow);
+  transform: translateX(-50%);
+  z-index: 10;
+  transition: left 0.05s linear;
+}
+.ba-slider .ba-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px; height: 40px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px var(--gold-glow);
+}
+.ba-slider .ba-handle::before {
+  content: '\2194';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  font-size: 18px;
+  color: var(--bg);
+  font-weight: 700;
+}
+.ba-label {
+  position: absolute;
+  top: 12px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 5;
+}
+.ba-label.before { left: 12px; background: rgba(0,0,0,0.6); color: white; }
+.ba-label.after { right: 12px; background: var(--gold); color: var(--bg); }
+
+/* ── E-SIGNATURE ── */
+.sig-pad-wrap {
+  background: white;
+  border-radius: 12px;
+  padding: 4px;
+  margin: 12px 0;
+}
+.sig-pad {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  cursor: crosshair;
+  touch-action: none;
+}
+.sig-actions {
+  display: flex; gap: 8px; margin-top: 8px;
+}
+
+/* ── SKELETON LOADING ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg3) 25%, var(--bg4) 50%, var(--bg3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-text { height: 14px; margin-bottom: 8px; width: 70%; }
+.skeleton-title { height: 24px; margin-bottom: 12px; width: 50%; }
+.skeleton-card { height: 120px; border-radius: 16px; margin-bottom: 12px; }
+
+/* ── NUMBER COUNTUP ── */
+.countup { transition: none; }
+
+/* ── CONFETTI ── */
+.confetti-piece {
+  position: fixed;
+  width: 10px; height: 10px;
+  z-index: 3000;
+  pointer-events: none;
+  animation: confettiFall 2s ease forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── ANIMATED GOLD GRADIENT TEXT ── */
+.gold-shimmer {
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold), var(--gold-light));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: goldShimmer 3s ease infinite;
+}
+@keyframes goldShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── GLASSMORPHISM ── */
+.glass {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ── SPRING TRANSITIONS ── */
+.spring-enter {
+  animation: springIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes springIn {
+  0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── DOCUMENT VAULT ── */
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+.doc-item:hover { border-color: var(--gold); }
+.doc-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.doc-icon.pdf { background: var(--red-dim); }
+.doc-icon.img { background: var(--blue-dim); }
+.doc-icon.doc { background: var(--gold-dim); }
+.doc-name { font-size: 13px; font-weight: 600; }
+.doc-meta { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.doc-download {
+  margin-left: auto;
+  color: var(--gold);
+  font-size: 18px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* ── MATERIAL SELECTION ── */
+.material-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.material-card.selected { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-glow); }
+.material-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+.material-info {
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.material-name { font-size: 14px; font-weight: 600; }
+.material-price { font-size: 13px; color: var(--gold); font-weight: 600; }
+.material-select-btn {
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.material-select-btn:hover { background: rgba(201,168,76,0.2); }
+.material-select-btn.chosen {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+}
+
+/* ── WEEKLY SUMMARY CARD ── */
+.weekly-summary {
+  background: linear-gradient(135deg, var(--bg2), rgba(201,168,76,0.06));
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 12px 16px 0;
+}
+.weekly-summary-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.weekly-summary-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text2);
+}
+
+/* ── PULSE DOT ── */
+.pulse-dot {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  position: relative;
+}
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  animation: pulseDot 2s ease infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+/* ── TAB SLIDE ANIMATION ── */
+.panel {
+  display: none;
+  padding: 16px;
+}
+.panel.active {
+  display: block;
+  animation: slideTab 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes slideTab {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 /* Responsive */
 @media (max-width: 380px) {
   .auth-card { padding: 32px 20px; }
@@ -1149,6 +1426,12 @@ input, textarea, select { font-family: inherit; }
     <div class="quick-stats" id="quickStats"></div>
   </div>
 
+  <!-- Weekly AI Summary -->
+  <div class="weekly-summary" id="weeklySummary" style="display:none">
+    <div class="weekly-summary-title">&#10024; This Week's Summary</div>
+    <div class="weekly-summary-text"></div>
+  </div>
+
   <!-- Estimate Card (shown when pending) -->
   <div id="estimateSection" style="padding:16px;display:none">
     <div class="estimate-card">
@@ -1175,7 +1458,23 @@ input, textarea, select { font-family: inherit; }
 
   <div class="panel" data-panel="gallery" id="panelGallery">
     <div class="panel-title">Project Photos</div>
+    <!-- Before/After Slider (shown when 2+ photos exist) -->
+    <div id="beforeAfterSection" style="display:none;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:8px">Before & After</div>
+      <div class="ba-slider" id="baSlider">
+        <img class="ba-before" id="baBefore" src="" alt="Before">
+        <img class="ba-after" id="baAfter" src="" alt="After">
+        <div class="ba-handle" id="baHandle"></div>
+        <span class="ba-label before">Before</span>
+        <span class="ba-label after">After</span>
+      </div>
+    </div>
     <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <div class="panel" data-panel="documents" id="panelDocuments">
+    <div class="panel-title">Documents</div>
+    <div id="documentsList"></div>
   </div>
 
   <div class="panel" data-panel="financials" id="panelFinancials">
@@ -1231,11 +1530,15 @@ input, textarea, select { font-family: inherit; }
       </button>
       <button class="tab-item" data-tab="financials" onclick="switchTab('financials')">
         <span class="tab-icon">&#128176;</span>
-        <span>Financials</span>
+        <span>Money</span>
+      </button>
+      <button class="tab-item" data-tab="documents" onclick="switchTab('documents')">
+        <span class="tab-icon">&#128196;</span>
+        <span>Docs</span>
       </button>
       <button class="tab-item" data-tab="messages" onclick="switchTab('messages')">
         <span class="tab-icon">&#129302;</span>
-        <span>Ask Joe</span>
+        <span>Joe</span>
         <span class="tab-badge" id="msgBadge"></span>
       </button>
     </div>
@@ -1263,9 +1566,19 @@ input, textarea, select { font-family: inherit; }
       <label class="auth-label">Notes (optional)</label>
       <textarea class="modal-textarea" id="acceptNotes" placeholder="Any questions or notes for the team..."></textarea>
     </div>
+    <div class="modal-field">
+      <label class="auth-label">Your Signature</label>
+      <div class="sig-pad-wrap">
+        <canvas class="sig-pad" id="sigCanvas"></canvas>
+      </div>
+      <div class="sig-actions">
+        <button class="btn-decline" style="font-size:12px;padding:6px 12px" onclick="clearSignature()">Clear</button>
+        <span style="font-size:11px;color:var(--text3);margin-left:8px">Sign with your finger or mouse</span>
+      </div>
+    </div>
     <div class="modal-actions">
       <button class="modal-btn-cancel" onclick="closeAcceptModal()">Cancel</button>
-      <button class="modal-btn-primary" onclick="confirmAcceptEstimate()">Confirm & Accept</button>
+      <button class="modal-btn-primary" onclick="confirmAcceptEstimate()">Sign & Accept</button>
     </div>
   </div>
 </div>
@@ -1468,8 +1781,10 @@ function selectProject(id, data) {
   currentProject = data;
   joeConversation = [];
   projectContext = {};
+  weeklySummaryGenerated = false;
 
   showScreen('appShell');
+  showSkeletons();
   renderProject();
   setupRealtimeListeners();
 
@@ -2194,6 +2509,327 @@ function showToast(msg) {
   clearTimeout(t._t);
   t._t = setTimeout(() => t.classList.remove('visible'), 3000);
 }
+
+// ── BEFORE/AFTER SLIDER ──
+function initBeforeAfterSlider() {
+  const photos = projectContext.photos || [];
+  if (photos.length < 2) { document.getElementById('beforeAfterSection').style.display = 'none'; return; }
+
+  // Use oldest as "before", newest as "after"
+  const sorted = [...photos].filter(p => p.url && p.type !== 'video').sort((a, b) => {
+    const da = a.date?.toDate ? a.date.toDate() : new Date(a.date || 0);
+    const db = b.date?.toDate ? b.date.toDate() : new Date(b.date || 0);
+    return da - db;
+  });
+  if (sorted.length < 2) return;
+
+  document.getElementById('baBefore').src = sorted[0].url;
+  document.getElementById('baAfter').src = sorted[sorted.length - 1].url;
+  document.getElementById('beforeAfterSection').style.display = '';
+
+  const slider = document.getElementById('baSlider');
+  const handle = document.getElementById('baHandle');
+  const afterImg = document.getElementById('baAfter');
+
+  function updateSlider(x) {
+    const rect = slider.getBoundingClientRect();
+    let pct = ((x - rect.left) / rect.width) * 100;
+    pct = Math.max(2, Math.min(98, pct));
+    handle.style.left = pct + '%';
+    afterImg.style.clipPath = `inset(0 0 0 ${pct}%)`;
+  }
+
+  let dragging = false;
+  slider.addEventListener('mousedown', e => { dragging = true; updateSlider(e.clientX); });
+  slider.addEventListener('mousemove', e => { if (dragging) updateSlider(e.clientX); });
+  document.addEventListener('mouseup', () => dragging = false);
+  slider.addEventListener('touchstart', e => { dragging = true; updateSlider(e.touches[0].clientX); }, { passive: true });
+  slider.addEventListener('touchmove', e => { if (dragging) updateSlider(e.touches[0].clientX); }, { passive: true });
+  document.addEventListener('touchend', () => dragging = false);
+}
+
+// ── E-SIGNATURE ──
+let sigCtx = null;
+let sigDrawing = false;
+
+function initSignaturePad() {
+  const canvas = document.getElementById('sigCanvas');
+  if (!canvas) return;
+  sigCtx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth * 2;
+  canvas.height = canvas.offsetHeight * 2;
+  sigCtx.scale(2, 2);
+  sigCtx.strokeStyle = '#222';
+  sigCtx.lineWidth = 2;
+  sigCtx.lineCap = 'round';
+  sigCtx.lineJoin = 'round';
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches ? e.touches[0] : e;
+    return { x: t.clientX - rect.left, y: t.clientY - rect.top };
+  }
+
+  canvas.addEventListener('mousedown', e => { sigDrawing = true; sigCtx.beginPath(); const p = getPos(e); sigCtx.moveTo(p.x, p.y); });
+  canvas.addEventListener('mousemove', e => { if (!sigDrawing) return; const p = getPos(e); sigCtx.lineTo(p.x, p.y); sigCtx.stroke(); });
+  canvas.addEventListener('mouseup', () => sigDrawing = false);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); sigDrawing = true; sigCtx.beginPath(); const p = getPos(e); sigCtx.moveTo(p.x, p.y); }, { passive: false });
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!sigDrawing) return; const p = getPos(e); sigCtx.lineTo(p.x, p.y); sigCtx.stroke(); }, { passive: false });
+  canvas.addEventListener('touchend', () => sigDrawing = false);
+}
+
+function clearSignature() {
+  const canvas = document.getElementById('sigCanvas');
+  if (sigCtx) sigCtx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function getSignatureDataUrl() {
+  const canvas = document.getElementById('sigCanvas');
+  if (!canvas) return null;
+  // Check if signature is blank
+  const blank = document.createElement('canvas');
+  blank.width = canvas.width; blank.height = canvas.height;
+  if (canvas.toDataURL() === blank.toDataURL()) return null;
+  return canvas.toDataURL('image/png');
+}
+
+// ── CONFETTI BURST ──
+function confettiBurst() {
+  const colors = ['#C9A84C', '#E8C96B', '#22C55E', '#3B82F6', '#F5F0E8'];
+  for (let i = 0; i < 40; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.left = (Math.random() * 100) + 'vw';
+    el.style.top = '-10px';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    el.style.width = (6 + Math.random() * 8) + 'px';
+    el.style.height = (6 + Math.random() * 8) + 'px';
+    el.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+    el.style.animationDelay = (Math.random() * 0.5) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3500);
+  }
+}
+
+// ── HAPTIC FEEDBACK ──
+function haptic(type) {
+  if (!navigator.vibrate) return;
+  if (type === 'light') navigator.vibrate(10);
+  else if (type === 'medium') navigator.vibrate(25);
+  else if (type === 'success') navigator.vibrate([15, 50, 15]);
+}
+
+// ── NUMBER COUNTUP ──
+function animateCount(el, target, prefix, duration) {
+  if (!el) return;
+  const start = 0;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / (duration || 1000), 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = Math.round(start + (target - start) * eased);
+    el.textContent = (prefix || '') + current.toLocaleString('en-US');
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ── DOCUMENTS RENDER ──
+function renderDocuments() {
+  const el = document.getElementById('documentsList');
+  const p = currentProject || {};
+  const docs = [];
+
+  // Estimate as document
+  if (p.contractAmount > 0) {
+    docs.push({
+      name: 'Project Estimate',
+      type: p.estimateStatus === 'accepted' ? 'Signed' : 'Pending',
+      icon: 'pdf',
+      iconEmoji: '📋',
+      date: p.createdAt
+    });
+  }
+
+  // Line items
+  if (p.lineItems && p.lineItems.length > 0) {
+    docs.push({
+      name: 'Scope of Work',
+      type: p.lineItems.length + ' line items',
+      icon: 'doc',
+      iconEmoji: '📄'
+    });
+  }
+
+  // Add change orders as documents
+  (projectContext.changeOrders || []).forEach(co => {
+    docs.push({
+      name: 'Change Order: ' + (co.description || 'Adjustment'),
+      type: (co.status || 'pending'),
+      icon: 'doc',
+      iconEmoji: '📝',
+      date: co.date
+    });
+  });
+
+  if (!docs.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128196;</div><div class="empty-state-title">No documents yet</div><div class="empty-state-desc">Contracts, estimates, and project documents will appear here.</div></div>';
+    return;
+  }
+
+  el.innerHTML = docs.map(d => `
+    <div class="doc-item spring-enter">
+      <div class="doc-icon ${d.icon}">${d.iconEmoji}</div>
+      <div>
+        <div class="doc-name">${esc(d.name)}</div>
+        <div class="doc-meta">${esc(d.type)}${d.date ? ' &middot; ' + formatDate(d.date) : ''}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── WEEKLY AI SUMMARY ──
+let weeklySummaryGenerated = false;
+
+async function generateWeeklySummary() {
+  if (weeklySummaryGenerated || !GROQ_API_KEY) return;
+  const ctx = buildProjectContext();
+  if (!ctx.updates.length && !ctx.phases.length) return;
+
+  weeklySummaryGenerated = true;
+  const summaryEl = document.getElementById('weeklySummary');
+  if (!summaryEl) return;
+
+  try {
+    const proxyUrl = 'http://159.203.143.156:8085/api/joe';
+    const resp = await fetch(proxyUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{
+          role: 'system',
+          content: `Generate a brief, friendly weekly project summary (3-4 sentences) for a remodeling client. Use this data:
+Project: ${ctx.projectType} at ${ctx.address}
+Progress: ${ctx.progress} | Status: ${ctx.status}
+Recent updates: ${ctx.updates.slice(0, 3).map(u => u.message).join('; ')}
+Active phase: ${ctx.phases.find(p => p.status === 'in_progress')?.name || 'N/A'}
+Photos this week: ${ctx.photoCount}
+Be warm and professional. Use the client's language if updates are in Spanish.`
+        }],
+        max_tokens: 150,
+        temperature: 0.7
+      })
+    });
+
+    if (!resp.ok) return;
+    const data = await resp.json();
+    const summary = data.choices?.[0]?.message?.content;
+    if (summary) {
+      summaryEl.style.display = '';
+      summaryEl.querySelector('.weekly-summary-text').textContent = summary;
+    }
+  } catch(e) {}
+}
+
+// ── INIT SIGNATURE PAD WHEN MODAL OPENS ──
+const origShowAcceptModal = showAcceptModal;
+showAcceptModal = function() {
+  document.getElementById('acceptModal').classList.add('visible');
+  setTimeout(initSignaturePad, 100);
+  haptic('light');
+};
+
+// ── ENHANCED CONFIRM ACCEPT (with signature) ──
+const origConfirmAccept = confirmAcceptEstimate;
+confirmAcceptEstimate = async function() {
+  const sigData = getSignatureDataUrl();
+  if (!sigData) {
+    showToast('Please sign above to accept the estimate.');
+    return;
+  }
+
+  const startDate = document.getElementById('acceptStartDate').value;
+  const notes = document.getElementById('acceptNotes').value.trim();
+
+  try {
+    await db.collection('projects').doc(currentProjectId).update({
+      estimateStatus: 'accepted',
+      estimateAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      clientPreferredStartDate: startDate || null,
+      clientAcceptNotes: notes || null,
+      clientSignature: sigData,
+      _secret: WRITE_SECRET
+    });
+
+    await db.collection('projects').doc(currentProjectId).collection('updates').add({
+      message: 'Client accepted and signed the estimate!' + (startDate ? ' Preferred start: ' + startDate : ''),
+      type: 'milestone',
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+      _secret: WRITE_SECRET
+    });
+
+    closeAcceptModal();
+    confettiBurst();
+    haptic('success');
+    showToast('Estimate accepted! We\'ll be in touch soon.');
+  } catch (e) {
+    showToast('Error: ' + e.message);
+  }
+};
+
+// ── SKELETON LOADING ──
+function showSkeletons() {
+  document.getElementById('timelineList').innerHTML = Array(4).fill('<div class="skeleton skeleton-card"></div>').join('');
+  document.getElementById('quickStats').innerHTML = '<div class="qstat"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></div>'.repeat(2);
+}
+
+// ── ENHANCED RENDER WITH ANIMATIONS ──
+const origRenderProject = renderProject;
+renderProject = function() {
+  origRenderProject();
+
+  // Animate countup for financial numbers
+  const contract = currentProject.contractAmount || 0;
+  const paid = currentProject.paidAmount || 0;
+  document.getElementById('quickStats').querySelectorAll('.qstat-value').forEach((el, i) => {
+    const target = i === 0 ? contract : paid;
+    animateCount(el, target, '$', 800);
+  });
+
+  // Generate weekly summary
+  setTimeout(generateWeeklySummary, 1500);
+
+  // Render documents
+  renderDocuments();
+};
+
+// ── ENHANCED GALLERY WITH BEFORE/AFTER ──
+const origRenderGallery = renderGallery;
+renderGallery = function(photos) {
+  origRenderGallery(photos);
+  initBeforeAfterSlider();
+
+  // Render video items differently
+  const el = document.getElementById('galleryGrid');
+  photos.forEach((p, i) => {
+    if (p.type === 'video' && el.children[i]) {
+      el.children[i].innerHTML = `
+        <video src="${esc(p.url)}" style="width:100%;height:100%;object-fit:cover" playsinline></video>
+        <div class="gallery-caption">&#9654; ${esc(p.caption || 'Video')}</div>`;
+      el.children[i].onclick = () => { window.open(p.url, '_blank'); };
+    }
+  });
+};
+
+// ── BUTTON HAPTICS ──
+document.addEventListener('click', e => {
+  if (e.target.matches('button, .tab-item, .quick-prompt, .picker-card')) {
+    haptic('light');
+  }
+});
 
 // Pre-fill email from URL param
 const urlParams = new URLSearchParams(window.location.search);
