@@ -810,15 +810,15 @@ h2.headline{
     <div class="juan-chat-header">
       <div class="juan-avatar">👷</div>
       <div class="juan-name">
-        <strong>Juan — Project Advisor</strong>
-        <span>First Class Remodeling TX · Fast reply</span>
+        <strong>Joe — Project Advisor</strong>
+        <span>First Class Remodeling TX · AI-powered</span>
       </div>
       <button onclick="closeJuan()" style="margin-left:auto;background:none;border:none;color:var(--muted);font-size:1.5rem;line-height:1;padding:4px">×</button>
     </div>
     <div class="juan-msgs" id="juanBody" style="flex:1;overflow-y:auto">
       <div>
-        <div class="jmsg-name">Juan</div>
-        <div class="jmsg jmsg-bot">Hi! I'm Juan, your project advisor at First Class Remodeling TX. 👋<br><br>What are you thinking about? I can help with kitchens, bathrooms, outdoor kitchens, patios, additions, or anything else.</div>
+        <div class="jmsg-name">Joe</div>
+        <div class="jmsg jmsg-bot">Hey! I'm Joe, your project advisor at First Class Remodeling TX. 👋<br><br>Ask me anything — kitchen costs, bathroom ideas, materials, timelines, permits. I know San Antonio remodeling inside and out.</div>
       </div>
     </div>
     <div class="juan-quick" id="juanQuick">
@@ -858,183 +858,82 @@ new IntersectionObserver(([e]) => {
 // ── FAQ ───────────────────────────────────────
 function toggleFaq(btn) { btn.parentElement.classList.toggle('open'); }
 
-// ── JUAN CHAT ENGINE ──────────────────────────
-// Conversation state
+// ── JOE AI CHAT ENGINE (TigreLabs Trenzado) ──────────────
+const JOE_API = 'http://159.203.143.156:8085/api/joe';
+const JOE_SYSTEM = `You are Joe -- the #1 senior project advisor and sales expert at First Class Remodeling TX, the premier residential remodeling company in San Antonio, Texas. Owner: Roberto Martinez, phone (210) 606-5298, website: firstclassremodelingtx.com.
+
+You are a CONSTRUCTION EXPERT and SALES CLOSER with 20+ years experience in San Antonio.
+
+YOUR EXPERTISE:
+- Kitchen remodels: cabinets, countertops (quartz $50-150/sqft, granite $40-100, marble $75-200), layout, lighting. Full remodel $25k-55k, refresh $8k-22k.
+- Bathroom remodels: master $14k-35k, guest $7k-18k, powder $3.5k-9k. Tile, fixtures, walk-in showers, ADA, waterproofing.
+- Flooring: LVP $5-9/sqft installed, hardwood $9-16, tile $8-14. San Antonio humidity considerations.
+- Painting: interior $2.5k-6k full home, exterior $3k-8k. Proper prep is key.
+- Outdoor: kitchens $18k-40k, patios $12k-30k, combined $28k-60k. Fully permitted.
+- Home additions: room $55k-90k+, garage conversion $25k-55k.
+- Permits: San Antonio/Bexar County, 2-4 weeks approval. We handle all permits and inspections.
+- Timelines: bath 1-3 weeks, kitchen 3-6 weeks, outdoor 3-6 weeks, addition 8-16 weeks.
+
+HOW TO TALK:
+- You ARE Joe. NEVER say you are AI, a bot, or an assistant. You are part of the First Class team.
+- Warm, confident, conversational -- like texting a friend who is a construction expert.
+- Match the client language: if they write Spanish, answer in Spanish. If English, English.
+- Give real San Antonio price ranges. Be specific and helpful.
+- ALWAYS guide toward a free estimate: "Want Roberto to come take a look? Free estimate, no pressure."
+- If they share project details: "That sounds great. We just finished something similar -- came out amazing."
+- Mention referral bonus naturally when appropriate.
+- Keep it 2-4 sentences. Go longer only for detailed technical questions.
+- Phone: (210) 606-5298 | WhatsApp: wa.me/12106065298`;
+
+let joeHistory = [];
+let joeBusy = false;
+
+// Clear on page leave
+window.addEventListener('beforeunload', () => { joeHistory = []; });
+
+// Conversation state for lead capture
 const J = {
-  step: 'start',       // current conversation step
-  topic: null,         // kitchen / bathroom / outdoor / addition / flooring / painting
-  detail: null,        // sub-detail collected
+  step: 'start',
+  topic: null,
+  detail: null,
   name: null,
   phone: null,
 };
 
-// Full knowledge base
-const KB = {
-  kitchen: {
-    intro: "Great choice! Kitchen remodels are one of the best investments you can make in San Antonio. To give you a useful ballpark — are you thinking a <strong>full remodel</strong> (new cabinets, countertops, layout), or more of a <strong>refresh</strong> (new countertops, backsplash, paint)?",
-    full:   "Got it — a full kitchen remodel in San Antonio typically runs <strong>$25,000–$55,000</strong>. The biggest variable is cabinetry: stock cabinets keep costs down, semi-custom or full custom push the number up.<br><br>Other big factors: countertop material (quartz is the most popular), whether you're changing the layout, and appliances.<br><br>We always do a free in-home estimate before anything — takes about 45 minutes and you get a detailed written quote. Want to set one up?",
-    refresh:"A kitchen refresh — new countertops, backsplash, hardware, and paint — usually runs <strong>$8,000–$18,000</strong> in San Antonio. If you add cabinet refacing (new doors, same boxes), budget <strong>$12,000–$22,000</strong>.<br><br>It's a great way to get a dramatically different kitchen without the full cost. Want a free in-home estimate to see exactly what yours would look like?",
-  },
-  bathroom: {
-    intro: "Bathroom remodels are our most requested project! Quick question — is this a <strong>master bathroom</strong>, a <strong>guest/hall bath</strong>, or a <strong>powder room</strong>?",
-    master: "Master baths are where people go all-in — and it's worth it. In San Antonio, a master bath remodel typically runs <strong>$14,000–$35,000</strong>.<br><br>The most popular combo: custom walk-in shower with large-format tile, double vanity, new flooring, and updated lighting. We can also do a full gut-and-replace if the layout needs work.<br><br>Want a free in-home estimate? We come to you, measure, and have a written quote within 24 hours.",
-    guest:  "A hall or guest bath remodel in San Antonio usually runs <strong>$7,000–$18,000</strong> depending on how much you're changing. New tile, vanity, toilet, and fixtures = big visual impact at a reasonable cost.<br><br>We can also do tub-to-shower conversions if you want to reclaim that space. Want to set up a free estimate?",
-    powder: "Powder rooms are small but have a big design impact! A powder room update typically runs <strong>$3,500–$9,000</strong> — new vanity, tile, fixtures, and a little wow-factor go a long way.<br><br>Want us to come take a look and give you a free quote?",
-  },
-  outdoor: {
-    intro: "Outdoor kitchens and covered patios are huge in San Antonio — our summers basically demand it 😄 Are you thinking an <strong>outdoor kitchen with BBQ/grill</strong>, a <strong>covered patio or pergola</strong>, or <strong>both together</strong>?",
-    kitchen:"A custom outdoor kitchen in San Antonio typically runs <strong>$18,000–$40,000</strong> depending on size and what's included — built-in grill, side burners, fridge, countertops, sink, lighting.<br><br>We handle everything: concrete slab, gas line rough-in, electrical, tile, and the structure. All permitted and inspected.<br><br>Want a free consultation to design your outdoor space?",
-    patio:  "A covered patio or pergola in San Antonio typically runs <strong>$12,000–$30,000</strong>. Key variables: size, roofing material (insulated vs open), concrete or tile work, and lighting.<br><br>We also do outdoor fans, electrical outlets, and can integrate with an outdoor kitchen in the same project.<br><br>Want to schedule a free design consultation?",
-    both:   "A full outdoor living area — covered patio + outdoor kitchen — is one of the best investments for a San Antonio home. Combined projects typically run <strong>$28,000–$60,000</strong> depending on size and finishes.<br><br>We design and build the whole thing as one project: structure, concrete, gas, electrical, tile, appliances — fully permitted.<br><br>Want us to come see your backyard and put together a free proposal?",
-  },
-  addition: {
-    intro: "Home additions are a big project but a great way to grow your space without moving. What kind of addition are you thinking — a <strong>new bedroom/bathroom</strong>, a <strong>garage conversion</strong>, or something else?",
-    room:   "A room or bedroom addition in San Antonio typically starts around <strong>$55,000–$90,000+</strong> depending on size and finishes. This includes foundation, framing, roofing, HVAC extension, electrical, insulation, drywall, and finish work — the full build.<br><br>We handle all permits and inspections. The best first step is a free in-home consultation where we can look at your existing structure and discuss options.",
-    garage: "A garage conversion to living space in San Antonio typically runs <strong>$25,000–$55,000</strong> — it's generally more affordable than a full addition since the structure exists. We add insulation, HVAC, electrical, flooring, drywall, and windows.<br><br>Want to set up a free estimate?",
-  },
-  flooring: {
-    intro: "Flooring transforms a space completely. Are you thinking <strong>hardwood or LVP</strong> (luxury vinyl plank), <strong>large-format tile</strong>, or something else?",
-    hard:   "Hardwood and luxury vinyl plank are our most popular flooring choices in San Antonio. LVP runs <strong>$5–$9/sq ft installed</strong>, hardwood <strong>$9–$16/sq ft installed</strong>. Both look great and hold up well in the Texas climate.<br><br>Want a free measure and quote for your home?",
-    tile:   "Large-format porcelain tile (24x24, 24x48) is the most popular tile choice right now — fewer grout lines, modern look, easy to maintain. Installed cost typically runs <strong>$8–$14/sq ft</strong> in San Antonio.<br><br>Want us to come measure and put together a free quote?",
-  },
-  painting: {
-    intro: "Interior painting, exterior, or both?",
-    int:    "Interior painting for a full home in San Antonio typically runs <strong>$2,500–$6,000</strong> depending on square footage, ceiling height, and prep needed. Individual rooms are less. We prep, prime, and paint — clean and professional.<br><br>Want a free quote?",
-    ext:    "Exterior painting for a San Antonio home typically runs <strong>$3,000–$8,000</strong> depending on size, siding type, and prep needed. Proper prep (pressure wash, caulk, primer) is key — we don't skip it.<br><br>Want a free estimate?",
-  },
-  cost: "Here are ballpark ranges for San Antonio in 2026:<br><br>🍳 <strong>Kitchen remodel:</strong> $25k–$55k (full) · $8k–$22k (refresh)<br>🛁 <strong>Bathroom remodel:</strong> $14k–$35k (master) · $7k–$18k (guest)<br>🔥 <strong>Outdoor kitchen:</strong> $18k–$40k<br>🏡 <strong>Covered patio:</strong> $12k–$30k<br>🏠 <strong>Home addition:</strong> $55k+<br>🪵 <strong>Flooring:</strong> $5–$16/sq ft installed<br><br>The best way to get your exact number is a <strong>free in-home estimate</strong> — no obligation, written quote within 24 hours. Want to set one up?",
-  permit: "Yes — First Class Remodeling TX is fully licensed and insured in Texas. We pull <strong>all required permits</strong> and handle all inspections as part of every project. You never have to deal with the paperwork.",
-  time:   "Typical timelines in San Antonio:<br><br>🛁 Bathroom remodel: <strong>1–3 weeks</strong><br>🍳 Kitchen remodel: <strong>3–6 weeks</strong><br>🔥 Outdoor kitchen + patio: <strong>3–6 weeks</strong><br>🏠 Home addition: <strong>8–16 weeks</strong><br><br>We give you a clear timeline at the estimate and track every step through your client portal.",
-  estimate: "A free in-home estimate is the best next step — takes about 45 minutes, we measure everything, discuss your vision, and you get a detailed written quote within 24 hours. No pressure, no commitment.<br><br>👉 Call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a><br>👉 Or send photos on <a href='https://wa.me/12106065298' target='_blank' style='color:var(--gold)'>WhatsApp</a><br>👉 Or leave your name and number below and we'll call you!",
-  default: "I'd love to help you figure out your project! You can ask me about kitchens, bathrooms, outdoor kitchens, patios, home additions, flooring, or pricing in San Antonio.<br><br>Or if you prefer to talk directly, call or text <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a> — we're quick to respond. 😊",
-};
-
-function classify(m) {
-  m = m.toLowerCase();
-  // Detail signals (checked first so "full kitchen" → full, not just kitchen)
-  if (/full|complete|everything|todo|completo|completa|remodel|renovar|redoing|all new/.test(m) && !/outdoor/.test(m)) return 'full';
-  if (/refresh|update|small|minor|just the|solo|update/.test(m)) return 'refresh';
-  if (/master|principal|main bath|my bath|the bath/.test(m)) return 'master';
-  if (/guest|hall|second bath|kids|children/.test(m)) return 'guest';
-  if (/powder|half bath|half-bath|medio baño|lavabo/.test(m)) return 'powder';
-  if (/both|together|all of it|ambos|todo junto/.test(m)) return 'both';
-  if (/hard.*wood|wood.*floor|vinyl|lvp|laminate|madera/.test(m)) return 'hardfloor';
-  if (/interior|inside|adentro|int paint/.test(m) && /paint/.test(m)) return 'paintint';
-  if (/exterior|outside|afuera|ext paint/.test(m) && /paint/.test(m)) return 'paintext';
-  if (/garage conv|garage to|garage remo/.test(m)) return 'garage';
-  // Topic signals
-  if (/kitchen|cocina|cabinet|countertop|island|estufa/.test(m)) return 'kitchen';
-  if (/bath|baño|shower|ducha|vanity|tub|toilet|restroom/.test(m)) return 'bathroom';
-  if (/outdoor|patio|pergola|bbq|grill|asador|backyard|traspatio/.test(m)) return 'outdoor';
-  if (/addition|add.on|adding a room|sunroom|expand|cuarto nuevo/.test(m)) return 'addition';
-  if (/garage/.test(m)) return 'addition';
-  if (/floor|tile|porcelain|ceramic|piso|wood floor/.test(m)) return 'flooring';
-  if (/paint|pintura|pintando|repaint/.test(m)) return 'painting';
-  // Info signals
-  if (/cost|price|how much|cuanto|budget|precio|rates|charge/.test(m)) return 'cost';
-  if (/permit|licens|insur|licensed|legal|registro/.test(m)) return 'permit';
-  if (/how long|timeline|time|cuanto tiempo|weeks|days|duration/.test(m)) return 'time';
-  if (/estimate|visit|schedule|cita|free|quote|presupuesto/.test(m)) return 'estimate';
-  if (/yes|si\b|sure|ok\b|okay|yeah|of course|sounds good|let's go|dale|claro|quiero|want/.test(m)) return 'yes';
-  return 'default';
-}
-
-function getJuanReply(userMsg) {
-  const m = userMsg.toLowerCase();
-  const intent = classify(userMsg);
-
-  // If we already have a topic, try follow-ups FIRST before switching topics
-  if (J.topic === 'kitchen') {
-    if (intent === 'full' || /full|complete|completo|remodel|renovar/.test(m)) return KB.kitchen.full;
-    if (intent === 'refresh' || /refresh|small|update|solo/.test(m)) return KB.kitchen.refresh;
-    if (intent === 'cost') return KB.cost;
-    if (intent === 'estimate' || intent === 'yes') return KB.estimate;
-    // Only switch topic if a clearly different topic mentioned
-    if (intent === 'bathroom') { J.topic = 'bathroom'; return KB.bathroom.intro; }
-    if (intent === 'outdoor')  { J.topic = 'outdoor';  return KB.outdoor.intro; }
-  }
-  if (J.topic === 'bathroom') {
-    if (intent === 'master'  || /master|principal|main|my bath/.test(m)) return KB.bathroom.master;
-    if (intent === 'guest'   || /guest|hall|second|kids/.test(m))        return KB.bathroom.guest;
-    if (intent === 'powder'  || /powder|half/.test(m))                   return KB.bathroom.powder;
-    if (intent === 'cost') return KB.cost;
-    if (intent === 'estimate' || intent === 'yes') return KB.estimate;
-    if (intent === 'kitchen') { J.topic = 'kitchen'; return KB.kitchen.intro; }
-    if (intent === 'outdoor') { J.topic = 'outdoor'; return KB.outdoor.intro; }
-  }
-  if (J.topic === 'outdoor') {
-    if (intent === 'both'  || /both|together|ambos/.test(m))       return KB.outdoor.both;
-    if (/kitchen|bbq|grill|asador|outdoor cook/.test(m))           return KB.outdoor.kitchen;
-    if (/patio|pergola|cover|roof|shade|techo/.test(m))            return KB.outdoor.patio;
-    if (intent === 'cost') return KB.cost;
-    if (intent === 'estimate' || intent === 'yes') return KB.estimate;
-  }
-  if (J.topic === 'addition') {
-    if (intent === 'garage' || /garage/.test(m))                   return KB.addition.garage;
-    if (/room|bedroom|cuarto|suite|living/.test(m))                return KB.addition.room;
-    if (intent === 'cost') return KB.cost;
-    if (intent === 'estimate' || intent === 'yes') return KB.estimate;
-  }
-  if (J.topic === 'flooring') {
-    if (intent === 'hardfloor' || /hard|wood|vinyl|lvp|laminate/.test(m)) return KB.flooring.hard;
-    if (/tile|porcelain|ceramic|piso/.test(m))                     return KB.flooring.tile;
-    if (intent === 'cost') return KB.cost;
-    if (intent === 'estimate' || intent === 'yes') return KB.estimate;
-  }
-  if (J.topic === 'painting') {
-    if (intent === 'paintint' || /interior|inside|adentro/.test(m)) return KB.painting.int;
-    if (intent === 'paintext' || /exterior|outside|afuera/.test(m)) return KB.painting.ext;
-    if (intent === 'cost') return KB.cost;
-    if (intent === 'estimate' || intent === 'yes') return KB.estimate;
-  }
-
-  // No active topic — topic selection
-  if (intent === 'kitchen')  { J.topic = 'kitchen';   return KB.kitchen.intro; }
-  if (intent === 'bathroom') { J.topic = 'bathroom';  return KB.bathroom.intro; }
-  if (intent === 'outdoor')  { J.topic = 'outdoor';   return KB.outdoor.intro; }
-  if (intent === 'addition') { J.topic = 'addition';  return KB.addition.intro; }
-  if (intent === 'flooring') { J.topic = 'flooring';  return KB.flooring.intro; }
-  if (intent === 'painting') { J.topic = 'painting';  return KB.painting.intro; }
-  if (intent === 'full' || intent === 'refresh') {
-    // "full remodel" without specific topic
-    return "What room are we remodeling? Kitchen, bathroom, or another area of your home?";
-  }
-  if (intent === 'cost')     return KB.cost;
-  if (intent === 'permit')   return KB.permit;
-  if (intent === 'time')     return KB.time;
-  if (intent === 'estimate') return KB.estimate;
-  if (intent === 'yes')      return KB.estimate;
-
-  return KB.default;
-}
+// (AI-powered — no static knowledge base needed)
 
 // DOM helpers
-function botMsg(html) {
+function botMsg(html, instant) {
   const body = document.getElementById('juanBody');
-  // typing indicator
-  const typing = document.createElement('div');
-  typing.className = 'jmsg-bot jmsg jmsg-typing';
-  typing.innerHTML = '<span></span><span></span><span></span>';
-  const tw = document.createElement('div');
-  tw.style.cssText = 'display:flex;flex-direction:column';
-  const tn = document.createElement('div');
-  tn.className = 'jmsg-name'; tn.textContent = 'Juan';
-  tw.appendChild(tn); tw.appendChild(typing);
-  body.appendChild(tw); body.scrollTop = body.scrollHeight;
-
-  setTimeout(() => {
-    tw.remove();
-    const w = document.createElement('div');
-    w.style.cssText = 'display:flex;flex-direction:column';
-    const n = document.createElement('div');
-    n.className = 'jmsg-name'; n.textContent = 'Juan';
-    const m = document.createElement('div');
-    m.className = 'jmsg jmsg-bot';
-    m.innerHTML = html;
-    w.appendChild(n); w.appendChild(m);
-    body.appendChild(w);
-    body.scrollTop = body.scrollHeight;
-  }, 900);
+  if (!instant) {
+    // typing indicator
+    const typing = document.createElement('div');
+    typing.className = 'jmsg-bot jmsg jmsg-typing';
+    typing.id = 'joeTyping';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    const tw = document.createElement('div');
+    tw.id = 'joeTypingWrap';
+    tw.style.cssText = 'display:flex;flex-direction:column';
+    const tn = document.createElement('div');
+    tn.className = 'jmsg-name'; tn.textContent = 'Joe';
+    tw.appendChild(tn); tw.appendChild(typing);
+    body.appendChild(tw); body.scrollTop = body.scrollHeight;
+    return;
+  }
+  // Remove typing indicator
+  const old = document.getElementById('joeTypingWrap');
+  if (old) old.remove();
+  // Add actual message
+  const w = document.createElement('div');
+  w.style.cssText = 'display:flex;flex-direction:column';
+  const n = document.createElement('div');
+  n.className = 'jmsg-name'; n.textContent = 'Joe';
+  const m = document.createElement('div');
+  m.className = 'jmsg jmsg-bot';
+  m.innerHTML = html;
+  w.appendChild(n); w.appendChild(m);
+  body.appendChild(w);
+  body.scrollTop = body.scrollHeight;
 }
 
 function userMsg(text) {
@@ -1067,50 +966,52 @@ function captureJuanLead(name, phone) {
   }).catch(() => {});
 }
 
-function sendMsg() {
+async function sendMsg() {
+  if (joeBusy) return;
   const inp = document.getElementById('juanInput');
   const txt = inp.value.trim(); if (!txt) return;
   inp.value = '';
   document.getElementById('juanQuick').style.display = 'none';
   userMsg(txt);
 
-  // Capture phone number if user types it
+  // Capture phone number
   const phoneMatch = txt.match(/(\(?\d{3}\)?[\s\-.]?\d{3}[\s\-.]?\d{4})/);
   if (phoneMatch) {
     J.phone = phoneMatch[1];
     if (J.name) captureJuanLead(J.name, J.phone);
   }
-  // Capture name if Juan asked for it
-  if (J.step === 'ask_name') {
-    J.name = txt;
-    J.step = 'ask_phone';
-  }
 
-  const reply = getJuanReply(txt);
-  // If reply is the estimate KB, ask for name+phone
-  if (reply === KB.estimate && !J.phone) {
-    J.step = 'ask_name';
-    setTimeout(() => botMsg(reply + "<br><br>📋 <strong>To set up your free estimate, what's your name?</strong>"), 300);
-    return;
-  }
-  if (J.step === 'ask_phone' && J.name) {
-    setTimeout(() => botMsg("Thanks " + J.name + "! 📱 <strong>What's the best phone number to reach you?</strong>"), 300);
-    return;
-  }
-  if (J.step === 'ask_name' && J.phone) {
-    captureJuanLead(J.name, J.phone);
-    J.step = 'done';
-    setTimeout(() => botMsg("Perfect! I've sent your info to Roberto — expect a call within 1 hour. 🎉"), 300);
-    return;
-  }
+  // AI call
+  joeBusy = true;
+  botMsg(null, false); // show typing
+  joeHistory.push({role: 'user', content: txt});
+  if (joeHistory.length > 16) joeHistory = joeHistory.slice(-16);
 
-  setTimeout(() => botMsg(reply), 300);
+  try {
+    const resp = await fetch(JOE_API, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        messages: [{role: 'system', content: JOE_SYSTEM}, ...joeHistory],
+        max_tokens: 400,
+        temperature: 0.7
+      })
+    });
+    const data = await resp.json();
+    const reply = data?.choices?.[0]?.message?.content || "Let me check on that — call or text Roberto at (210) 606-5298 for a quick answer!";
+    joeHistory.push({role: 'assistant', content: reply});
+    // Clean markdown
+    const clean = reply.replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>');
+    botMsg(clean, true);
+  } catch(e) {
+    botMsg("Brief connection issue — call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a> for instant help!", true);
+  }
+  joeBusy = false;
 }
 
 function quickMsg(txt) {
-  document.getElementById('juanQuick').style.display = 'none';
-  userMsg(txt);
-  setTimeout(() => botMsg(getJuanReply(txt)), 300);
+  document.getElementById('juanInput').value = txt;
+  sendMsg();
 }
 
 function openJuan() {
@@ -1121,6 +1022,12 @@ function openJuan() {
 function closeJuan() {
   document.getElementById('juanOverlay').classList.remove('open');
   document.body.style.overflow = '';
+  // Clear chat history on close
+  joeHistory = [];
+  J.step = 'start'; J.topic = null; J.name = null; J.phone = null;
+  const body = document.getElementById('juanBody');
+  body.innerHTML = '<div><div class="jmsg-name">Joe</div><div class="jmsg jmsg-bot">Hey! I\'m Joe, your project advisor at First Class Remodeling TX. 👋<br><br>Ask me anything — kitchen costs, bathroom ideas, materials, timelines, permits. I know San Antonio remodeling inside and out.</div></div>';
+  document.getElementById('juanQuick').style.display = '';
 }
 function closeOutside(e) {
   if (e.target === document.getElementById('juanOverlay')) closeJuan();
