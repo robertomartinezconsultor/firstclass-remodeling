@@ -598,26 +598,26 @@ tr:hover td{background:rgba(255,255,255,0.015);}
       </div>
 
       <div class="stats-grid" id="dashStats">
-        <div class="stat-card" onclick="switchTab('projects')" style="cursor:pointer" title="View all projects">
-          <div class="stat-card-label">Total Projects</div>
+        <button class="stat-card" id="statTotal" style="cursor:pointer;text-align:left;background:var(--bg-2);border:1px solid var(--border);color:inherit;width:100%;padding:16px;">
+          <div class="stat-card-label">TOTAL PROJECTS</div>
           <div class="stat-card-value gold" id="dTotal">--</div>
-          <div style="font-size:10px;color:var(--text-3);margin-top:4px">Tap to view all →</div>
-        </div>
-        <div class="stat-card" onclick="filterProjects('in_progress')" style="cursor:pointer" title="View active projects">
-          <div class="stat-card-label">Active</div>
+          <div style="font-size:11px;color:var(--accent);margin-top:6px">View all projects →</div>
+        </button>
+        <button class="stat-card" id="statActive" style="cursor:pointer;text-align:left;background:var(--bg-2);border:1px solid var(--border);color:inherit;width:100%;padding:16px;">
+          <div class="stat-card-label">ACTIVE</div>
           <div class="stat-card-value green" id="dActive">--</div>
-          <div style="font-size:10px;color:var(--text-3);margin-top:4px">Tap to filter →</div>
-        </div>
-        <div class="stat-card" onclick="switchTab('projects')" style="cursor:pointer" title="View contract details">
-          <div class="stat-card-label">Contract Value</div>
+          <div style="font-size:11px;color:var(--success);margin-top:6px">Filter active →</div>
+        </button>
+        <button class="stat-card" id="statContract" style="cursor:pointer;text-align:left;background:var(--bg-2);border:1px solid var(--border);color:inherit;width:100%;padding:16px;">
+          <div class="stat-card-label">CONTRACT VALUE</div>
           <div class="stat-card-value gold" id="dContract">--</div>
-          <div style="font-size:10px;color:var(--text-3);margin-top:4px">All contracts →</div>
-        </div>
-        <div class="stat-card" onclick="filterProjects('outstanding')" style="cursor:pointer" title="View unpaid balances">
-          <div class="stat-card-label">Outstanding</div>
+          <div style="font-size:11px;color:var(--accent);margin-top:6px">View breakdown →</div>
+        </button>
+        <button class="stat-card" id="statBalance" style="cursor:pointer;text-align:left;background:var(--bg-2);border:1px solid var(--border);color:inherit;width:100%;padding:16px;">
+          <div class="stat-card-label">OUTSTANDING</div>
           <div class="stat-card-value red" id="dBalance">--</div>
-          <div style="font-size:10px;color:var(--text-3);margin-top:4px">View unpaid →</div>
-        </div>
+          <div style="font-size:11px;color:var(--error);margin-top:6px">View unpaid →</div>
+        </button>
       </div>
 
       <!-- Quick Actions -->
@@ -1242,6 +1242,12 @@ function initAdmin() {
   checkJoeConfig();
   // Set default dates
   try { document.getElementById('payDate').value = new Date().toISOString().slice(0,10); } catch(e){}
+
+  // Dashboard stat card click handlers (addEventListener for mobile reliability)
+  document.getElementById('statTotal').addEventListener('click', () => switchTab('projects'));
+  document.getElementById('statActive').addEventListener('click', () => filterProjects('in_progress'));
+  document.getElementById('statContract').addEventListener('click', () => switchTab('projects'));
+  document.getElementById('statBalance').addEventListener('click', () => filterProjects('outstanding'));
 }
 
 function adminLogout() {
