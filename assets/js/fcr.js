@@ -161,7 +161,7 @@ async function sendMsg() {
       })
     });
     const data = await resp.json();
-    const reply = data?.choices?.[0]?.message?.content || "Let me check on that — call or text Roberto at (210) 606-5298 for a quick answer!";
+    const reply = data?.choices?.[0]?.message?.content || "Let me check on that — call or text us at (210) 606-5298 for a quick answer!";
     joeHistory.push({role: 'assistant', content: reply});
     const clean = reply.replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>');
     botMsg(clean, true);
