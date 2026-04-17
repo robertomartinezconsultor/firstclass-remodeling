@@ -186,6 +186,65 @@ h2.headline{
 .svc:hover .svc-link{gap:9px}
 .services-cta{text-align:center;margin-top:48px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
 
+/* ── PROJECTS / TESTIMONIALS (bone background, editorial) ─ */
+.projects-section{background:#F5F2ED;color:#09111c;padding:clamp(72px,9vw,110px) 0}
+.projects-section .tag{color:#8b7536}
+.projects-section h2.headline{color:#09111c;max-width:720px}
+.projects-section .lead{color:#4b5a6c}
+.testimonials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:52px}
+.testimonial{
+  background:#fff;padding:30px 28px;border-radius:14px;
+  border:1px solid rgba(9,17,28,0.08);
+  box-shadow:0 2px 10px rgba(9,17,28,0.035),0 1px 2px rgba(9,17,28,0.02);
+  display:flex;flex-direction:column;gap:18px;
+}
+.testimonial-meta{display:flex;align-items:center;gap:14px}
+.testimonial-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#09111c;display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-weight:600;font-size:.92rem;
+  flex-shrink:0;letter-spacing:.02em;
+}
+.testimonial-meta strong{display:block;font-size:.86rem;color:#09111c;font-weight:600;letter-spacing:.01em}
+.testimonial-meta span{font-size:.74rem;color:#6b7a8d;line-height:1.4}
+.testimonial blockquote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.08rem;line-height:1.6;color:#1b2a3d;
+  font-weight:500;font-style:italic;margin:0;
+}
+.testimonial blockquote::before{content:'\201C';font-size:2.6rem;line-height:0;color:var(--gold);vertical-align:-.3em;margin-right:4px;font-style:normal}
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+  margin-top:56px;padding-top:40px;border-top:1px solid rgba(9,17,28,0.1);
+}
+.stat{text-align:left}
+.stat-num{
+  display:block;font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,4.2vw,2.9rem);font-weight:600;
+  color:#09111c;line-height:1;
+}
+.stat-num .stat-plus{color:var(--gold)}
+.stat-lbl{
+  display:block;font-size:.72rem;color:#6b7a8d;
+  letter-spacing:.1em;text-transform:uppercase;margin-top:8px;font-weight:600;
+}
+
+/* ── PARTNERS RAIL (text-only editorial, no logo clutter) ── */
+.partners-section{background:var(--bg);padding:64px 0;border-top:1px solid var(--line)}
+.partners-label{text-align:center;font-size:.7rem;color:var(--muted2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:26px;font-weight:600}
+.partners-rail{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:14px 30px;font-size:.74rem;font-weight:700;
+  letter-spacing:.16em;color:var(--muted);margin-bottom:14px;
+}
+.partners-rail span{white-space:nowrap}
+.partners-rail.trust{color:var(--gold);opacity:.72}
+.partners-rail.trust span{opacity:.85}
+
+@media(max-width:960px){.testimonials-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.stats-row{grid-template-columns:repeat(2,1fr);gap:28px}.projects-section{padding:72px 0}}
+
 /* ── WHY US ──────────────────────────────── */
 .why-section{padding:90px 0;background:var(--bg)}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:52px}
