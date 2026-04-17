@@ -142,10 +142,26 @@ async function sendMsg() {
         language: document.documentElement.lang === 'es' ? 'es' : 'en'
       })
     });
-    const data = await resp.json();
-    const reply = data?.reply || data?.response || data?.message || data?.choices?.[0]?.message?.content || "Call or text us at (210) 606-5298 for a quick answer.";
-    const clean = String(reply).replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>');
-    botMsg(clean, true);
+    let full = '';
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    const oldTyping = document.getElementById('joeTypingWrap');
+    if (oldTyping) oldTyping.remove();
+    botMsg('', true);
+    const lastMsg = document.getElementById('juanBody')?.lastElementChild?.querySelector('.jmsg-bot');
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, {stream: true});
+      for (const line of chunk.split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        try {
+          const d = JSON.parse(line.slice(6));
+          if (d.text) { full += d.text; if (lastMsg) lastMsg.innerHTML = full.replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>'); }
+        } catch(e) {}
+      }
+    }
+    if (!full) { if (lastMsg) lastMsg.innerHTML = "Call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a>"; }
   } catch(e) {
     botMsg("Brief connection issue — call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a> for instant help!", true);
   }
