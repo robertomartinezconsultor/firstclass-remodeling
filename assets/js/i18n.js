@@ -94,7 +94,7 @@ const FCR_DICT = {
   'prj.stat.1':        { en: 'Years in San Antonio', es: 'Años en San Antonio' },
   'prj.stat.2':        { en: 'Projects completed',   es: 'Proyectos completados' },
   'prj.stat.3':        { en: 'Google & Facebook avg', es: 'Promedio Google y Facebook' },
-  'prj.stat.4':        { en: 'Licensed & insured',   es: 'Licencia y seguro' },
+  'prj.stat.4':        { en: 'San Antonio based',     es: 'Con base en San Antonio' },
   'prj.cta.google':    { en: 'Read reviews on Google', es: 'Lee las reseñas en Google' },
   'prj.cta.fb':        { en: 'Reviews on Facebook',  es: 'Reseñas en Facebook' },
   'par.label':         { en: 'Materials & trust',    es: 'Materiales y confianza' },
