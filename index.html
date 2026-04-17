@@ -84,11 +84,12 @@
       <small>San Antonio · (210) 606-5298</small>
     </a>
     <nav class="nav">
-      <a href="/services.html">Services</a>
-      <a href="/portfolio.html">Gallery</a>
-      <a href="/blog.html">Blog</a>
-      <a href="/contact.html" class="btn-nav">Free Estimate</a>
+      <a href="/services.html" data-i18n="nav.services">Services</a>
+      <a href="/portfolio.html" data-i18n="nav.gallery">Gallery</a>
+      <a href="/blog.html" data-i18n="nav.blog">Blog</a>
+      <a href="/contact.html" class="btn-nav" data-i18n="nav.estimate">Free Estimate</a>
     </nav>
+    <button id="langToggle" class="lang-toggle" aria-label="Cambiar a español" type="button">ES</button>
     <button class="hamburger" id="menuBtn" aria-label="Open menu">
       <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-menu"/></svg>
     </button>
@@ -97,11 +98,11 @@
 
 <!-- MOBILE NAV -->
 <div class="mob-nav" id="mobNav">
-  <a href="/services.html">Services</a>
-  <a href="/portfolio.html">Photo Gallery</a>
-  <a href="/blog.html">Blog &amp; Pricing Guides</a>
-  <a href="/contact.html">Contact / Free Estimate</a>
-  <a href="/app.html">Client Portal</a>
+  <a href="/services.html" data-i18n="nav.services">Services</a>
+  <a href="/portfolio.html" data-i18n="nav.photos">Photo Gallery</a>
+  <a href="/blog.html" data-i18n="nav.guides">Blog &amp; Pricing Guides</a>
+  <a href="/contact.html" data-i18n="nav.contact">Contact / Free Estimate</a>
+  <a href="/app.html" data-i18n="nav.portal">Client Portal</a>
   <div class="mob-ctas">
     <a href="tel:2106065298" class="btn" style="justify-content:center"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-phone"/></svg>Call Roberto</a>
     <a href="https://wa.me/12106065298" target="_blank" rel="noopener" class="btn-wa" style="justify-content:center"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-chat"/></svg>WhatsApp</a>
@@ -118,18 +119,18 @@
   <div class="hero-overlay"></div>
   <div class="shell">
     <div class="hero-body">
-      <div class="hero-badge" data-eyebrow>San Antonio &middot; 15+ Years &middot; Licensed TX &middot; Bilingual</div>
-      <h1>Remodeling that feels<br>planned &mdash; and finished <em>cleaner</em>.</h1>
-      <p class="hero-sub">Custom kitchens, baths, outdoor living, and whole-home remodels. Licensed Texas contractor. Bilingual crews. Owner supervises every job.</p>
+      <div class="hero-badge" data-i18n="hero.eyebrow">San Antonio &middot; 15+ Years &middot; Licensed TX &middot; Bilingual</div>
+      <h1 data-i18n="hero.h1a">Remodeling that feels<br>planned &mdash; and finished <em>cleaner</em>.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">Custom kitchens, baths, outdoor living, and whole-home remodels. Licensed Texas contractor. Bilingual crews. Owner supervises every job.</p>
       <div class="hero-btns">
-        <a href="/contact.html" class="btn">Get a free estimate <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
-        <a href="tel:2106065298" class="btn-ghost"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-phone"/></svg>Talk to Roberto &middot; (210) 606-5298</a>
+        <a href="/contact.html" class="btn"><span data-i18n="hero.cta.primary">Get a free estimate</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <a href="tel:2106065298" class="btn-ghost"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-phone"/></svg><span data-i18n="hero.cta.phone">Talk to Roberto &middot; (210) 606-5298</span></a>
       </div>
       <div class="hero-trust">
-        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-shield"/></svg>Licensed &amp; insured in Texas</div>
-        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-check"/></svg>Free in-home estimates</div>
-        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-spark"/></svg>Google rated &middot; bilingual crew</div>
-        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-pin"/></svg>San Antonio &amp; surrounding TX</div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-shield"/></svg><span data-i18n="hero.trust.1">Licensed &amp; insured in Texas</span></div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-check"/></svg><span data-i18n="hero.trust.2">Free in-home estimates</span></div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-spark"/></svg><span data-i18n="hero.trust.3">Google rated &middot; bilingual crew</span></div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-pin"/></svg><span data-i18n="hero.trust.4">San Antonio &amp; surrounding TX</span></div>
       </div>
     </div>
   </div>
@@ -138,50 +139,50 @@
 <!-- SERVICES -->
 <section class="services-section">
   <div class="shell">
-    <div class="tag">What We Build</div>
-    <h2 class="headline">Every project.<br>Every room.</h2>
-    <p class="lead">From the kitchen to the backyard — complete remodeling services for San Antonio homeowners.</p>
+    <div class="tag" data-i18n="svc.tag">What We Build</div>
+    <h2 class="headline" data-i18n="svc.headline">Every project.<br>Every room.</h2>
+    <p class="lead" data-i18n="svc.lead">From the kitchen to the backyard — complete remodeling services for San Antonio homeowners.</p>
     <div class="services-grid">
       <div class="svc">
         <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-kitchen"/></svg></div>
-        <h3>Kitchen Remodel</h3>
-        <p>Custom cabinetry, quartz counters, islands, backsplash, and full kitchen rebuilds &mdash; finished clean, inspected, documented.</p>
-        <a href="/services.html#kitchens" class="svc-link">See kitchen work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <h3 data-i18n="svc.kitchen.h">Kitchen Remodel</h3>
+        <p data-i18n="svc.kitchen.p">Custom cabinetry, quartz counters, islands, backsplash, and full kitchen rebuilds &mdash; finished clean, inspected, documented.</p>
+        <a href="/services.html#kitchens" class="svc-link"><span data-i18n="svc.kitchen.link">See kitchen work</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
         <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-bath"/></svg></div>
-        <h3>Bathroom Remodel</h3>
-        <p>Walk-in showers, tub-to-shower conversions, double vanities, full master bath rebuilds with waterproofed substrate and tighter grout lines.</p>
-        <a href="/services.html#bathrooms" class="svc-link">See bathroom work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <h3 data-i18n="svc.bath.h">Bathroom Remodel</h3>
+        <p data-i18n="svc.bath.p">Walk-in showers, tub-to-shower conversions, double vanities, full master bath rebuilds with waterproofed substrate and tighter grout lines.</p>
+        <a href="/services.html#bathrooms" class="svc-link"><span data-i18n="svc.bath.link">See bathroom work</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
         <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-flame"/></svg></div>
-        <h3>Outdoor Kitchen &amp; BBQ</h3>
-        <p>Custom BBQ islands, built-in grills, outdoor bars, and covered outdoor kitchens designed for San Antonio heat and rain.</p>
-        <a href="/services.html#outdoor" class="svc-link">See outdoor work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <h3 data-i18n="svc.outdoor.h">Outdoor Kitchen &amp; BBQ</h3>
+        <p data-i18n="svc.outdoor.p">Custom BBQ islands, built-in grills, outdoor bars, and covered outdoor kitchens designed for San Antonio heat and rain.</p>
+        <a href="/services.html#outdoor" class="svc-link"><span data-i18n="svc.outdoor.link">See outdoor work</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
         <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-home"/></svg></div>
-        <h3>Patios &amp; Covered Porches</h3>
-        <p>Covered patios, pergolas, concrete, and tile. Extend the living space outward without compromising drainage or shade planning.</p>
-        <a href="/services.html#patios" class="svc-link">See patio work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <h3 data-i18n="svc.patio.h">Patios &amp; Covered Porches</h3>
+        <p data-i18n="svc.patio.p">Covered patios, pergolas, concrete, and tile. Extend the living space outward without compromising drainage or shade planning.</p>
+        <a href="/services.html#patios" class="svc-link"><span data-i18n="svc.patio.link">See patio work</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
         <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-home-plus"/></svg></div>
-        <h3>Home Additions</h3>
-        <p>New rooms, sunrooms, garage conversions, full structural additions. Permits, inspections, and framing handled in-house.</p>
-        <a href="/services.html#additions" class="svc-link">See additions <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <h3 data-i18n="svc.add.h">Home Additions</h3>
+        <p data-i18n="svc.add.p">New rooms, sunrooms, garage conversions, full structural additions. Permits, inspections, and framing handled in-house.</p>
+        <a href="/services.html#additions" class="svc-link"><span data-i18n="svc.add.link">See additions</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
         <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-floor"/></svg></div>
-        <h3>Flooring</h3>
-        <p>Hardwood, luxury vinyl plank, large-format porcelain tile, stone. Subfloor prep checked before anything gets laid.</p>
-        <a href="/services.html#flooring" class="svc-link">See flooring work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <h3 data-i18n="svc.floor.h">Flooring</h3>
+        <p data-i18n="svc.floor.p">Hardwood, luxury vinyl plank, large-format porcelain tile, stone. Subfloor prep checked before anything gets laid.</p>
+        <a href="/services.html#flooring" class="svc-link"><span data-i18n="svc.floor.link">See flooring work</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
     </div>
     <div class="services-cta">
-      <a href="/contact.html" class="btn">Get a Free Estimate</a>
-      <a href="/portfolio.html" class="btn-ghost">View Photo Gallery</a>
+      <a href="/contact.html" class="btn" data-i18n="svc.cta.estimate">Get a Free Estimate</a>
+      <a href="/portfolio.html" class="btn-ghost" data-i18n="svc.cta.gallery">View Photo Gallery</a>
     </div>
   </div>
 </section>
@@ -189,28 +190,28 @@
 <!-- WHY US -->
 <section class="why-section">
   <div class="shell">
-    <div class="tag">Why First Class</div>
-    <h2 class="headline">Built on trust.<br>Delivered on time.</h2>
+    <div class="tag" data-i18n="why.tag">Why First Class</div>
+    <h2 class="headline" data-i18n="why.headline">Built on trust.<br>Delivered on time.</h2>
     <div class="why-grid">
       <div class="why-card">
         <div class="why-num">100%</div>
-        <h4>Licensed &amp; Insured</h4>
-        <p>Full Texas contractor license and insurance on every project. We pull all permits.</p>
+        <h4 data-i18n="why.1.h">Licensed &amp; Insured</h4>
+        <p data-i18n="why.1.p">Full Texas contractor license and insurance on every project. We pull all permits.</p>
       </div>
       <div class="why-card">
         <div class="why-num">Free</div>
-        <h4>In-Home Estimates</h4>
-        <p>No charge, no pressure. Detailed written quote within 24–48 hours of your visit.</p>
+        <h4 data-i18n="why.2.h">In-Home Estimates</h4>
+        <p data-i18n="why.2.p">No charge, no pressure. Detailed written quote within 24&ndash;48 hours of your visit.</p>
       </div>
       <div class="why-card">
         <div class="why-num serif">5.0</div>
-        <h4>Google Rating</h4>
-        <p>Consistent top-rated reviews from homeowners across San Antonio and surrounding areas.</p>
+        <h4 data-i18n="why.3.h">Google Rating</h4>
+        <p data-i18n="why.3.p">Consistent top-rated reviews from homeowners across San Antonio and surrounding areas.</p>
       </div>
       <div class="why-card">
         <div class="why-num"><svg class="ico" style="width:2.2rem;height:2.2rem" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-shield"/></svg></div>
-        <h4>Client Portal</h4>
-        <p>Track your project live &mdash; photos, timeline, docs, and updates from your phone.</p>
+        <h4 data-i18n="why.4.h">Client Portal</h4>
+        <p data-i18n="why.4.p">Track your project live &mdash; photos, timeline, docs, and updates from your phone.</p>
       </div>
     </div>
   </div>
@@ -284,8 +285,8 @@
 <section class="faq-section">
   <div class="shell">
     <div class="faq-inner">
-      <div class="tag">Common Questions</div>
-      <h2 class="headline">FAQ</h2>
+      <div class="tag" data-i18n="faq.tag">Common Questions</div>
+      <h2 class="headline" data-i18n="faq.headline">FAQ</h2>
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">How much does a kitchen remodel cost in San Antonio? <i class="faq-icon">+</i></button>
@@ -445,6 +446,7 @@
   </div>
 </div>
 
+<script src="/assets/js/i18n.js?v=20260416" defer></script>
 <script src="/assets/js/fcr.js?v=20260416" defer></script>
 </body>
 </html>
