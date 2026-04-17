@@ -1,0 +1,19 @@
+# Local tooling + agent state
+.claude/
+.backups/
+
+# Audits (Lighthouse reports, Playwright artifacts) — local-only
+audits/
+
+# Backups of individual files from refactors
+*.bak
+*.sprint?-bak
+*.orig
+*.orig-*
+.tmp-*
+
+# Unused heavyweight masters kept for reference, not for the deployed site
+videos/*.orig-*
+videos/optimized/
+images/optimized/
+images/og-default.png

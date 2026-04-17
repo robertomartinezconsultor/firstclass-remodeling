@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FCR OG template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{
+  font-family:'Manrope',sans-serif;
+  background:#09111c;
+  color:#f0ece4;
+  position:relative;
+}
+.bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 900px 520px at 82% 35%, rgba(215,180,108,0.22), transparent 62%),
+    radial-gradient(ellipse 700px 500px at 15% 85%, rgba(215,180,108,0.08), transparent 60%),
+    linear-gradient(135deg, #0b1626 0%, #09111c 55%, #060e18 100%);
+}
+.grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(215,180,108,0.04) 1px, transparent 1px),
+                   linear-gradient(90deg, rgba(215,180,108,0.04) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to right, transparent, black 25%, black 75%, transparent);
+}
+.wrap{
+  position:relative;z-index:2;
+  padding:72px 80px;
+  display:flex;flex-direction:column;
+  height:100%;
+}
+.brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:600;color:#d7b46c;
+  letter-spacing:0.01em;
+  display:flex;align-items:center;gap:14px;
+}
+.brand::before{
+  content:"";width:6px;height:38px;background:#d7b46c;border-radius:2px;display:inline-block;
+}
+.eyebrow{
+  margin-top:auto;margin-bottom:26px;
+  font-size:18px;font-weight:700;color:#d7b46c;
+  letter-spacing:0.18em;text-transform:uppercase;
+}
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:86px;font-weight:600;line-height:1.04;
+  color:#f6f1e6;max-width:980px;
+  letter-spacing:-0.01em;
+}
+h1 em{color:#d7b46c;font-style:normal}
+.url{
+  margin-top:38px;
+  font-size:22px;font-weight:600;color:rgba(240,236,228,0.62);
+  display:flex;align-items:center;gap:16px;
+  letter-spacing:0.02em;
+}
+.url::before{
+  content:"";width:32px;height:1.5px;background:#d7b46c;display:inline-block;
+}
+.badge{
+  position:absolute;top:72px;right:80px;
+  padding:12px 22px;border:1px solid rgba(215,180,108,0.4);
+  border-radius:100px;
+  font-size:14px;font-weight:700;color:#d7b46c;
+  letter-spacing:0.14em;text-transform:uppercase;
+  backdrop-filter:blur(6px);
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="grid"></div>
+<div class="wrap">
+  <div class="brand">First Class Remodeling TX</div>
+  <div class="badge">San Antonio &middot; Licensed &middot; Bilingual</div>
+  <div class="eyebrow">San Antonio &middot; 15+ Years &middot; Owner-Supervised</div>
+  <h1>Remodeling that feels<br>planned &mdash; and finished <em>cleaner</em>.</h1>
+  <div class="url">firstclassremodelingtx.com</div>
+</div>
+</body>
+</html>

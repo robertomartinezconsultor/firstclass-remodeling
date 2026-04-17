@@ -7,11 +7,31 @@
 <meta name="description" content="San Antonio's trusted remodeling contractor. Kitchen remodels, bathroom renovations, outdoor kitchens, patios & home additions. Licensed & insured. Free estimates — (210) 606-5298.">
 <meta name="theme-color" content="#0b1320">
 <meta property="og:title" content="First Class Remodeling TX — San Antonio Remodeling Contractor">
-<meta property="og:description" content="Kitchens, bathrooms, outdoor kitchens, patios & home additions in San Antonio TX. Free estimates.">
+<meta property="og:description" content="Kitchens, bathrooms, outdoor kitchens, patios & home additions in San Antonio TX. Licensed, bilingual, owner-supervised. Free estimates.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://firstclassremodelingtx.com/">
-<meta property="og:image" content="https://firstclassremodelingtx.com/images/project-hero-still.png">
+<meta property="og:image" content="https://firstclassremodelingtx.com/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="First Class Remodeling TX — Remodeling that feels planned, and finished cleaner. San Antonio, 15+ years, licensed, bilingual.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="First Class Remodeling TX — San Antonio Remodeling Contractor">
+<meta name="twitter:description" content="Kitchens, baths, outdoor living, whole-home. Licensed TX. Bilingual. Owner supervises every job.">
+<meta name="twitter:image" content="https://firstclassremodelingtx.com/images/og-default.jpg">
 <link rel="canonical" href="https://firstclassremodelingtx.com/">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F6RR0RKW2R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F6RR0RKW2R', {send_page_view: true});
+</script>
+<!-- Meta Pixel slot — inject base code here once Meta Business PIXEL_ID is provided. -->
+<script data-fcr-meta-pixel>/* SLOT */</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -44,422 +64,17 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="/assets/css/fcr.css?v=20260416">
+<link rel="stylesheet" href="/assets/css/fcr.css?v=20260416">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<style>
-/* ── RESET & TOKENS ───────────────────────── */
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-:root{
-  --bg:       #09111c;
-  --bg2:      #0f1b2a;
-  --bg3:      #111f30;
-  --card:     rgba(255,255,255,0.05);
-  --line:     rgba(255,255,255,0.10);
-  --gold:     #d7b46c;
-  --gold2:    #efd39a;
-  --gold-dim: rgba(215,180,108,0.15);
-  --text:     #f0ece4;
-  --muted:    #a8b4c2;
-  --muted2:   #6b7a8d;
-  --radius:   14px;
-  --safe-b:   env(safe-area-inset-bottom,0px);
-}
-body{
-  font-family:'Manrope',sans-serif;
-  color:var(--text);
-  background:var(--bg);
-  min-height:100vh;
-}
-a{text-decoration:none;color:inherit}
-button,input,textarea{font:inherit;cursor:pointer}
-
-.shell{max-width:1160px;margin:0 auto;padding:0 24px}
-
-/* ── TYPOGRAPHY ──────────────────────────── */
-.serif{font-family:'Cormorant Garamond',serif}
-.tag{
-  display:inline-block;
-  font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:14px;
-}
-h2.headline{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2rem,4vw,3rem);font-weight:600;
-  line-height:1.15;color:var(--text);margin-bottom:16px;
-}
-.lead{color:var(--muted);font-size:1rem;line-height:1.7;max-width:520px}
-
-/* ── BUTTONS ─────────────────────────────── */
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--gold);color:#0b1320;
-  padding:14px 26px;border-radius:10px;
-  font-weight:700;font-size:.92rem;border:none;
-  transition:all .2s;white-space:nowrap;
-}
-.btn:hover{background:var(--gold2);transform:translateY(-1px)}
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:8px;
-  background:transparent;color:var(--text);
-  border:1px solid var(--line);
-  padding:13px 24px;border-radius:10px;
-  font-weight:600;font-size:.92rem;
-  transition:all .2s;white-space:nowrap;
-}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-.btn-wa{
-  display:inline-flex;align-items:center;gap:8px;
-  background:#25D366;color:#fff;
-  padding:14px 24px;border-radius:10px;
-  font-weight:700;font-size:.92rem;border:none;
-  transition:all .2s;
-}
-.btn-wa:hover{background:#1ebd5a}
-
-/* ── HEADER ──────────────────────────────── */
-.header{
-  position:sticky;top:0;z-index:100;
-  backdrop-filter:blur(20px);
-  background:rgba(9,17,28,0.88);
-  border-bottom:1px solid var(--line);
-}
-.header-inner{
-  display:flex;align-items:center;justify-content:space-between;
-  height:66px;
-}
-.logo{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.25rem;font-weight:600;color:var(--gold);line-height:1.1;
-}
-.logo small{display:block;font-family:'Manrope',sans-serif;font-size:.67rem;font-weight:500;color:var(--muted2);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
-.nav{display:flex;align-items:center;gap:4px}
-.nav a{padding:8px 13px;border-radius:8px;font-size:.85rem;font-weight:500;color:var(--muted);transition:all .2s}
-.nav a:hover{color:var(--gold);background:var(--gold-dim)}
-.nav .btn-nav{background:var(--gold);color:#0b1320;padding:9px 18px;border-radius:8px;font-weight:700;font-size:.85rem}
-.nav .btn-nav:hover{background:var(--gold2)}
-.hamburger{display:none;background:none;border:none;padding:8px;color:var(--text)}
-.hamburger svg{width:22px;height:22px}
-
-/* ── MOBILE NAV ──────────────────────────── */
-.mob-nav{
-  display:none;position:fixed;
-  top:66px;left:0;right:0;bottom:0;z-index:99;
-  background:var(--bg);overflow-y:auto;padding:24px;
-}
-.mob-nav.open{display:block}
-.mob-nav a{display:block;padding:16px 0;font-size:1.05rem;font-weight:600;border-bottom:1px solid var(--line);color:var(--text)}
-.mob-ctas{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
-
-/* ── HERO ────────────────────────────────── */
-.hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;background:#060e18}
-.hero video{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:.45;
-}
-.hero-overlay{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(to right, rgba(6,14,24,0.96) 0%, rgba(6,14,24,0.65) 55%, rgba(6,14,24,0.25) 100%),
-    linear-gradient(to top, rgba(6,14,24,0.6) 0%, transparent 50%);
-}
-.hero-body{
-  position:relative;z-index:2;
-  padding:80px 0 80px;
-  max-width:620px;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(215,180,108,0.12);border:1px solid rgba(215,180,108,0.3);
-  color:var(--gold);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:6px 14px;border-radius:100px;margin-bottom:28px;
-}
-.hero h1{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.6rem,5.5vw,4.2rem);
-  font-weight:600;line-height:1.1;color:#fff;margin-bottom:22px;
-}
-.hero h1 em{color:var(--gold);font-style:normal}
-.hero-sub{font-size:1.05rem;color:rgba(255,255,255,0.72);line-height:1.72;margin-bottom:36px;max-width:500px}
-.hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
-.hero-trust{display:flex;flex-wrap:wrap;gap:18px}
-.trust-pill{
-  display:flex;align-items:center;gap:7px;
-  font-size:.78rem;color:rgba(255,255,255,0.6);
-}
-.trust-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
-
-/* ── SERVICES ────────────────────────────── */
-.services-section{background:var(--bg2);padding:90px 0}
-.services-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:2px;margin-top:52px;
-  border-radius:var(--radius);overflow:hidden;
-  border:1px solid var(--line);
-}
-.svc{
-  position:relative;padding:36px 28px;
-  background:var(--bg2);
-  border-right:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  transition:background .25s;
-  overflow:hidden;
-}
-.svc:hover{background:var(--bg3)}
-.svc::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(to right,var(--gold),transparent);
-  opacity:0;transition:opacity .25s;
-}
-.svc:hover::before{opacity:1}
-.svc-icon{
-  width:52px;height:52px;border-radius:12px;
-  background:var(--gold-dim);border:1px solid rgba(215,180,108,0.2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;margin-bottom:20px;
-}
-.svc h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:8px}
-.svc p{font-size:.84rem;color:var(--muted);line-height:1.65;margin-bottom:16px}
-.svc-link{font-size:.8rem;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:5px;transition:gap .2s}
-.svc:hover .svc-link{gap:9px}
-.services-cta{text-align:center;margin-top:48px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
-
-/* ── WHY US ──────────────────────────────── */
-.why-section{padding:90px 0;background:var(--bg)}
-.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:52px}
-.why-card{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:28px 24px;text-align:center;
-}
-.why-num{
-  font-family:'Cormorant Garamond',serif;
-  font-size:2.8rem;font-weight:600;color:var(--gold);line-height:1;margin-bottom:8px;
-}
-.why-card h4{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:6px}
-.why-card p{font-size:.8rem;color:var(--muted);line-height:1.6}
-
-/* ── ASK JUAN (solo modal, sin sección) ─── */
-.juan-chat-header{
-  background:linear-gradient(135deg,rgba(215,180,108,0.15),rgba(215,180,108,0.05));
-  border-bottom:1px solid var(--line);
-  padding:18px 22px;display:flex;align-items:center;gap:12px;
-}
-.juan-avatar{
-  width:42px;height:42px;border-radius:50%;
-  background:var(--gold-dim);border:2px solid rgba(215,180,108,0.3);
-  display:flex;align-items:center;justify-content:center;font-size:1.2rem;
-}
-.juan-name strong{display:block;font-size:.9rem;font-weight:700;color:var(--text)}
-.juan-name span{font-size:.74rem;color:var(--muted2)}
-.juan-online{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.74rem;color:#4ade80}
-.juan-online::before{content:'';width:7px;height:7px;border-radius:50%;background:#4ade80;display:block}
-.juan-msgs{padding:18px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;background:rgba(0,0,0,0.15);min-height:260px}
-.jmsg{max-width:88%;padding:11px 15px;border-radius:12px;font-size:.86rem;line-height:1.65}
-.jmsg-bot{background:var(--bg3);border:1px solid var(--line);color:var(--text);border-bottom-left-radius:3px}
-.jmsg-user{background:var(--gold);color:#0b1320;font-weight:600;align-self:flex-end;border-bottom-right-radius:3px}
-.jmsg-name{font-size:.7rem;font-weight:700;color:var(--gold);margin-bottom:4px}
-.jmsg-typing{display:flex;gap:5px;align-items:center;padding:11px 15px}
-.jmsg-typing span{width:7px;height:7px;border-radius:50%;background:var(--muted2);animation:bounce .9s infinite}
-.jmsg-typing span:nth-child(2){animation-delay:.2s}
-.jmsg-typing span:nth-child(3){animation-delay:.4s}
-@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-.juan-quick{
-  display:flex;flex-wrap:wrap;gap:7px;padding:12px 18px;
-  border-top:1px solid var(--line);background:var(--bg3);
-}
-.juan-qbtn{
-  padding:5px 13px;border-radius:100px;
-  border:1px solid rgba(215,180,108,0.35);
-  color:var(--gold);font-size:.76rem;font-weight:600;
-  background:transparent;transition:all .15s;
-}
-.juan-qbtn:hover{background:var(--gold);color:#0b1320}
-.juan-input-row{
-  display:flex;gap:10px;padding:12px 18px;
-  border-top:1px solid var(--line);background:var(--bg2);
-}
-.juan-txt{
-  flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:8px;
-  padding:10px 14px;color:var(--text);font-size:.86rem;outline:none;
-  transition:border-color .2s;
-}
-.juan-txt:focus{border-color:var(--gold)}
-.juan-txt::placeholder{color:var(--muted2)}
-.juan-send{
-  background:var(--gold);color:#0b1320;border:none;border-radius:8px;
-  padding:10px 16px;font-weight:700;font-size:.82rem;
-}
-.juan-send:hover{background:var(--gold2)}
-
-/* ── PORTAL ──────────────────────────────── */
-.portal-section{padding:90px 0;background:var(--bg)}
-.portal-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.portal-mock{
-  background:var(--bg2);border:1px solid var(--line);border-radius:20px;overflow:hidden;
-  box-shadow:0 16px 48px rgba(0,0,0,0.35);
-}
-.portal-mock-bar{
-  background:linear-gradient(90deg,rgba(215,180,108,0.12),rgba(215,180,108,0.04));
-  border-bottom:1px solid var(--line);padding:16px 22px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.portal-mock-bar span{font-weight:700;font-size:.9rem;color:var(--gold)}
-.portal-status{font-size:.75rem;color:#4ade80;display:flex;align-items:center;gap:5px}
-.portal-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;display:block}
-.portal-steps{padding:22px;display:flex;flex-direction:column;gap:10px}
-.portal-step{
-  background:var(--bg3);border:1px solid var(--line);border-radius:10px;
-  padding:14px 16px;display:flex;align-items:center;gap:14px;
-}
-.pstep-icon{font-size:1.3rem;width:38px;text-align:center;flex-shrink:0}
-.pstep-text strong{display:block;font-size:.85rem;color:var(--text);margin-bottom:2px}
-.pstep-text span{font-size:.76rem;color:var(--muted2)}
-.pstep-badge{
-  margin-left:auto;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:100px;
-}
-.badge-done{background:rgba(74,222,128,0.15);color:#4ade80}
-.badge-active{background:rgba(215,180,108,0.15);color:var(--gold)}
-.badge-next{background:rgba(255,255,255,0.06);color:var(--muted2)}
-.portal-cta-bar{
-  padding:18px 22px;border-top:1px solid var(--line);background:var(--bg2);
-  text-align:center;font-size:.82rem;color:var(--muted);
-}
-.portal-cta-bar a{color:var(--gold);font-weight:600}
-
-/* ── FAQ ─────────────────────────────────── */
-.faq-section{padding:90px 0;background:var(--bg2)}
-.faq-inner{max-width:760px;margin:0 auto}
-.faq-list{margin-top:44px;display:flex;flex-direction:column;gap:10px}
-.faq-item{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.faq-q{
-  width:100%;background:none;border:none;text-align:left;
-  padding:20px 24px;font-size:.93rem;font-weight:600;color:var(--text);
-  display:flex;justify-content:space-between;align-items:center;gap:16px;
-  transition:color .2s;
-}
-.faq-q:hover{color:var(--gold)}
-.faq-icon{font-size:1.1rem;color:var(--gold);flex-shrink:0;transition:transform .3s;font-style:normal}
-.faq-item.open .faq-icon{transform:rotate(45deg)}
-.faq-a{display:none;padding:0 24px 20px;font-size:.87rem;color:var(--muted);line-height:1.75}
-.faq-item.open .faq-a{display:block}
-.faq-a a{color:var(--gold);font-weight:600}
-
-/* ── LOCATIONS ───────────────────────────── */
-.loc-section{padding:56px 0;border-top:1px solid var(--line);background:var(--bg)}
-.loc-inner{text-align:center}
-.loc-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:24px}
-.loc-pill{
-  padding:8px 18px;border-radius:100px;
-  border:1px solid var(--line);font-size:.82rem;font-weight:500;color:var(--muted);
-  transition:all .2s;
-}
-.loc-pill:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
-
-/* ── FINAL CTA ───────────────────────────── */
-.cta-section{
-  padding:90px 0;
-  background:
-    radial-gradient(ellipse at center top, rgba(215,180,108,0.12), transparent 60%),
-    var(--bg3);
-  border-top:1px solid var(--line);text-align:center;
-}
-.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--text);margin-bottom:14px}
-.cta-section p{color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto 40px;line-height:1.7}
-.cta-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
-
-/* ── FOOTER ──────────────────────────────── */
-.footer{background:#060d16;border-top:1px solid var(--line);padding:60px 0 32px}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
-.footer-brand .logo{font-size:1.1rem}
-.footer-brand p{font-size:.83rem;color:var(--muted2);line-height:1.7;margin-top:12px;max-width:280px}
-.footer-brand .foot-contact{margin-top:18px;display:flex;flex-direction:column;gap:9px}
-.footer-brand .foot-contact a{font-size:.83rem;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s}
-.footer-brand .foot-contact a:hover{color:var(--gold)}
-.footer-col h5{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:14px}
-.footer-col a{display:block;font-size:.83rem;color:var(--muted);margin-bottom:9px;transition:color .2s}
-.footer-col a:hover{color:var(--gold)}
-.footer-bottom{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.footer-bottom p{font-size:.76rem;color:var(--muted2)}
-
-/* ── STICKY MOBILE BAR ───────────────────── */
-.sticky-bar{
-  display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;
-  background:var(--bg2);border-top:1px solid var(--line);
-  padding:10px 12px;padding-bottom:calc(10px + var(--safe-b));
-  gap:8px;
-}
-.sticky-bar a, .sticky-bar button{
-  flex:1;padding:13px 6px;border-radius:9px;
-  font-weight:700;font-size:.8rem;text-align:center;border:none;
-  min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.s-call{background:var(--gold);color:#0b1320}
-.s-wa{background:#25D366;color:#fff}
-.s-juan{background:var(--card);border:1px solid rgba(215,180,108,0.4)!important;color:var(--gold)}
-
-/* ── JUAN FAB (desktop) ──────────────────── */
-.juan-fab{
-  position:fixed;bottom:24px;right:24px;z-index:80;
-  width:54px;height:54px;border-radius:50%;
-  background:var(--gold);color:#0b1320;border:none;
-  font-size:1.4rem;
-  box-shadow:0 4px 24px rgba(215,180,108,0.35);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .2s,box-shadow .2s;
-}
-.juan-fab:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(215,180,108,0.5)}
-
-/* ── JUAN MODAL ──────────────────────────── */
-.juan-overlay{
-  display:none;position:fixed;inset:0;z-index:95;
-  background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
-  align-items:flex-end;justify-content:flex-end;padding:20px;
-}
-.juan-overlay.open{display:flex}
-.juan-modal{
-  width:100%;max-width:370px;
-  background:var(--bg2);border:1px solid var(--line);
-  border-radius:20px;overflow:hidden;
-  box-shadow:0 24px 64px rgba(0,0,0,0.5);
-  display:flex;flex-direction:column;max-height:82vh;
-}
-
-/* ── RESPONSIVE ──────────────────────────── */
-@media(max-width:960px){
-  .services-grid{grid-template-columns:repeat(2,1fr)}
-  .why-grid{grid-template-columns:repeat(2,1fr)}
-  .juan-inner,.portal-inner{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:680px){
-  .nav a:not(.btn-nav){display:none}
-  .hamburger{display:block}
-  .services-grid{grid-template-columns:1fr}
-  .why-grid{grid-template-columns:1fr 1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .footer-col{display:none}
-  .footer-col:first-child+.footer-col{display:none}
-  .sticky-bar{display:flex;flex-wrap:wrap}
-  .sticky-bar a, .sticky-bar button{flex:1 1 45%;min-width:0;padding:12px 4px;font-size:.72rem}
-  .hero h1{font-size:clamp(1.8rem,7vw,2.6rem)}
-  .hero-sub{font-size:.9rem}
-  .hero{min-height:80vh;padding-bottom:120px}
-  .juan-fab{bottom:78px}
-  .juan-overlay{padding:0;align-items:flex-end}
-  .juan-modal{border-radius:20px 20px 0 0;max-height:90vh;max-width:100%}
-}
-@media(max-width:375px){
-  .hero h1{font-size:1.6rem}
-  .hero-sub{font-size:.82rem}
-  .sticky-bar a, .sticky-bar button{font-size:.65rem;padding:10px 2px}
-  .hero-badge{font-size:.7rem;padding:6px 14px}
-}
-</style>
 </head>
 <body>
+
+<!-- ICON SPRITE (loaded once, referenced via <use href="/assets/icons/sprite.svg#id"/>) -->
 
 <!-- HEADER -->
 <header class="header">
@@ -474,8 +89,8 @@ h2.headline{
       <a href="/blog.html">Blog</a>
       <a href="/contact.html" class="btn-nav">Free Estimate</a>
     </nav>
-    <button class="hamburger" id="menuBtn" aria-label="Menu">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <button class="hamburger" id="menuBtn" aria-label="Open menu">
+      <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-menu"/></svg>
     </button>
   </div>
 </header>
@@ -488,32 +103,33 @@ h2.headline{
   <a href="/contact.html">Contact / Free Estimate</a>
   <a href="/app.html">Client Portal</a>
   <div class="mob-ctas">
-    <a href="tel:2106065298" class="btn" style="justify-content:center">📞 Call Now</a>
-    <a href="https://wa.me/12106065298" target="_blank" class="btn-wa" style="justify-content:center">💬 WhatsApp</a>
+    <a href="tel:2106065298" class="btn" style="justify-content:center"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-phone"/></svg>Call Roberto</a>
+    <a href="https://wa.me/12106065298" target="_blank" rel="noopener" class="btn-wa" style="justify-content:center"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-chat"/></svg>WhatsApp</a>
+    <a href="https://m.me/firstclassremodelingsatx" target="_blank" rel="noopener" class="btn-ghost" style="justify-content:center;grid-column:1/-1"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-facebook"/></svg>Message on Facebook</a>
   </div>
 </div>
 
 <!-- HERO -->
 <section class="hero">
-  <video autoplay muted loop playsinline poster="images/project-hero-still.png">
+  <video autoplay muted loop playsinline preload="metadata" poster="images/project-hero-still.webp" aria-hidden="true">
+    <source src="videos/project-showcase.webm" type="video/webm">
     <source src="videos/project-showcase.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
   <div class="shell">
     <div class="hero-body">
-      <div class="hero-badge">⭐ San Antonio's Trusted Remodeling Contractor</div>
-      <h1>Kitchens.<br>Bathrooms.<br><em>Outdoor Living.</em></h1>
-      <p class="hero-sub">From custom kitchens and spa-style bathrooms to outdoor kitchens, covered patios, and home additions — we build spaces San Antonio homeowners love to live in.</p>
+      <div class="hero-badge" data-eyebrow>San Antonio &middot; 15+ Years &middot; Licensed TX &middot; Bilingual</div>
+      <h1>Remodeling that feels<br>planned &mdash; and finished <em>cleaner</em>.</h1>
+      <p class="hero-sub">Custom kitchens, baths, outdoor living, and whole-home remodels. Licensed Texas contractor. Bilingual crews. Owner supervises every job.</p>
       <div class="hero-btns">
-        <a href="tel:2106065298" class="btn">📞 Call (210) 606-5298</a>
-        <a href="https://wa.me/12106065298?text=Hi%20First%20Class%20Remodeling%20TX%2C%20I%27d%20like%20a%20free%20estimate." target="_blank" class="btn-wa">💬 WhatsApp</a>
-        <a href="/contact.html" class="btn-ghost">Request Estimate Online</a>
+        <a href="/contact.html" class="btn">Get a free estimate <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+        <a href="tel:2106065298" class="btn-ghost"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-phone"/></svg>Talk to Roberto &middot; (210) 606-5298</a>
       </div>
       <div class="hero-trust">
-        <div class="trust-pill"><div class="trust-dot"></div>Licensed &amp; Insured in Texas</div>
-        <div class="trust-pill"><div class="trust-dot"></div>Free In-Home Estimates</div>
-        <div class="trust-pill"><div class="trust-dot"></div>5-Star Rated</div>
-        <div class="trust-pill"><div class="trust-dot"></div>San Antonio &amp; Surrounding Areas</div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-shield"/></svg>Licensed &amp; insured in Texas</div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-check"/></svg>Free in-home estimates</div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-spark"/></svg>Google rated &middot; bilingual crew</div>
+        <div class="trust-pill"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-pin"/></svg>San Antonio &amp; surrounding TX</div>
       </div>
     </div>
   </div>
@@ -527,40 +143,40 @@ h2.headline{
     <p class="lead">From the kitchen to the backyard — complete remodeling services for San Antonio homeowners.</p>
     <div class="services-grid">
       <div class="svc">
-        <div class="svc-icon">🍳</div>
+        <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-kitchen"/></svg></div>
         <h3>Kitchen Remodel</h3>
-        <p>Custom cabinets, quartz countertops, islands, backsplash, and complete kitchen transformations that add serious value.</p>
-        <a href="/services.html#kitchens" class="svc-link">See kitchen work <span>→</span></a>
+        <p>Custom cabinetry, quartz counters, islands, backsplash, and full kitchen rebuilds &mdash; finished clean, inspected, documented.</p>
+        <a href="/services.html#kitchens" class="svc-link">See kitchen work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
-        <div class="svc-icon">🛁</div>
+        <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-bath"/></svg></div>
         <h3>Bathroom Remodel</h3>
-        <p>Walk-in showers, tub-to-shower conversions, double vanities, and full master bath renovations with premium tile work.</p>
-        <a href="/services.html#bathrooms" class="svc-link">See bathroom work <span>→</span></a>
+        <p>Walk-in showers, tub-to-shower conversions, double vanities, full master bath rebuilds with waterproofed substrate and tighter grout lines.</p>
+        <a href="/services.html#bathrooms" class="svc-link">See bathroom work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
-        <div class="svc-icon">🔥</div>
+        <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-flame"/></svg></div>
         <h3>Outdoor Kitchen &amp; BBQ</h3>
-        <p>Custom BBQ islands, built-in grills, outdoor bars, and full outdoor kitchen setups — designed for San Antonio summers.</p>
-        <a href="/services.html#outdoor" class="svc-link">See outdoor work <span>→</span></a>
+        <p>Custom BBQ islands, built-in grills, outdoor bars, and covered outdoor kitchens designed for San Antonio heat and rain.</p>
+        <a href="/services.html#outdoor" class="svc-link">See outdoor work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
-        <div class="svc-icon">🏡</div>
+        <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-home"/></svg></div>
         <h3>Patios &amp; Covered Porches</h3>
-        <p>Covered patios, pergolas, concrete and tile work. Extend your living space outside with a custom outdoor retreat.</p>
-        <a href="/services.html#patios" class="svc-link">See patio work <span>→</span></a>
+        <p>Covered patios, pergolas, concrete, and tile. Extend the living space outward without compromising drainage or shade planning.</p>
+        <a href="/services.html#patios" class="svc-link">See patio work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
-        <div class="svc-icon">🏠</div>
+        <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-home-plus"/></svg></div>
         <h3>Home Additions</h3>
-        <p>New rooms, sunrooms, garage conversions, and full structural additions. Expand your home without moving.</p>
-        <a href="/services.html#additions" class="svc-link">See additions <span>→</span></a>
+        <p>New rooms, sunrooms, garage conversions, full structural additions. Permits, inspections, and framing handled in-house.</p>
+        <a href="/services.html#additions" class="svc-link">See additions <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
       <div class="svc">
-        <div class="svc-icon">🪵</div>
+        <div class="svc-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-floor"/></svg></div>
         <h3>Flooring</h3>
-        <p>Hardwood, luxury vinyl plank, large-format porcelain tile, and stone. Full installation and subfloor work.</p>
-        <a href="/services.html#flooring" class="svc-link">See flooring work <span>→</span></a>
+        <p>Hardwood, luxury vinyl plank, large-format porcelain tile, stone. Subfloor prep checked before anything gets laid.</p>
+        <a href="/services.html#flooring" class="svc-link">See flooring work <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
       </div>
     </div>
     <div class="services-cta">
@@ -587,14 +203,14 @@ h2.headline{
         <p>No charge, no pressure. Detailed written quote within 24–48 hours of your visit.</p>
       </div>
       <div class="why-card">
-        <div class="why-num">5★</div>
-        <h4>Google Rated</h4>
-        <p>Consistent five-star reviews from homeowners across San Antonio and surrounding areas.</p>
+        <div class="why-num serif">5.0</div>
+        <h4>Google Rating</h4>
+        <p>Consistent top-rated reviews from homeowners across San Antonio and surrounding areas.</p>
       </div>
       <div class="why-card">
-        <div class="why-num">📱</div>
+        <div class="why-num"><svg class="ico" style="width:2.2rem;height:2.2rem" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-shield"/></svg></div>
         <h4>Client Portal</h4>
-        <p>Track your project live — photos, timeline, docs, and updates from your phone.</p>
+        <p>Track your project live &mdash; photos, timeline, docs, and updates from your phone.</p>
       </div>
     </div>
   </div>
@@ -609,34 +225,22 @@ h2.headline{
         <h2 class="headline">Your project, always<br>in your pocket.</h2>
         <p class="lead">Every active client gets access to a private project app — progress photos, timeline, invoices, approvals, and direct messaging with your team. No login hassle, no app store needed.</p>
 
-        <div style="display:flex;flex-direction:column;gap:13px;margin-top:28px">
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="font-size:1.2rem;width:34px;text-align:center">📸</span>
-            <div><strong style="display:block;font-size:.88rem;color:var(--text)">Live progress photos</strong><span style="font-size:.8rem;color:var(--muted)">See your project being built — updated daily</span></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="font-size:1.2rem;width:34px;text-align:center">📋</span>
-            <div><strong style="display:block;font-size:.88rem;color:var(--text)">Timeline & next steps</strong><span style="font-size:.8rem;color:var(--muted)">Always know what's happening and what comes next</span></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="font-size:1.2rem;width:34px;text-align:center">💳</span>
-            <div><strong style="display:block;font-size:.88rem;color:var(--text)">Invoices & payments</strong><span style="font-size:.8rem;color:var(--muted)">All records in one secure place</span></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="font-size:1.2rem;width:34px;text-align:center">✅</span>
-            <div><strong style="display:block;font-size:.88rem;color:var(--text)">Approvals & sign-offs</strong><span style="font-size:.8rem;color:var(--muted)">Review and approve changes from your phone</span></div>
-          </div>
-        </div>
+        <ul class="portal-feat">
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-camera"/></svg><div><strong>Live progress photos</strong><span>See the project being built &mdash; updated daily.</span></div></li>
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-clock"/></svg><div><strong>Timeline &amp; next steps</strong><span>Always know what is happening and what comes next.</span></div></li>
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-card"/></svg><div><strong>Invoices &amp; payments</strong><span>All records in one secure place.</span></div></li>
+          <li><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-check"/></svg><div><strong>Approvals &amp; sign-offs</strong><span>Review and approve changes from your phone.</span></div></li>
+        </ul>
 
-        <div style="margin-top:32px;display:flex;flex-direction:column;gap:10px">
-          <a href="/app.html" class="btn" style="justify-content:center;text-align:center">📲 Open the Client App</a>
-          <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px">
-            <p style="font-size:.78rem;color:var(--gold);font-weight:700;margin-bottom:6px">📱 Add to your Home Screen (iPhone)</p>
-            <p style="font-size:.76rem;color:var(--muted);line-height:1.6">Open in Safari → tap the <strong style="color:var(--text)">Share</strong> button → <strong style="color:var(--text)">Add to Home Screen</strong> → Done. Works like a native app.</p>
+        <div class="portal-install">
+          <a href="/app.html" class="btn" style="justify-content:center;text-align:center">Open the client app <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+          <div class="portal-install-card">
+            <p class="portal-install-ttl">Add to home screen (iPhone)</p>
+            <p class="portal-install-body">Open in Safari, tap <strong>Share</strong>, then <strong>Add to Home Screen</strong>. Installs like a native app.</p>
           </div>
-          <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px">
-            <p style="font-size:.78rem;color:var(--gold);font-weight:700;margin-bottom:6px">🤖 Android</p>
-            <p style="font-size:.76rem;color:var(--muted);line-height:1.6">Open in Chrome → tap <strong style="color:var(--text)">⋮ Menu</strong> → <strong style="color:var(--text)">Add to Home Screen</strong>. Installs instantly.</p>
+          <div class="portal-install-card">
+            <p class="portal-install-ttl">Add to home screen (Android)</p>
+            <p class="portal-install-body">Open in Chrome, tap the menu, then <strong>Add to Home Screen</strong>.</p>
           </div>
         </div>
       </div>
@@ -648,22 +252,22 @@ h2.headline{
         </div>
         <div class="portal-steps">
           <div class="portal-step">
-            <div class="pstep-icon">🔨</div>
-            <div class="pstep-text"><strong>Demolition complete</strong><span>Apr 1 · 4 photos added</span></div>
-            <div class="pstep-badge badge-done">Done ✓</div>
+            <div class="pstep-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-check"/></svg></div>
+            <div class="pstep-text"><strong>Demolition complete</strong><span>Apr 1 &middot; 4 photos added</span></div>
+            <div class="pstep-badge badge-done">Done</div>
           </div>
           <div class="portal-step" style="border:1px solid rgba(215,180,108,0.3)">
-            <div class="pstep-icon">🚿</div>
-            <div class="pstep-text"><strong>Plumbing rough-in</strong><span>Apr 3 · Active now</span></div>
+            <div class="pstep-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-bath"/></svg></div>
+            <div class="pstep-text"><strong>Plumbing rough-in</strong><span>Apr 3 &middot; Active now</span></div>
             <div class="pstep-badge badge-active">Active</div>
           </div>
           <div class="portal-step">
-            <div class="pstep-icon">🪨</div>
+            <div class="pstep-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-floor"/></svg></div>
             <div class="pstep-text"><strong>Tile installation</strong><span>Starts Apr 7</span></div>
             <div class="pstep-badge badge-next">Upcoming</div>
           </div>
           <div class="portal-step">
-            <div class="pstep-icon">✅</div>
+            <div class="pstep-icon"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-clipboard"/></svg></div>
             <div class="pstep-text"><strong>Final walkthrough</strong><span>Est. Apr 14</span></div>
             <div class="pstep-badge badge-next">Upcoming</div>
           </div>
@@ -734,9 +338,9 @@ h2.headline{
     <h2>Ready to start your project?</h2>
     <p>Call, text, or send us a few photos. We'll get back to you fast with a clear plan.</p>
     <div class="cta-btns">
-      <a href="tel:2106065298" class="btn">📞 Call (210) 606-5298</a>
-      <a href="https://wa.me/12106065298?text=Hi%20First%20Class%20Remodeling%20TX%2C%20I%27d%20like%20a%20free%20estimate." target="_blank" class="btn-wa">💬 WhatsApp Us</a>
-      <a href="/contact.html" class="btn-ghost">📋 Request Estimate Online</a>
+      <a href="/contact.html" class="btn">Get a free estimate <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-arrow-right"/></svg></a>
+      <a href="tel:2106065298" class="btn-ghost"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-phone"/></svg>Talk to Roberto &middot; (210) 606-5298</a>
+      <a href="https://wa.me/12106065298?text=Hi%20First%20Class%20Remodeling%20TX%2C%20I%27d%20like%20a%20free%20estimate." target="_blank" rel="noopener" class="btn-ghost"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-chat"/></svg>WhatsApp</a>
     </div>
   </div>
 </section>
@@ -749,10 +353,10 @@ h2.headline{
         <div class="logo">First Class Remodeling TX <small>San Antonio, Texas</small></div>
         <p>Licensed and insured remodeling contractor. Kitchens, bathrooms, outdoor living, home additions, flooring, and painting across San Antonio and surrounding areas.</p>
         <div class="foot-contact">
-          <a href="tel:2106065298">📞 (210) 606-5298</a>
-          <a href="mailto:estimates@firstclassremodelingtx.com">✉️ estimates@firstclassremodelingtx.com</a>
-          <a href="https://wa.me/12106065298" target="_blank">💬 WhatsApp</a>
-          <a href="https://www.facebook.com/firstclassremodelingsatx" target="_blank">📘 Facebook</a>
+          <a href="tel:2106065298"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-phone"/></svg>(210) 606-5298</a>
+          <a href="mailto:estimates@firstclassremodelingtx.com"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-mail"/></svg>estimates@firstclassremodelingtx.com</a>
+          <a href="https://wa.me/12106065298" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-chat"/></svg>WhatsApp</a>
+          <a href="https://www.facebook.com/firstclassremodelingsatx" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-facebook"/></svg>Facebook</a>
         </div>
       </div>
       <div class="footer-col">
@@ -808,13 +412,13 @@ h2.headline{
 </div>
 
 <!-- JUAN FAB -->
-<button class="juan-fab" onclick="openJuan()" aria-label="Chat with Juan">💬</button>
+<button class="juan-fab" onclick="openJuan()" aria-label="Chat with Joe"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-chat"/></svg></button>
 
 <!-- JUAN MODAL -->
 <div class="juan-overlay" id="juanOverlay" onclick="closeOutside(event)">
   <div class="juan-modal" id="juanModal">
     <div class="juan-chat-header">
-      <div class="juan-avatar">👷</div>
+      <div class="juan-avatar"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260416#i-user"/></svg></div>
       <div class="juan-name">
         <strong>Joe — Project Advisor</strong>
         <span>First Class Remodeling TX · AI-powered</span>
@@ -824,15 +428,15 @@ h2.headline{
     <div class="juan-msgs" id="juanBody" style="flex:1;overflow-y:auto">
       <div>
         <div class="jmsg-name">Joe</div>
-        <div class="jmsg jmsg-bot">Hey! I'm Joe, your project advisor at First Class Remodeling TX. 👋<br><br>Ask me anything — kitchen costs, bathroom ideas, materials, timelines, permits. I know San Antonio remodeling inside and out.</div>
+        <div class="jmsg jmsg-bot">Hey &mdash; I'm Joe, your project advisor at First Class Remodeling TX.<br><br>Ask me anything: kitchen costs, bathroom ideas, materials, timelines, permits. I know San Antonio remodeling inside and out.</div>
       </div>
     </div>
     <div class="juan-quick" id="juanQuick">
-      <button class="juan-qbtn" onclick="quickMsg('Kitchen remodel')">🍳 Kitchen</button>
-      <button class="juan-qbtn" onclick="quickMsg('Bathroom remodel')">🛁 Bathroom</button>
-      <button class="juan-qbtn" onclick="quickMsg('Outdoor kitchen or patio')">🔥 Outdoor</button>
-      <button class="juan-qbtn" onclick="quickMsg('Home addition')">🏠 Addition</button>
-      <button class="juan-qbtn" onclick="quickMsg('How much does it cost?')">💰 Pricing</button>
+      <button class="juan-qbtn" onclick="quickMsg('Kitchen remodel')">Kitchen</button>
+      <button class="juan-qbtn" onclick="quickMsg('Bathroom remodel')">Bathroom</button>
+      <button class="juan-qbtn" onclick="quickMsg('Outdoor kitchen or patio')">Outdoor</button>
+      <button class="juan-qbtn" onclick="quickMsg('Home addition')">Addition</button>
+      <button class="juan-qbtn" onclick="quickMsg('How much does it cost?')">Pricing</button>
     </div>
     <div class="juan-input-row">
       <input class="juan-txt" id="juanInput" placeholder="Ask about your project..." onkeydown="if(event.key==='Enter')sendMsg()">
@@ -841,209 +445,6 @@ h2.headline{
   </div>
 </div>
 
-<script>
-// ── HAMBURGER ─────────────────────────────────
-const menuBtn = document.getElementById('menuBtn');
-const mobNav  = document.getElementById('mobNav');
-menuBtn.addEventListener('click', () => {
-  const open = mobNav.classList.toggle('open');
-  document.body.style.overflow = open ? 'hidden' : '';
-});
-// close mobile nav on link tap
-mobNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  mobNav.classList.remove('open');
-  document.body.style.overflow = '';
-}));
-
-// ── STICKY BAR (show after hero) ──────────────
-const stickyBar = document.getElementById('stickyBar');
-new IntersectionObserver(([e]) => {
-  stickyBar.style.display = e.isIntersecting ? 'none' : 'flex';
-}, {threshold: 0}).observe(document.querySelector('.hero'));
-
-// ── FAQ ───────────────────────────────────────
-function toggleFaq(btn) { btn.parentElement.classList.toggle('open'); }
-
-// ── JOE AI CHAT ENGINE (TigreLabs Trenzado) ──────────────
-const JOE_API = 'http://159.203.143.156:8085/api/joe';
-const JOE_SYSTEM = `You are Joe -- the #1 senior project advisor and sales expert at First Class Remodeling TX, the premier residential remodeling company in San Antonio, Texas. Owner: Roberto Martinez, phone (210) 606-5298, website: firstclassremodelingtx.com.
-
-You are a CONSTRUCTION EXPERT and SALES CLOSER with 20+ years experience in San Antonio.
-
-YOUR EXPERTISE:
-- Kitchen remodels: cabinets, countertops (quartz $50-150/sqft, granite $40-100, marble $75-200), layout, lighting. Full remodel $25k-55k, refresh $8k-22k.
-- Bathroom remodels: master $14k-35k, guest $7k-18k, powder $3.5k-9k. Tile, fixtures, walk-in showers, ADA, waterproofing.
-- Flooring: LVP $5-9/sqft installed, hardwood $9-16, tile $8-14. San Antonio humidity considerations.
-- Painting: interior $2.5k-6k full home, exterior $3k-8k. Proper prep is key.
-- Outdoor: kitchens $18k-40k, patios $12k-30k, combined $28k-60k. Fully permitted.
-- Home additions: room $55k-90k+, garage conversion $25k-55k.
-- Permits: San Antonio/Bexar County, 2-4 weeks approval. We handle all permits and inspections.
-- Timelines: bath 1-3 weeks, kitchen 3-6 weeks, outdoor 3-6 weeks, addition 8-16 weeks.
-
-HOW TO TALK:
-- You ARE Joe. NEVER say you are AI, a bot, or an assistant. You are part of the First Class team.
-- Warm, confident, conversational -- like texting a friend who is a construction expert.
-- Match the client language: if they write Spanish, answer in Spanish. If English, English.
-- Give real San Antonio price ranges. Be specific and helpful.
-- ALWAYS guide toward a free estimate: "Want Roberto to come take a look? Free estimate, no pressure."
-- If they share project details: "That sounds great. We just finished something similar -- came out amazing."
-- Mention referral bonus naturally when appropriate.
-- Keep it 2-4 sentences. Go longer only for detailed technical questions.
-- Phone: (210) 606-5298 | WhatsApp: wa.me/12106065298`;
-
-let joeHistory = [];
-let joeBusy = false;
-
-// Clear on page leave
-window.addEventListener('beforeunload', () => { joeHistory = []; });
-
-// Conversation state for lead capture
-const J = {
-  step: 'start',
-  topic: null,
-  detail: null,
-  name: null,
-  phone: null,
-};
-
-// (AI-powered — no static knowledge base needed)
-
-// DOM helpers
-function botMsg(html, instant) {
-  const body = document.getElementById('juanBody');
-  if (!instant) {
-    // typing indicator
-    const typing = document.createElement('div');
-    typing.className = 'jmsg-bot jmsg jmsg-typing';
-    typing.id = 'joeTyping';
-    typing.innerHTML = '<span></span><span></span><span></span>';
-    const tw = document.createElement('div');
-    tw.id = 'joeTypingWrap';
-    tw.style.cssText = 'display:flex;flex-direction:column';
-    const tn = document.createElement('div');
-    tn.className = 'jmsg-name'; tn.textContent = 'Joe';
-    tw.appendChild(tn); tw.appendChild(typing);
-    body.appendChild(tw); body.scrollTop = body.scrollHeight;
-    return;
-  }
-  // Remove typing indicator
-  const old = document.getElementById('joeTypingWrap');
-  if (old) old.remove();
-  // Add actual message
-  const w = document.createElement('div');
-  w.style.cssText = 'display:flex;flex-direction:column';
-  const n = document.createElement('div');
-  n.className = 'jmsg-name'; n.textContent = 'Joe';
-  const m = document.createElement('div');
-  m.className = 'jmsg jmsg-bot';
-  m.innerHTML = html;
-  w.appendChild(n); w.appendChild(m);
-  body.appendChild(w);
-  body.scrollTop = body.scrollHeight;
-}
-
-function userMsg(text) {
-  const body = document.getElementById('juanBody');
-  const w = document.createElement('div');
-  w.style.cssText = 'align-self:flex-end;display:flex;flex-direction:column;align-items:flex-end';
-  const m = document.createElement('div');
-  m.className = 'jmsg jmsg-user';
-  m.textContent = text;
-  w.appendChild(m);
-  body.appendChild(w);
-  body.scrollTop = body.scrollHeight;
-}
-
-const LEAD_ENGINE = 'https://leads.firstclassremodelingtx.com';
-
-function captureJuanLead(name, phone) {
-  const data = {
-    source: 'ask-juan',
-    name: name || J.name || '',
-    phone: phone || J.phone || '',
-    email: '',
-    service: J.topic || '',
-    message: 'Lead from Ask Juan chat'
-  };
-  fetch(LEAD_ENGINE + '/webhook/lead', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  }).catch(() => {});
-}
-
-async function sendMsg() {
-  if (joeBusy) return;
-  const inp = document.getElementById('juanInput');
-  const txt = inp.value.trim(); if (!txt) return;
-  inp.value = '';
-  document.getElementById('juanQuick').style.display = 'none';
-  userMsg(txt);
-
-  // Capture phone number
-  const phoneMatch = txt.match(/(\(?\d{3}\)?[\s\-.]?\d{3}[\s\-.]?\d{4})/);
-  if (phoneMatch) {
-    J.phone = phoneMatch[1];
-    if (J.name) captureJuanLead(J.name, J.phone);
-  }
-
-  // AI call
-  joeBusy = true;
-  botMsg(null, false); // show typing
-  joeHistory.push({role: 'user', content: txt});
-  if (joeHistory.length > 16) joeHistory = joeHistory.slice(-16);
-
-  try {
-    const resp = await fetch(JOE_API, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        messages: [{role: 'system', content: JOE_SYSTEM}, ...joeHistory],
-        max_tokens: 400,
-        temperature: 0.7
-      })
-    });
-    const data = await resp.json();
-    const reply = data?.choices?.[0]?.message?.content || "Let me check on that — call or text Roberto at (210) 606-5298 for a quick answer!";
-    joeHistory.push({role: 'assistant', content: reply});
-    // Clean markdown
-    const clean = reply.replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>');
-    botMsg(clean, true);
-  } catch(e) {
-    botMsg("Brief connection issue — call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a> for instant help!", true);
-  }
-  joeBusy = false;
-}
-
-function quickMsg(txt) {
-  document.getElementById('juanInput').value = txt;
-  sendMsg();
-}
-
-function openJuan() {
-  document.getElementById('juanOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('juanInput').focus(), 350);
-}
-function closeJuan() {
-  document.getElementById('juanOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-  // Clear chat history on close
-  joeHistory = [];
-  J.step = 'start'; J.topic = null; J.name = null; J.phone = null;
-  const body = document.getElementById('juanBody');
-  body.innerHTML = '<div><div class="jmsg-name">Joe</div><div class="jmsg jmsg-bot">Hey! I\'m Joe, your project advisor at First Class Remodeling TX. 👋<br><br>Ask me anything — kitchen costs, bathroom ideas, materials, timelines, permits. I know San Antonio remodeling inside and out.</div></div>';
-  document.getElementById('juanQuick').style.display = '';
-}
-function closeOutside(e) {
-  if (e.target === document.getElementById('juanOverlay')) closeJuan();
-}
-
-// Enter key in chat
-document.getElementById('juanInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') sendMsg();
-});
-</script>
-
+<script src="/assets/js/fcr.js?v=20260416" defer></script>
 </body>
 </html>
