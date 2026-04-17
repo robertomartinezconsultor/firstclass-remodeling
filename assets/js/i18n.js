@@ -8,9 +8,9 @@ const FCR_DICT = {
   'nav.services':      { en: 'Services',            es: 'Servicios' },
   'nav.gallery':       { en: 'Gallery',             es: 'Galería' },
   'nav.blog':          { en: 'Blog',                es: 'Blog' },
-  'nav.estimate':      { en: 'Free Estimate',       es: 'Cotización gratis' },
+  'nav.estimate':      { en: 'Free Consultation',    es: 'Consulta gratis' },
   'nav.portal':        { en: 'Client Portal',       es: 'Portal del cliente' },
-  'nav.contact':       { en: 'Contact / Free Estimate', es: 'Contacto / Cotización' },
+  'nav.contact':       { en: 'Contact / Free Consultation', es: 'Contacto / Consulta gratis' },
   'nav.photos':        { en: 'Photo Gallery',       es: 'Galería de fotos' },
   'nav.guides':        { en: 'Blog & Pricing Guides', es: 'Blog y guías de precios' },
 
@@ -21,9 +21,9 @@ const FCR_DICT = {
                          es: 'Remodelaciones <br>planeadas al detalle &mdash; y acabadas <em>como se debe</em>.' },
   'hero.h1b':          { en: 'Kitchen &amp; bath remodels.<br>On schedule. On budget. <em>Bilingual</em>.',
                          es: 'Cocinas y baños.<br>A tiempo. En presupuesto. <em>Bilingüe</em>.' },
-  'hero.sub':          { en: 'Custom kitchens, baths, outdoor living, and whole-home remodels. Licensed Texas contractor. Bilingual crews. Owner supervises every job.',
-                         es: 'Cocinas a medida, baños, exteriores y remodelaciones completas. Contratista con licencia en Texas. Cuadrillas bilingües. El dueño supervisa cada obra.' },
-  'hero.cta.primary':  { en: 'Get a free estimate', es: 'Cotización gratis' },
+  'hero.sub':          { en: 'Custom kitchens, baths, outdoor living, and whole-home remodels. Bilingual coordination. Every project supervised from design to completion.',
+                         es: 'Cocinas a medida, baños, exteriores y remodelaciones completas. Coordinación bilingüe. Cada proyecto supervisado de diseño a entrega.' },
+  'hero.cta.primary':  { en: 'Free design consultation', es: 'Consulta de diseño gratis' },
   'hero.cta.phone':    { en: 'Call us · (210) 606-5298',
                          es: 'Llámanos · (210) 606-5298' },
   'hero.trust.1':      { en: 'Licensed &amp; insured in Texas',
@@ -65,7 +65,7 @@ const FCR_DICT = {
   'svc.floor.p':       { en: 'Hardwood, luxury vinyl plank, large-format porcelain tile, stone. Subfloor prep checked before anything gets laid.',
                          es: 'Madera, vinil de lujo, porcelanato gran formato, piedra. Revisamos el subsuelo antes de instalar.' },
   'svc.floor.link':    { en: 'See flooring work',   es: 'Ver trabajo de pisos' },
-  'svc.cta.estimate':  { en: 'Get a Free Estimate', es: 'Cotización gratis' },
+  'svc.cta.estimate':  { en: 'Free Design Consultation', es: 'Consulta de diseño gratis' },
   'svc.cta.gallery':   { en: 'View Photo Gallery',  es: 'Ver galería de fotos' },
 
   // Why us
