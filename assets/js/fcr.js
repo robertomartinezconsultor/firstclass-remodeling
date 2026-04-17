@@ -283,7 +283,20 @@ if (chatInput) {
     statNums.forEach(n => counterObs.observe(n));
   }
 
-  // 4. Custom cursor (Obys / Bruno Simon — dot + ring)
+  // 4. 3D tilt on service cards (Active Theory / Stripe)
+  document.querySelectorAll('.svc').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(800px) rotateY(${x*8}deg) rotateX(${-y*8}deg) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // 5. Custom cursor (Obys / Bruno Simon — dot + ring)
   const dot = document.createElement('div');
   dot.className = 'cursor-dot';
   const ring = document.createElement('div');

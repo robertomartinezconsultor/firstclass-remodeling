@@ -130,13 +130,13 @@ h2.headline{
 .hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;background:#060e18}
 .hero video{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:.45;
+  opacity:.6;
 }
 .hero-overlay{
   position:absolute;inset:0;
   background:
-    linear-gradient(to right, rgba(6,14,24,0.96) 0%, rgba(6,14,24,0.65) 55%, rgba(6,14,24,0.25) 100%),
-    linear-gradient(to top, rgba(6,14,24,0.6) 0%, transparent 50%);
+    linear-gradient(to right, rgba(6,9,15,0.92) 0%, rgba(6,9,15,0.55) 50%, rgba(6,9,15,0.15) 100%),
+    linear-gradient(to top, rgba(6,9,15,0.7) 0%, transparent 40%);
 }
 .hero-body{
   position:relative;z-index:2;
@@ -154,7 +154,15 @@ h2.headline{
   font-size:clamp(2.6rem,5.5vw,4.2rem);
   font-weight:600;line-height:1.1;color:#fff;margin-bottom:22px;
 }
-.hero h1 em{color:var(--gold);font-style:normal}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold),var(--gold2));
+  background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 .hero-sub{font-size:1.05rem;color:rgba(255,255,255,0.72);line-height:1.72;margin-bottom:36px;max-width:500px}
 .hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
 .hero-trust{display:flex;flex-wrap:wrap;gap:18px}
@@ -175,13 +183,15 @@ h2.headline{
 }
 .svc{
   position:relative;padding:36px 28px;
-  background:var(--bg2);
+  background:var(--card-glass);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border-right:1px solid var(--line);
   border-bottom:1px solid var(--line);
-  transition:background .25s;
+  transition:background .35s,transform .35s,box-shadow .35s;
   overflow:hidden;
+  transform-style:preserve-3d;
 }
-.svc:hover{background:var(--bg3)}
+.svc:hover{background:rgba(255,255,255,0.06);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(215,180,108,0.08)}
 .svc::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(to right,var(--gold),transparent);
@@ -244,10 +254,10 @@ h2.headline{
   letter-spacing:.18em;text-transform:uppercase;
   will-change:transform;
 }
-.rail-track span{color:var(--muted2);transition:color .3s}
-.rail-track span:hover{color:var(--gold)}
-.rail-track.gold span{color:rgba(215,180,108,0.35)}
-.rail-track.gold span:hover{color:var(--gold)}
+.rail-track a,.rail-track span{color:var(--muted2);transition:color .3s,text-shadow .3s;text-decoration:none}
+.rail-track a:hover,.rail-track span:hover{color:var(--gold);text-shadow:0 0 18px rgba(215,180,108,0.3)}
+.rail-track.gold a,.rail-track.gold span{color:rgba(215,180,108,0.35)}
+.rail-track.gold a:hover,.rail-track.gold span:hover{color:var(--gold);text-shadow:0 0 20px rgba(215,180,108,0.4)}
 .rail--left .rail-track{animation:rail-scroll-l 40s linear infinite}
 .rail--right .rail-track{animation:rail-scroll-r 45s linear infinite}
 .rail--slow .rail-track{animation-duration:55s}
