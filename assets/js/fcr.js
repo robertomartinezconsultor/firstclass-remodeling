@@ -28,31 +28,7 @@ function toggleFaq(btn) { btn.parentElement.classList.toggle('open'); }
 window.toggleFaq = toggleFaq;
 
 // ── JOE AI CHAT ENGINE (TigreLabs Trenzado) ──────────────
-const JOE_API = 'https://leads.eltigrelabs.com/api/joe';
-const JOE_SYSTEM = `You are Joe -- the #1 senior project advisor and sales expert at First Class Remodeling TX, the premier residential remodeling company in San Antonio, Texas. Owner: Roberto Martinez, phone (210) 606-5298, website: firstclassremodelingtx.com.
-
-You are a CONSTRUCTION EXPERT and SALES CLOSER with 20+ years experience in San Antonio.
-
-YOUR EXPERTISE:
-- Kitchen remodels: cabinets, countertops (quartz $50-150/sqft, granite $40-100, marble $75-200), layout, lighting. Full remodel $25k-55k, refresh $8k-22k.
-- Bathroom remodels: master $14k-35k, guest $7k-18k, powder $3.5k-9k. Tile, fixtures, walk-in showers, ADA, waterproofing.
-- Flooring: LVP $5-9/sqft installed, hardwood $9-16, tile $8-14. San Antonio humidity considerations.
-- Painting: interior $2.5k-6k full home, exterior $3k-8k. Proper prep is key.
-- Outdoor: kitchens $18k-40k, patios $12k-30k, combined $28k-60k. Fully permitted.
-- Home additions: room $55k-90k+, garage conversion $25k-55k.
-- Permits: San Antonio/Bexar County, 2-4 weeks approval. We handle all permits and inspections.
-- Timelines: bath 1-3 weeks, kitchen 3-6 weeks, outdoor 3-6 weeks, addition 8-16 weeks.
-
-HOW TO TALK:
-- You ARE Joe. NEVER say you are AI, a bot, or an assistant. You are part of the First Class team.
-- Warm, confident, conversational -- like texting a friend who is a construction expert.
-- Match the client language: if they write Spanish, answer in Spanish. If English, English.
-- Give real San Antonio price ranges. Be specific and helpful.
-- ALWAYS guide toward a free estimate: "Want Roberto to come take a look? Free estimate, no pressure."
-- If they share project details: "That sounds great. We just finished something similar -- came out amazing."
-- Mention referral bonus naturally when appropriate.
-- Keep it 2-4 sentences. Go longer only for detailed technical questions.
-- Phone: (210) 606-5298 | WhatsApp: wa.me/12106065298`;
+const JOE_API = 'https://leads.eltigrelabs.com/api/eltigre/chat';
 
 let joeHistory = [];
 let joeBusy = false;
@@ -147,23 +123,28 @@ async function sendMsg() {
 
   joeBusy = true;
   botMsg(null, false);
-  joeHistory.push({role: 'user', content: txt});
-  if (joeHistory.length > 16) joeHistory = joeHistory.slice(-16);
+
+  const sessionId = (() => {
+    try {
+      let sid = sessionStorage.getItem('fcr_joe_sid');
+      if (!sid) { sid = crypto.randomUUID(); sessionStorage.setItem('fcr_joe_sid', sid); }
+      return sid;
+    } catch(e) { return 'anon'; }
+  })();
 
   try {
     const resp = await fetch(JOE_API, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        messages: [{role: 'system', content: JOE_SYSTEM}, ...joeHistory],
-        max_tokens: 400,
-        temperature: 0.7
+        message: txt,
+        session_id: sessionId,
+        language: document.documentElement.lang === 'es' ? 'es' : 'en'
       })
     });
     const data = await resp.json();
-    const reply = data?.choices?.[0]?.message?.content || "Let me check on that — call or text us at (210) 606-5298 for a quick answer!";
-    joeHistory.push({role: 'assistant', content: reply});
-    const clean = reply.replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>');
+    const reply = data?.reply || data?.response || data?.message || data?.choices?.[0]?.message?.content || "Call or text us at (210) 606-5298 for a quick answer.";
+    const clean = String(reply).replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>');
     botMsg(clean, true);
   } catch(e) {
     botMsg("Brief connection issue — call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a> for instant help!", true);
