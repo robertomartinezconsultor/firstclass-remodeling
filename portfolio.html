@@ -84,29 +84,7 @@
   </div>
 </section>
 
-<!-- BEFORE / AFTER INTERACTIVE SLIDER -->
-<section class="ba-section">
-  <div class="shell">
-    <div class="tag" style="text-align:center">Before &amp; After</div>
-    <h2 class="headline" style="text-align:center">Drag to reveal the<br><em style="color:var(--gold);font-style:normal">transformation</em>.</h2>
-
-    <div class="ba-wrap" id="baWrap">
-      <img src="/images/projects/kitchen-before-1.webp" alt="Kitchen before remodel" class="ba-before" loading="eager">
-      <img src="/images/projects/kitchen-luxury-1.webp" alt="Kitchen after quiet luxury remodel" class="ba-after" loading="eager">
-      <div class="ba-line" id="baLine"></div>
-      <div class="ba-handle" id="baHandle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 4l-4 8 4 8M16 4l4 8-4 8"/></svg>
-      </div>
-      <span class="ba-label before">Before</span>
-      <span class="ba-label after">After</span>
-    </div>
-
-    <div class="ba-tabs">
-      <button class="ba-tab active" onclick="switchBA('kitchen')">Kitchen</button>
-      <button class="ba-tab" onclick="switchBA('bathroom')">Bathroom</button>
-    </div>
-  </div>
-</section>
+<!-- Gallery starts directly -->
 
 <!-- GALLERY GRID -->
 <section style="background:var(--bg);padding:clamp(60px,8vw,100px) 0">
@@ -120,49 +98,41 @@
       <button class="gal-fil" onclick="filterGal('bathroom',this)">Bathroom</button>
       <button class="gal-fil" onclick="filterGal('outdoor',this)">Outdoor</button>
       <button class="gal-fil" onclick="filterGal('interior',this)">Interior</button>
+      <button class="gal-fil" onclick="filterGal('tile',this)">Tile &amp; Materials</button>
+      <button class="gal-fil" onclick="filterGal('color',this)">Color Combos</button>
     </div>
 
     <div class="gal-grid" id="galGrid">
-      <div class="gal-card" data-cat="kitchen" onclick="openLB(0)">
-        <img src="/images/projects/kitchen-luxury-1.webp" alt="Luxury kitchen remodel with marble island" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Kitchen</span><h3>Marble island with brass pendants</h3></div>
-      </div>
-      <div class="gal-card" data-cat="kitchen" onclick="openLB(1)">
-        <img src="/images/projects/kitchen-detail-1.webp" alt="Quartz countertop detail with brass faucet" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Kitchen Detail</span><h3>Waterfall quartz edge with LED glow</h3></div>
-      </div>
-      <div class="gal-card" data-cat="bathroom" onclick="openLB(2)">
-        <img src="/images/projects/bathroom-luxury-1.webp" alt="Luxury master bath with stone tile" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Bathroom</span><h3>Natural stone spa with freestanding tub</h3></div>
-      </div>
-      <div class="gal-card" data-cat="bathroom" onclick="openLB(3)">
-        <img src="/images/projects/bathroom-detail-1.webp" alt="Walk-in rain shower with warm lighting" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Bathroom Detail</span><h3>Rain shower with ambient LED niches</h3></div>
-      </div>
-      <div class="gal-card" data-cat="outdoor" onclick="openLB(4)">
-        <img src="/images/projects/outdoor-kitchen-1.webp" alt="Outdoor BBQ kitchen at dusk" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Outdoor</span><h3>BBQ island with covered pergola</h3></div>
-      </div>
-      <div class="gal-card" data-cat="outdoor" onclick="openLB(5)">
-        <img src="/images/projects/patio-luxury-1.webp" alt="Covered patio with hill country sunset" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Patio</span><h3>Stone patio with sunset pergola</h3></div>
-      </div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(6)">
-        <img src="/images/projects/flooring-luxury-1.webp" alt="Wide plank hardwood in open concept" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Flooring</span><h3>Wide plank oak with natural light</h3></div>
-      </div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(7)">
-        <img src="/images/projects/whole-home-luxury-1.webp" alt="Whole home remodel with stone fireplace" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Whole Home</span><h3>Beamed ceiling with stone fireplace</h3></div>
-      </div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(8)">
-        <img src="/images/projects/painting-luxury-1.webp" alt="Interior painting with warm gray walls" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Painting</span><h3>Warm gray with crown molding</h3></div>
-      </div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(9)">
-        <img src="/images/projects/addition-luxury-1.webp" alt="Sunroom addition with hill country view" loading="lazy" width="1200" height="800">
-        <div class="gal-overlay"><span>Addition</span><h3>Sunroom with polished concrete</h3></div>
-      </div>
+      <div class="gal-card" data-cat="kitchen" onclick="openLB(0)"><img src="/images/projects/kitchen-luxury-1.webp" alt="Luxury kitchen with marble island" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Kitchen</span><h3>Marble island, warm wood, brass pendants</h3></div></div>
+      <div class="gal-card" data-cat="kitchen" onclick="openLB(1)"><img src="/images/projects/kitchen-detail-1.webp" alt="Quartz waterfall edge detail" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Detail</span><h3>Waterfall quartz with brass faucet</h3></div></div>
+      <div class="gal-card" data-cat="kitchen" onclick="openLB(2)"><img src="/images/projects/kitchen-black-cabinets.webp" alt="Black cabinets with marble" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Kitchen</span><h3>Black cabinets, marble, gold hardware</h3></div></div>
+      <div class="gal-card" data-cat="kitchen" onclick="openLB(3)"><img src="/images/projects/kitchen-open-shelves.webp" alt="Open shelving on subway tile" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Detail</span><h3>Walnut shelves on white subway tile</h3></div></div>
+      <div class="gal-card" data-cat="color" onclick="openLB(4)"><img src="/images/projects/color-green-island-kitchen.webp" alt="Green island with terracotta floor" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Deep green + white + terracotta</h3></div></div>
+      <div class="gal-card" data-cat="bathroom" onclick="openLB(5)"><img src="/images/projects/bathroom-luxury-1.webp" alt="Master bath stone and tub" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Bathroom</span><h3>Natural stone spa, freestanding tub</h3></div></div>
+      <div class="gal-card" data-cat="bathroom" onclick="openLB(6)"><img src="/images/projects/bathroom-detail-1.webp" alt="Rain shower ambient light" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Detail</span><h3>Rain shower with LED niche</h3></div></div>
+      <div class="gal-card" data-cat="color" onclick="openLB(7)"><img src="/images/projects/color-navy-brass-bath.webp" alt="Navy vanity with brass fixtures" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Navy blue + brass + white marble</h3></div></div>
+      <div class="gal-card" data-cat="bathroom" onclick="openLB(8)"><img src="/images/projects/bath-double-vanity.webp" alt="Walnut double vanity spa" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Bathroom</span><h3>Walnut floating vanity, vessel sinks</h3></div></div>
+      <div class="gal-card" data-cat="tile" onclick="openLB(9)"><img src="/images/projects/tile-herringbone-marble.webp" alt="Herringbone marble floor" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Herringbone marble pattern</h3></div></div>
+      <div class="gal-card" data-cat="tile" onclick="openLB(10)"><img src="/images/projects/tile-zellige-sage.webp" alt="Zellige sage green backsplash" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Zellige sage green backsplash</h3></div></div>
+      <div class="gal-card" data-cat="tile" onclick="openLB(11)"><img src="/images/projects/tile-shower-niche-detail.webp" alt="Mosaic shower niche" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Mosaic niche with matte black hardware</h3></div></div>
+      <div class="gal-card" data-cat="tile" onclick="openLB(12)"><img src="/images/projects/tile-bookmatched-marble-bath.webp" alt="Book-matched marble slabs" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Book-matched marble floor to ceiling</h3></div></div>
+      <div class="gal-card" data-cat="tile" onclick="openLB(13)"><img src="/images/projects/tile-hex-marble-floor.webp" alt="Hex marble floor with LED mirror" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Hex marble with backlit mirror</h3></div></div>
+      <div class="gal-card" data-cat="tile" onclick="openLB(14)"><img src="/images/projects/tile-woodlook-porcelain.webp" alt="Wood-look porcelain open concept" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Wood-look porcelain, seamless flow</h3></div></div>
+      <div class="gal-card" data-cat="tile" onclick="openLB(15)"><img src="/images/projects/tile-travertine-texture.webp" alt="Travertine texture warm tones" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Material</span><h3>Travertine texture study</h3></div></div>
+      <div class="gal-card" data-cat="outdoor" onclick="openLB(16)"><img src="/images/projects/outdoor-kitchen-1.webp" alt="Outdoor BBQ at dusk" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>BBQ island with covered pergola</h3></div></div>
+      <div class="gal-card" data-cat="outdoor" onclick="openLB(17)"><img src="/images/projects/outdoor-bbq-night.webp" alt="BBQ area at night limestone" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>Limestone BBQ, oak tree, night lighting</h3></div></div>
+      <div class="gal-card" data-cat="outdoor" onclick="openLB(18)"><img src="/images/projects/patio-luxury-1.webp" alt="Patio sunset hill country" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Patio</span><h3>Sunset pergola with stone tile</h3></div></div>
+      <div class="gal-card" data-cat="outdoor" onclick="openLB(19)"><img src="/images/projects/outdoor-firepit.webp" alt="Fire pit lounge at dusk" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>Stone fire pit with LED seating</h3></div></div>
+      <div class="gal-card" data-cat="outdoor" onclick="openLB(20)"><img src="/images/projects/outdoor-dining-pergola.webp" alt="Outdoor dining hill country" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>Farm table under vine pergola</h3></div></div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(21)"><img src="/images/projects/flooring-luxury-1.webp" alt="Wide plank oak open concept" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Flooring</span><h3>Wide plank oak, natural light</h3></div></div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(22)"><img src="/images/projects/whole-home-luxury-1.webp" alt="Stone fireplace beamed ceiling" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Whole Home</span><h3>Beamed ceiling, stone fireplace</h3></div></div>
+      <div class="gal-card" data-cat="color" onclick="openLB(23)"><img src="/images/projects/painting-luxury-1.webp" alt="Warm gray paint crown molding" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Warm gray + white crown molding</h3></div></div>
+      <div class="gal-card" data-cat="color" onclick="openLB(24)"><img src="/images/projects/color-olive-accent-wall.webp" alt="Olive green accent wall herringbone" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Deep olive + linen white + oak</h3></div></div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(25)"><img src="/images/projects/addition-luxury-1.webp" alt="Sunroom addition concrete" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Addition</span><h3>Sunroom, polished concrete, beams</h3></div></div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(26)"><img src="/images/projects/laundry-luxury.webp" alt="Luxury laundry room" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Interior</span><h3>Laundry: shaker + cement tile floor</h3></div></div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(27)"><img src="/images/projects/mudroom-luxury.webp" alt="Mudroom herringbone floor" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Interior</span><h3>Mudroom: bench + herringbone floor</h3></div></div>
+      <div class="gal-card" data-cat="bathroom" onclick="openLB(28)"><img src="/images/projects/powder-room-dramatic.webp" alt="Powder room dark floral wallpaper" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Bathroom</span><h3>Powder room: dark floral + brass</h3></div></div>
+      <div class="gal-card" data-cat="color" onclick="openLB(29)"><img src="/images/projects/exterior-paint-twotone.webp" alt="Exterior two-tone white charcoal" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Exterior</span><h3>Two-tone: warm white + charcoal trim</h3></div></div>
     </div>
   </div>
 </section>
