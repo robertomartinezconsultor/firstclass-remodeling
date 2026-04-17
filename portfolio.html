@@ -1,211 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Remodeling Portfolio San Antonio TX | First Class Remodeling</title>
-  <meta name="description" content="See our remodeling work — kitchen transformations, bathroom renovations, outdoor kitchens, and patios across San Antonio TX. Licensed & insured. Free estimates (210) 606-5298.">
-  <link rel="canonical" href="https://www.firstclassremodelingtx.com/portfolio.html" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"ImageGallery","name":"First Class Remodeling TX Portfolio","description":"Kitchen, bathroom, outdoor kitchen and patio remodeling projects in San Antonio TX","url":"https://www.firstclassremodelingtx.com/portfolio.html","provider":{"@type":"HomeAndConstructionBusiness","name":"First Class Remodeling TX","telephone":"+12106065298"}}
-  </script>
-  <style>
-    .gallery-item { cursor: pointer; overflow: hidden; border-radius: 0.5rem; }
-    .gallery-item img { transition: transform 0.3s ease; }
-    .gallery-item:hover img { transform: scale(1.05); }
-    #lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; }
-    #lightbox.open { display:flex; }
-    #lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Project Gallery | First Class Remodeling TX</title>
+<meta name="description" content="Kitchen, bathroom, outdoor kitchen, patio, flooring, and whole-home remodeling inspiration. Quiet luxury design for San Antonio homes.">
+<meta name="theme-color" content="#06090f">
+<link rel="canonical" href="https://firstclassremodelingtx.com/portfolio.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/fcr.css?v=20260417">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<style>
+/* Gallery grid */
+.gal-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.gal-fil{padding:8px 18px;border-radius:100px;border:1px solid var(--line);font-size:.78rem;font-weight:600;color:var(--muted);background:transparent;transition:all .25s;cursor:pointer;letter-spacing:.04em}
+.gal-fil:hover,.gal-fil.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.gal-card{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/2;cursor:pointer;border:1px solid var(--line);transition:transform .35s,box-shadow .35s,border-color .35s}
+.gal-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 12px 40px rgba(0,0,0,0.4);border-color:rgba(215,180,108,0.2)}
+.gal-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.65,.25,1)}
+.gal-card:hover img{transform:scale(1.06)}
+.gal-card .gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,9,15,0.85) 0%,transparent 50%);opacity:0;transition:opacity .35s;display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.gal-card:hover .gal-overlay{opacity:1}
+.gal-overlay h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:4px}
+.gal-overlay span{font-size:.76rem;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+/* Lightbox */
+.lb{display:none;position:fixed;inset:0;z-index:9999;background:rgba(6,9,15,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:center;justify-content:center;flex-direction:column;padding:20px}
+.lb.open{display:flex}
+.lb img{max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.5)}
+.lb-cap{margin-top:18px;font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text)}
+.lb-close{position:absolute;top:24px;right:28px;background:none;border:none;color:var(--muted);font-size:1.6rem;cursor:pointer;padding:12px;transition:color .2s}
+.lb-close:hover{color:var(--gold)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.06);border:1px solid var(--line);border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:all .2s}
+.lb-nav:hover{background:var(--gold-dim);color:var(--gold);border-color:var(--gold)}
+.lb-prev{left:20px}
+.lb-next{right:20px}
+
+/* Before/After slider */
+.ba-section{padding:clamp(60px,8vw,100px) 0;background:var(--bg2)}
+.ba-wrap{position:relative;max-width:900px;margin:0 auto;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/2;cursor:col-resize;border:1px solid var(--line);box-shadow:0 16px 48px rgba(0,0,0,0.3)}
+.ba-wrap img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ba-wrap .ba-after{clip-path:inset(0 0 0 50%)}
+.ba-line{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--gold);z-index:5;pointer-events:none;box-shadow:0 0 12px rgba(215,180,108,0.4)}
+.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:6;width:44px;height:44px;border-radius:50%;background:var(--gold);border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);pointer-events:none}
+.ba-handle svg{width:20px;height:20px;color:#06090f}
+.ba-label{position:absolute;bottom:16px;z-index:4;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;padding:6px 14px;border-radius:100px;backdrop-filter:blur(6px)}
+.ba-label.before{left:16px;background:rgba(239,68,68,0.6)}
+.ba-label.after{right:16px;background:rgba(74,222,128,0.6)}
+.ba-tabs{display:flex;justify-content:center;gap:10px;margin-top:24px}
+.ba-tab{padding:8px 20px;border-radius:100px;border:1px solid var(--line);font-size:.78rem;font-weight:600;color:var(--muted);background:transparent;cursor:pointer;transition:all .25s}
+.ba-tab.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+@media(max-width:680px){.gal-grid{grid-template-columns:1fr 1fr}.gal-grid .gal-card{aspect-ratio:1/1}}
+@media(max-width:420px){.gal-grid{grid-template-columns:1fr}}
+</style>
 </head>
-<body class="bg-slate-50 font-sans">
-  <header class="bg-white shadow sticky top-0 z-40">
-    <div class="container mx-auto flex items-center justify-between py-4 px-6">
-      <a href="/" class="font-bold text-xl text-teal-700">First Class Remodeling TX</a>
-      <nav class="hidden md:flex space-x-6 items-center">
-        <a href="/" class="text-gray-700 hover:text-teal-600">Home</a>
-        <a href="/services.html" class="text-gray-700 hover:text-teal-600">Services</a>
-        <a href="/portfolio.html" class="text-teal-600 font-semibold">Portfolio</a>
-        <a href="/blog.html" class="text-gray-700 hover:text-teal-600">Blog</a>
-        <a href="/contact.html" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Free Estimate</a>
-      </nav>
-      <button id="menuToggle" class="md:hidden"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-    </div>
-    <div id="mobileMenu" class="md:hidden hidden bg-white shadow"><nav class="flex flex-col p-4 space-y-2">
-      <a href="/" class="text-gray-700">Home</a>
-      <a href="/services.html" class="text-gray-700">Services</a>
-      <a href="/portfolio.html" class="text-teal-600 font-semibold">Portfolio</a>
-      <a href="/contact.html" class="text-teal-600 font-semibold">Free Estimate</a>
-    </nav></div>
-  </header>
+<body>
 
-  <main>
-    <section class="bg-teal-700 text-white py-14 px-6 text-center">
-      <h1 class="text-4xl font-bold mb-3">Our Work Speaks for Itself</h1>
-      <p class="text-xl text-teal-100 max-w-2xl mx-auto">Real projects. Real San Antonio homeowners. Kitchens, bathrooms, outdoor kitchens, and patios — all built by our licensed team.</p>
-    </section>
-
-    <!-- Filter Tabs -->
-    <section class="container mx-auto py-8 px-6">
-      <div class="flex flex-wrap gap-3 justify-center mb-10" id="filterBtns">
-        <button onclick="filterGallery('all')" class="filter-btn active px-5 py-2 rounded-full bg-teal-600 text-white font-semibold text-sm">All Projects</button>
-        <button onclick="filterGallery('kitchen')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🍳 Kitchens</button>
-        <button onclick="filterGallery('bathroom')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🛁 Bathrooms</button>
-        <button onclick="filterGallery('outdoor')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🔥 Outdoor</button>
-        <button onclick="filterGallery('patio')" class="filter-btn px-5 py-2 rounded-full bg-gray-200 text-gray-700 font-semibold text-sm hover:bg-teal-100">🏡 Patios</button>
-      </div>
-
-      <!-- Gallery Grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="gallery">
-
-        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
-          <img src="/images/projects/kitchen-1.webp" alt="Full kitchen remodel San Antonio TX — white shaker cabinets and quartz countertops" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Full Kitchen Remodel</p><p class="text-gray-500 text-xs">Stone Oak, San Antonio TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
-          <img src="/images/projects/kitchen-2.webp" alt="Modern kitchen renovation San Antonio — quartz island and custom cabinets" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Kitchen with Island</p><p class="text-gray-500 text-xs">Helotes, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="bathroom" onclick="openLightbox(this)">
-          <img src="/images/projects/bathroom-1.webp" alt="Master bathroom remodel San Antonio — walk-in shower with custom tile" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Master Bath Renovation</p><p class="text-gray-500 text-xs">Shavano Park, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="bathroom" onclick="openLightbox(this)">
-          <img src="/images/projects/bathroom-2.webp" alt="Bathroom remodel San Antonio — tub to shower conversion with frameless glass" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Tub-to-Shower Conversion</p><p class="text-gray-500 text-xs">Boerne, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="outdoor" onclick="openLightbox(this)">
-          <img src="/images/projects/patio-1.webp" alt="Outdoor kitchen San Antonio TX — built-in grill and tile countertops" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Outdoor Kitchen Build</p><p class="text-gray-500 text-xs">Leon Valley, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="patio" onclick="openLightbox(this)">
-          <img src="/images/projects/patio-2.webp" alt="Covered patio San Antonio TX — pergola with outdoor fans and lighting" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Covered Patio & Pergola</p><p class="text-gray-500 text-xs">San Antonio, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="patio" onclick="openLightbox(this)">
-          <img src="/images/projects/patio-3.webp" alt="Backyard patio remodel San Antonio — stamped concrete and outdoor living" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Backyard Patio Remodel</p><p class="text-gray-500 text-xs">New Braunfels, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="outdoor" onclick="openLightbox(this)">
-          <img src="/images/projects/fireplace-1.webp" alt="Outdoor fireplace San Antonio TX — custom stone fireplace and patio" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Outdoor Fireplace</p><p class="text-gray-500 text-xs">Stone Oak, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
-          <img src="/images/projects/project-real-1.jpg" alt="Kitchen remodel San Antonio — before and after transformation" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Kitchen Transformation</p><p class="text-gray-500 text-xs">Schertz, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="bathroom" onclick="openLightbox(this)">
-          <img src="/images/projects/project-real-2.jpg" alt="Bathroom renovation San Antonio — modern tile and fixtures" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Modern Bathroom Reno</p><p class="text-gray-500 text-xs">Converse, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="kitchen" onclick="openLightbox(this)">
-          <img src="/images/projects/project-real-3.jpg" alt="Complete kitchen renovation San Antonio TX" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Complete Kitchen Reno</p><p class="text-gray-500 text-xs">Universal City, TX</p></div>
-        </div>
-
-        <div class="gallery-item" data-cat="patio" onclick="openLightbox(this)">
-          <img src="/images/projects/project-real-4.jpg" alt="Patio and outdoor living space San Antonio TX" class="w-full h-56 object-cover" loading="lazy">
-          <div class="p-3 bg-white"><p class="font-semibold text-sm">Outdoor Living Space</p><p class="text-gray-500 text-xs">Helotes, TX</p></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Stats bar -->
-    <section class="bg-teal-700 text-white py-10 px-6">
-      <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-        <div><div class="text-4xl font-bold">200+</div><div class="text-teal-200 text-sm mt-1">Projects Completed</div></div>
-        <div><div class="text-4xl font-bold">5★</div><div class="text-teal-200 text-sm mt-1">Average Rating</div></div>
-        <div><div class="text-4xl font-bold">10+</div><div class="text-teal-200 text-sm mt-1">Years in San Antonio</div></div>
-        <div><div class="text-4xl font-bold">100%</div><div class="text-teal-200 text-sm mt-1">Licensed & Insured</div></div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="container mx-auto py-16 px-6 text-center">
-      <h2 class="text-3xl font-bold mb-3">Ready to Start Your Project?</h2>
-      <p class="text-gray-600 mb-8 max-w-xl mx-auto">Join hundreds of San Antonio homeowners who've transformed their homes with First Class Remodeling TX. Free estimate, no pressure, results that last.</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/contact.html" class="bg-teal-600 text-white font-bold px-8 py-3 rounded hover:bg-teal-700">Request Free Estimate</a>
-        <a href="https://wa.me/12106065298" target="_blank" class="border-2 border-teal-600 text-teal-600 font-bold px-8 py-3 rounded hover:bg-teal-50">💬 WhatsApp Us</a>
-        <a href="tel:+12106065298" class="border-2 border-gray-300 text-gray-700 font-bold px-8 py-3 rounded hover:bg-gray-50">(210) 606-5298</a>
-      </div>
-    </section>
-  </main>
-
-  <!-- Lightbox -->
-  <div id="lightbox" onclick="closeLightbox()">
-    <button onclick="closeLightbox()" style="position:absolute;top:20px;right:24px;color:white;font-size:2rem;background:none;border:none;cursor:pointer;">✕</button>
-    <img id="lightboxImg" src="" alt="">
+<header class="header">
+  <div class="shell header-inner">
+    <a href="/" class="logo">First Class Remodeling TX<small>San Antonio · (210) 606-5298</small></a>
+    <nav class="nav">
+      <a href="/services.html">Services</a>
+      <a href="/portfolio.html" style="color:var(--gold)">Gallery</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/contact.html" class="btn-nav">Free Consultation</a>
+    </nav>
+    <button id="langToggle" class="lang-toggle" type="button">ES</button>
+    <button class="hamburger" id="menuBtn" aria-label="Open menu">
+      <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260417#i-menu"/></svg>
+    </button>
   </div>
+</header>
 
-  <footer class="bg-gray-800 text-gray-300 py-8">
-    <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8">
-      <div><h3 class="font-semibold mb-2">First Class Remodeling TX</h3><p>San Antonio TX</p><p>Phone: <a href="tel:+12106065298" class="text-teal-400">(210) 606-5298</a></p></div>
-      <div><h3 class="font-semibold mb-2">Services</h3><ul class="space-y-1">
-        <li><a href="/services.html#kitchens" class="hover:text-teal-400">Kitchen Remodels</a></li>
-        <li><a href="/services.html#bathrooms" class="hover:text-teal-400">Bathroom Remodels</a></li>
-        <li><a href="/services.html#outdoor" class="hover:text-teal-400">Outdoor Kitchens</a></li>
-        <li><a href="/portfolio.html" class="hover:text-teal-400">Portfolio</a></li>
-      </ul></div>
-      <div><h3 class="font-semibold mb-2">Locations</h3><ul class="space-y-1">
-        <li><a href="/locations/helotes.html" class="hover:text-teal-400">Helotes</a></li>
-        <li><a href="/locations/boerne.html" class="hover:text-teal-400">Boerne</a></li>
-        <li><a href="/locations/stone-oak.html" class="hover:text-teal-400">Stone Oak</a></li>
-        <li><a href="/locations/shavano-park.html" class="hover:text-teal-400">Shavano Park</a></li>
-      </ul></div>
+<!-- HERO -->
+<section style="background:var(--bg);padding:clamp(60px,8vw,100px) 0 40px">
+  <div class="shell">
+    <div class="tag">Gallery</div>
+    <h1 class="headline" style="max-width:680px">Design inspiration<br>for your next <em style="color:var(--gold);font-style:normal">remodel</em>.</h1>
+    <p class="lead">AI-rendered quiet luxury concepts. When you are ready to see your own space transformed, schedule a free design consultation.</p>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER INTERACTIVE SLIDER -->
+<section class="ba-section">
+  <div class="shell">
+    <div class="tag" style="text-align:center">Before &amp; After</div>
+    <h2 class="headline" style="text-align:center">Drag to reveal the<br><em style="color:var(--gold);font-style:normal">transformation</em>.</h2>
+
+    <div class="ba-wrap" id="baWrap">
+      <img src="/images/projects/kitchen-before-1.webp" alt="Kitchen before remodel" class="ba-before" loading="eager">
+      <img src="/images/projects/kitchen-luxury-1.webp" alt="Kitchen after quiet luxury remodel" class="ba-after" loading="eager">
+      <div class="ba-line" id="baLine"></div>
+      <div class="ba-handle" id="baHandle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 4l-4 8 4 8M16 4l4 8-4 8"/></svg>
+      </div>
+      <span class="ba-label before">Before</span>
+      <span class="ba-label after">After</span>
     </div>
-    <div class="text-center text-gray-400 mt-8">&copy; 2026 First Class Remodeling TX. All rights reserved.</div>
-    <div style="text-align:center;padding:12px 0 8px;border-top:1px solid rgba(255,255,255,0.06);margin-top:16px">
-      <a href="https://eltigrelabs.com" target="_blank" rel="noopener" style="font-size:11px;color:rgba(255,255,255,0.35);text-decoration:none;font-family:-apple-system,system-ui,sans-serif;letter-spacing:0.03em;display:inline-flex;align-items:center;gap:5px;transition:color 0.2s" onmouseover="this.style.color='#B87333'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        Designed by ELTIGRELABS
-      </a>
+
+    <div class="ba-tabs">
+      <button class="ba-tab active" onclick="switchBA('kitchen')">Kitchen</button>
+      <button class="ba-tab" onclick="switchBA('bathroom')">Bathroom</button>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    document.getElementById('menuToggle').addEventListener('click', function() {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
-    });
+<!-- GALLERY GRID -->
+<section style="background:var(--bg);padding:clamp(60px,8vw,100px) 0">
+  <div class="shell">
+    <div class="tag">Projects</div>
+    <h2 class="headline">Quiet luxury,<br>every room.</h2>
 
-    function filterGallery(cat) {
-      document.querySelectorAll('.gallery-item').forEach(el => {
-        el.style.display = (cat === 'all' || el.dataset.cat === cat) ? 'block' : 'none';
-      });
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('bg-teal-600','text-white');
-        btn.classList.add('bg-gray-200','text-gray-700');
-      });
-      event.target.classList.remove('bg-gray-200','text-gray-700');
-      event.target.classList.add('bg-teal-600','text-white');
-    }
+    <div class="gal-filters">
+      <button class="gal-fil active" onclick="filterGal('all',this)">All</button>
+      <button class="gal-fil" onclick="filterGal('kitchen',this)">Kitchen</button>
+      <button class="gal-fil" onclick="filterGal('bathroom',this)">Bathroom</button>
+      <button class="gal-fil" onclick="filterGal('outdoor',this)">Outdoor</button>
+      <button class="gal-fil" onclick="filterGal('interior',this)">Interior</button>
+    </div>
 
-    function openLightbox(el) {
-      const img = el.querySelector('img');
-      document.getElementById('lightboxImg').src = img.src;
-      document.getElementById('lightboxImg').alt = img.alt;
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
+    <div class="gal-grid" id="galGrid">
+      <div class="gal-card" data-cat="kitchen" onclick="openLB(0)">
+        <img src="/images/projects/kitchen-luxury-1.webp" alt="Luxury kitchen remodel with marble island" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Kitchen</span><h3>Marble island with brass pendants</h3></div>
+      </div>
+      <div class="gal-card" data-cat="kitchen" onclick="openLB(1)">
+        <img src="/images/projects/kitchen-detail-1.webp" alt="Quartz countertop detail with brass faucet" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Kitchen Detail</span><h3>Waterfall quartz edge with LED glow</h3></div>
+      </div>
+      <div class="gal-card" data-cat="bathroom" onclick="openLB(2)">
+        <img src="/images/projects/bathroom-luxury-1.webp" alt="Luxury master bath with stone tile" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Bathroom</span><h3>Natural stone spa with freestanding tub</h3></div>
+      </div>
+      <div class="gal-card" data-cat="bathroom" onclick="openLB(3)">
+        <img src="/images/projects/bathroom-detail-1.webp" alt="Walk-in rain shower with warm lighting" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Bathroom Detail</span><h3>Rain shower with ambient LED niches</h3></div>
+      </div>
+      <div class="gal-card" data-cat="outdoor" onclick="openLB(4)">
+        <img src="/images/projects/outdoor-kitchen-1.webp" alt="Outdoor BBQ kitchen at dusk" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Outdoor</span><h3>BBQ island with covered pergola</h3></div>
+      </div>
+      <div class="gal-card" data-cat="outdoor" onclick="openLB(5)">
+        <img src="/images/projects/patio-luxury-1.webp" alt="Covered patio with hill country sunset" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Patio</span><h3>Stone patio with sunset pergola</h3></div>
+      </div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(6)">
+        <img src="/images/projects/flooring-luxury-1.webp" alt="Wide plank hardwood in open concept" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Flooring</span><h3>Wide plank oak with natural light</h3></div>
+      </div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(7)">
+        <img src="/images/projects/whole-home-luxury-1.webp" alt="Whole home remodel with stone fireplace" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Whole Home</span><h3>Beamed ceiling with stone fireplace</h3></div>
+      </div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(8)">
+        <img src="/images/projects/painting-luxury-1.webp" alt="Interior painting with warm gray walls" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Painting</span><h3>Warm gray with crown molding</h3></div>
+      </div>
+      <div class="gal-card" data-cat="interior" onclick="openLB(9)">
+        <img src="/images/projects/addition-luxury-1.webp" alt="Sunroom addition with hill country view" loading="lazy" width="1200" height="800">
+        <div class="gal-overlay"><span>Addition</span><h3>Sunroom with polished concrete</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
+<section class="cta-section">
+  <div class="shell">
+    <h2>See your space reimagined.</h2>
+    <p>Free design consultation. We visit, walk the space, and show you what is possible.</p>
+    <div class="cta-btns">
+      <a href="/contact.html" class="btn">Schedule a consultation <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260417#i-arrow-right"/></svg></a>
+    </div>
+  </div>
+</section>
 
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-  </script>
+<footer class="footer">
+  <div class="shell">
+    <div class="footer-bottom">
+      <p>&copy; 2026 First Class Remodeling TX &middot; San Antonio &middot; Bilingual</p>
+      <p style="font-size:.68rem;color:var(--muted2);max-width:520px">Images are AI-generated design concepts for inspiration. Actual project results vary. First Class Remodeling TX provides design consultation and project coordination. Construction is performed by independently licensed and insured professionals.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="if(event.target===this)closeLB()">
+  <button class="lb-close" onclick="closeLB()">&times;</button>
+  <button class="lb-nav lb-prev" onclick="navLB(-1)"><svg class="ico" style="width:20px;height:20px"><use href="/assets/icons/sprite.svg?v=20260417#i-arrow-right"/></svg></button>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-cap" id="lbCap"></div>
+  <button class="lb-nav lb-next" onclick="navLB(1)"><svg class="ico" style="width:20px;height:20px"><use href="/assets/icons/sprite.svg?v=20260417#i-arrow-right"/></svg></button>
+</div>
+
+<script>
+// Before/After slider
+const baData = {
+  kitchen: { before: '/images/projects/kitchen-before-1.webp', after: '/images/projects/kitchen-luxury-1.webp' },
+  bathroom: { before: '/images/projects/bathroom-before-1.webp', after: '/images/projects/bathroom-luxury-1.webp' }
+};
+function switchBA(type) {
+  document.querySelectorAll('.ba-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  const d = baData[type];
+  document.querySelector('.ba-before').src = d.before;
+  document.querySelector('.ba-after').src = d.after;
+  setBA(50);
+}
+function setBA(pct) {
+  pct = Math.max(2, Math.min(98, pct));
+  document.querySelector('.ba-after').style.clipPath = `inset(0 0 0 ${pct}%)`;
+  document.getElementById('baLine').style.left = pct + '%';
+  document.getElementById('baHandle').style.left = pct + '%';
+}
+(function initBA() {
+  const wrap = document.getElementById('baWrap');
+  if (!wrap) return;
+  let dragging = false;
+  function onMove(x) {
+    const r = wrap.getBoundingClientRect();
+    setBA(((x - r.left) / r.width) * 100);
+  }
+  wrap.addEventListener('mousedown', () => dragging = true);
+  wrap.addEventListener('touchstart', () => dragging = true, {passive: true});
+  window.addEventListener('mouseup', () => dragging = false);
+  window.addEventListener('touchend', () => dragging = false);
+  wrap.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
+  wrap.addEventListener('touchmove', e => { if (dragging) onMove(e.touches[0].clientX); }, {passive: true});
+  wrap.addEventListener('click', e => onMove(e.clientX));
+})();
+
+// Gallery filter
+function filterGal(cat, btn) {
+  document.querySelectorAll('.gal-fil').forEach(f => f.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.gal-card').forEach(c => {
+    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+// Lightbox
+const lbItems = [];
+document.querySelectorAll('.gal-card').forEach(c => {
+  lbItems.push({ src: c.querySelector('img').src, cap: c.querySelector('h3')?.textContent || '' });
+});
+let lbIdx = 0;
+function openLB(i) {
+  lbIdx = i;
+  document.getElementById('lbImg').src = lbItems[i].src;
+  document.getElementById('lbCap').textContent = lbItems[i].cap;
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLB() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function navLB(dir) {
+  lbIdx = (lbIdx + dir + lbItems.length) % lbItems.length;
+  document.getElementById('lbImg').src = lbItems[lbIdx].src;
+  document.getElementById('lbCap').textContent = lbItems[lbIdx].cap;
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lb').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLB();
+  if (e.key === 'ArrowLeft') navLB(-1);
+  if (e.key === 'ArrowRight') navLB(1);
+});
+</script>
+<script src="/assets/js/i18n.js?v=20260417" defer></script>
+<script src="/assets/js/fcr.js?v=20260417" defer></script>
 </body>
 </html>
