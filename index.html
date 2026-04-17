@@ -32,6 +32,7 @@
 </script>
 <!-- Meta Pixel slot — inject base code here once Meta Business PIXEL_ID is provided. -->
 <script data-fcr-meta-pixel>/* SLOT */</script>
+<script>if(navigator.serviceWorker){navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());navigator.serviceWorker.getRegistration().then(r=>{if(r)r.update()})}</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
