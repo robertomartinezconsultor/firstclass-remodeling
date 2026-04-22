@@ -7,6 +7,7 @@ if (menuBtn && mobNav) {
   menuBtn.addEventListener('click', () => {
     const open = mobNav.classList.toggle('open');
     document.body.style.overflow = open ? 'hidden' : '';
+    menuBtn.setAttribute('aria-expanded', String(open));
   });
   mobNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     mobNav.classList.remove('open');
@@ -30,10 +31,7 @@ window.toggleFaq = toggleFaq;
 // ── JOE AI CHAT ENGINE (TigreLabs Trenzado) ──────────────
 const JOE_API = 'https://leads.eltigrelabs.com/api/eltigre/chat';
 
-let joeHistory = [];
 let joeBusy = false;
-
-window.addEventListener('beforeunload', () => { joeHistory = []; });
 
 const J = {
   step: 'start',
@@ -102,7 +100,32 @@ function captureJuanLead(name, phone) {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
-  }).catch(() => {});
+  }).catch((err) => {
+    if (typeof window.fcrPushEvent === 'function') window.fcrPushEvent('lead_capture_failed', {error: String(err)});
+  });
+}
+
+const JOE_SESSION_ID = (() => {
+  try {
+    let sid = sessionStorage.getItem('fcr_joe_sid');
+    if (!sid) { sid = crypto.randomUUID(); sessionStorage.setItem('fcr_joe_sid', sid); }
+    return sid;
+  } catch(e) { return 'anon'; }
+})();
+
+const JOE_TIMEOUT_MS = 20000;
+const PHONE_FALLBACK = '<a href="tel:2106065298" style="color:var(--gold)">(210) 606-5298</a>';
+
+function sanitizeAIText(raw) {
+  return raw
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\*\*/g, '')
+    .replace(/\*/g, '')
+    .replace(/^#+\s/gm, '')
+    .replace(/\n/g, '<br>');
 }
 
 async function sendMsg() {
@@ -118,30 +141,32 @@ async function sendMsg() {
   const phoneMatch = txt.match(/(\(?\d{3}\)?[\s\-.]?\d{3}[\s\-.]?\d{4})/);
   if (phoneMatch) {
     J.phone = phoneMatch[1];
-    if (J.name) captureJuanLead(J.name, J.phone);
+    captureJuanLead(J.name, J.phone);
   }
 
   joeBusy = true;
   botMsg(null, false);
 
-  const sessionId = (() => {
-    try {
-      let sid = sessionStorage.getItem('fcr_joe_sid');
-      if (!sid) { sid = crypto.randomUUID(); sessionStorage.setItem('fcr_joe_sid', sid); }
-      return sid;
-    } catch(e) { return 'anon'; }
-  })();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), JOE_TIMEOUT_MS);
 
   try {
     const resp = await fetch(JOE_API, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
+      signal: controller.signal,
       body: JSON.stringify({
         message: txt,
-        session_id: sessionId,
+        session_id: JOE_SESSION_ID,
         language: document.documentElement.lang === 'es' ? 'es' : 'en'
       })
     });
+
+    if (!resp.ok || !resp.body) {
+      botMsg('Call or text us at ' + PHONE_FALLBACK + ' for instant help!', true);
+      return;
+    }
+
     let full = '';
     const reader = resp.body.getReader();
     const decoder = new TextDecoder();
@@ -149,6 +174,7 @@ async function sendMsg() {
     if (oldTyping) oldTyping.remove();
     botMsg('', true);
     const lastMsg = document.getElementById('juanBody')?.lastElementChild?.querySelector('.jmsg-bot');
+
     while (true) {
       const {done, value} = await reader.read();
       if (done) break;
@@ -157,15 +183,23 @@ async function sendMsg() {
         if (!line.startsWith('data: ')) continue;
         try {
           const d = JSON.parse(line.slice(6));
-          if (d.text) { full += d.text; if (lastMsg) lastMsg.innerHTML = full.replace(/\*\*/g,'').replace(/\*/g,'').replace(/^#+\s/gm,'').replace(/\n/g,'<br>'); }
+          if (d.text) {
+            full += d.text;
+            if (lastMsg) lastMsg.innerHTML = sanitizeAIText(full);
+          }
         } catch(e) {}
       }
     }
-    if (!full) { if (lastMsg) lastMsg.innerHTML = "Call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a>"; }
+
+    if (!full && lastMsg) {
+      lastMsg.innerHTML = 'Call or text us at ' + PHONE_FALLBACK;
+    }
   } catch(e) {
-    botMsg("Brief connection issue — call or text us at <a href='tel:2106065298' style='color:var(--gold)'>(210) 606-5298</a> for instant help!", true);
+    botMsg('Brief connection issue — call or text us at ' + PHONE_FALLBACK + ' for instant help!', true);
+  } finally {
+    clearTimeout(timer);
+    joeBusy = false;
   }
-  joeBusy = false;
 }
 window.sendMsg = sendMsg;
 
@@ -194,7 +228,6 @@ function closeJuan() {
   if (!ov) return;
   ov.classList.remove('open');
   document.body.style.overflow = '';
-  joeHistory = [];
   J.step = 'start'; J.topic = null; J.name = null; J.phone = null;
   const body = document.getElementById('juanBody');
   if (body) body.innerHTML = '<div><div class="jmsg-name">Joe</div><div class="jmsg jmsg-bot">Hey — I\'m Joe, your project advisor at First Class Remodeling TX.<br><br>Ask me anything: kitchen costs, bathroom ideas, materials, timelines, permits. I know San Antonio remodeling inside and out.</div></div>';
@@ -274,7 +307,7 @@ if (chatInput) {
           const t = Math.min((now - start) / duration, 1);
           const ease = 1 - Math.pow(1 - t, 3);
           current = Math.round(target * ease);
-          el.innerHTML = current + suffix;
+          el.textContent = current + suffix;
           if (t < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
@@ -311,13 +344,19 @@ if (chatInput) {
     dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
   }, {passive: true});
 
+  let ringRafId = 0;
   function ringLoop() {
     rx += (mx - rx) * 0.15;
     ry += (my - ry) * 0.15;
     ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(ringLoop);
+    ringRafId = requestAnimationFrame(ringLoop);
   }
-  ringLoop();
+  ringRafId = requestAnimationFrame(ringLoop);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { cancelAnimationFrame(ringRafId); }
+    else { ringRafId = requestAnimationFrame(ringLoop); }
+  });
 
   document.addEventListener('mouseover', (e) => {
     const t = e.target.closest('a, button, .svc, input, textarea');
