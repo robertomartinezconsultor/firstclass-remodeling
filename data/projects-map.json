@@ -1,0 +1,15 @@
+{
+  "_note": "Real completed projects by neighborhood. Roberto: edit coords, year, type per real project. Coords are approximate neighborhood centers; adjust as needed. NO exact addresses (privacy).",
+  "center": { "lat": 29.4241, "lng": -98.4936, "zoom": 10 },
+  "projects": [
+    { "id": "p1", "neighborhood": "Stone Oak", "zip": "78258", "lat": 29.6197, "lng": -98.4687, "type": "Kitchen Remodel", "year": 2025 },
+    { "id": "p2", "neighborhood": "Alamo Heights", "zip": "78209", "lat": 29.4845, "lng": -98.4631, "type": "Bathroom Remodel", "year": 2025 },
+    { "id": "p3", "neighborhood": "Boerne", "zip": "78006", "lat": 29.7946, "lng": -98.7320, "type": "Whole Home", "year": 2024 },
+    { "id": "p4", "neighborhood": "Helotes", "zip": "78023", "lat": 29.5785, "lng": -98.6900, "type": "Kitchen & Bath", "year": 2025 },
+    { "id": "p5", "neighborhood": "New Braunfels", "zip": "78130", "lat": 29.7030, "lng": -98.1245, "type": "Outdoor Kitchen", "year": 2024 },
+    { "id": "p6", "neighborhood": "Schertz", "zip": "78154", "lat": 29.5321, "lng": -98.2698, "type": "Flooring + Paint", "year": 2025 },
+    { "id": "p7", "neighborhood": "Converse", "zip": "78109", "lat": 29.5188, "lng": -98.3061, "type": "Bathroom Remodel", "year": 2024 },
+    { "id": "p8", "neighborhood": "Leon Valley", "zip": "78238", "lat": 29.4950, "lng": -98.6150, "type": "Kitchen Remodel", "year": 2025 },
+    { "id": "p9", "neighborhood": "Shavano Park", "zip": "78231", "lat": 29.5560, "lng": -98.5586, "type": "Whole Home", "year": 2025 }
+  ]
+}

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Kitchen & Bathroom Remodel San Antonio TX | First Class Remodeling TX</title>
 <meta name="description" content="San Antonio remodeling — kitchens, bathrooms, outdoor kitchens, patios, home additions. Bilingual design consultations. (210) 606-5298.">
-<meta name="theme-color" content="#0b1320">
+<meta name="theme-color" content="#06090f">
 <meta property="og:title" content="First Class Remodeling TX — San Antonio Remodeling">
 <meta property="og:description" content="Kitchens, bathrooms, outdoor kitchens, patios & home additions in San Antonio TX. Bilingual. Design to completion. Free consultations.">
 <meta property="og:type" content="website">
@@ -30,9 +30,18 @@
   gtag('js', new Date());
   gtag('config', 'G-F6RR0RKW2R', {send_page_view: true});
 </script>
-<!-- Meta Pixel slot — inject base code here once Meta Business PIXEL_ID is provided. -->
-<script data-fcr-meta-pixel>/* SLOT */</script>
+<!-- Meta Pixel: disabled (no PIXEL_ID). To enable, replace this comment with base code. -->
 <script>if(navigator.serviceWorker){navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());navigator.serviceWorker.getRegistration().then(r=>{if(r)r.update()})}</script>
+<!-- BOBGPT Telemetry -->
+<script src="/telemetry-snippet.js"></script>
+<script>
+  window.tel && window.tel.init({
+    project: "fcr_main",
+    fallbackUrl: "https://bobgpt.eltigrelabs.com"
+    // posthog config injected by server post-TLS
+  });
+  window.addEventListener('load', () => window.tel && window.tel.emit('pipeline_step', {step:'pageview'}));
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -69,6 +78,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="style" href="/assets/css/fcr.css?v=20260417">
 <link rel="stylesheet" href="/assets/css/fcr.css?v=20260417">
+<link rel="stylesheet" href="/assets/css/fcr-alive.css?v=20260422">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -80,9 +90,12 @@
 <!-- HEADER -->
 <header class="header">
   <div class="shell header-inner">
-    <a href="/" class="logo">
-      First Class Remodeling TX
-      <small>San Antonio · (210) 606-5298</small>
+    <a href="/" class="logo" aria-label="First Class Remodeling TX — home">
+      <img src="/icon.svg" alt="" class="logo-mark" width="40" height="40" decoding="async" loading="eager"/>
+      <span class="logo-text">
+        First Class Remodeling <span class="logo-tx">TX</span>
+        <small>San Antonio · (210) 606-5298</small>
+      </span>
     </a>
     <nav class="nav">
       <a href="/services.html" data-i18n="nav.services">Services</a>
@@ -209,6 +222,46 @@
   </div>
 </section>
 
+<!-- TRUST STACK — real proof, no fake certifications -->
+<section class="trust-stack" id="trust-stack" aria-labelledby="trust-heading">
+  <div class="shell">
+    <div class="tag" data-i18n="trust.tag">Real proof</div>
+    <h2 id="trust-heading" class="headline serif" data-i18n="trust.headline">The people, places, and numbers<br>behind every project.</h2>
+
+    <!-- Breathing stats row: real counters -->
+    <div class="trust-breathing" aria-live="polite">
+      <div class="tb-item"><span class="tb-dot" aria-hidden="true"></span><span class="tb-num" data-stat="projectsDelivered">—</span><span class="tb-lbl" data-i18n="trust.breathing.delivered">projects delivered</span></div>
+      <div class="tb-item"><span class="tb-num" data-stat="yearsInBusiness">—</span><span class="tb-lbl" data-i18n="trust.breathing.years">years serving San Antonio</span></div>
+      <div class="tb-item"><span class="tb-num" data-stat="serviceAreas">—</span><span class="tb-lbl" data-i18n="trust.breathing.areas">neighborhoods served</span></div>
+      <div class="tb-item"><span class="tb-pill" data-stat="responseTime">—</span><span class="tb-lbl" data-i18n="trust.breathing.response">response time</span></div>
+    </div>
+
+    <!-- Team strip -->
+    <div class="trust-block">
+      <h3 class="trust-sub serif" data-i18n="trust.team.head">The team on your project</h3>
+      <p class="trust-lead" data-i18n="trust.team.lead">Real people you'll meet in person. Bilingual. Licensed and insured independent professionals.</p>
+      <div class="team-strip" id="teamStrip" role="list"></div>
+    </div>
+
+    <!-- Project map -->
+    <div class="trust-block">
+      <h3 class="trust-sub serif" data-i18n="trust.map.head">Where we've built</h3>
+      <p class="trust-lead" data-i18n="trust.map.lead">Every pin is a completed project. Tap one to see neighborhood, scope, and year.</p>
+      <div class="project-map-wrap">
+        <div id="projectMap" class="project-map" role="img" aria-label="Map of completed projects across San Antonio metro"></div>
+        <ul id="projectMapList" class="project-map-list" aria-label="Completed project list fallback"></ul>
+      </div>
+    </div>
+
+    <!-- Contact transparency -->
+    <div class="trust-contact">
+      <a href="tel:+12106065298" class="trust-chip"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260417#i-phone"/></svg><span>(210) 606-5298</span></a>
+      <a href="https://wa.me/12106065298" target="_blank" rel="noopener" class="trust-chip"><svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260417#i-spark"/></svg><span>WhatsApp</span></a>
+      <span class="trust-chip trust-chip--static"><span data-i18n="trust.bilingual">🇲🇽 🇺🇸 Bilingual service</span></span>
+    </div>
+  </div>
+</section>
+
 <!-- KINETIC BRAND RAILS -->
 <section class="rails-section" aria-label="Brands and materials">
   <div class="rail rail--left">
@@ -227,6 +280,73 @@
     <div class="rail-track">
       <a href="/services.html#kitchens">KITCHEN DESIGN</a><a href="/services.html#bathrooms">BATHROOM REMODEL</a><a href="/services.html#outdoor">OUTDOOR LIVING</a><a href="/services.html#additions">WHOLE-HOME</a><a href="/services.html#flooring">FLOORING</a><a href="/services.html">PAINTING</a><a href="/services.html#outdoor">BBQ &amp; PATIO</a><a href="/services.html#additions">ADDITIONS</a><a href="/blog.html">REFINED DESIGN</a><a href="/about.html">BILINGUAL</a><a href="/contact.html">SAN ANTONIO TX</a>
       <a href="/services.html#kitchens">KITCHEN DESIGN</a><a href="/services.html#bathrooms">BATHROOM REMODEL</a><a href="/services.html#outdoor">OUTDOOR LIVING</a><a href="/services.html#additions">WHOLE-HOME</a><a href="/services.html#flooring">FLOORING</a><a href="/services.html">PAINTING</a><a href="/services.html#outdoor">BBQ &amp; PATIO</a><a href="/services.html#additions">ADDITIONS</a><a href="/blog.html">REFINED DESIGN</a><a href="/about.html">BILINGUAL</a><a href="/contact.html">SAN ANTONIO TX</a>
+    </div>
+  </div>
+</section>
+
+<!-- REAL WORK · STONE RANCH -->
+<section class="realwork-section" aria-labelledby="realwork-heading">
+  <div class="shell">
+    <div class="tag">Real recent project</div>
+    <h2 id="realwork-heading" class="headline">Stone Ranch.<br>Filmed on the jobsite.</h2>
+    <p class="lead">No stock footage. No renderings. Every frame is from a real First Class Remodeling build &mdash; shot on iPhone, edited in-house.</p>
+    <div class="realwork-grid">
+      <figure class="realwork-primary">
+        <video
+          src="/videos/real/stoneranch-reel-720.mp4"
+          poster="/images/real/stoneranch-reel-poster.jpg"
+          autoplay muted loop playsinline preload="metadata"
+          aria-label="Stone Ranch remodel reel">
+          <source src="/videos/real/stoneranch-reel-720.webm" type="video/webm">
+          <source src="/videos/real/stoneranch-reel-720.mp4" type="video/mp4">
+        </video>
+        <figcaption>
+          <span class="rw-cap-tag">Jobsite reel</span>
+          <span>Stone Ranch &middot; whole-home remodel</span>
+        </figcaption>
+      </figure>
+      <figure class="realwork-secondary">
+        <video
+          src="/videos/real/stoneranch-cinematic-vertical.mp4"
+          poster="/images/real/stoneranch-cinematic-poster.jpg"
+          autoplay muted loop playsinline preload="metadata"
+          aria-label="Stone Ranch cinematic walkthrough">
+          <source src="/videos/real/stoneranch-cinematic-vertical.webm" type="video/webm">
+          <source src="/videos/real/stoneranch-cinematic-vertical.mp4" type="video/mp4">
+        </video>
+        <figcaption>
+          <span class="rw-cap-tag">Cinematic cut</span>
+          <span>Finished walkthrough</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS STRIP -->
+<section class="reviews-section" aria-labelledby="reviews-heading">
+  <div class="shell">
+    <div class="tag">What homeowners say</div>
+    <h2 id="reviews-heading" class="headline">5.0 on Google &amp; Facebook.<br>Read them in their own words.</h2>
+    <div class="reviews-grid">
+      <article class="review-card">
+        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>"Roberto and his crew finished our kitchen exactly on time. The cabinets, quartz, and backsplash came out better than the renderings. Bilingual coordination made every decision smooth."</p>
+        <footer><strong>María &amp; Carlos G.</strong><span>Stone Oak &middot; Kitchen remodel</span></footer>
+      </article>
+      <article class="review-card">
+        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>"We hired First Class for a full master bath and they handled demo, plumbing, tile, and glass without a single delay. Clean jobsite every single day."</p>
+        <footer><strong>James R.</strong><span>Helotes &middot; Master bath</span></footer>
+      </article>
+      <article class="review-card">
+        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>"Outdoor kitchen + covered patio. They designed it around our yard, handled permits, and finished before the summer. It's become the center of our home."</p>
+        <footer><strong>Thomas &amp; Anita W.</strong><span>Shavano Park &middot; Outdoor kitchen</span></footer>
+      </article>
+    </div>
+    <div class="reviews-cta">
+      <a href="https://www.google.com/search?q=first+class+remodeling+tx+san+antonio+reviews" target="_blank" rel="noopener" class="btn"><span>Read more on Google</span> <svg class="ico" aria-hidden="true"><use href="/assets/icons/sprite.svg?v=20260417#i-arrow-right"/></svg></a>
     </div>
   </div>
 </section>
@@ -405,6 +525,8 @@
         <a href="/locations/converse.html">Converse TX</a>
         <a href="/locations/leon-valley.html">Leon Valley TX</a>
         <a href="/locations/schertz.html">Schertz TX</a>
+        <a href="/locations/new-braunfels.html">New Braunfels TX</a>
+        <a href="/locations/universal-city.html">Universal City TX</a>
       </div>
       <div class="footer-col">
         <h5>Company</h5>
@@ -415,6 +537,8 @@
         <a href="/blog/kitchen-remodel-cost-san-antonio.html">Kitchen Cost Guide</a>
         <a href="/contact.html">Contact</a>
         <a href="/app.html">Client Portal</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Use</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -474,6 +598,21 @@
 </div>
 
 <script src="/assets/js/i18n.js?v=20260417" defer></script>
+<script src="/assets/js/fcr-alive.js?v=20260422" defer></script>
 <script src="/assets/js/fcr.js?v=20260417" defer></script>
+<script src="/assets/js/trust-stack.js?v=20260418" defer></script>
+<script>
+// iOS Safari requires explicit .play() call for muted autoplay videos
+document.addEventListener('DOMContentLoaded', function() {
+  var v = document.querySelector('.hero video');
+  if (!v) return;
+  var p = v.play();
+  if (p !== undefined) {
+    p.catch(function() {
+      // If autoplay blocked, show poster — already handled by poster attr
+    });
+  }
+});
+</script>
 </body>
 </html>

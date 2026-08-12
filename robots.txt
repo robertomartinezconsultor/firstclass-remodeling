@@ -1,9 +1,27 @@
 User-agent: *
 Allow: /
+
+# Private client/admin portals (never index)
 Disallow: /app.html
 Disallow: /portal.html
 Disallow: /portal-admin.html
+Disallow: /portal-admin-v2.html
+Disallow: /client-portal.html
+Disallow: /client-portal-v2.html
+Disallow: /client-portal-v3.html
+Disallow: /client-portal-v4.html
 Disallow: /ops-app.html
 Disallow: /monitor.html
+Disallow: /bot-dashboard.html
+Disallow: /social-dashboard.html
+Disallow: /design-preview.html
+Disallow: /project-access.html
+Disallow: /project-dashboard.html
+Disallow: /seo-head-snippet.html
 Disallow: /OPERATIONS_GUIDE.html
+Disallow: /ai-sales-assistant/
 
+# Keep /thank-you.html crawlable for conversion tracking
+Allow: /thank-you.html
+
+Sitemap: https://firstclassremodelingtx.com/sitemap.xml

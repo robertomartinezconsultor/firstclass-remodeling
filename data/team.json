@@ -1,0 +1,23 @@
+{
+  "_note": "Team strip data. Roberto: fill in real headshot paths and years. Images live in /images/team/. Use portraits 400x400px WebP preferred.",
+  "team": [
+    {
+      "name": "Roberto Martinez",
+      "role": "Owner & Lead Designer",
+      "roleEs": "Dueño y Diseñador Principal",
+      "years": 15,
+      "bilingual": true,
+      "photo": "/images/team/roberto.webp",
+      "photoFallback": "/images/team/roberto.jpg"
+    },
+    {
+      "name": "Joe",
+      "role": "Operations Manager",
+      "roleEs": "Gerente de Operaciones",
+      "years": null,
+      "bilingual": true,
+      "photo": "/images/team/joe.webp",
+      "photoFallback": "/images/team/joe.jpg"
+    }
+  ]
+}

@@ -108,6 +108,30 @@ const FCR_DICT = {
   'faq.tag':           { en: 'Common Questions',    es: 'Preguntas frecuentes' },
   'faq.headline':      { en: 'FAQ',                 es: 'Preguntas frecuentes' },
 
+  // Trust stack
+  'trust.tag':            { en: 'Real proof',
+                            es: 'Prueba real' },
+  'trust.headline':       { en: 'The people, places, and numbers<br>behind every project.',
+                            es: 'La gente, los lugares y los números<br>detrás de cada proyecto.' },
+  'trust.breathing.delivered': { en: 'projects delivered',
+                                 es: 'proyectos entregados' },
+  'trust.breathing.years':     { en: 'years serving San Antonio',
+                                 es: 'años sirviendo a San Antonio' },
+  'trust.breathing.areas':     { en: 'neighborhoods served',
+                                 es: 'colonias atendidas' },
+  'trust.breathing.response':  { en: 'response time',
+                                 es: 'tiempo de respuesta' },
+  'trust.team.head':      { en: 'The team on your project',
+                            es: 'El equipo en tu proyecto' },
+  'trust.team.lead':      { en: 'Real people you\'ll meet in person. Bilingual. Licensed and insured independent professionals.',
+                            es: 'Personas reales que conocerás en persona. Bilingües. Profesionales independientes con licencia y seguro.' },
+  'trust.map.head':       { en: 'Where we\'ve built',
+                            es: 'Dónde hemos construido' },
+  'trust.map.lead':       { en: 'Every pin is a completed project. Tap one to see neighborhood, scope, and year.',
+                            es: 'Cada pin es un proyecto completado. Toca uno para ver la colonia, el alcance y el año.' },
+  'trust.bilingual':      { en: '🇲🇽 🇺🇸 Bilingual service',
+                            es: '🇲🇽 🇺🇸 Servicio bilingüe' },
+
   // Toggle button label
   'lang.toggle':       { en: 'ES',                  es: 'EN' },
   'lang.toggleAria':   { en: 'Cambiar a español',   es: 'Switch to English' }
