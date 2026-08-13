@@ -288,17 +288,15 @@
     });
   }
 
-  /* ---------- Weather-aware hero badge ---------- */
-  function mountWeather(){
-    if(REDUCED) return;
-    var badge=document.querySelector('.hero-badge');
+  /* ---------- Weather-aware hero badge(s) ---------- */
+  function mountWeatherFor(badge,cityQuery,cityLabel){
     if(!badge||badge.dataset.weather) return;
     badge.dataset.weather='1';
     var chip=document.createElement('span');
     chip.className='alive-weather';
     badge.appendChild(chip);
     // wttr.in is free, no-auth, returns JSON
-    fetch('https://wttr.in/San+Antonio?format=j1',{mode:'cors'}).then(function(r){
+    fetch('https://wttr.in/'+cityQuery+'?format=j1',{mode:'cors'}).then(function(r){
       if(!r.ok) throw new Error('weather');
       return r.json();
     }).then(function(data){
@@ -313,11 +311,16 @@
       else if(tempF>=45){ico='🌤';tag='Cozy remodel weather'}
       else{ico='🔥';tag='Indoor season'}
       chip.innerHTML='<span class="alive-weather-ico">'+ico+'</span><span>'+tempF+'°F &middot; '+tag+'</span>';
-      chip.title=desc+' in San Antonio';
+      chip.title=desc+' in '+cityLabel;
       requestAnimationFrame(function(){chip.classList.add('is-in')});
     }).catch(function(){
       chip.remove();
     });
+  }
+  function mountWeather(){
+    if(REDUCED) return;
+    mountWeatherFor(document.querySelector('.hero-badge:not(.hero-badge-fl)'),'San+Antonio','San Antonio, TX');
+    mountWeatherFor(document.querySelector('.hero-badge-fl'),'Sarasota+FL','Sarasota, FL');
   }
 
   ready(function(){
