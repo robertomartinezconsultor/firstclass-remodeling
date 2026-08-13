@@ -14,48 +14,18 @@
 <link rel="stylesheet" href="/assets/css/fcr-alive.css?v=20260422">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <style>
-/* Gallery grid */
+/* Reel gallery */
 .gal-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
 .gal-fil{padding:8px 18px;border-radius:100px;border:1px solid var(--line);font-size:.78rem;font-weight:600;color:var(--muted);background:transparent;transition:all .25s;cursor:pointer;letter-spacing:.04em}
 .gal-fil:hover,.gal-fil.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
-.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
-.gal-card{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/2;cursor:pointer;border:1px solid var(--line);transition:transform .35s,box-shadow .35s,border-color .35s}
-.gal-card:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 12px 40px rgba(0,0,0,0.4);border-color:rgba(215,180,108,0.2)}
-.gal-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.65,.25,1)}
-.gal-card:hover img{transform:scale(1.06)}
-.gal-card .gal-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,9,15,0.85) 0%,transparent 50%);opacity:0;transition:opacity .35s;display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
-.gal-card:hover .gal-overlay{opacity:1}
-.gal-overlay h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:#fff;margin-bottom:4px}
-.gal-overlay span{font-size:.76rem;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-
-/* Lightbox */
-.lb{display:none;position:fixed;inset:0;z-index:9999;background:rgba(6,9,15,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:center;justify-content:center;flex-direction:column;padding:20px}
-.lb.open{display:flex}
-.lb img{max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.5)}
-.lb-cap{margin-top:18px;font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text)}
-.lb-close{position:absolute;top:24px;right:28px;background:none;border:none;color:var(--muted);font-size:1.6rem;cursor:pointer;padding:12px;transition:color .2s}
-.lb-close:hover{color:var(--gold)}
-.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.06);border:1px solid var(--line);border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);transition:all .2s}
-.lb-nav:hover{background:var(--gold-dim);color:var(--gold);border-color:var(--gold)}
-.lb-prev{left:20px}
-.lb-next{right:20px}
-
-/* Before/After slider */
-.ba-section{padding:clamp(60px,8vw,100px) 0;background:var(--bg2)}
-.ba-wrap{position:relative;max-width:900px;margin:0 auto;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/2;cursor:col-resize;border:1px solid var(--line);box-shadow:0 16px 48px rgba(0,0,0,0.3)}
-.ba-wrap img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.ba-wrap .ba-after{clip-path:inset(0 0 0 50%)}
-.ba-line{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--gold);z-index:5;pointer-events:none;box-shadow:0 0 12px rgba(215,180,108,0.4)}
-.ba-handle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:6;width:44px;height:44px;border-radius:50%;background:var(--gold);border:3px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.3);pointer-events:none}
-.ba-handle svg{width:20px;height:20px;color:#06090f}
-.ba-label{position:absolute;bottom:16px;z-index:4;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;padding:6px 14px;border-radius:100px;backdrop-filter:blur(6px)}
-.ba-label.before{left:16px;background:rgba(239,68,68,0.6)}
-.ba-label.after{right:16px;background:rgba(74,222,128,0.6)}
-.ba-tabs{display:flex;justify-content:center;gap:10px;margin-top:24px}
-.ba-tab{padding:8px 20px;border-radius:100px;border:1px solid var(--line);font-size:.78rem;font-weight:600;color:var(--muted);background:transparent;cursor:pointer;transition:all .25s}
-.ba-tab.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
-@media(max-width:680px){.gal-grid{grid-template-columns:1fr 1fr}.gal-grid .gal-card{aspect-ratio:1/1}}
-@media(max-width:420px){.gal-grid{grid-template-columns:1fr}}
+.reel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.reel-card{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:9/16;border:1px solid var(--line);background:#000;transition:transform .35s,box-shadow .35s,border-color .35s}
+.reel-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,0.45);border-color:rgba(215,180,108,0.25)}
+.reel-card video{width:100%;height:100%;object-fit:cover;display:block}
+.reel-tag{position:absolute;top:10px;left:10px;z-index:2;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#06090f;background:var(--gold2);padding:4px 10px;border-radius:100px}
+.reel-src{position:absolute;bottom:10px;right:10px;z-index:2;display:flex;align-items:center;gap:5px;font-size:.66rem;color:#fff;background:rgba(6,9,15,.55);padding:4px 9px;border-radius:100px;backdrop-filter:blur(4px)}
+@media(max-width:680px){.reel-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.reel-grid{grid-template-columns:1fr 1fr;gap:10px}}
 </style>
 </head>
 <body>
@@ -84,60 +54,44 @@
 <section style="background:var(--bg);padding:clamp(60px,8vw,100px) 0 40px">
   <div class="shell">
     <div class="tag">Gallery</div>
-    <h1 class="headline" style="max-width:680px">Design inspiration<br>for your next <em style="color:var(--gold);font-style:normal">remodel</em>.</h1>
-    <p class="lead">Curated design concepts for kitchens, baths, outdoor living, tile combinations, and color palettes. When you are ready to see your own space transformed, schedule a free consultation.</p>
+    <h1 class="headline" style="max-width:680px">Real projects,<br>straight from the <em style="color:var(--gold);font-style:normal">job site</em>.</h1>
+    <p class="lead">Every clip here is from our own Facebook page &mdash; actual work, actual crew, no stock photography. When you are ready to see your own space transformed, schedule a free consultation.</p>
   </div>
 </section>
 
 <!-- Gallery starts directly -->
 
-<!-- GALLERY GRID -->
+<!-- REEL GRID -->
 <section style="background:var(--bg);padding:clamp(60px,8vw,100px) 0">
   <div class="shell">
     <div class="tag">Projects</div>
-    <h2 class="headline">Quiet luxury,<br>every room.</h2>
+    <h2 class="headline">From our Facebook,<br>unedited.</h2>
 
     <div class="gal-filters">
       <button class="gal-fil active" onclick="filterGal('all',this)">All</button>
-      <button class="gal-fil" onclick="filterGal('kitchen',this)">Kitchen</button>
       <button class="gal-fil" onclick="filterGal('bathroom',this)">Bathroom</button>
-      <button class="gal-fil" onclick="filterGal('outdoor',this)">Outdoor</button>
-      <button class="gal-fil" onclick="filterGal('interior',this)">Interior</button>
-      <button class="gal-fil" onclick="filterGal('tile',this)">Tile &amp; Materials</button>
-      <button class="gal-fil" onclick="filterGal('color',this)">Color Combos</button>
+      <button class="gal-fil" onclick="filterGal('flooring',this)">Flooring</button>
+      <button class="gal-fil" onclick="filterGal('kitchen',this)">Kitchen</button>
+      <button class="gal-fil" onclick="filterGal('exterior',this)">Exterior</button>
+      <button class="gal-fil" onclick="filterGal('systems',this)">Electrical &amp; Plumbing</button>
     </div>
 
-    <div class="gal-grid" id="galGrid">
-      <div class="gal-card" data-cat="kitchen" onclick="openLB(0)"><img src="/images/projects/kitchen-luxury-1.webp" alt="Luxury kitchen with marble island" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Kitchen</span><h3>Marble island, warm wood, brass pendants</h3></div></div>
-      <div class="gal-card" data-cat="kitchen" onclick="openLB(1)"><img src="/images/projects/kitchen-detail-1.webp" alt="Quartz waterfall edge detail" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Detail</span><h3>Waterfall quartz with brass faucet</h3></div></div>
-      <div class="gal-card" data-cat="kitchen" onclick="openLB(2)"><img src="/images/projects/kitchen-black-cabinets.webp" alt="Black cabinets with marble" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Kitchen</span><h3>Black cabinets, marble, gold hardware</h3></div></div>
-      <div class="gal-card" data-cat="kitchen" onclick="openLB(3)"><img src="/images/projects/kitchen-open-shelves.webp" alt="Open shelving on subway tile" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Detail</span><h3>Walnut shelves on white subway tile</h3></div></div>
-      <div class="gal-card" data-cat="color" onclick="openLB(4)"><img src="/images/projects/color-green-island-kitchen.webp" alt="Green island with terracotta floor" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Deep green + white + terracotta</h3></div></div>
-      <div class="gal-card" data-cat="bathroom" onclick="openLB(5)"><img src="/images/projects/bathroom-luxury-1.webp" alt="Master bath stone and tub" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Bathroom</span><h3>Natural stone spa, freestanding tub</h3></div></div>
-      <div class="gal-card" data-cat="bathroom" onclick="openLB(6)"><img src="/images/projects/bathroom-detail-1.webp" alt="Rain shower ambient light" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Detail</span><h3>Rain shower with LED niche</h3></div></div>
-      <div class="gal-card" data-cat="color" onclick="openLB(7)"><img src="/images/projects/color-navy-brass-bath.webp" alt="Navy vanity with brass fixtures" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Navy blue + brass + white marble</h3></div></div>
-      <div class="gal-card" data-cat="bathroom" onclick="openLB(8)"><img src="/images/projects/bath-double-vanity.webp" alt="Walnut double vanity spa" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Bathroom</span><h3>Walnut floating vanity, vessel sinks</h3></div></div>
-      <div class="gal-card" data-cat="tile" onclick="openLB(9)"><img src="/images/projects/tile-herringbone-marble.webp" alt="Herringbone marble floor" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Herringbone marble pattern</h3></div></div>
-      <div class="gal-card" data-cat="tile" onclick="openLB(10)"><img src="/images/projects/tile-zellige-sage.webp" alt="Zellige sage green backsplash" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Zellige sage green backsplash</h3></div></div>
-      <div class="gal-card" data-cat="tile" onclick="openLB(11)"><img src="/images/projects/tile-shower-niche-detail.webp" alt="Mosaic shower niche" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Mosaic niche with matte black hardware</h3></div></div>
-      <div class="gal-card" data-cat="tile" onclick="openLB(12)"><img src="/images/projects/tile-bookmatched-marble-bath.webp" alt="Book-matched marble slabs" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Book-matched marble floor to ceiling</h3></div></div>
-      <div class="gal-card" data-cat="tile" onclick="openLB(13)"><img src="/images/projects/tile-hex-marble-floor.webp" alt="Hex marble floor with LED mirror" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Hex marble with backlit mirror</h3></div></div>
-      <div class="gal-card" data-cat="tile" onclick="openLB(14)"><img src="/images/projects/tile-woodlook-porcelain.webp" alt="Wood-look porcelain open concept" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Tile</span><h3>Wood-look porcelain, seamless flow</h3></div></div>
-      <div class="gal-card" data-cat="tile" onclick="openLB(15)"><img src="/images/projects/tile-travertine-texture.webp" alt="Travertine texture warm tones" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Material</span><h3>Travertine texture study</h3></div></div>
-      <div class="gal-card" data-cat="outdoor" onclick="openLB(16)"><img src="/images/projects/outdoor-kitchen-1.webp" alt="Outdoor BBQ at dusk" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>BBQ island with covered pergola</h3></div></div>
-      <div class="gal-card" data-cat="outdoor" onclick="openLB(17)"><img src="/images/projects/outdoor-bbq-night.webp" alt="BBQ area at night limestone" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>Limestone BBQ, oak tree, night lighting</h3></div></div>
-      <div class="gal-card" data-cat="outdoor" onclick="openLB(18)"><img src="/images/projects/patio-luxury-1.webp" alt="Patio sunset hill country" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Patio</span><h3>Sunset pergola with stone tile</h3></div></div>
-      <div class="gal-card" data-cat="outdoor" onclick="openLB(19)"><img src="/images/projects/outdoor-firepit.webp" alt="Fire pit lounge at dusk" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>Stone fire pit with LED seating</h3></div></div>
-      <div class="gal-card" data-cat="outdoor" onclick="openLB(20)"><img src="/images/projects/outdoor-dining-pergola.webp" alt="Outdoor dining hill country" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Outdoor</span><h3>Farm table under vine pergola</h3></div></div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(21)"><img src="/images/projects/flooring-luxury-1.webp" alt="Wide plank oak open concept" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Flooring</span><h3>Wide plank oak, natural light</h3></div></div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(22)"><img src="/images/projects/whole-home-luxury-1.webp" alt="Stone fireplace beamed ceiling" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Whole Home</span><h3>Beamed ceiling, stone fireplace</h3></div></div>
-      <div class="gal-card" data-cat="color" onclick="openLB(23)"><img src="/images/projects/painting-luxury-1.webp" alt="Warm gray paint crown molding" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Warm gray + white crown molding</h3></div></div>
-      <div class="gal-card" data-cat="color" onclick="openLB(24)"><img src="/images/projects/color-olive-accent-wall.webp" alt="Olive green accent wall herringbone" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Color</span><h3>Deep olive + linen white + oak</h3></div></div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(25)"><img src="/images/projects/addition-luxury-1.webp" alt="Sunroom addition concrete" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Addition</span><h3>Sunroom, polished concrete, beams</h3></div></div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(26)"><img src="/images/projects/laundry-luxury.webp" alt="Luxury laundry room" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Interior</span><h3>Laundry: shaker + cement tile floor</h3></div></div>
-      <div class="gal-card" data-cat="interior" onclick="openLB(27)"><img src="/images/projects/mudroom-luxury.webp" alt="Mudroom herringbone floor" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Interior</span><h3>Mudroom: bench + herringbone floor</h3></div></div>
-      <div class="gal-card" data-cat="bathroom" onclick="openLB(28)"><img src="/images/projects/powder-room-dramatic.webp" alt="Powder room dark floral wallpaper" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Bathroom</span><h3>Powder room: dark floral + brass</h3></div></div>
-      <div class="gal-card" data-cat="color" onclick="openLB(29)"><img src="/images/projects/exterior-paint-twotone.webp" alt="Exterior two-tone white charcoal" loading="lazy" width="1200" height="800"><div class="gal-overlay"><span>Exterior</span><h3>Two-tone: warm white + charcoal trim</h3></div></div>
+    <div class="reel-grid" id="galGrid">
+      <div class="reel-card" data-cat="bathroom"><span class="reel-tag">Bathroom</span><video src="/videos/facebook/reel-00.mp4" poster="/images/facebook-thumbs/reel-00.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="bathroom"><span class="reel-tag">Bathroom</span><video src="/videos/facebook/reel-01.mp4" poster="/images/facebook-thumbs/reel-01.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="systems"><span class="reel-tag">Electrical</span><video src="/videos/facebook/reel-02.mp4" poster="/images/facebook-thumbs/reel-02.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="systems"><span class="reel-tag">Plumbing</span><video src="/videos/facebook/reel-03.mp4" poster="/images/facebook-thumbs/reel-03.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="bathroom"><span class="reel-tag">Bathroom</span><video src="/videos/facebook/reel-04.mp4" poster="/images/facebook-thumbs/reel-04.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="bathroom"><span class="reel-tag">Bathroom</span><video src="/videos/facebook/reel-05.mp4" poster="/images/facebook-thumbs/reel-05.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="bathroom"><span class="reel-tag">Bathroom</span><video src="/videos/facebook/reel-06.mp4" poster="/images/facebook-thumbs/reel-06.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="kitchen"><span class="reel-tag">Interior</span><video src="/videos/facebook/reel-07.mp4" poster="/images/facebook-thumbs/reel-07.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="systems"><span class="reel-tag">HVAC</span><video src="/videos/facebook/reel-08.mp4" poster="/images/facebook-thumbs/reel-08.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="flooring"><span class="reel-tag">Flooring</span><video src="/videos/facebook/reel-09.mp4" poster="/images/facebook-thumbs/reel-09.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="exterior"><span class="reel-tag">Exterior</span><video src="/videos/facebook/reel-11.mp4" poster="/images/facebook-thumbs/reel-11.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="flooring"><span class="reel-tag">Flooring</span><video src="/videos/facebook/reel-12.mp4" poster="/images/facebook-thumbs/reel-12.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="flooring"><span class="reel-tag">Flooring</span><video src="/videos/facebook/reel-13.mp4" poster="/images/facebook-thumbs/reel-13.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="bathroom"><span class="reel-tag">Bathroom</span><video src="/videos/facebook/reel-14.mp4" poster="/images/facebook-thumbs/reel-14.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
+      <div class="reel-card" data-cat="kitchen"><span class="reel-tag">Kitchen</span><video src="/videos/facebook/reel-15.mp4" poster="/images/facebook-thumbs/reel-15.jpg" muted loop playsinline preload="none"></video><span class="reel-src">Facebook</span></div>
     </div>
   </div>
 </section>
@@ -156,7 +110,7 @@
   <div class="shell">
     <div class="footer-bottom">
       <p>&copy; 2026 First Class Remodeling TX &middot; San Antonio &middot; Bilingual</p>
-      <p style="font-size:.68rem;color:var(--muted2);max-width:520px">Images are AI-generated design concepts for inspiration. Actual project results vary. First Class Remodeling TX provides design consultation and project coordination. Construction is performed by independently licensed and insured professionals.</p>
+      <p style="font-size:.68rem;color:var(--muted2);max-width:520px">Video clips are sourced directly from our official Facebook page (facebook.com/firstclassremodelingsatx). First Class Remodeling TX provides design consultation and project coordination. Construction is performed by independently licensed and insured professionals.</p>
       <p class="footer-legal-links" style="font-size:.75rem;margin-top:10px">
         <a href="/privacy.html">Privacy</a> &middot;
         <a href="/terms.html">Terms</a> &middot;
@@ -166,89 +120,33 @@
   </div>
 </footer>
 
-<!-- LIGHTBOX -->
-<div class="lb" id="lb" onclick="if(event.target===this)closeLB()">
-  <button class="lb-close" onclick="closeLB()">&times;</button>
-  <button class="lb-nav lb-prev" onclick="navLB(-1)"><svg class="ico" style="width:20px;height:20px"><use href="/assets/icons/sprite.svg?v=20260417#i-arrow-right"/></svg></button>
-  <img id="lbImg" src="" alt="">
-  <div class="lb-cap" id="lbCap"></div>
-  <button class="lb-nav lb-next" onclick="navLB(1)"><svg class="ico" style="width:20px;height:20px"><use href="/assets/icons/sprite.svg?v=20260417#i-arrow-right"/></svg></button>
-</div>
-
 <script>
-// Before/After slider
-const baData = {
-  kitchen: { before: '/images/projects/kitchen-before-1.webp', after: '/images/projects/kitchen-luxury-1.webp' },
-  bathroom: { before: '/images/projects/bathroom-before-1.webp', after: '/images/projects/bathroom-luxury-1.webp' }
-};
-function switchBA(type) {
-  document.querySelectorAll('.ba-tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  const d = baData[type];
-  document.querySelector('.ba-before').src = d.before;
-  document.querySelector('.ba-after').src = d.after;
-  setBA(50);
-}
-function setBA(pct) {
-  pct = Math.max(2, Math.min(98, pct));
-  document.querySelector('.ba-after').style.clipPath = `inset(0 0 0 ${pct}%)`;
-  document.getElementById('baLine').style.left = pct + '%';
-  document.getElementById('baHandle').style.left = pct + '%';
-}
-(function initBA() {
-  const wrap = document.getElementById('baWrap');
-  if (!wrap) return;
-  let dragging = false;
-  function onMove(x) {
-    const r = wrap.getBoundingClientRect();
-    setBA(((x - r.left) / r.width) * 100);
-  }
-  wrap.addEventListener('mousedown', () => dragging = true);
-  wrap.addEventListener('touchstart', () => dragging = true, {passive: true});
-  window.addEventListener('mouseup', () => dragging = false);
-  window.addEventListener('touchend', () => dragging = false);
-  wrap.addEventListener('mousemove', e => { if (dragging) onMove(e.clientX); });
-  wrap.addEventListener('touchmove', e => { if (dragging) onMove(e.touches[0].clientX); }, {passive: true});
-  wrap.addEventListener('click', e => onMove(e.clientX));
-})();
-
 // Gallery filter
 function filterGal(cat, btn) {
   document.querySelectorAll('.gal-fil').forEach(f => f.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.gal-card').forEach(c => {
+  document.querySelectorAll('.reel-card').forEach(c => {
     c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
   });
 }
 
-// Lightbox
-const lbItems = [];
-document.querySelectorAll('.gal-card').forEach(c => {
-  lbItems.push({ src: c.querySelector('img').src, cap: c.querySelector('h3')?.textContent || '' });
-});
-let lbIdx = 0;
-function openLB(i) {
-  lbIdx = i;
-  document.getElementById('lbImg').src = lbItems[i].src;
-  document.getElementById('lbCap').textContent = lbItems[i].cap;
-  document.getElementById('lb').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLB() {
-  document.getElementById('lb').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function navLB(dir) {
-  lbIdx = (lbIdx + dir + lbItems.length) % lbItems.length;
-  document.getElementById('lbImg').src = lbItems[lbIdx].src;
-  document.getElementById('lbCap').textContent = lbItems[lbIdx].cap;
-}
-document.addEventListener('keydown', e => {
-  if (!document.getElementById('lb').classList.contains('open')) return;
-  if (e.key === 'Escape') closeLB();
-  if (e.key === 'ArrowLeft') navLB(-1);
-  if (e.key === 'ArrowRight') navLB(1);
-});
+// Lazy-autoplay: only play reels currently visible on screen
+(function () {
+  const videos = document.querySelectorAll('.reel-card video');
+  if (!('IntersectionObserver' in window) || !videos.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const v = entry.target;
+      if (entry.isIntersecting) {
+        if (v.preload === 'none') v.preload = 'metadata';
+        v.play().catch(() => {});
+      } else {
+        v.pause();
+      }
+    });
+  }, { threshold: 0.35 });
+  videos.forEach((v) => io.observe(v));
+})();
 </script>
 <script src="/assets/js/i18n.js?v=20260417" defer></script>
 <script src="/assets/js/fcr.js?v=20260417" defer></script>
