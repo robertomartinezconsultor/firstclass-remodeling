@@ -173,7 +173,7 @@
   /* ---------- Service card 3D tilt ---------- */
   function mountTilt(){
     if(REDUCED||TOUCH) return;
-    var cards=document.querySelectorAll('.svc');
+    var cards=document.querySelectorAll('.svc, .reel-card');
     cards.forEach(function(card){
       var raf=null;
       function onMove(e){
@@ -199,6 +199,20 @@
   }
 
   /* Magnetic CTA already handled by fcr.js — skip. */
+
+  /* ---------- Why-card hover video reveal ---------- */
+  function mountWhyVideos(){
+    if(TOUCH) return;
+    document.querySelectorAll('.why-card video').forEach(function(v){
+      var card=v.closest('.why-card');
+      if(!card) return;
+      card.addEventListener('pointerenter',function(){
+        if(v.preload==='none') v.preload='auto';
+        v.play().catch(function(){});
+      });
+      card.addEventListener('pointerleave',function(){v.pause()});
+    });
+  }
 
   /* ---------- Live activity pill ---------- */
   function mountLive(){
@@ -330,6 +344,7 @@
     try{mountProgress();}catch(e){}
     try{mountSpotlight();}catch(e){}
     try{mountTilt();}catch(e){}
+    try{mountWhyVideos();}catch(e){}
     try{mountLive();}catch(e){}
     try{mountBeforeAfter();}catch(e){}
     try{mountWeather();}catch(e){}

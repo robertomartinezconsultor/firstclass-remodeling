@@ -257,7 +257,7 @@ if (chatInput) {
   if (isMobile || prefersReduced) return;
 
   // 1. Scroll reveals (IntersectionObserver fade-up, Linear/Stripe pattern)
-  document.querySelectorAll('.tag, .headline, .lead, .svc, .why-card, .stat, .projects-cta, .partners-label, .partners-rail, .portal-inner > *, .cta-section h2, .cta-section p, .cta-btns, .faq-inner > *').forEach((el, i) => {
+  document.querySelectorAll('.tag, .headline, .lead, .svc, .why-card, .stat, .projects-cta, .partners-label, .partners-rail, .portal-inner > *, .cta-section h2, .cta-section p, .cta-btns, .faq-inner > *, .sar-item, .sar-card, .sar-area-card, .sar-contact-card, .reel-card, .about-val').forEach((el, i) => {
     el.setAttribute('data-reveal', '');
     el.setAttribute('data-reveal-delay', String(Math.min(i % 5, 4)));
   });
@@ -272,7 +272,7 @@ if (chatInput) {
   document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 
   // 2. Magnetic hover on CTAs (Active Theory pattern)
-  document.querySelectorAll('.btn, .btn-ghost, .btn-wa').forEach(btn => {
+  document.querySelectorAll('.btn, .btn-ghost, .btn-wa, .btn-nav').forEach(btn => {
     const strength = 0.25;
     btn.addEventListener('mousemove', (e) => {
       const r = btn.getBoundingClientRect();
